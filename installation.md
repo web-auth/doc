@@ -2,7 +2,7 @@
 
 This framework contains several sub-packages that you don’t necessarily need. It is highly recommended to install what you need and not the whole framework.
 
-The preffered way to install the library you need is to use composer:
+The prefered way to install the library you need is to use composer:
 
 ```bash
 composer install web-auth/webauthn-lib
