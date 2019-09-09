@@ -1,4 +1,4 @@
-# The Hard Way
+# Authentication without username
 
 {% hint style="info" %}
 To be written

@@ -1,4 +1,4 @@
-# The Hard Way
+# Extensions
 
 {% hint style="info" %}
 To be written

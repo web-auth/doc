@@ -1,4 +1,4 @@
-# The Hard Way
+# Token Binding
 
 {% hint style="info" %}
 To be written

@@ -1,4 +1,4 @@
-# The Hard Way
+# User Verification
 
 {% hint style="info" %}
 To be written

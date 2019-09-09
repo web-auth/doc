@@ -17,9 +17,16 @@
   * [Authenticator Registration](the-webauthn-server/the-easy-way/register-a-new-authentication.md)
   * [User Authentication](the-webauthn-server/the-easy-way/user-authentication.md)
 * [The Hard Way](the-webauthn-server/the-hard-way.md)
-* [The Symfony Way](the-webauthn-server/the-symfony-way.md)
+* [The Symfony Way](the-webauthn-server/the-symfony-way/README.md)
+  * [Entities with Doctrine](the-webauthn-server/the-symfony-way/entities-with-doctrine.md)
+  * [Firewall](the-webauthn-server/the-symfony-way/firewall.md)
 
-## Attestation Statement
+## Deep into the framework
 
-* [What is it?](attestation-statement/what-is-it.md)
+* [User Verification](deep-into-the-framework/user-verification.md)
+* [Attestation and Metadata Statement](deep-into-the-framework/attestation-and-metadata-statement.md)
+* [Authenticator Selection Criteria](deep-into-the-framework/authenticator-selection-criteria.md)
+* [Authentication without username](deep-into-the-framework/authentication-without-username.md)
+* [Extensions](deep-into-the-framework/extensions.md)
+* [Token Binding](deep-into-the-framework/token-binding.md)
 

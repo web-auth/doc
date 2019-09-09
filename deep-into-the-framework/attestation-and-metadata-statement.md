@@ -1,4 +1,4 @@
-# The Hard Way
+# Attestation and Metadata Statement
 
 {% hint style="info" %}
 To be written

@@ -1,4 +1,4 @@
-# The Hard Way
+# Authenticator Selection Criteria
 
 {% hint style="info" %}
 To be written

@@ -1,4 +1,4 @@
-# The Hard Way
+# Firewall
 
 {% hint style="info" %}
 To be written
