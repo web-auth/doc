@@ -12,13 +12,11 @@ And with the user entity you will get all associated Public Key Credential Sourc
 <?php
 
 use Webauthn\PublicKeyCredentialRequestOptions;
-use Webauthn\PublicKeyCredentialSource;
 use Webauthn\PublicKeyCredentialUserEntity;
 
 // UseEntity found using the username.
 $userEntity = $userEntityRepository->findWebauthnUserByUsername('john.doe');
 
-/** Optional: this avoid multiple registration of the same authenticator with the user account **/
 // Get the list of authenticators associated to the user
 $credentialSources = $credentialSourceRepository->findAllForUserEntity($userEntity);
 
@@ -26,12 +24,11 @@ $credentialSources = $credentialSourceRepository->findAllForUserEntity($userEnti
 $allowedCredentials = array_map(function (PublicKeyCredentialSource $credential) {
 return $credential->getPublicKeyCredentialDescriptor();
 }, $credentialSources);
-/** End of optional part**/
 
 // We generate the set of options.
-$ublicKeyCredentialRequestOptions = $server->generatePublicKeyCredentialRequestOptions(
-    PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_DISCOURAGED, // Optional
-    $allowedCredentials                                                           // Optional
+$publicKeyCredentialRequestOptions = $server->generatePublicKeyCredentialRequestOptions(
+    PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_PREFERRED, // Default value
+    $allowedCredentials
 );
 ```
 

@@ -16,6 +16,7 @@ To generate that object, you just need to call the method`generatePublicKeyCrede
 <?php
 
 use Webauthn\PublicKeyCredentialUserEntity;
+use Webauthn\PublicKeyCredentialCreationOptions;
 
 $userEntity = new PublicKeyCredentialUserEntity(
     'john.doe',
@@ -23,8 +24,22 @@ $userEntity = new PublicKeyCredentialUserEntity(
     'John Doe'
 );
 
+/** This avoids multiple registration of the same authenticator with the user account **/
+/** You can remove these code if it is a new user **/
+// Get the list of authenticators associated to the user
+$credentialSources = $credentialSourceRepository->findAllForUserEntity($userEntity);
+
+// Convert the Credential Sources into Public Key Credential Descriptors
+$excludeCredentials = array_map(function (PublicKeyCredentialSource $credential) {
+return $credential->getPublicKeyCredentialDescriptor();
+}, $credentialSources);
+/** End of optional part**/
+
 $publicKeyCredentialCreationOptions = $server->generatePublicKeyCredentialCreationOptions(
-    $userEntity
+    $userEntity,                                                                // The user entity
+    PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE, // We will see this option later
+    $excludeCredentials                                                         // Excluded authenticators
+                                                                                //   Set [] if new user
 );
 ```
 

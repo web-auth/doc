@@ -27,9 +27,9 @@
 
 ## Deep into the framework
 
+* [Attestation and Metadata Statement](deep-into-the-framework/attestation-and-metadata-statement.md)
 * [Authenticator Selection Criteria](deep-into-the-framework/authenticator-selection-criteria.md)
 * [Authentication without username](deep-into-the-framework/authentication-without-username.md)
-* [Attestation and Metadata Statement](deep-into-the-framework/attestation-and-metadata-statement.md)
 * [Extensions](deep-into-the-framework/extensions.md)
 * [Token Binding](deep-into-the-framework/token-binding.md)
 
