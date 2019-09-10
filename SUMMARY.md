@@ -2,7 +2,11 @@
 
 * [Introduction](README.md)
 * [Installation](installation.md)
-* [Ceremonies](ceremonies.md)
+
+## Webauthn In A Nutshell
+
+* [Authenticators](webauthn-in-a-nutshell/authenticators.md)
+* [Ceremonies](webauthn-in-a-nutshell/ceremonies.md)
 
 ## Pre-requisites
 
@@ -23,10 +27,9 @@
 
 ## Deep into the framework
 
-* [User Verification](deep-into-the-framework/user-verification.md)
-* [Attestation and Metadata Statement](deep-into-the-framework/attestation-and-metadata-statement.md)
 * [Authenticator Selection Criteria](deep-into-the-framework/authenticator-selection-criteria.md)
 * [Authentication without username](deep-into-the-framework/authentication-without-username.md)
+* [Attestation and Metadata Statement](deep-into-the-framework/attestation-and-metadata-statement.md)
 * [Extensions](deep-into-the-framework/extensions.md)
 * [Token Binding](deep-into-the-framework/token-binding.md)
 
