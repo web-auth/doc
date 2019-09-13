@@ -12,7 +12,7 @@
 
 * [The Relaying Party](pre-requisites/the-relaying-party.md)
 * [Credential Souce Repository](pre-requisites/credential-souce-repository.md)
-* [User Entity Repository](pre-requisites/user-entity-repository.md)
+* [User Entity And Repository](pre-requisites/user-entity-repository.md)
 * [Javascript](pre-requisites/javascript.md)
 
 ## The Webauthn Server

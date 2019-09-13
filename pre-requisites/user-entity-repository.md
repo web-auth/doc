@@ -1,4 +1,4 @@
-# User Entity Repository
+# User Entity And Repository
 
 ## User Entity
 
@@ -20,6 +20,14 @@ $userEntity = new PublicKeyCredentialUserEntity(
     'John Doe'                              // Display name
 );
 ```
+
+{% hint style="info" %}
+The username can be composed of any displayable characters, including emojies. Username "😝**🥰**😔" is perfectly valid.
+{% endhint %}
+
+{% hint style="warning" %}
+For privacy reasons, it is not recommended to use the e-mail as username.
+{% endhint %}
 
 As for the `rp` Entity, the User Entity may have an icon. This icon must also be secured.
 
