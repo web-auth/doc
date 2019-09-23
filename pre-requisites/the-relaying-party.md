@@ -17,14 +17,18 @@ $rpEntity = new PublicKeyCredentialRpEntity(
 
 This `$rpEntity` object will be useful for the next steps.
 
-{% hint style="warning" %}
-The ID can be `null`, the domain or sub-domain of your application. **The scheme, userinfo, port, path, user… are not allowed**.
-
-Example: `www.sub.domain.com`, `sub.domain.com`, `domain.com` but **not** `com`, `www.sub.domain.com:1337`, `https://domain.com:443`, `sub.domain.com/index`, `https://user:password@www.domain.com`.
+{% hint style="success" %}
+The ID can be `null`, the domain or sub-domain of your application.
 {% endhint %}
 
 {% hint style="info" %}
 Even if it is optional, we highly recommend to set the application ID. If absent, the current domain will be used
+{% endhint %}
+
+{% hint style="warning" %}
+ The scheme, userinfo, port, path, user… are not allowed.
+
+Example: `www.sub.domain.com`, `sub.domain.com`, `domain.com` but **not** `com`, `www.sub.domain.com:1337`, `https://domain.com:443`, `sub.domain.com/index`, `https://user:password@www.domain.com`.
 {% endhint %}
 
 Your application may also have a logo. You can indicate this logo as third argument. Please note that for safety reason this icon is a priori authenticated URL i.e. an image that uses the `data` scheme.

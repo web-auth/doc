@@ -32,19 +32,20 @@ At the moment, only Doctrine is supported, however there is no technical constra
 
 ### Configuration
 
-{% hint style="info" %}
-To be written
-{% endhint %}
+The minimal configuration requires the[ user repository](../../pre-requisites/user-entity-repository.md) and the [pk credential source repository](../../pre-requisites/credential-souce-repository.md).
 
-### Available Services
+{% code-tabs %}
+{% code-tabs-item title="app/config/webauthn.yaml" %}
+```yaml
+webauthn:
+    credential_repository: 'App\Repository\PublicKeyCredentialSourceRepository'
+    user_repository: 'App\Repository\PublicKeyCredentialUserEntityRepository'
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
 
-{% hint style="info" %}
-To be written
-{% endhint %}
+Now you may want to:
 
-### Firewall
-
-{% hint style="info" %}
-To be written
-{% endhint %}
+* [Register your first authenticators](register-authenticators.md),
+* [Authenticate your users](firewall.md).
 

@@ -20,7 +20,7 @@ This framework contains PHP libraries and Symfony bundle to allow developpers to
   * TPM
   * Android Key
   * Android Safetynet
-* ~~TokenBinding support~~
+* ~~Token Binding support~~
 * Cose Algorithms
   *  RS1, RS256, RS384, RS512
   *  PS256, PS384, PS512
