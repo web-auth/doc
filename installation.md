@@ -5,7 +5,7 @@ This framework contains several sub-packages that you don’t necessarily need. 
 The prefered way to install the library you need is to use composer:
 
 ```bash
-composer install web-auth/webauthn-lib
+composer require web-auth/webauthn-lib
 ```
 
 Hereafter the dependency tree:
