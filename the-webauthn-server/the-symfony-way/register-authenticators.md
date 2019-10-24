@@ -109,7 +109,7 @@ webauthn:
 This option indicates the algorithms allowed for your application. By default, a large list of algorithms is defined, but you can add custom algorithms or reduce the list.
 
 {% hint style="info" %}
-The oredr is important. Preferred algorithms go first.
+The order is important. Preferred algorithms go first.
 {% endhint %}
 
 {% hint style="warning" %}
