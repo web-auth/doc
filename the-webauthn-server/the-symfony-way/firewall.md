@@ -118,7 +118,7 @@ security:
 
 ### Handlers
 
-You can customize the responses returned by the firewall by using a custom handler. This could be useful when using an access token manager \(e.g. [LexikJWTAuthenticationBundle](https://github.com/lexik/LexikJWTAuthenticationBundle)\) or to add other parameters to the response.
+You can customize the responses returned by the firewall by using a custom handler. This could be useful when using an access token manager \(e.g. [LexikJWTAuthenticationBundle](https://github.com/lexik/LexikJWTAuthenticationBundle)\) or to modify the responses.
 
 There are 3 types of responses and handlers:
 
