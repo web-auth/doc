@@ -1,6 +1,6 @@
 # Firewall
 
-To authenticate your users, you can follow the steps described on this page. But as Symfony offers a firewall, you may prefer to use it instead of writing a new authentication process and get all advantages of this firewall.
+To authenticate your users, you can follow the steps described [on the previous page](authenticate-your-users.md). But as Symfony offers a firewall, you may prefer to use it instead of writing a new authentication process and get all advantages of this firewall.
 
 First of all, you must install the dedicated bundle: `symfony/security-bundle`.
 
@@ -79,7 +79,7 @@ security:
 
 ### User Assertion
 
-When the user touched is security device, you will receive a response from it. You just have to send a POST request to `/login`.
+When the user touched the security device, you will receive a response from it. You just have to send a POST request to `/login`.
 
 The body of this request is the response of the security device.
 
@@ -116,6 +116,40 @@ security:
                 login_path: /security/authentication/login
 ```
 
+Your user can now be authenticated and retrieved as usual.
+
+{% code title="Acme\\Controller\\AdminController.php" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Acme\Controller;
+
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
+final class AdminController
+{
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage:
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+    }
+
+    public function __invoke()
+    {
+        // $token is an object of type Webauthn\Bundle\Security\Authentication\Token\WebauthnToken
+        $token = $this->tokenStorage->getToken();
+        ...
+    }
+}
+```
+{% endcode %}
+
 ### Handlers
 
 You can customize the responses returned by the firewall by using a custom handler. This could be useful when using an access token manager \(e.g. [LexikJWTAuthenticationBundle](https://github.com/lexik/LexikJWTAuthenticationBundle)\) or to modify the responses.
@@ -130,7 +164,7 @@ There are 3 types of responses and handlers:
 
 This handler is called when a client sends a valid POST request to the `options_path`. The default Request Options Handler is `Webauthn\Bundle\Security\Handler\DefaultRequestOptionsHandler`. It returns a JSON Response with the Public Key Credential Request Options objects in its body.
 
-Your custom handler have to implement the interface `Webauthn\Bundle\Security\Handler\RequestOptionsHandler` and be declared as a container service.
+Your custom handler have to implement the interface `Webauthn\Bundle\Security\Handler\RequestOptionsHandler` and be declared as a service.
 
 When done, you can set your new service in the firewall configuration:
 
