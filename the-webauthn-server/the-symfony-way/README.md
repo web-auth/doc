@@ -8,8 +8,7 @@ If you use Laravel, you may be intersted in [this project: https://github.com/as
 
 If you are using Symfony Flex then the bundle will automatically be installed. Otherwise you need to add it in your `AppKernel.php` file:
 
-{% code-tabs %}
-{% code-tabs-item title="src/AppKernel.php" %}
+{% code title="src/AppKernel.php" %}
 ```php
 <?php
 
@@ -21,8 +20,7 @@ public function registerBundles()
     ];
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
 ### Entities
 
@@ -34,15 +32,13 @@ At the moment, only Doctrine is supported, however there is no technical constra
 
 The minimal configuration requires the[ user repository](../../pre-requisites/user-entity-repository.md) and the [pk credential source repository](../../pre-requisites/credential-souce-repository.md).
 
-{% code-tabs %}
-{% code-tabs-item title="app/config/webauthn.yaml" %}
+{% code title="app/config/webauthn.yaml" %}
 ```yaml
 webauthn:
     credential_repository: 'App\Repository\PublicKeyCredentialSourceRepository'
     user_repository: 'App\Repository\PublicKeyCredentialUserEntityRepository'
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
 Now you may want to:
 
