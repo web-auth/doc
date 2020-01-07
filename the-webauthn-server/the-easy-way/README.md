@@ -2,7 +2,6 @@
 
 The easiest way to create a Webauthn Server is to use the class `Webauthn\Server`.
 
-{% code title="" %}
 ```php
 <?php
 
@@ -20,7 +19,6 @@ $server = new Server(
     $publicKeyCredentialSourceRepository
 );
 ```
-{% endcode %}
 
 That’s it!
 

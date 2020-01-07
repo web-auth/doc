@@ -14,7 +14,8 @@ The library does not provide any concrete implementation. It is up to you to cre
 Please don’t use this example in production! It will store credential source objects in a temporary folder.
 {% endhint %}
 
-{% code title="Acme\\Repository\\PublicKeyCredentialSourceRepository.php" %}
+{% code-tabs %}
+{% code-tabs-item title="Acme\\Repository\\PublicKeyCredentialSourceRepository.php" %}
 ```php
 <?php
 /**
@@ -90,7 +91,8 @@ class PublicKeyCredentialSourceRepository implements PublicKeyCredentialSourceRe
 	}
 }
 ```
-{% endcode %}
+{% endcode-tabs-item %}
+{% endcode-tabs %}
 
 #### Doctrine Repository
 
@@ -102,7 +104,8 @@ _Y_ou must [add custom Doctrine types](https://www.doctrine-project.org/projects
 If you use Symfony, this repository already exists and custom Doctrine types are automatically registered.
 {% endhint %}
 
-{% code title="Acme\\Repository\\PublicKeyCredentialSourceRepository.php" %}
+{% code-tabs %}
+{% code-tabs-item title="Acme\\Repository\\PublicKeyCredentialSourceRepository.php" %}
 ```php
 <?php
 
@@ -204,5 +207,6 @@ class PublicKeyCredentialSourceRepository implements PublicKeyCredentialSourceRe
     }
 }
 ```
-{% endcode %}
+{% endcode-tabs-item %}
+{% endcode-tabs %}
 
