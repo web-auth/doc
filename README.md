@@ -12,7 +12,7 @@ This framework contains PHP libraries and Symfony bundle to allow developpers to
 
 ## Class, Constant and Property Names
 
-Naming things may be complicated. Thas’s why the following rule applies on the whole framework: the name of classes, constants and properties as the ones you will find in the specification.
+Naming things may be complicated. That’s why the following rule applies on the whole framework: the name of classes, constants and properties are identical to the ones you will find in the specification.
 
 As an example, the [section 5.3.3 “Web Authentication Assertion”](https://www.w3.org/TR/webauthn/#iface-authenticatorassertionresponse) shows an object named `AuthenticatorAssertionResponse` that extends `AuthenticatorResponse` with the following properties:
 
