@@ -1,6 +1,6 @@
 # Authenticators
 
-An Authenticator s a cryptographic entity used generate a public key credential and registered by a Relaying Party \(i.e. an application\). This public key is used to authenticate by potentially verifying a user in the form of an authentication assertion and other data.
+An Authenticator is a cryptographic entity used to generate a public key credential and registered by a Relaying Party \(i.e. an application\). This public key is used to authenticate by potentially verifying a user in the form of an authentication assertion and other data.
 
 Authenticators may have additional features such as PIN code or biometric sensors \(fingerprint, facial recognition…\) that offer user verification.
 
