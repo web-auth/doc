@@ -4,10 +4,10 @@
 
 ### The Doctrine Entity
 
-With Doctrine, you have to indicate how to store the Credential Source objects. Hereafter an example of an entity. In this example we add an entity `id`  and a custom field `created_at`. We also indicate the repository as we will have a custom one.
+With Doctrine, you have to indicate how to store the Credential Source objects. Hereafter an example of an entity. In this example we add an entity `id` and a custom field `created_at`. We also indicate the repository as we will have a custom one.
 
 {% hint style="info" %}
-As the ID must have a fixed length and because the `credentialId` field of `Webauthn\PublicKeyCredentialSource` hasn’t such requirement and is a binary string, we need to declare our own `id` field.
+As the ID must have a fixed length and because the `credentialId` field of `Webauthn\PublicKeyCredentialSource` hasn’t such a requirement and is a binary string, we need to declare our own `id` field.
 {% endhint %}
 
 {% code title="App/Entity/PublicKeyCredentialSource.php" %}

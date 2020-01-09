@@ -73,7 +73,7 @@ $publicKeyCredentialRequestOptions = new PublicKeyCredentialRequestOptions(
 
 The way you receive this response is out of scope of this library. In the previous example, the data is part of the query string, but it can be done through a POST request body or a request header.
 
-What you receive must be a JSON object that looks like as follow:
+What you receive must be a JSON object that looks like as follows:
 
 ```javascript
 {

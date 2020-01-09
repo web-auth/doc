@@ -1,6 +1,6 @@
 # Authenticate Your Users
 
-## Credention Request Options
+## Credential Request Options
 
 To authenticate you user, you need to send a `Webauthn\PublicKeyCredentialRequestOptions` object. 
 

@@ -6,7 +6,7 @@ An official bundle is provided in the package `web-auth/webauthn-symfony-bundle`
 If you use Laravel, you may be interested in [this project: https://github.com/asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
 {% endhint %}
 
-Before instaling it, please make sure you installed the [SensioFremaworkExtraBundle](https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html) and enabled the PSR-7 support.
+Before installing it, please make sure you installed the [SensioFremaworkExtraBundle](https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html) and enabled the PSR-7 support.
 
 ```yaml
 sensio_framework_extra:
@@ -54,11 +54,11 @@ Only [Doctrine ORM based repositories are provided](entities-with-doctrine.md). 
 
 ## Configuration
 
-With Flex, you have a minimal configuration file installed through a Flex Receipe. You must set the repositories you have just created. You also have to modify the environment variables `RELAYING_PARTY_ID` and `RELAYING_PARTY_NAME`.
+With Flex, you have a minimal configuration file installed through a Flex Recipe. You must set the repositories you have just created. You also have to modify the environment variables `RELAYING_PARTY_ID` and `RELAYING_PARTY_NAME`.
 
 You may also need to adjust other parameters.
 
-If you don’t use Flex, hereafter an examle of configuration file:
+If you don’t use Flex, hereafter an example of configuration file:
 
 {% code title="config/packages/webauthn.yaml" %}
 ```yaml
@@ -178,7 +178,7 @@ The order is important. Preferred algorithms go first.
 {% endhint %}
 
 {% hint style="warning" %}
-It is not recommended to change the default list unless you exactly know what you are doing.
+It is not recommended changing the default list unless you exactly know what you are doing.
 {% endhint %}
 
 {% code title="app/config/webauthn.yaml" %}
@@ -196,7 +196,7 @@ webauthn:
 
 #### Attestation Conveyance
 
-If you need the [attestation of the authenticator](../../deep-into-the-framework/attestation-and-metadata-statement.md), you can  specify the preference regarding attestation conveyance during credential generation.
+If you need the [attestation of the authenticator](../../deep-into-the-framework/attestation-and-metadata-statement.md), you can specify the preference regarding attestation conveyance during credential generation.
 
 {% hint style="warning" %}
 Please note that the metadata service is mandatory when you use this option.
@@ -255,7 +255,7 @@ webauthn:
 ```
 {% endcode %}
 
-Please note that all parameters are optional. The following configuration is perfectly valid. However, and as mentioned above,  the parameter `id` is highly recommended.
+Please note that all parameters are optional. The following configuration is perfectly valid. However, and as mentioned above, the parameter `id` is highly recommended.
 
 {% code title="app/config/webauthn.yaml" %}
 ```yaml

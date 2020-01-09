@@ -43,7 +43,7 @@ $publicKeyCredentialCreationOptions = $server->generatePublicKeyCredentialCreati
 );
 ```
 
-Now send the options to the authenticator using your favorite Javascript framework, library or the example availbale in [the Javascript page](../../pre-requisites/javascript.md).
+Now send the options to the authenticator using your favorite Javascript framework, library or the example available in [the Javascript page](../../pre-requisites/javascript.md).
 
 {% hint style="success" %}
 The Public Key Credential Creation Options object \(variable `$publicKeyCredentialCreationOptions`\) can be serialized into JSON.

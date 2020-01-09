@@ -22,11 +22,11 @@ $userEntity = new PublicKeyCredentialUserEntity(
 ```
 
 {% hint style="info" %}
-The username can be composed of any displayable characters, including emojies. Username "😝**🥰**😔" is perfectly valid.
+The username can be composed of any displayable characters, including emojis. Username "😝**🥰**😔" is perfectly valid.
 {% endhint %}
 
 {% hint style="warning" %}
-For privacy reasons, it is not recommended to use the e-mail as username.
+For privacy reasons, it is not recommended using the e-mail as username.
 {% endhint %}
 
 As for the `rp` Entity, the User Entity may have an icon. This icon must also be secured.
@@ -111,7 +111,7 @@ final class PublicKeyCredentialUserEntityRepository
     {
         //We create a PublicKeyCredentialUserEntity object
         // This object requires the username, the ID and the name to display (e.g. "John Doe")
-        // The avatar URL is optionnal and could be null
+        // The avatar URL is optional and could be null
         return new PublicKeyCredentialUserEntity(
             $user->username,
             $user->id,

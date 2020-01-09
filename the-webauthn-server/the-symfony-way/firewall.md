@@ -55,7 +55,7 @@ fetch('/login/options', {
 })
 ```
 
-In case of success, you receive a valid `PublicKeyCredentialRequestOptions`  object and your user will be asked to interact with its security devices.
+In case of success, you receive a valid `PublicKeyCredentialRequestOptions` object and your user will be asked to interact with its security devices.
 
 The default path is `/login/options`. You can change it if needed:
 
@@ -211,7 +211,7 @@ fetch('/register/options', {
     })
 ```
 
-In case of success, you receive a valid `PublicKeyCredentialCreationOptions`  object and your user will be asked to interact with its security devices.
+In case of success, you receive a valid `PublicKeyCredentialCreationOptions` object and your user will be asked to interact with its security devices.
 
 The default path is `/register/options`. You can change it if needed:
 
@@ -264,7 +264,7 @@ security:
                     result_path: /security/registration/result
 ```
 
-In case of succes, the user and the authenticator are correctly registered and automatically logged in.
+In case of success, the user and the authenticator are correctly registered and automatically logged in.
 
 ### Creation Profile
 

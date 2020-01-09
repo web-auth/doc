@@ -8,7 +8,7 @@ Webauthn defines an API enabling the creation and use of strong, attested, scope
 
 The complete specification can be found on [the W3C dedicated page](https://www.w3.org/TR/webauthn/).
 
-This framework contains PHP libraries and Symfony bundle to allow developpers to integrate that authentication mechanism into their web applications.
+This framework contains PHP libraries and Symfony bundle to allow developers to integrate that authentication mechanism into their web applications.
 
 ## Class, Constant and Property Names
 
@@ -56,13 +56,13 @@ The ECDAA Attestation format is very rare at that time \(January 2020\) thus thi
 
 The compliance of the framework is ensured by running unit and functional tests during its development.
 
-It is also tested using the official FIDO Alliance testing tools. The status of the compliance tests are [reported in this issue](https://github.com/web-auth/webauthn-framework/issues/67). At the time of writing \(end of January. 2020\), the main features and algorithms are supported and 99% of the tests pass. Full compliance with the Webatuhn specification is expected in early 2020.
+It is also tested using the official FIDO Alliance testing tools. The status of the compliance tests are [reported in this issue](https://github.com/web-auth/webauthn-framework/issues/67). At the time of writing \(end of January. 2020\), the main features and algorithms are supported and 99% of the tests pass. Full compliance with the Webauthn specification is expected in early 2020.
 
 ## Support
 
 I bring solutions to your problems and answer your questions.
 
-If you really love that project and the work I have done or if you want I prioritize your issues, then [you can help me out for a couple of🍻 or more](https://github.com/sponsors/Spomky)!
+If you really love that project, and the work I have done or if you want I prioritize your issues, then [you can help me out for a couple of🍻 or more](https://github.com/sponsors/Spomky)!
 
 ## Contributing
 
