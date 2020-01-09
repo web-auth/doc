@@ -48,7 +48,7 @@ return function (RoutingConfigurator $routes) {
 
 ## Repositories
 
-The first step is to create [your credential](../../pre-requisites/credential-souce-repository.md) and [user entity repositories](../../pre-requisites/user-entity-repository.md).
+The first step is to create [your credential](../../pre-requisites/credential-source-repository.md) and [user entity repositories](../../pre-requisites/user-entity-repository.md).
 
 Only [Doctrine ORM based repositories are provided](entities-with-doctrine.md). Other storage systems like filesystem or Doctrine ODM may be added in the future but, at the moment, you have to create these from scratch.
 
