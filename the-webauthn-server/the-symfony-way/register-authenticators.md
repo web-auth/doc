@@ -1,6 +1,6 @@
 # Register/Authenticate Programmatically
 
-In some circumstances, you may need to register a new authenticator for a user e.g. when adding a new authenticator or when an administrator acts as another user to replaces a lost devices.
+In some circumstances, you may need to register a new authenticator for a user e.g. when adding a new authenticator or when an administrator acts as another user to replace a lost device.
 
 It is possible to perform both ceremonies programmatically.
 

@@ -10,7 +10,7 @@ You will need the following components before loading or verifying the data:
 * An Authenticator Attestation Response Validator
 * An Extension Output Checker Handler
 
-That’s a lot off classes! But don’t worry, as their configuration is the same for all your application, you just have to set them once. Let see all of these in the next sections.
+That’s a lot off classes! But don’t worry, as their configuration is the same for all your application, you just have to set them once. Let’s see all of these in the next sections.
 
 ## Public Key Credential Source Repository
 
@@ -26,7 +26,7 @@ Please refer to [the dedicated page](../../deep-into-the-framework/token-binding
 
 ## Attestation Statement Support Manager
 
-Every Creation Responses contain an Attestation Statement. This attestation contains data regarding the authenticator depending on several factors such as its manufacturer and model,what you asked in the options, the capabilities of the browser or what the user allowed.
+Every Creation Responses contain an Attestation Statement. This attestation contains data regarding the authenticator depending on several factors such as its manufacturer and model, what you asked in the options, the capabilities of the browser or what the user allowed.
 
 {% hint style="info" %}
 With Firefox for example, the user may refuse to send information about the security token for privacy reasons.
@@ -36,17 +36,17 @@ Hereafter the types of attestations you can have:
 
 * `none`: no attestation is provided
 * `fido-u2f`: for non-FIDO2 compatible devices \(old U2F security token\)
-* `packed`: generaly used by 
+* `packed`: generally used by 
 * `android key`: commonly used by old or disconnected Android devices
 * `android safety net`: for new Android devices like smartphones
-* `trusted platform module`: for devices with built-in secutrity chips
+* `trusted platform module`: for devices with built-in security chips
 
 {% hint style="danger" %}
 All these attestation types are supported, but you should only use the `none` one unless you plan to use the [Attestation and Metadata Statement](../../deep-into-the-framework/attestation-and-metadata-statement.md).
 {% endhint %}
 
 {% hint style="warning" %}
-The _Android SafetyNet Attestation Statement_ is a JWT that can be verified by the library, but can also be checked online by hitting the Google API. This method drastically increase the security for the attestation type but requires a [PSR-18 compatible HTTP Client](https://www.php-fig.org/psr/psr-18/) and [an API key](https://developer.android.com/training/safetynet/attestation).
+The _Android SafetyNet Attestation Statement_ is a JWT that can be verified by the library, but can also be checked online by hitting the Google API. This method drastically increases the security for the attestation type but requires a [PSR-18 compatible HTTP Client](https://www.php-fig.org/psr/psr-18/) and [an API key](https://developer.android.com/training/safetynet/attestation).
 {% endhint %}
 
 ```php
@@ -106,7 +106,7 @@ use Webauthn\AuthenticationExtensions\ExtensionOutputCheckerHandler;
 $extensionOutputCheckerHandler = new ExtensionOutputCheckerHandler();
 ```
 
-You can add as many extension checker as you want. Each extension checker must implement `Webauthn\AuthenticationExtensions\ExtensionOutputChecker` and throw a `Webauthn\AuthenticationExtensions\ExtensionOutputError` in case of an error.
+You can add as many extension checkers as you want. Each extension checker must implement `Webauthn\AuthenticationExtensions\ExtensionOutputChecker` and throw a `Webauthn\AuthenticationExtensions\ExtensionOutputError` in case of an error.
 
 ## Authenticator Attestation Response Validator
 

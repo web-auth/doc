@@ -2,7 +2,9 @@
 
 ## Credention Request Options
 
-To authenticate you user, you need to send a `Webauthn\PublicKeyCredentialRequestOptions` object. using your `$server` object, call the method `generatePublicKeyCredentialRequestOptions` 
+To authenticate you user, you need to send a `Webauthn\PublicKeyCredentialRequestOptions` object. 
+
+To generate that object, you just need to call the method `generatePublicKeyCredentialRequestOptions` of the `$server` object.
 
 In general, to authenticate your user you will ask them for their username first. With this username and [your user repository](../../pre-requisites/user-entity-repository.md), you will find the associated `Webauthn\PublicKeyCredentialUserEntity`.
 
@@ -22,7 +24,7 @@ $credentialSources = $credentialSourceRepository->findAllForUserEntity($userEnti
 
 // Convert the Credential Sources into Public Key Credential Descriptors
 $allowedCredentials = array_map(function (PublicKeyCredentialSource $credential) {
-return $credential->getPublicKeyCredentialDescriptor();
+    return $credential->getPublicKeyCredentialDescriptor();
 }, $credentialSources);
 
 // We generate the set of options.
@@ -32,11 +34,11 @@ $publicKeyCredentialRequestOptions = $server->generatePublicKeyCredentialRequest
 );
 ```
 
-Now send the options to the authenticator using your favorite Javascript framework, library or the example availbale in [the Javascript page](../../pre-requisites/javascript.md).
+Now send the options to the authenticator using your favorite Javascript framework, library or the example available in [the Javascript page](../../pre-requisites/javascript.md).
 
 ## Response Verification
 
-When the authenticator send you the computed response \(i.e. the user touched the button, fingerprint reader, submitted the PIN…\), you can load it and check it.
+When the authenticator sends you the computed response \(i.e. the user touched the button, fingerprint reader, submitted the PIN…\), you can load it and check it.
 
 The authenticator response looks similar to the following example:
 

@@ -50,15 +50,15 @@ return function (RoutingConfigurator $routes) {
 
 The first step is to create [your credential](../../pre-requisites/credential-souce-repository.md) and [user entity repositories](../../pre-requisites/user-entity-repository.md).
 
-Only [Doctrine ORM based repositories are provided](entities-with-doctrine.md). For other storage systems like filesystem or Doctrine ODM may be added in the future but, at the moment, you have to create these from scratch.
+Only [Doctrine ORM based repositories are provided](entities-with-doctrine.md). Other storage systems like filesystem or Doctrine ODM may be added in the future but, at the moment, you have to create these from scratch.
 
 ## Configuration
 
-With Flex, you have a minimal configuration file installed through a Fle Receipe. You must set the repositories you have just created. You also have to modify the environment variables `RELAYING_PARTY_ID` and `RELAYING_PARTY_NAME`.
+With Flex, you have a minimal configuration file installed through a Flex Receipe. You must set the repositories you have just created. You also have to modify the environment variables `RELAYING_PARTY_ID` and `RELAYING_PARTY_NAME`.
 
 You may also need to adjust other parameters.
 
-If you don’t use Flex, hereafter an examle of configuration file.
+If you don’t use Flex, hereafter an examle of configuration file:
 
 {% code title="config/packages/webauthn.yaml" %}
 ```yaml
@@ -138,7 +138,7 @@ webauthn:
 
 #### Timeout
 
-The default timeout is set to 60 seconds \(60 000 milliseconds\). You can change this value as follow:
+The default timeout is set to 60 seconds \(60 000 milliseconds\). You can change this value as follows:
 
 {% code title="app/config/webauthn.yaml" %}
 ```yaml
@@ -219,10 +219,10 @@ webauthn:
 
 #### Extensions
 
-You can set as many extension as you want in the profile. Please also [refer to this page](../../deep-into-the-framework/extensions.md) for more information.
+You can set as many extensions as you want in the profile. Please also [refer to this page](../../deep-into-the-framework/extensions.md) for more information.
 
 {% hint style="info" %}
-The example below is totally fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the supports depends on the authenticators, on the browsers and on the relaying parties \(your applications\).
+The example below is totally fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the support depends on the authenticators, on the browsers and on the relaying parties \(your applications\).
 {% endhint %}
 
 {% code title="app/config/webauthn.yaml" %}
@@ -255,7 +255,7 @@ webauthn:
 ```
 {% endcode %}
 
-Please note that all parameters are optional. The following configuration is perfectly valid. However and as mentioned above,  the parameter `id` is highly recommended.
+Please note that all parameters are optional. The following configuration is perfectly valid. However, and as mentioned above,  the parameter `id` is highly recommended.
 
 {% code title="app/config/webauthn.yaml" %}
 ```yaml

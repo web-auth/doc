@@ -5,10 +5,10 @@
 Now we want to register a new authenticator and attach it to a user. This step can be done during the creation of a new user account or if the user already exists and you want to add another authenticator.
 
 {% hint style="success" %}
-You can attach several authenticators to a user account. It is recommended in case of lost devices or if the user get access on your application using multiple platforms \(smartphone, laptop…\).
+You can attach several authenticators to a user account. It is recommended in case of lost devices or if the user gets access on your application using multiple platforms \(smartphone, laptop…\).
 {% endhint %}
 
-To register a new authenticator, you need to generate and send a set of options to it. These options defined in a `Webauthn\PublicKeyCredentialCreationOptions` object.
+To register a new authenticator, you need to generate and send a set of options to it. These options are defined in a `Webauthn\PublicKeyCredentialCreationOptions` object.
 
 To generate that object, you just need to call the method`generatePublicKeyCredentialCreationOptions` of the `$server` object. This method requires a `Webauthn\PublicKeyCredentialUserEntity` object that represents the user entity to be associated with this new authenticator.
 
@@ -25,13 +25,13 @@ $userEntity = new PublicKeyCredentialUserEntity(
 );
 
 /** This avoids multiple registration of the same authenticator with the user account **/
-/** You can remove these code if it is a new user **/
+/** You can remove this code if it is a new user **/
 // Get the list of authenticators associated to the user
 $credentialSources = $credentialSourceRepository->findAllForUserEntity($userEntity);
 
 // Convert the Credential Sources into Public Key Credential Descriptors
 $excludeCredentials = array_map(function (PublicKeyCredentialSource $credential) {
-return $credential->getPublicKeyCredentialDescriptor();
+    return $credential->getPublicKeyCredentialDescriptor();
 }, $credentialSources);
 /** End of optional part**/
 
@@ -55,7 +55,7 @@ The variable `$publicKeyCredentialCreationOptions` and `$userEntity` have to be 
 
 ## Response Verification
 
-When the authenticator send you the computed response \(i.e. the user touched the button, fingerprint reader, submitted the PIN…\), you can load it and check it.
+When the authenticator sends you the computed response \(i.e. the user touched the button, fingerprint reader, submitted the PIN…\), you can load it and check it.
 
 The authenticator response looks similar to the following example:
 
