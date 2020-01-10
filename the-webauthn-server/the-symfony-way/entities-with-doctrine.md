@@ -4,10 +4,10 @@
 
 ### The Doctrine Entity
 
-With Doctrine, you have to indicate how to store the Credential Source objects. Hereafter an example an entity. In this example we add an entity `id`  and a custom field `created_at`. We also indicate the repository as we will have a custom one.
+With Doctrine, you have to indicate how to store the Credential Source objects. Hereafter an example of an entity. In this example we add an entity `id` and a custom field `created_at`. We also indicate the repository as we will have a custom one.
 
 {% hint style="info" %}
-As the ID must have a fixed length and because the `credentialId` field of `Webauthn\PublicKeyCredentialSource` haven’t such requirement and is a binary string, we need to declare our own `id` field.
+As the ID must have a fixed length and because the `credentialId` field of `Webauthn\PublicKeyCredentialSource` hasn’t such a requirement and is a binary string, we need to declare our own `id` field.
 {% endhint %}
 
 {% code title="App/Entity/PublicKeyCredentialSource.php" %}
@@ -83,7 +83,7 @@ In this following example, we extend that class and add a method to get all cred
 {% endhint %}
 
 {% hint style="warning" %}
-We must override the method saveCredentialSource because we may receive `Webauthn\PublicKeyCredentialSource` objects instead of `App\Entity\PublicKeyCredentialSource`.
+We must override the method `saveCredentialSource` because we may receive `Webauthn\PublicKeyCredentialSource` objects instead of `App\Entity\PublicKeyCredentialSource`.
 {% endhint %}
 
 {% code title="App/Repository/PublicKeyCredentialSourceRepository.php" %}
@@ -171,7 +171,7 @@ services:
 
 ### Doctrine Entity
 
-In a Symfony application context, you usually have to manage several user entities. Thus, in the following example, the user entity class will extend the required calls and implements the interface provided by the Symfony Security component.
+In a Symfony application context, you usually have to manage several user entities. Thus, in the following example, the user entity class will extend the required calls and implement the interface provided by the Symfony Security component.
 
 Feel free to add the necessary setters as well as other fields you need \(creation date, last update at…\).
 
@@ -296,7 +296,6 @@ final class PublicKeyCredentialUserEntityRepository extends AbstractPublicKeyCre
             $userEntity =  $this->createUserEntity(
                 $userEntity->getName(),
                 $userEntity->getDisplayName(),
-                [],
                 $userEntity->getIcon()
             );
         }

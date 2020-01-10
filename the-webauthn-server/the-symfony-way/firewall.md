@@ -30,7 +30,7 @@ security:
 
 Prior to the authentication of the user, you must get a PublicKey Credential Request Options object. To do so, send a POST request to `/login/options`.
 
-The body of this request is a JSON object that must contain a `username` member with the name of the user being authenticated.
+The body of this request is a JSON object that must contain a `username` field with the name of the user being authenticated.
 
 {% hint style="warning" %}
 It is mandatory to set the Content-Type header to `application/json`.
@@ -55,7 +55,7 @@ fetch('/login/options', {
 })
 ```
 
-In case of success, you receive a valid `PublicKeyCredentialRequestOptions`  object and your user will be asked to interact with its security devices.
+In case of success, you receive a valid `PublicKeyCredentialRequestOptions` object and your user will be asked to interact with its security devices.
 
 The default path is `/login/options`. You can change it if needed:
 
@@ -81,7 +81,7 @@ It is mandatory to set the Content-Type header to `application/json`.
 {% endhint %}
 
 ```javascript
-fetch('/assertion/result', {
+fetch('/login', {
     method  : 'POST',
     credentials : 'same-origin',
     headers : {
@@ -97,7 +97,7 @@ fetch('/assertion/result', {
 })
 ```
 
-The default path is `/login`. You can change that path is needed:
+The default path is `/login`. You can change that path if needed:
 
 ```yaml
 security:
@@ -185,7 +185,7 @@ security:
 
 Prior to the registration of a user and its authenticator, you must get a PublicKey Credential Creation Options object. To do so, send a POST request to `/register/options`.
 
-The body of this request is a JSON object that must contain `username` and `displayName` members with the username of the user being registered and the name displayed in the application.
+The body of this request is a JSON object that must contain `username` and `displayName` fields with the username of the user being registered and the name displayed in the application.
 
 {% hint style="warning" %}
 It is mandatory to set the Content-Type header to `application/json`.
@@ -211,7 +211,7 @@ fetch('/register/options', {
     })
 ```
 
-In case of success, you receive a valid `PublicKeyCredentialCreationOptions`  object and your user will be asked to interact with its security devices.
+In case of success, you receive a valid `PublicKeyCredentialCreationOptions` object and your user will be asked to interact with its security devices.
 
 The default path is `/register/options`. You can change it if needed:
 
@@ -264,7 +264,7 @@ security:
                     result_path: /security/registration/result
 ```
 
-In case of succes, the user and the authenticator are correctly registered and automatically logged in.
+In case of success, the user and the authenticator are correctly registered and automatically logged in.
 
 ### Creation Profile
 
@@ -305,7 +305,7 @@ It is needed to store the options and the user entity associated to it to verify
 
 By default, the firewall uses `Webauthn\Bundle\Security\Storage\SessionStorage`. This storage system stores the data in a session.
 
-If this behaviour does not fit on your needs \(e.g. you want to use a database, REDIS…\), you can implement a custom data storage for that purpose. Your custom storage system have to implement `Webauthn\Bundle\Security\Storage\RequestOptionsStorage` and declared as a container service.
+If this behaviour does not fit on your needs \(e.g. you want to use a database, Redis…\), you can implement a custom data storage for that purpose. Your custom storage system has to implement `Webauthn\Bundle\Security\Storage\RequestOptionsStorage` and be declared as a container service.
 
 When done, you can set your new service in the firewall configuration:
 
@@ -332,7 +332,7 @@ There are 4 types of responses and handlers:
 
 This handler is called when a client sends a valid POST request to the `options_path` during the authentication process. The default Request Options Handler is `Webauthn\Bundle\Security\Handler\DefaultRequestOptionsHandler`. It returns a JSON Response with the Public Key Credential Request Options objects in its body.
 
-Your custom handler have to implement the interface `Webauthn\Bundle\Security\Handler\RequestOptionsHandler` and be declared as a service.
+Your custom handler has to implement the interface `Webauthn\Bundle\Security\Handler\RequestOptionsHandler` and be declared as a service.
 
 When done, you can set your new service in the firewall configuration:
 
@@ -362,7 +362,7 @@ ecurity:
 
 This handler is called when a client sends a valid assertion from the authenticator. The default handler is `Webauthn\Bundle\Security\Handler\DefaultSuccessHandler`.
 
-Your custom handler have to implement the interface `Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface` and be declared as a container service.
+Your custom handler has to implement the interface `Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface` and be declared as a container service.
 
 When done, you can set your new service in the firewall configuration:
 
@@ -378,7 +378,7 @@ security:
 
 This handler is called when an error occurred during the authentication process. The default handler is `Webauthn\Bundle\Security\Handler\DefaultFailureHandler`.
 
-Your custom handler have to implement the interface `Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface` and be declared as a container service.
+Your custom handler has to implement the interface `Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface` and be declared as a container service.
 
 When done, you can set your new service in the firewall configuration:
 

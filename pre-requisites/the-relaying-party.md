@@ -22,11 +22,11 @@ The ID can be `null`, the domain or sub-domain of your application.
 {% endhint %}
 
 {% hint style="info" %}
-Even if it is optional, we highly recommend to set the application ID. If absent, the current domain will be used
+Even if it is optional, we highly recommend setting the application ID. If absent, the current domain will be used
 {% endhint %}
 
 {% hint style="warning" %}
- The scheme, userinfo, port, path, user… are not allowed.
+The scheme, userinfo, port, path, user… are not allowed.
 
 Allowed: `www.sub.domain.com`, `sub.domain.com`, `domain.com` 
 

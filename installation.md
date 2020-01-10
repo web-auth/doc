@@ -6,7 +6,7 @@ description: How to install the library or the Symfony bundle?
 
 This framework contains several sub-packages that you don’t necessarily need. It is highly recommended to install what you need and not the whole framework.
 
-The prefered way to install the library you need is to use composer:
+The preferred way to install the library you need is to use composer:
 
 ```bash
 composer require web-auth/webauthn-lib
@@ -20,7 +20,7 @@ Hereafter the dependency tree:
 
 The core library also depends on `web-auth/cose-lib` and `web-auth/metadata-service`. What are these dependencies?
 
-`web-auth/cose-lib` contains several cipher algorithms and COSE key support to verify the digital signatures sent by the authenticators during the creation and authentication ceremonies. These algorithms are compliant with the [RFC8152](https://tools.ietf.org/html/rfc8152). This library can be used by any other PHP projects. At the moment only signature algorithms are available, but it is planned to add encryption algorithms
+`web-auth/cose-lib` contains several cipher algorithms and COSE key support to verify the digital signatures sent by the authenticators during the creation and authentication ceremonies. These algorithms are compliant with the [RFC8152](https://tools.ietf.org/html/rfc8152). This library can be used by any other PHP projects. At the moment only signature algorithms are available, but it is planned to add encryption algorithms.
 
 `web-auth/metadata-service` provides classes to support the [Fido Alliance Metadata Service](https://fidoalliance.org/metadata/). If you plan to use Attestation Statements during the creation ceremony, this service is mandatory. Please note that Attestation Statements decreases the user privacy as they may leak data that allow to identify a specific user. **The use of Attestation Statements and this service are generally not recommended unless you REALLY need this information**. This library can also be used by any other PHP projects.
 

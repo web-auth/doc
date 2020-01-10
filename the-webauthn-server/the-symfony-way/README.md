@@ -6,7 +6,7 @@ An official bundle is provided in the package `web-auth/webauthn-symfony-bundle`
 If you use Laravel, you may be interested in [this project: https://github.com/asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
 {% endhint %}
 
-Before instaling it, please make sure you installed the [SensioFremaworkExtraBundle](https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html) and enabled the PSR-7 support.
+Before installing it, please make sure you installed the [SensioFremaworkExtraBundle](https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html) and enabled the PSR-7 support.
 
 ```yaml
 sensio_framework_extra:
@@ -48,17 +48,17 @@ return function (RoutingConfigurator $routes) {
 
 ## Repositories
 
-The first step is to create [your credential](../../pre-requisites/credential-souce-repository.md) and [user entity repositories](../../pre-requisites/user-entity-repository.md).
+The first step is to create [your credential](../../pre-requisites/credential-source-repository.md) and [user entity repositories](../../pre-requisites/user-entity-repository.md).
 
-Only [Doctrine ORM based repositories are provided](entities-with-doctrine.md). For other storage systems like filesystem or Doctrine ODM may be added in the future but, at the moment, you have to create these from scratch.
+Only [Doctrine ORM based repositories are provided](entities-with-doctrine.md). Other storage systems like filesystem or Doctrine ODM may be added in the future but, at the moment, you have to create these from scratch.
 
 ## Configuration
 
-With Flex, you have a minimal configuration file installed through a Fle Receipe. You must set the repositories you have just created. You also have to modify the environment variables `RELAYING_PARTY_ID` and `RELAYING_PARTY_NAME`.
+With Flex, you have a minimal configuration file installed through a Flex Recipe. You must set the repositories you have just created. You also have to modify the environment variables `RELAYING_PARTY_ID` and `RELAYING_PARTY_NAME`.
 
 You may also need to adjust other parameters.
 
-If you don’t use Flex, hereafter an examle of configuration file.
+If you don’t use Flex, hereafter an example of configuration file:
 
 {% code title="config/packages/webauthn.yaml" %}
 ```yaml
@@ -138,7 +138,7 @@ webauthn:
 
 #### Timeout
 
-The default timeout is set to 60 seconds \(60 000 milliseconds\). You can change this value as follow:
+The default timeout is set to 60 seconds \(60 000 milliseconds\). You can change this value as follows:
 
 {% code title="app/config/webauthn.yaml" %}
 ```yaml
@@ -178,7 +178,7 @@ The order is important. Preferred algorithms go first.
 {% endhint %}
 
 {% hint style="warning" %}
-It is not recommended to change the default list unless you exactly know what you are doing.
+It is not recommended changing the default list unless you exactly know what you are doing.
 {% endhint %}
 
 {% code title="app/config/webauthn.yaml" %}
@@ -196,7 +196,7 @@ webauthn:
 
 #### Attestation Conveyance
 
-If you need the [attestation of the authenticator](../../deep-into-the-framework/attestation-and-metadata-statement.md), you can  specify the preference regarding attestation conveyance during credential generation.
+If you need the [attestation of the authenticator](../../deep-into-the-framework/attestation-and-metadata-statement.md), you can specify the preference regarding attestation conveyance during credential generation.
 
 {% hint style="warning" %}
 Please note that the metadata service is mandatory when you use this option.
@@ -219,10 +219,10 @@ webauthn:
 
 #### Extensions
 
-You can set as many extension as you want in the profile. Please also [refer to this page](../../deep-into-the-framework/extensions.md) for more information.
+You can set as many extensions as you want in the profile. Please also [refer to this page](../../deep-into-the-framework/extensions.md) for more information.
 
 {% hint style="info" %}
-The example below is totally fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the supports depends on the authenticators, on the browsers and on the relaying parties \(your applications\).
+The example below is totally fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the support depends on the authenticators, on the browsers and on the relaying parties \(your applications\).
 {% endhint %}
 
 {% code title="app/config/webauthn.yaml" %}
@@ -255,7 +255,7 @@ webauthn:
 ```
 {% endcode %}
 
-Please note that all parameters are optional. The following configuration is perfectly valid. However and as mentioned above,  the parameter `id` is highly recommended.
+Please note that all parameters are optional. The following configuration is perfectly valid. However, and as mentioned above, the parameter `id` is highly recommended.
 
 {% code title="app/config/webauthn.yaml" %}
 ```yaml

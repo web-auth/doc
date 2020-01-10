@@ -1,10 +1,10 @@
-# Credential Souce Repository
+# Credential Source Repository
 
 After the registration of an authenticator, you will get a Public Key Credential Source object. It contains all the credential data needed to perform user authentication and much more.
 
 Each Credential Source is managed using the Public Key Credential Source Repository.
 
-The library does not provide any concrete implementation. It is up to you to create it depending on your application constraints. This only constraint is that your repository class must implement the interface `Webauthn\PublicKeyCredentialSourceRepository`.
+The library does not provide any concrete implementation. It is up to you to create it depending on your application constraints. The only constraint is that your repository class must implement the interface `Webauthn\PublicKeyCredentialSourceRepository`.
 
 ## Examples
 

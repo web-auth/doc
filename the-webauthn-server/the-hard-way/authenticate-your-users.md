@@ -6,7 +6,7 @@ During this step, your application will send a challenge to the list of register
 
 To perform a user authentication using a security device, you need to instantiate a `Webauthn\PublicKeyCredentialRequestOptions` object.
 
-Let say you want to authenticate the user we used earlier. This options object will need:
+Let’s say you want to authenticate the user we used earlier. This options object will need:
 
 * A challenge \(random binary string\)
 * A timeout \(optional\)
@@ -65,7 +65,7 @@ $publicKeyCredentialRequestOptions = new PublicKeyCredentialRequestOptions(
     random_bytes(32),                                                           // Challenge
     60000,                                                                      // Timeout
     'foo.example.com',                                                          // Relying Party ID
-    $allowedCredentials                                                        // Extensions
+    $allowedCredentials                                                         // Extensions
 );
 ```
 
@@ -73,7 +73,7 @@ $publicKeyCredentialRequestOptions = new PublicKeyCredentialRequestOptions(
 
 The way you receive this response is out of scope of this library. In the previous example, the data is part of the query string, but it can be done through a POST request body or a request header.
 
-What you receive must be a JSON object that looks like as follow:
+What you receive must be a JSON object that looks like as follows:
 
 ```javascript
 {
@@ -163,6 +163,6 @@ $publicKeyCredentialSource = $authenticatorAssertionResponse->check(
 If no exception is thrown, the response is valid and you can continue the authentication of the user.
 
 {% hint style="info" %}
-The Public Key Credential Source returned allow you to know which device were used by the user.
+The Public Key Credential Source returned allows you to know which device was used by the user.
 {% endhint %}
 
