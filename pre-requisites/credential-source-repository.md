@@ -1,10 +1,10 @@
-# Credential Source Repository
+# Credential Souce Repository
 
 After the registration of an authenticator, you will get a Public Key Credential Source object. It contains all the credential data needed to perform user authentication and much more.
 
 Each Credential Source is managed using the Public Key Credential Source Repository.
 
-The library does not provide any concrete implementation. It is up to you to create it depending on your application constraints. The only constraint is that your repository class must implement the interface `Webauthn\PublicKeyCredentialSourceRepository`.
+The library does not provide any concrete implementation. It is up to you to create it depending on your application constraints. This only constraint is that your repository class must implement the interface `Webauthn\PublicKeyCredentialSourceRepository`.
 
 ## Examples
 
@@ -33,61 +33,61 @@ use Webauthn\PublicKeyCredentialUserEntity;
 
 class PublicKeyCredentialSourceRepository implements PublicKeyCredentialSourceRepositoryInterface
 {
-	private $path = '/tmp/pubkey-repo.json';
+    private $path = '/tmp/pubkey-repo.json';
 
     public function findOneByCredentialId(string $publicKeyCredentialId): ?PublicKeyCredentialSource
-	{
-		$data = $this->read();
+    {
+        $data = $this->read();
         if (isset($data[base64_encode($publicKeyCredentialId)]))
         {
             return PublicKeyCredentialSource::createFromArray($data[base64_encode($publicKeyCredentialId)]);
-		}
-		return null;
-	}
+        }
+        return null;
+    }
 
     /**
      * @return PublicKeyCredentialSource[]
      */
     public function findAllForUserEntity(PublicKeyCredentialUserEntity $publicKeyCredentialUserEntity): array
-	{
-		$sources = [];
-		foreach($this->read() as $data)
-		{
-			$source = PublicKeyCredentialSource::createFromArray($data);
-			if ($source->getUserHandle() === $publicKeyCredentialUserEntity->getId())
-			{
-				$sources[] = $source;
-			}
-		}
-		return $sources;
-	}
+    {
+        $sources = [];
+        foreach($this->read() as $data)
+        {
+            $source = PublicKeyCredentialSource::createFromArray($data);
+            if ($source->getUserHandle() === $publicKeyCredentialUserEntity->getId())
+            {
+                $sources[] = $source;
+            }
+        }
+        return $sources;
+    }
 
     public function saveCredentialSource(PublicKeyCredentialSource $publicKeyCredentialSource): void
-	{
-		$data = $this->read();
-		$data[base64_encode($publicKeyCredentialSource->getPublicKeyCredentialId())] = $publicKeyCredentialSource;
-		$this->write($data);
-	}
+    {
+        $data = $this->read();
+        $data[base64_encode($publicKeyCredentialSource->getPublicKeyCredentialId())] = $publicKeyCredentialSource;
+        $this->write($data);
+    }
 
-	private function read(): array
-	{
-		if (file_exists($this->path))
-		{
-			return json_decode(file_get_contents($this->path), true);
-		}
-		return [];
-	}
+    private function read(): array
+    {
+        if (file_exists($this->path))
+        {
+            return json_decode(file_get_contents($this->path), true);
+        }
+        return [];
+    }
 
-	private function write(array $data): void
-	{
-		if (!file_exists($this->path))
-		{
+    private function write(array $data): void
+    {
+        if (!file_exists($this->path))
+        {
             if (!mkdir($concurrentDirectory = dirname($this->path), 0700, true) && !is_dir($concurrentDirectory)) {
                 throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
             }
-		}
-		file_put_contents($this->path, json_encode($data), LOCK_EX);
-	}
+        }
+        file_put_contents($this->path, json_encode($data), LOCK_EX);
+    }
 }
 ```
 {% endcode %}
