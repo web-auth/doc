@@ -34,12 +34,12 @@ With Firefox for example, the user may refuse to send information about the secu
 
 Hereafter the types of attestations you can have:
 
-* `none`: no attestation is provided
-* `fido-u2f`: for non-FIDO2 compatible devices \(old U2F security token\)
-* `packed`: generally used by 
-* `android key`: commonly used by old or disconnected Android devices
-* `android safety net`: for new Android devices like smartphones
-* `trusted platform module`: for devices with built-in security chips
+* `none`: no attestation is provided.
+* `fido-u2f`: for non-FIDO2 compatible devices \(old U2F security tokens\).
+* `packed`: generally used by authenticators with limited resources \(e.g., secure elements\). It uses a very compact but still extensible encoding method. 
+* `android key`: commonly used by old or disconnected Android devices.
+* `android safety net`: for new Android devices like smartphones.
+* `trusted platform module`: for devices with built-in security chips.
 
 {% hint style="danger" %}
 All these attestation types are supported, but you should only use the `none` one unless you plan to use the [Attestation and Metadata Statement](../../deep-into-the-framework/attestation-and-metadata-statement.md).
