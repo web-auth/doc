@@ -21,7 +21,7 @@ This section is not yet finished
 #### General modifications
 
 * You don't have to inject the CBOR\Decoder service anymore
-* You must inject the Metadata Stement Repository to use Metadata Statemenet types other than `none`.
+* You must inject the Metadata Statement Repository to use Metadata Statement types other than `none`.
 
 #### Removed methods, functions or properties
 
@@ -52,10 +52,10 @@ To be written
 It is now time to upgrade the libraries. In your composer.json, change all `web-auth/*` dependencies from `v2.x` to `v3.0`. When done, execute `composer update`.
 
 {% hint style="warning" %}
-This may also update other dependencies. You can list upgradable libraries by calling `composer outdated`. Please make sure these libraries do not impact your upgrade
+This may also update other dependencies. You can list upgradable libraries by calling `composer outdated`. Please make sure these libraries do not impact your upgrade.
 {% endhint %}
 
 ## All Modifications In A Row
 
-If you want to see all modifications at once, please[ have a look at this page](https://github.com/web-auth/webauthn-framework/compare/v2.1.7...v3.0).
+If you want to see all modifications at once, please [have a look at this page](https://github.com/web-auth/webauthn-framework/compare/v2.1.7...v3.0).
 
