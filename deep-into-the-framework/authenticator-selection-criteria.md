@@ -2,11 +2,11 @@
 
 By default, any type of authenticator can be used by your users and interact with you application. In certain circumstances, you may need to select specific authenticators e.g. when user verification is required.
 
-The Webauthn API and this library are allow you to define a set of options to disallow the registration of authenticators that do not fulfill with the conditions.
+The Webauthn API and this library allow you to define a set of options to disallow the registration of authenticators that do not fulfill with the conditions.
 
-The class Webauthn\AuthenticatorSelectionCriteria is designed for this purpose. It is used when generating the Webauthn\PublicKeyCredentialCreationOptions object.
+The class `Webauthn\AuthenticatorSelectionCriteria` is designed for this purpose. It is used when generating the `Webauthn\PublicKeyCredentialCreationOptions` object.
 
-## Available Criterias
+## Available Criteria
 
 ### Authenticator Attachment Modality
 
@@ -22,9 +22,9 @@ A primary use case for platform authenticators is to register a particular clien
 
 ### Resident Key
 
-When this criteria is set to `true`, a Public Key Credential Source will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such resident credential.
+When this criterion is set to `true`, a Public Key Credential Source will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such a resident credential.
 
-This criteria is needed if you want to [authenticate users without username](authentication-without-username.md).
+This criterion is needed if you want to [authenticate users without username](authentication-without-username.md).
 
 ### User Verification
 
