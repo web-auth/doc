@@ -3,14 +3,14 @@
 The mechanism for generating public key credentials, as well as requesting and generating Authentication assertions, can be extended to suit particular use cases. Each case is addressed by defining a registration extension.
 
 {% hint style="info" %}
-This library is ready to handle extension inputs and outputs, but no concrete implementeation are provided.
+This library is ready to handle extension inputs and outputs, but no concrete implementations are provided.
 
-It is up to you, depending on the extensions you want to support, to create the extension handlers
+It is up to you, depending on the extensions you want to support, to create the extension handlers.
 {% endhint %}
 
 ## Creation/Request Options
 
-The Following example is totally fictive. We will add an extension input `loc=true` to the request option object.
+The following example is totally fictive. We will add an extension input `loc=true` to the request option object.
 
 ```php
 <?php
@@ -86,7 +86,7 @@ final class LocationExtensionOutputChecker
 
 ## Extension Input
 
-To enable an authenticator feature like the geolocation, you must ask it throught the creation or the request option objects.
+To enable an authenticator feature like the geolocation, you must ask it through the creation or the request option objects.
 
 ### The Easy Way
 

@@ -18,7 +18,7 @@ During the Attestation Ceremony \(i.e. the registration of the authenticator\), 
 
 The Metadata Statements are issued by the manufacturers of the authenticators. These statements contain details about the authenticators \(supported algorithms, biometric capabilities...\) and all the necessary information to verify the Attestation Statements generated during the attestation ceremony.
 
-There are several possible sources to get theses Metadata Statements. The main source is the [FIDO Alliance Metadata Service](https://fidoalliance.org/metadata) that allows to fetch statements on-demand, but some of them may be provided by other means.
+There are several possible sources to get these Metadata Statements. The main source is the [FIDO Alliance Metadata Service](https://fidoalliance.org/metadata) that allows fetching statements on-demand, but some of them may be provided by other means.
 
 {% hint style="danger" %}
 The FIDO Alliance Metadata Service provides a limited number of Metadata Statements. It is mandatory to get the statement from the manufacturer of your authenticators otherwise the Attestation Statement won't be verified and the Attestation Ceremony will fail. 
@@ -28,7 +28,7 @@ The FIDO Alliance Metadata Service provides a limited number of Metadata Stateme
 
 ### Attestation Metadata Repository
 
-First of all, you must prepare an Attestation Metadata Repository. This service will manage all Metadata Statements depending on there sources \(local storage or distant service\).
+First of all, you must prepare an Attestation Metadata Repository. This service will manage all Metadata Statements depending on their sources \(local storage or distant service\).
 
 Your Metadata Statement Repository must implement the interface `Webauthn\MetadataService\MetadataStatementRepository` that has a unique method `findOneByAAGUID(string $aaguid)`.
 
@@ -155,7 +155,7 @@ webauthn:
         request_factory: 'my.psr17.request_factory'
 ```
 
-If you have some troubles when validating Android SafetyNet Attestation Statement, this may be caused by the leeway of the server clocks or the age of the statement. You can modify the default values as follow:
+If you have some troubles when validating Android SafetyNet Attestation Statement, this may be caused by the leeway of the server clocks or the age of the statement. You can modify the default values as follows:
 
 ```yaml
 webauthn:

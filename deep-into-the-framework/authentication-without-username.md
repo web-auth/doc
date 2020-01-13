@@ -12,7 +12,7 @@ In case of failure, you should continue with the standard authentication process
 
 ## The Easy Way
 
-Selection criterias for the registration of the authenticator:
+Selection criteria for the registration of the authenticator:
 
 ```php
 use Webauthn\AuthenticatorSelectionCriteria;
@@ -39,7 +39,7 @@ $ublicKeyCredentialRequestOptions = $server->generatePublicKeyCredentialRequestO
 
 ## The Hard Way
 
-Selection criterias for the registration of the authenticator:
+Selection criteria for the registration of the authenticator:
 
 ```php
 $authenticatorSelectionCriteria = new AuthenticatorSelectionCriteria(

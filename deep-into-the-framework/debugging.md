@@ -21,7 +21,7 @@ $server->setLogger(new MyPsr3Logger());
 
 ## The Hard Way
 
-The following classes have an optional constructor parameter $logger that can accept the logging service.
+The following classes have an optional constructor parameter `$logger` that can accept the logging service.
 
 * `Webauthn\AttestationStatement\AttestationObjectLoader`
 * `Webauthn\AuthenticatorAssertionResponseValidator`
