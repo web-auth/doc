@@ -1,4 +1,4 @@
-# User Entity Repository
+# User Entity
 
 ## User Entity
 
@@ -22,7 +22,7 @@ $userEntity = new PublicKeyCredentialUserEntity(
 ```
 
 {% hint style="info" %}
-The username can be composed of any displayable characters, including emojis. Username "😝**🥰**😔" is perfectly valid.
+The username can be composed of any displayable characters, including emojis. Username "😝🥰😔" is perfectly valid.
 {% endhint %}
 
 {% hint style="warning" %}
@@ -103,7 +103,7 @@ final class PublicKeyCredentialUserEntityRepository
         if (null === $user) {
             return null;
         }
-        
+
         return $this->createUserEntity($user);
     }
 
@@ -120,9 +120,6 @@ final class PublicKeyCredentialUserEntityRepository
         );
     }
 }
-
 ```
 {% endcode %}
-
-
 

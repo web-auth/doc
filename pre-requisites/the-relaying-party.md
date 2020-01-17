@@ -10,28 +10,44 @@ The library provides a simple class to handle the rp information: `Webauthn\Publ
 use Webauthn\PublicKeyCredentialRpEntity;
 
 $rpEntity = new PublicKeyCredentialRpEntity(
-    'ACME Webauthn Server', // The application name
-    'acme.com'              // The application ID = the domain
+    'ACME Webauthn Server' // The application name
 );
 ```
 
 This `$rpEntity` object will be useful for the next steps.
 
-{% hint style="success" %}
-The ID can be `null`, the domain or sub-domain of your application.
-{% endhint %}
+## Relaying Party ID
+
+In the example above, we created a simple relaying party object with it’s name. The relaying party may also have an ID that corresponds to the domain applicable for that `rp`. By default, the relaying party ID is `null` i.e. the current domain will be used.
+
+It may be useful to specify the `rp` ID, especially if your application has several sub-domains. The rp ID can be set during the creation of the object as 2nd constructor parameter.
+
+```php
+<?php
+
+use Webauthn\PublicKeyCredentialRpEntity;
+
+$rpEntity = new PublicKeyCredentialRpEntity(
+    'ACME Webauthn Server', // The application name
+    'acme.com'              // The application ID = the domain
+);
+```
 
 {% hint style="info" %}
-Even if it is optional, we highly recommend setting the application ID. If absent, the current domain will be used
+Even if it is optional, we highly recommend setting the application ID
+{% endhint %}
+
+The `rp` ID shall be the domain of the application without the scheme, userinfo, port, path, user….
+
+{% hint style="success" %}
+Allowed: `www.sub.domain.com`, `sub.domain.com`, `domain.com`
 {% endhint %}
 
 {% hint style="warning" %}
-The scheme, userinfo, port, path, user… are not allowed.
-
-Allowed: `www.sub.domain.com`, `sub.domain.com`, `domain.com` 
-
-Not allowed:`com`, `www.sub.domain.com:1337`, `https://domain.com:443`, `sub.domain.com/index`, `https://user:password@www.domain.com`.
+Not allowed: `www.sub.domain.com:1337`, `https://domain.com:443`, `sub.domain.com/index`, `https://user:password@www.domain.com`.
 {% endhint %}
+
+## Relaying Party Icon
 
 Your application may also have a logo. You can indicate this logo as third argument. Please note that for safety reason this icon is a priori authenticated URL i.e. an image that uses the `data` scheme.
 
