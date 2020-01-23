@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Introduction](README.md)
+* [Web Browser Support](web-browser-support.md)
 * [Installation](installation.md)
 * [Contributing](contributing.md)
 
