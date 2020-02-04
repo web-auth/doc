@@ -28,6 +28,7 @@ Let’s see an example of the `PublicKeyCredentialCreationOptions` object. The f
 declare(strict_types=1);
 
 use Cose\Algorithms;
+use Webauthn\AuthenticatorSelectionCriteria;
 use Webauthn\PublicKeyCredentialDescriptor;
 use Webauthn\PublicKeyCredentialCreationOptions;
 use Webauthn\PublicKeyCredentialParameters;
@@ -52,6 +53,9 @@ $userEntity = new PublicKeyCredentialUserEntity(
 // Challenge
 $challenge = random_bytes(16);
 
+// Timeout
+$timeout = 60000; // 60 seconds
+
 // Public Key Credential Parameters
 $publicKeyCredentialParametersList = [
     new PublicKeyCredentialParameters('public-key', Algorithms::COSE_ALGORITHM_ES256),
@@ -67,7 +71,12 @@ $publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
     $rpEntity,
     $userEntity,
     $challenge,
-    $publicKeyCredentialParametersList
+    $publicKeyCredentialParametersList,
+    $timeout,
+    $excludedPublicKeyDescriptors,
+    new AuthenticatorSelectionCriteria(),
+    PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE,
+    null // Extensions
 );
 ```
 

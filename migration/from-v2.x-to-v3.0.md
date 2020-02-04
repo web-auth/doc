@@ -18,12 +18,40 @@ Next, you have to verify you don’t use any deprecated class, interface, method
 This section is not yet finished
 {% endhint %}
 
-#### General modifications
+### General modifications
 
-* You don't have to inject the CBOR\Decoder service anymore
-* You must inject the Metadata Statement Repository to use Metadata Statement types other than `none`.
+#### CBOR\Decoder Service Not Needed Anymore
 
-#### Removed methods, functions or properties
+You don't have to inject the `CBOR\Decoder` service anymore. This service is automatically created with the necessary  options.
+
+Example:
+
+```php
+use Webauthn\AuthenticatorAssertionResponseValidator;
+
+//Before:
+$validator = new AuthenticatorAssertionResponseValidator(
+    $publicKeyCredentialSourceRepository,
+    $decoder,
+    $tokenBindingHandler,
+    $extensionOutputCheckerHandler,
+    $algorithmManager
+);
+
+//After
+$validator = new AuthenticatorAssertionResponseValidator(
+    $publicKeyCredentialSourceRepository,
+    $tokenBindingHandler,
+    $extensionOutputCheckerHandler,
+    $algorithmManager
+);
+```
+
+#### Metadata Statement Repository Is Required
+
+You must inject the Metadata Statement Repository to use Metadata Statement types other than `none`.
+
+### Removed methods, functions or properties
 
 * `Webauthn\PublicKeyCredentialSource::createFromPublicKeyCredential()`
 * `Webauthn\ CertificateToolbox::checkAttestationMedata()`
