@@ -63,15 +63,16 @@ If you don’t use Flex, hereafter an example of configuration file:
 {% code title="config/packages/webauthn.yaml" %}
 ```yaml
 webauthn:
-#    logger: null
-    credential_repository: 'App\Repository\PublicKeyCredentialSourceRepository' # CREATE YOUR REPOSITORY AND CHANGE THIS!
-    user_repository: 'App\Repository\PublicKeyCredentialUserEntityRepository' # CREATE YOUR REPOSITORY AND CHANGE THIS!
-    creation_profiles:
-        default:
-            rp:
-                name: 'My Application' # CHANGE THIS!
-                id: 'example.com' # Please adapt with the correct relaying party ID or set null
-#                icon: null #
+#    logger: null # PSR-3 compatible logging service
+    credential_repository: 'Webauthn\Bundle\Repository\DummyPublicKeyCredentialSourceRepository' # CREATE YOUR REPOSITORY AND CHANGE THIS!
+    user_repository: 'Webauthn\Bundle\Repository\DummyPublicKeyCredentialUserEntityRepository' # CREATE YOUR REPOSITORY AND CHANGE THIS!
+    token_binding_support_handler: 'Webauthn\TokenBinding\IgnoreTokenBindingHandler' # We ignore the token binding instructions by default
+    creation_profiles: # Authenticator registration profiles
+        default: # Unique name of the profile
+            rp: # Relaying Party information
+                name: '%env(RELAYING_PARTY_NAME)%' # CHANGE THIS! or create the corresponding env variable
+                id: '%env(RELAYING_PARTY_ID)%' # Please adapt the env file with the correct relaying party ID or set null
+#                icon: null # Secured image (data:// scheme)
 #            challenge_length: 32
 #            timeout: 60000
 #            authenticator_selection_criteria:
@@ -93,9 +94,9 @@ webauthn:
 #                - !php/const Cose\Algorithms::COSE_ALGORITHM_PS384
 #                - !php/const Cose\Algorithms::COSE_ALGORITHM_PS512
 #            attestation_conveyance: !php/const Webauthn\PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE
-    request_profiles:
-        default:
-            rp_id: 'example.com' # Please adapt with the correct relaying party ID or set null
+    request_profiles: # Authentication profiles
+        default: # Unique name of the profile
+            rp_id: '%env(RELAYING_PARTY_ID)%' # Please adapt the env file with the correct relaying party ID or set null
 #            challenge_length: 32
 #            timeout: 60000
 #            user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
