@@ -95,7 +95,7 @@ class PublicKeyCredentialSourceRepository implements PublicKeyCredentialSourceRe
 ### Doctrine Repository
 
 {% hint style="warning" %}
-\_Y\_ou must [add custom Doctrine types](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/cookbook/custom-mapping-types.html) to convert plain PHP objects into your ORM. Please have a look at [this folder](https://github.com/web-auth/webauthn-framework/tree/v2.0/src/symfony/src/Doctrine/Type) to find examples.
+You must [add custom Doctrine types](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/cookbook/custom-mapping-types.html) to convert plain PHP objects into your ORM. Please have a look at [this folder](https://github.com/web-auth/webauthn-framework/tree/v2.0/src/symfony/src/Doctrine/Type) to find examples.
 {% endhint %}
 
 {% hint style="success" %}
