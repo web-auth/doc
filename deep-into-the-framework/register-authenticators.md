@@ -4,8 +4,8 @@ In some circumstances, you may need to register a new authenticator for a user e
 
 It is possible to perform this ceremony programmatically.
 
-{% hint style="info" %}
-Indeed it is recommended to register several authenticators
+{% hint style="success" %}
+You can attach several authenticators to a user account. It is recommended in case of lost devices or if the user gets access on your application using multiple platforms \(smartphone, laptop…\).
 {% endhint %}
 
 ## The Easy Way
