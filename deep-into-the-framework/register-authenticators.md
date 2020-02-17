@@ -1,12 +1,20 @@
-# Register Authenticators
+# Register Additional Authenticators
 
 In some circumstances, you may need to register a new authenticator for a user e.g. when adding a new authenticator or when an administrator acts as another user to replace a lost device.
 
 It is possible to perform this ceremony programmatically.
 
+{% hint style="info" %}
+Indeed it is recommended to register several authenticators
+{% endhint %}
+
 ## The Easy Way
 
-The procedure is the same as [the one described in this page](register-a-new-authentication.md), except that you don’t have to save the user entity again.
+The procedure is the same as [the one described in this page](../the-webauthn-server/the-easy-way/register-a-new-authentication.md), except that you don’t have to save the user entity again.
+
+## The Hard Way
+
+The procedure is the same as [the one described in this page](../the-webauthn-server/the-hard-way/authenticator-registration.md).
 
 ## The Symfony Way
 
@@ -133,8 +141,4 @@ security:
         - { path: ^/add/device,  roles: IS_AUTHENTICATED_FULLY }
 ```
 {% endcode %}
-
-## The Hard Way
-
-The procedure is the same as the one described in this page, except that you don’t have to save the user entity again.
 

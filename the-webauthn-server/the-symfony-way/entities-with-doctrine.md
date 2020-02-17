@@ -16,15 +16,6 @@ As the ID must have a fixed length and because the `credentialId` field of `Weba
 
 declare(strict_types=1);
 
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) 2014-2019 Spomky-Labs
- *
- * This software may be modified and distributed under the terms
- * of the MIT license.  See the LICENSE file for details.
- */
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -47,16 +38,9 @@ class PublicKeyCredentialSource extends BasePublicKeyCredentialSource
      */
     private $id;
 
-    /**
-     * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $createdAt;
-
     public function __construct(string $publicKeyCredentialId, string $type, array $transports, string $attestationType, TrustPath $trustPath, UuidInterface $aaguid, string $credentialPublicKey, string $userHandle, int $counter)
     {
         $this->id = Uuid::uuid4()->toString();
-        $this->createdAt = new \DateTimeImmutable();
         parent::__construct($publicKeyCredentialId, $type, $transports, $attestationType, $trustPath, $aaguid, $credentialPublicKey, $userHandle, $counter);
     }
 
@@ -64,13 +48,7 @@ class PublicKeyCredentialSource extends BasePublicKeyCredentialSource
     {
         return $this->id;
     }
-
-    public function getCreatedAt(): \DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
 }
-
 ```
 {% endcode %}
 
@@ -92,19 +70,9 @@ We must override the method `saveCredentialSource` because we may receive `Webau
 
 declare(strict_types=1);
 
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) 2014-2019 Spomky-Labs
- *
- * This software may be modified and distributed under the terms
- * of the MIT license.  See the LICENSE file for details.
- */
-
 namespace App\Repository;
 
 use App\Entity\PublicKeyCredentialSource;
-use App\Entity\User;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Webauthn\Bundle\Repository\PublicKeyCredentialSourceRepository as BasePublicKeyCredentialSourceRepository;
 use Webauthn\PublicKeyCredentialSource as BasePublicKeyCredentialSource;
@@ -114,22 +82,6 @@ final class PublicKeyCredentialSourceRepository extends BasePublicKeyCredentialS
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, PublicKeyCredentialSource::class);
-    }
-
-    /**
-     * @return PublicKeyCredentialSource[]
-     */
-    public function allForUser(User $user): array
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        return $qb->select('c')
-            ->from($this->getClass(), 'c')
-            ->where('c.userHandle = :user_handle')
-            ->setParameter(':user_handle', $user->getUserHandle())
-            ->getQuery()
-            ->execute()
-        ;
     }
 
     public function saveCredentialSource(BasePublicKeyCredentialSource $publicKeyCredentialSource, bool $flush = true): void
@@ -150,7 +102,6 @@ final class PublicKeyCredentialSourceRepository extends BasePublicKeyCredentialS
         parent::saveCredentialSource($publicKeyCredentialSource, $flush);
     }
 }
-
 ```
 {% endcode %}
 
@@ -185,11 +136,10 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+use Webauthn\PublicKeyCredentialUserEntity;
 
 /**
  * @ORM\Table(name="users")
@@ -205,25 +155,13 @@ class User extends PublicKeyCredentialUserEntity implements UserInterface
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(max = 100)
-     */
-    protected $name;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(max = 100)
-     */
-    protected $displayName;
-
-    /**
      * @ORM\Column(type="array")
      */
     protected $roles;
 
-    public function __construct(string $id, string $name, string $displayName, array $roles)
+    public function __construct(string $id, string $name, string $displayName, ?string $icon = null, array $roles = [])
     {
-        parent::__construct($name, $id, $displayName);
+        parent::__construct($name, $id, $displayName, $icon);
         $this->roles = $roles;
     }
 
@@ -262,23 +200,15 @@ The following example uses Doctrine to create, persist or perform queries using 
 
 declare(strict_types=1);
 
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) 2014-2019 Spomky-Labs
- *
- * This software may be modified and distributed under the terms
- * of the MIT license.  See the LICENSE file for details.
- */
-
 namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Ramsey\Uuid\Uuid;
 use Webauthn\Bundle\Repository\AbstractPublicKeyCredentialUserEntityRepository;
 use Webauthn\PublicKeyCredentialUserEntity;
 
-final class PublicKeyCredentialUserEntityRepository extends AbstractPublicKeyCredentialUserEntityRepository
+final class UserRepository extends AbstractPublicKeyCredentialUserEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -287,16 +217,19 @@ final class PublicKeyCredentialUserEntityRepository extends AbstractPublicKeyCre
 
     public function createUserEntity(string $username, string $displayName, ?string $icon): PublicKeyCredentialUserEntity
     {
-        return new User($username, $displayName, [], $icon);
+        $id = Uuid::uuid4()->toString();
+
+        return new User($id, $username, $displayName, $icon, []);
     }
 
     public function saveUserEntity(PublicKeyCredentialUserEntity $userEntity): void
     {
         if (!$userEntity instanceof User) {
-            $userEntity =  $this->createUserEntity(
+            $userEntity =  new User(
+                $userEntity->getId(),
                 $userEntity->getName(),
                 $userEntity->getDisplayName(),
-                $userEntity->getIcon()
+                $userEntity->getId()
             );
         }
 
@@ -314,10 +247,9 @@ final class PublicKeyCredentialUserEntityRepository extends AbstractPublicKeyCre
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
-        ;
+            ;
     }
 }
-
 ```
 {% endcode %}
 

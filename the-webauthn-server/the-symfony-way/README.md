@@ -6,13 +6,19 @@ An official bundle is provided in the package `web-auth/webauthn-symfony-bundle`
 If you use Laravel, you may be interested in [this project: https://github.com/asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
 {% endhint %}
 
-Before installing it, please make sure you installed the [SensioFremaworkExtraBundle](https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html) and enabled the PSR-7 support.
+Before installing it, please make sure you installed and configured:
 
+* The package [`symfony/psr-http-message-bridge`](https://symfony.com/doc/current/components/psr7.html) ,
+* The package [`nyholm/psr7`](https://github.com/Nyholm/psr7) or  any [other PSR-7](https://packagist.org/providers/psr/http-factory-implementation) package,
+* The [SensioFremaworkExtraBundle](https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html) and enabled the PSR-7 support.
+
+{% code title="config/packages/sensio\_framework\_extra.yaml" %}
 ```yaml
 sensio_framework_extra:
     psr_message:
         enabled: true
 ```
+{% endcode %}
 
 If you are using Symfony Flex then the bundle will automatically be installed and the default configuration will be set. Otherwise you need to add it in your `AppKernel.php` file:
 

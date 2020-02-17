@@ -68,7 +68,7 @@ final class LocationExtensionOutputChecker
         if (!$inputs->has('loc') || $inputs->get('loc') !== true) {
             return;
         }
-        
+
         if (!$outputs->has('loc')) {
             //You may simply return but here we consider it is a mandatory extension output.
             throw new ExtensionOutputError(
@@ -76,7 +76,7 @@ final class LocationExtensionOutputChecker
                 'The location of the device is missing'
             );
         }
-        
+
         $location = $outputs->get('loc');
         //... Proceed with the output e.g. by logging the location of the device
         // or verifying it is in a specific area.

@@ -47,7 +47,3 @@ webauthn:
 ```
 {% endcode %}
 
-
-
-
-

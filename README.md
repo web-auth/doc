@@ -20,7 +20,7 @@ As an example, the [section 5.3.3 “Web Authentication Assertion”](https://ww
 * `signature`
 * `userHandle`
 
- You will find [EXACTLY the same structure](https://github.com/web-auth/webauthn-framework/blob/v3.0/src/webauthn/src/AuthenticatorAssertionResponse.php#L21) in the PHP class provided by the library.
+  You will find [EXACTLY the same structure](https://github.com/web-auth/webauthn-framework/blob/v3.0/src/webauthn/src/AuthenticatorAssertionResponse.php#L21) in the PHP class provided by the library.
 
 ## Supported features
 
@@ -31,17 +31,17 @@ As an example, the [section 5.3.3 “Web Authentication Assertion”](https://ww
   * Private CA
   * ~~Elliptic Curve Direct Anonymous Attestation \(ECDAA\)~~
 * Attestation Formats
-  *   FIDO U2F
+  * FIDO U2F
   * Packed
   * TPM
   * Android Key
   * Android Safetynet
 * ~~Token Binding support~~
 * Cose Algorithms
-  *  RS1, RS256, RS384, RS512
-  *  PS256, PS384, PS512
-  *  ES256, ES256K, ES384, ES512
-  *  ED25519
+  * RS1, RS256, RS384, RS512
+  * PS256, PS384, PS512
+  * ES256, ES256K, ES384, ES512
+  * ED25519
 * Extensions
   * Supported \(not fully tested\)
   * appid extension

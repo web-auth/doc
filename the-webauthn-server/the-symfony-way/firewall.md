@@ -1,6 +1,6 @@
 # Firewall
 
-To authenticate or register your users, the best and easiest way is to use the Security Bundle. Make sure you have installed the package `symfony/security-bundle` and correctly created your user provider.
+To authenticate or register your users, the best and easiest way is to use the Security Bundle. Make sure you have installed the package `symfony/security-bundle` and correctly created [your user provider](https://symfony.com/doc/current/security/user_provider.html).
 
 When done, you can enable the webauthn firewall.
 

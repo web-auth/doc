@@ -29,10 +29,10 @@
 * [The Symfony Way](the-webauthn-server/the-symfony-way/README.md)
   * [Entities with Doctrine](the-webauthn-server/the-symfony-way/entities-with-doctrine.md)
   * [Firewall](the-webauthn-server/the-symfony-way/firewall.md)
-  * [Register/Authenticate Programmatically](the-webauthn-server/the-symfony-way/register-authenticators.md)
 
 ## Deep into the framework
 
+* [Register Additional Authenticators](deep-into-the-framework/register-authenticators.md)
 * [Debugging](deep-into-the-framework/debugging.md)
 * [User Verification](deep-into-the-framework/user-verification.md)
 * [Attestation and Metadata Statement](deep-into-the-framework/attestation-and-metadata-statement.md)

@@ -2,7 +2,7 @@
 
 ## Credential Request Options
 
-To authenticate you user, you need to send a `Webauthn\PublicKeyCredentialRequestOptions` object. 
+To authenticate you user, you need to send a `Webauthn\PublicKeyCredentialRequestOptions` object.
 
 To generate that object, you just need to call the method `generatePublicKeyCredentialRequestOptions` of the `$server` object.
 
@@ -83,7 +83,7 @@ try {
         $userEntity,                        // The user entity
         $serverRequest                      // The PSR-7 request
     );
-    
+
     //If everything is fine, this means the user has correctly been authenticated using the
     // authenticator defined in $publicKeyCredentialSource
 } catch(\Throwable $exception) {

@@ -73,7 +73,6 @@ $publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
 ### User Authentication
 
 ```php
-
 // Public Key Credential Request Options
 $publicKeyCredentialRequestOptions = new PublicKeyCredentialRequestOptions(
     random_bytes(32),

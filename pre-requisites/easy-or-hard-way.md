@@ -7,5 +7,3 @@ In this documentation, different ways to setup a Webauthn server are presented:
 
 The Symfony way is for Symfony developers. These pages contain configuration examples for Symfony-based applications.
 
-
-

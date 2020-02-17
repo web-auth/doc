@@ -6,15 +6,21 @@ Authenticators may have additional features such as PIN code or biometric sensor
 
 ![USB device with fingerprint reader](../.gitbook/assets/images.jpeg)
 
-## Physical Authenticators
+## Roaming Authenticators
 
-The authenticator may have different forms. The most common form is a USB device the user plugs into its computer. It can be a paired Bluetooth device or a card with NFC capabilities.
+The roaming authenticator may have different forms. The most common form is a USB device the user plugs into its computer. It can be a paired Bluetooth device or a card with NFC capabilities.
+
+Authenticators of this class are removable from, and can "roam" among, client devices.
 
 ![Webauthn compatible devices](../.gitbook/assets/fido2.jpeg)
 
-## Software-Based Authenticators
+## Platform Authenticators
 
-The authenticator can also be software based and integrated in an Operating System ; for example the smartphone using Android or a laptop with Windows 10 can act as an authenticator.
+A platform authenticator is usually not removable from the client device. For example an Android smartphone or a Windows 10 computer with the associated security chips can act as an authenticator.
 
 ![Android screenshot](../.gitbook/assets/webauthn-android-fennec.png)
+
+![Fingerprint reader on a laptop](../.gitbook/assets/master.jpg)
+
+
 
