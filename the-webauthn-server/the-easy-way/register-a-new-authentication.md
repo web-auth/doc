@@ -1,140 +1,111 @@
 # Register Authenticators
 
-In some circumstances, you may need to register a new authenticator for a user e.g. when adding a new authenticator or when an administrator acts as another user to replace a lost device.
+## Credential Creation Options
 
-It is possible to perform this ceremony programmatically.
+Now we want to register a new authenticator and attach it to a user. This step can be done during the creation of a new user account or if the user already exists and you want to add another authenticator.
 
-## The Easy Way
-
-The procedure is the same as [the one described in this page](register-a-new-authentication.md), except that you don’t have to save the user entity again.
-
-## The Symfony Way
-
-{% hint style="info" %}
-The following procedure is only available with the version 3.1.0 of the framework. For previous versions, please refer to the Hard Way below.
+{% hint style="success" %}
+You can attach several authenticators to a user account. It is recommended in case of lost devices or if the user gets access on your application using multiple platforms \(smartphone, laptop…\).
 {% endhint %}
 
-With a Symfony application, the fastest way for a user to register additional authenticators is to use the helper .
+To register a new authenticator, you need to generate and send a set of options to it. These options are defined in a `Webauthn\PublicKeyCredentialCreationOptions` object.
 
-In the example below, we will create 2 routes: the first one to get the options, te second one to verify the authenticator response. These routes will return JSON responses, but you are free to use Twig templates or any of response type.
+To generate that object, you just need to call the method`generatePublicKeyCredentialCreationOptions` of the `$server` object. This method requires a `Webauthn\PublicKeyCredentialUserEntity` object that represents the user entity to be associated with this new authenticator.
 
-{% code title="src/Controller/AddAuthenticatorController.php" %}
 ```php
 <?php
 
-declare(strict_types=1);
-
-namespace App\Controller;
-
-use Assert\Assertion;
-use Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Throwable;
-use Webauthn\AuthenticatorAttestationResponseValidator;
-use Webauthn\Bundle\Security\Storage\SessionStorage;
-use Webauthn\Bundle\Service\AuthenticatorRegistrationHelper;
-use Webauthn\Bundle\Service\PublicKeyCredentialCreationOptionsFactory;
-use Webauthn\PublicKeyCredentialLoader;
-use Webauthn\PublicKeyCredentialSourceRepository;
 use Webauthn\PublicKeyCredentialUserEntity;
+use Webauthn\PublicKeyCredentialCreationOptions;
 
-class AddAuthenticatorController extends AbstractController
-{
-    /**
-     * @var AuthenticatorRegistrationHelper
-     */
-    private $helper;
+$userEntity = new PublicKeyCredentialUserEntity(
+    'john.doe',
+    'ea4e7b55-d8d0-4c7e-bbfa-78ca96ec574c',
+    'John Doe'
+);
 
-    public function __construct(HttpMessageFactoryInterface $httpMessageFactory, ValidatorInterface $validator, SerializerInterface $serializer, PublicKeyCredentialCreationOptionsFactory $publicKeyCredentialCreationOptionsFactory, PublicKeyCredentialSourceRepository $publicKeyCredentialSourceRepository, PublicKeyCredentialLoader $publicKeyCredentialLoader, AuthenticatorAttestationResponseValidator $authenticatorAttestationResponseValidator, SessionStorage $optionsStorage)
-    {
-        $this->helper = new AuthenticatorRegistrationHelper(
-            $publicKeyCredentialCreationOptionsFactory,
-            $serializer,
-            $validator,
-            $publicKeyCredentialSourceRepository,
-            $publicKeyCredentialLoader,
-            $authenticatorAttestationResponseValidator,
-            $optionsStorage,
-            $httpMessageFactory
-        );
-    }
+/** This avoids multiple registration of the same authenticator with the user account **/
+/** You can remove this code if it is a new user **/
+// Get the list of authenticators associated to the user
+$credentialSources = $credentialSourceRepository->findAllForUserEntity($userEntity);
 
-    /**
-     * @Route(name="add_authenticator_options", path="/add/device/options", schemes={"https"}, methods={"POST"})
-     */
-    public function getOptions(Request $request): Response
-    {
-        try {
-            $userEntity = $this->getUser();
-            Assertion::isInstanceOf($userEntity, PublicKeyCredentialUserEntity::class, 'Invalid user');
-            $publicKeyCredentialCreationOptions = $this->helper->generateOptions($userEntity, $request);
+// Convert the Credential Sources into Public Key Credential Descriptors
+$excludeCredentials = array_map(function (PublicKeyCredentialSource $credential) {
+    return $credential->getPublicKeyCredentialDescriptor();
+}, $credentialSources);
+/** End of optional part**/
 
-            return $this->json($publicKeyCredentialCreationOptions);
-        } catch (Throwable $e) {
-            return $this->json([
-                'status' => 'failed',
-                'errorMessage' => 'Invalid request',
-            ], 400);
-        }
-
-    }
-
-    /**
-     * @Route(name="add_authenticator", path="/add/device", schemes={"https"}, methods={"POST"})
-     */
-    public function addAuthenticator(Request $request): Response
-    {
-        try {
-            $userEntity = $this->getUser();
-            Assertion::isInstanceOf($userEntity, PublicKeyCredentialUserEntity::class, 'Invalid user');
-            $this->helper ->validateResponse($userEntity, $request);
-            return $this->json([
-                'status' => 'ok',
-                'errorMessage' => '',
-            ]);
-        } catch (Throwable $e) {
-            return $this->json([
-                'status' => 'failed',
-                'errorMessage' => 'Invalid request',
-            ], 400);
-        }
-    }
-}
-```
-{% endcode %}
-
-{% hint style="success" %}
-If the current user is registering authenticators for another user \(admin\), the userEntity passed to the methods `generateOptions` and `validateResponse` must correspond to the target user.
-{% endhint %}
-
-By default the options profile is `default`. You can change it setting the profile name as third argument of the method `generateOptions`.
-
-```php
-$publicKeyCredentialCreationOptions = $this->helper->generateOptions(
-    $userEntity,
-    $request,
-    'profile1'
+$publicKeyCredentialCreationOptions = $server->generatePublicKeyCredentialCreationOptions(
+    $userEntity,                                                                // The user entity
+    PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE, // We will see this option later
+    $excludeCredentials                                                         // Excluded authenticators
+                                                                                //   Set [] if new user
 );
 ```
 
-{% hint style="warning" %}
-As the user shall be authenticated to register a new authenticator, you should protect these routes in the `security.yaml` file.
+Now send the options to the authenticator using your favorite Javascript framework, library or the example available in [the Javascript page](../../pre-requisites/javascript.md).
+
+{% hint style="success" %}
+The Public Key Credential Creation Options object \(variable `$publicKeyCredentialCreationOptions`\) can be serialized into JSON.
 {% endhint %}
 
-{% code title="config/packages/security.yaml" %}
-```yaml
-security:
-    access_control:
-        - { path: ^/add/device,  roles: IS_AUTHENTICATED_FULLY }
+{% hint style="warning" %}
+The variable `$publicKeyCredentialCreationOptions` and `$userEntity` have to be stored somewhere. These are needed during the next step. Usually these values are set in the session or solutions like Redis.
+{% endhint %}
+
+## Response Verification
+
+When the authenticator sends you the computed response \(i.e. the user touched the button, fingerprint reader, submitted the PIN…\), you can load it and check it.
+
+The authenticator response looks similar to the following example:
+
+```javascript
+{
+    "id": "LFdoCFJTyB82ZzSJUHc-c72yraRc_1mPvGX8ToE8su39xX26Jcqd31LUkKOS36FIAWgWl6itMKqmDvruha6ywA",
+    "rawId": "LFdoCFJTyB82ZzSJUHc-c72yraRc_1mPvGX8ToE8su39xX26Jcqd31LUkKOS36FIAWgWl6itMKqmDvruha6ywA",
+    "response": {
+        "clientDataJSON": "eyJjaGFsbGVuZ2UiOiJOeHlab3B3VktiRmw3RW5uTWFlXzVGbmlyN1FKN1FXcDFVRlVLakZIbGZrIiwiY2xpZW50RXh0ZW5zaW9ucyI6e30sImhhc2hBbGdvcml0aG0iOiJTSEEtMjU2Iiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwidHlwZSI6IndlYmF1dGhuLmNyZWF0ZSJ9",
+        "attestationObject": "o2NmbXRoZmlkby11MmZnYXR0U3RtdKJjc2lnWEcwRQIgVzzvX3Nyp_g9j9f2B-tPWy6puW01aZHI8RXjwqfDjtQCIQDLsdniGPO9iKr7tdgVV-FnBYhvzlZLG3u28rVt10YXfGN4NWOBWQJOMIICSjCCATKgAwIBAgIEVxb3wDANBgkqhkiG9w0BAQsFADAuMSwwKgYDVQQDEyNZdWJpY28gVTJGIFJvb3QgQ0EgU2VyaWFsIDQ1NzIwMDYzMTAgFw0xNDA4MDEwMDAwMDBaGA8yMDUwMDkwNDAwMDAwMFowLDEqMCgGA1UEAwwhWXViaWNvIFUyRiBFRSBTZXJpYWwgMjUwNTY5MjI2MTc2MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZNkcVNbZV43TsGB4TEY21UijmDqvNSfO6y3G4ytnnjP86ehjFK28-FdSGy9MSZ-Ur3BVZb4iGVsptk5NrQ3QYqM7MDkwIgYJKwYBBAGCxAoCBBUxLjMuNi4xLjQuMS40MTQ4Mi4xLjUwEwYLKwYBBAGC5RwCAQEEBAMCBSAwDQYJKoZIhvcNAQELBQADggEBAHibGMqbpNt2IOL4i4z96VEmbSoid9Xj--m2jJqg6RpqSOp1TO8L3lmEA22uf4uj_eZLUXYEw6EbLm11TUo3Ge-odpMPoODzBj9aTKC8oDFPfwWj6l1O3ZHTSma1XVyPqG4A579f3YAjfrPbgj404xJns0mqx5wkpxKlnoBKqo1rqSUmonencd4xanO_PHEfxU0iZif615Xk9E4bcANPCfz-OLfeKXiT-1msixwzz8XGvl2OTMJ_Sh9G9vhE-HjAcovcHfumcdoQh_WM445Za6Pyn9BZQV3FCqMviRR809sIATfU5lu86wu_5UGIGI7MFDEYeVGSqzpzh6mlcn8QSIZoYXV0aERhdGFYxEmWDeWIDoxodDQXD2R2YFuP5K65ooYyx5lc87qDHZdjQQAAAAAAAAAAAAAAAAAAAAAAAAAAAEAsV2gIUlPIHzZnNIlQdz5zvbKtpFz_WY-8ZfxOgTyy7f3Ffbolyp3fUtSQo5LfoUgBaBaXqK0wqqYO-u6FrrLApQECAyYgASFYIPr9-YH8DuBsOnaI3KJa0a39hyxh9LDtHErNvfQSyxQsIlgg4rAuQQ5uy4VXGFbkiAt0uwgJJodp-DymkoBcrGsLtkI"
+    },
+    "type": "public-key"
+}
 ```
-{% endcode %}
 
-## The Hard Way
+{% hint style="info" %}
+The library needs PSR-7 requests. In the example below, we use `nyholm/psr7-server` to get that request.
+{% endhint %}
 
-The procedure is the same as the one described in this page, except that you don’t have to save the user entity again.
+```php
+<?php
+
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Nyholm\Psr7Server\ServerRequestCreator;
+
+$psr17Factory = new Psr17Factory();
+$creator = new ServerRequestCreator(
+    $psr17Factory, // ServerRequestFactory
+    $psr17Factory, // UriFactory
+    $psr17Factory, // UploadedFileFactory
+    $psr17Factory  // StreamFactory
+);
+
+$serverRequest = $creator->fromGlobals();
+
+try {
+    $publicKeyCredentialSource = $server->loadAndCheckAttestationResponse(
+        '_The authenticator response you received…',
+        $publicKeyCredentialCreationOptions, // The options you stored during the previous step
+        $serverRequest                       // The PSR-7 request
+    );
+    
+    // The user entity and the public key credential source can now be stored using their repository
+    // The Public Key Credential Source repository must implement Webauthn\PublicKeyCredentialSourceRepository
+    $publicKeyCredentialSourceRepository->saveCredentialSource($publicKeyCredentialSource);
+    
+    // If you create a new user account, you should also save the user entity
+    $userEntityRepository->save($userEntity);
+} catch(\Throwable $exception) {
+    // Something went wrong!
+}
+```
 
