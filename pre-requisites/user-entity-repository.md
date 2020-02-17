@@ -64,8 +64,7 @@ Whatever the database you use\(MySQL, pgSQL…\), it is not necessary to create 
 
 Hereafter an example of a User Entity repository. In this example we suppose you already have methods to find users using their username or ID.
 
-{% code-tabs %}
-{% code-tabs-item title="Acme\\Repository\\PublicKeyCredentialUserEntityRepository.php" %}
+{% code title="Acme\\Repository\\PublicKeyCredentialUserEntityRepository.php" %}
 ```php
 <?php
 
@@ -100,7 +99,7 @@ final class PublicKeyCredentialUserEntityRepository
     public function findWebauthnUserByUserHandle(string $userHandle): ?PublicKeyCredentialUserEntity
     {
         //We suppose you already have a method to find a user using its ID
-        $user = $this->findOneBy(['id' => $username]);
+        $user = $this->findOneBy(['id' => $userHandle]);
         if (null === $user) {
             return null;
         }
@@ -123,8 +122,7 @@ final class PublicKeyCredentialUserEntityRepository
 }
 
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
 
 

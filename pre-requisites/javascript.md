@@ -1,13 +1,12 @@
 # Javascript
 
-You will interact with the authenticators with an HTML page and Javascript using the Webauthn API.
+You will interact with the authenticators through an HTML page and Javascript using the Webauthn API.
 
 No script is provided with the library because it could become hard to manage all types of scripts and application specificity. However, you will find on this page two JS scripts: the first one for the registration of an authenticator \(Attestation Ceremony\). The other one for the user authentication \(Assertion Ceremony\).
 
 Feel free to adapt these script for your application \(React, Vue…\).
 
-{% code-tabs %}
-{% code-tabs-item title="attestaion.js" %}
+{% code title="attestaion.js" %}
 ```javascript
 const publicKey = "{PLACE YOUR CREDENTIAL OPTIONS HERE}";
 
@@ -61,11 +60,9 @@ navigator.credentials.create({ 'publicKey': publicKey })
         console.log('FAIL', error);
     });
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
-{% code-tabs %}
-{% code-tabs-item title="assertion.js" %}
+{% code title="assertion.js" %}
 ```javascript
 
 const publicKey = "{PLACE YOUR CREDENTIAL OPTIONS HERE}";
@@ -114,6 +111,5 @@ navigator.credentials.get({ 'publicKey': publicKey })
         console.log('FAIL', error);
     });
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
