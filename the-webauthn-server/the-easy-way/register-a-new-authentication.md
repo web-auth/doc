@@ -97,11 +97,11 @@ try {
         $publicKeyCredentialCreationOptions, // The options you stored during the previous step
         $serverRequest                       // The PSR-7 request
     );
-    
+
     // The user entity and the public key credential source can now be stored using their repository
     // The Public Key Credential Source repository must implement Webauthn\PublicKeyCredentialSourceRepository
     $publicKeyCredentialSourceRepository->saveCredentialSource($publicKeyCredentialSource);
-    
+
     // If you create a new user account, you should also save the user entity
     $userEntityRepository->save($userEntity);
 } catch(\Throwable $exception) {

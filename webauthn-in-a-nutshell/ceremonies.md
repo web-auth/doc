@@ -12,3 +12,7 @@ For both ceremonies, there are two steps to perform:
 
 Depending on the options and the capabilities of the authenticator, the user interaction may differ. It can be a simple touch on a button or a complete authentication using biometric means \(PIN code, fingerprint, facial recognition…\).
 
+![The attestation ceremony](../.gitbook/assets/registration.png)
+
+![The assertion ceremony](../.gitbook/assets/login.png)
+
