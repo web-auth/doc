@@ -1,3 +1,7 @@
+---
+description: Registration and Authentication process overview
+---
+
 # Ceremonies
 
 In the Webauthn context, there are two ceremonies:

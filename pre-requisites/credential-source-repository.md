@@ -1,3 +1,7 @@
+---
+description: Authenticator details and how to manage them
+---
+
 # Credential Source Repository
 
 After the registration of an authenticator, you will get a Public Key Credential Source object. It contains all the credential data needed to perform user authentication and much more.

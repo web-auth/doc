@@ -1,3 +1,7 @@
+---
+description: If you want a fine grained Webauthn server
+---
+
 # The Hard Way
 
 You will need the following components before loading or verifying the data:

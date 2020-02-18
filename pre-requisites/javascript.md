@@ -1,3 +1,7 @@
+---
+description: Examples for dynamic interactions
+---
+
 # Javascript
 
 You will interact with the authenticators through an HTML page and Javascript using the Webauthn API.

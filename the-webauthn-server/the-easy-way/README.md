@@ -1,3 +1,7 @@
+---
+description: How to run a basic Webauthn server?
+---
+
 # The Easy Way
 
 The easiest way to create a Webauthn Server is to use the class `Webauthn\Server`.

@@ -1,3 +1,7 @@
+---
+description: First user authentication
+---
+
 # Authenticate Your Users
 
 ## Credential Request Options

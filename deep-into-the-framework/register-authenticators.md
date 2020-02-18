@@ -19,10 +19,10 @@ The procedure is the same as [the one described in this page](../the-webauthn-se
 ## The Symfony Way
 
 {% hint style="info" %}
-The following procedure is only available with the version 3.1.0 of the framework. For previous versions, please refer to the Hard Way below.
+The following procedure is only available with the version 3.1.0 of the framework. For previous versions, please refer to the Hard Way above.
 {% endhint %}
 
-With a Symfony application, the fastest way for a user to register additional authenticators is to use the helper .
+With a Symfony application, the fastest way for a user to register additional authenticators is to use the helper `Webauthn\Bundle\Service\AuthenticatorRegistrationHelper` provided by the bundle.
 
 In the example below, we will create 2 routes: the first one to get the options, te second one to verify the authenticator response. These routes will return JSON responses, but you are free to use Twig templates or any of response type.
 
@@ -118,6 +118,10 @@ class AddAuthenticatorController extends AbstractController
 
 {% hint style="success" %}
 If the current user is registering authenticators for another user \(admin\), the userEntity passed to the methods `generateOptions` and `validateResponse` must correspond to the target user.
+{% endhint %}
+
+{% hint style="info" %}
+This controller may be directly integrated in the bundle. 
 {% endhint %}
 
 By default the options profile is `default`. You can change it setting the profile name as third argument of the method `generateOptions`.

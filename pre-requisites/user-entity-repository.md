@@ -1,3 +1,7 @@
+---
+description: It's all about users
+---
+
 # User Entity
 
 ## User Entity

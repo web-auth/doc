@@ -1,3 +1,7 @@
+---
+description: aka the application you are interacting with
+---
+
 # The Relaying Party
 
 The Relaying Party \(or `rp`\) corresponds to the application that will ask for the user to interact with the authenticator.

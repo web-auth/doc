@@ -1,3 +1,7 @@
+---
+description: Is it complicated?
+---
+
 # Easy or Hard Way?
 
 In this documentation, different ways to setup a Webauthn server are presented:

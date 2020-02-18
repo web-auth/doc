@@ -1,3 +1,7 @@
+---
+description: First authenticator registration
+---
+
 # Register Authenticators
 
 ## Credential Creation Options

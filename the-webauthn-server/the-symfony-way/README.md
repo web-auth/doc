@@ -1,3 +1,7 @@
+---
+description: Lucky Symfony applications!
+---
+
 # The Symfony Way
 
 An official bundle is provided in the package `web-auth/webauthn-symfony-bundle`.

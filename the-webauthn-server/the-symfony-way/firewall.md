@@ -1,3 +1,7 @@
+---
+description: How to register and authenticate my users?
+---
+
 # Firewall
 
 To authenticate or register your users, the best and easiest way is to use the Security Bundle. Make sure you have installed the package `symfony/security-bundle` and correctly created [your user provider](https://symfony.com/doc/current/security/user_provider.html).
@@ -44,7 +48,7 @@ fetch('/login/options', {
         'Content-Type' : 'application/json'
     },
     body: JSON.stringify({
-        "username": "john.doe"
+        "username": "johndoe@example.com"
     })
 }).then(function (response) {
     return response.json();
@@ -286,12 +290,12 @@ The security token returned by the firewall sets some attributes depending on th
 * `IS_USER_PRESENT`: the user was present during the authentication ceremony. This attribute is usually set to `true` by authenticators,
 * `IS_USER_VERIFIED`: the user was verified by the authenticator. Verification may be performed by several means including biometrics ones \(fingerprint, iris, facial recognition…\).
 
-You can then set constraints to the access controls.
+You can then set constraints to the access controls. In the example below, the /admin path can be reached by suers with the role `ROLE_ADMIN` and that **have been verified** during the ceremony.
 
 ```yaml
 security:
     access_control:
-        - { path: ^/admin,  roles: IS_USER_VERIFIED}
+        - { path: ^/admin,  roles: [ROLE_ADMIN, IS_USER_VERIFIED]}
 ```
 
 ## Options Storage
