@@ -69,7 +69,8 @@ security:
         main:
             webauthn:
                 authentication:
-                    options_path: /security/authentication/options
+                    routes:
+                        options_path: /security/authentication/options
     access_control:
         - { path: ^/security/authentication/options,  roles: IS_AUTHENTICATED_ANONYMOUSLY}
 ```
@@ -109,7 +110,8 @@ security:
         main:
             webauthn:
                 authentication:
-                    result_path: /security/authentication/login
+                    routes:
+                        result_path: /security/authentication/login
 ```
 
 Your user can now be authenticated and retrieved as usual.
@@ -225,7 +227,8 @@ security:
         main:
             webauthn:
                 registration:
-                    options_path: /security/registration/options
+                    routes:
+                        options_path: /security/registration/options
     access_control:
         - { path: ^/security/registration/options,  roles: IS_AUTHENTICATED_ANONYMOUSLY}
 ```
@@ -265,7 +268,8 @@ security:
         main:
             webauthn:
                 registration:
-                    result_path: /security/registration/result
+                    routes:
+                        result_path: /security/registration/result
 ```
 
 In case of success, the user and the authenticator are correctly registered and automatically logged in.
