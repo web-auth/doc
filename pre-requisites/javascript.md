@@ -6,6 +6,10 @@ description: Examples for dynamic interactions
 
 You will interact with the authenticators through an HTML page and Javascript using the Webauthn API.
 
+{% hint style="danger" %}
+It is mandatory to use the HTTPS scheme to use Webauthn otherwise it will not work.
+{% endhint %}
+
 No script is provided with the library because it could become hard to manage all types of scripts and application specificity. However, you will find on this page two JS scripts: the first one for the registration of an authenticator \(Attestation Ceremony\). The other one for the user authentication \(Assertion Ceremony\).
 
 Feel free to adapt these script for your application \(React, Vue…\).
