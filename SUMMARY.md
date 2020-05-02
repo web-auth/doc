@@ -41,6 +41,7 @@
 * [Extensions](deep-into-the-framework/extensions.md)
 * [Token Binding](deep-into-the-framework/token-binding.md)
 * [Authenticator Counter](deep-into-the-framework/authenticator-counter.md)
+* [Dealing with “localhost”](deep-into-the-framework/dealing-with-localhost.md)
 
 ## Migration
 

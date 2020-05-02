@@ -156,7 +156,8 @@ $publicKeyCredentialSource = $authenticatorAssertionResponse->check(
     $publicKeyCredential->getRawId(),
     $authenticatorAssertionResponse,
     $publicKeyCredentialRequestOptions,
-    $request
+    $request,
+    $userHandle
 );
 ```
 
