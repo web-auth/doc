@@ -6,6 +6,10 @@ description: Lucky Symfony applications!
 
 An official bundle is provided in the package `web-auth/webauthn-symfony-bundle`.
 
+{% hint style="success" %}
+Starting at v3.2.4, the bundle can be installed on Symfony 4.4 or 5.0+.
+{% endhint %}
+
 {% hint style="info" %}
 If you use Laravel, you may be interested in [this project: https://github.com/asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
 {% endhint %}
@@ -36,11 +40,9 @@ public function registerBundles()
         // ...
         new Webauthn\Bundle\WebauthnBundle(),
     ];
-}
+}And add the Webauthn Route Loader:
 ```
 {% endcode %}
-
-And add the Webauthn Route Loader:
 
 {% code title="config/routes/webauthn\_routes.php" %}
 ```php
