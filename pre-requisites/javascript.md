@@ -68,7 +68,7 @@ register({
 ## Authentication
 
 ```javascript
-// Import the registration hook
+// Import the login hook
 import {useLogin} from 'webauthn-helper';
 
 // Create your login function.
