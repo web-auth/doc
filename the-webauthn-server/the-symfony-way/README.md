@@ -18,7 +18,7 @@ Before installing it, please make sure you installed and configured:
 
 * The package [`symfony/psr-http-message-bridge`](https://symfony.com/doc/current/components/psr7.html) ,
 * The package [`nyholm/psr7`](https://github.com/Nyholm/psr7) or  any [other PSR-7](https://packagist.org/providers/psr/http-factory-implementation) package,
-* The [SensioFremaworkExtraBundle](https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html) and enabled the PSR-7 support.
+* The [SensioFrameworkExtraBundle](https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html) and enabled the PSR-7 support.
 
 {% code title="config/packages/sensio\_framework\_extra.yaml" %}
 ```yaml
@@ -40,9 +40,11 @@ public function registerBundles()
         // ...
         new Webauthn\Bundle\WebauthnBundle(),
     ];
-}And add the Webauthn Route Loader:
+}
 ```
 {% endcode %}
+
+And add the Webauthn Route Loader:
 
 {% code title="config/routes/webauthn\_routes.php" %}
 ```php
