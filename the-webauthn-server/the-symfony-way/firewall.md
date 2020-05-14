@@ -294,7 +294,7 @@ The security token returned by the firewall sets some attributes depending on th
 * `IS_USER_PRESENT`: the user was present during the authentication ceremony. This attribute is usually set to `true` by authenticators,
 * `IS_USER_VERIFIED`: the user was verified by the authenticator. Verification may be performed by several means including biometrics ones \(fingerprint, iris, facial recognition…\).
 
-You can then set constraints to the access controls. In the example below, the /admin path can be reached by suers with the role `ROLE_ADMIN` and that **have been verified** during the ceremony.
+You can then set constraints to the access controls. In the example below, the /admin path can be reached by users with the role `ROLE_ADMIN` and that **have been verified** during the ceremony.
 
 ```yaml
 security:
