@@ -41,15 +41,32 @@ $rpEntity = new PublicKeyCredentialRpEntity(
 Even if it is optional, we highly recommend setting the application ID
 {% endhint %}
 
-The `rp` ID shall be the domain of the application without the scheme, userinfo, port, path, user….
+The `rp` ID shall be the domain of the application without the scheme, userinfo, port, path, user…. IP addresses are not allowed either.
 
 {% hint style="success" %}
 Allowed: `www.sub.domain.com`, `sub.domain.com`, `domain.com`
 {% endhint %}
 
 {% hint style="warning" %}
-Not allowed: `www.sub.domain.com:1337`, `https://domain.com:443`, `sub.domain.com/index`, `https://user:password@www.domain.com`.
+Not allowed:
+
+* `www.sub.domain.com:1337`, `https://domain.com:443`, `sub.domain.com/index`, `https://user:password@www.domain.com`.
+* 12.65.76.43 or \[2001:db8:85a3:8d3:1319:8a2e:370:7348\]
 {% endhint %}
+
+{% hint style="info" %}
+The domain `localhost` can be used if the browser considers the context is safe \(especially the IP address corresponds to a local address\)
+{% endhint %}
+
+### How to determine the Relaying Party ID?
+
+The Relaying Party ID should be determined depending on the common URLs for your web application.
+
+If you have a web application that can be reached at [https://m.my-app.com](https://m.my-app.com) \(for mobiles\) and [https://my-app.com](https://my-app.com) or [https://www.my-app.com](https://www.my-app.com) \(for other devices\), your Relaying Party ID should be `my-app.com`.
+
+If the domain is shared between sub-projects, the rp ID should be limited to that sub-projects.
+
+For example, a web site is located at `https://(www.)site1.host.com` and another at `https://(www.)site2.host.com`, then the Relaying Party IDs should be `site1.host.com` and `site2.host.com` respectively. If you set `host.com`, there is a risk that users from `site1.host.com` can log in at `site2.host.com`.
 
 ## Relaying Party Icon
 

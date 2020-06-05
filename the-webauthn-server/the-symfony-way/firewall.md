@@ -4,20 +4,128 @@ description: How to register and authenticate my users?
 
 # Firewall
 
-To authenticate or register your users, the best and easiest way is to use the Security Bundle. Make sure you have installed the package `symfony/security-bundle` and correctly created [your user provider](https://symfony.com/doc/current/security/user_provider.html).
+## Security Bundle
 
-When done, you can enable the webauthn firewall.
+To authenticate or register your users with Symfony, the best and easiest way is to use the Security Bundle. First, install that bundle.
 
+```bash
+composer require symfony/security-bundle
+```
+
+Next, you have to create a custom [user provider](https://symfony.com/doc/current/security/user_provider.html) that will retrieve users on login requests. The following example uses the [user repository showed on this page](entities-with-doctrine.md#the-repository-1).
+
+{% code title="src/Repository/UserRepository.php" %}
+```php
+<?php
+
+namespace App\Security;
+
+use App\Entity\User;
+use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+
+class UserProvider implements UserProviderInterface
+{
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+    /**
+     * @throws UsernameNotFoundException if the user is not found
+     */
+    public function loadUserByUsername($username): UserInterface
+    {
+        $user = $this->userRepository->find($username);
+        if (null !== $user) {
+            return $user;
+        }
+
+        throw new UsernameNotFoundException(sprintf('User with name "%s" does not exist', $username));
+    }
+
+    public function refreshUser(UserInterface $user): UserInterface
+    {
+        if (!$user instanceof User) {
+            throw new UnsupportedUserException(sprintf('Invalid user class "%s".', get_class($user)));
+        }
+
+        return $this->loadUserByUsername($user->getUsername());
+    }
+
+    public function supportsClass($class): bool
+    {
+        return User::class === $class;
+    }
+}
+```
+{% endcode %}
+
+### Firewall Configuration
+
+Now you can tell Symfony to use your user provider and you enable the dedicated firewall
+
+{% code title="config/packages/security.yaml" %}
 ```yaml
 security:
+    providers:
+        main:
+            id: 'App\Security\UserProvider'
     firewalls:
         main:
             webauthn: ~
 ```
+{% endcode %}
+
+In some case, you may have several user providers that are used by other parts of your application. This Webauthn bundle allow you to override the default user provider.
+
+{% code title="config/packages/security.yaml" %}
+```yaml
+security:
+    providers:
+        backend_users:
+            memory:
+                users:
+                    john_admin: { password: '$2y$13$jxGxc ... IuqDju', roles: ['ROLE_ADMIN'] }
+                    jane_admin: { password: '$2y$13$PFi1I ... rGwXCZ', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+    firewalls:
+        backend:
+            pattern: ^/backend/
+            # ... Add your configuration here
+            
+        main:
+            webauthn:
+                user_provider: 'App\Security\UserProvider'
+```
+{% endcode %}
+
+### Logout
+
+Users can logout as usual. You just have to add [the logout configuration](https://symfony.com/doc/current/security.html#logging-out) under your firewall and add the route.
+
+{% code title="config/packages/security.yaml" %}
+```yaml
+security:
+    # ...
+
+    firewalls:
+        main:
+            # ...
+            logout: ~
+```
+{% endcode %}
 
 ## User Authentication
 
-As you have noticed, there is nothing else to configure to have a fully functional firewall. The firewall routes are automatically created for you. They are namely:
+As you have noticed, there is nothing to configure to have a fully functional firewall. The firewall routes are automatically created for you. They are namely:
 
 * `/login/options`: to get the request options
 * `/login`: to submit the assertion response
@@ -35,6 +143,10 @@ security:
 Prior to the authentication of the user, you must get a PublicKey Credential Request Options object. To do so, send a POST request to `/login/options`.
 
 The body of this request is a JSON object that must contain a `username` field with the name of the user being authenticated.
+
+{% hint style="success" %}
+No need to reinvent the wheel, you can use the [webauthn-helper](https://www.npmjs.com/package/webauthn-helper) package.
+{% endhint %}
 
 {% hint style="warning" %}
 It is mandatory to set the Content-Type header to `application/json`.
