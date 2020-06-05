@@ -27,6 +27,8 @@ $userEntity = new PublicKeyCredentialUserEntity(
 
 {% hint style="info" %}
 The username can be composed of any displayable characters, including emojis. Username "😝🥰😔" is perfectly valid.
+
+Developers should not add rules that prevent users from choosing the username they want.
 {% endhint %}
 
 {% hint style="warning" %}
