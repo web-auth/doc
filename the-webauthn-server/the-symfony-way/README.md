@@ -20,6 +20,10 @@ Before installing it, please make sure you installed and configured:
 * The package [`nyholm/psr7`](https://github.com/Nyholm/psr7) or  any [other PSR-7](https://packagist.org/providers/psr/http-factory-implementation) package,
 * The [SensioFrameworkExtraBundle](https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html) and enabled the PSR-7 support.
 
+```bash
+composer require symfony/psr-http-message-bridge nyholm/psr7 annotations
+```
+
 {% code title="config/packages/sensio\_framework\_extra.yaml" %}
 ```yaml
 sensio_framework_extra:
@@ -121,6 +125,14 @@ webauthn:
 #        repository: 'App\Repository\MetadataStatementRepository'
 ```
 {% endcode %}
+
+### Repositories
+
+The credential\_repository  and user\_repository parameters correspond to the services we created above.
+
+### Token Binding Handler
+
+Please refer to [this page](../../deep-into-the-framework/token-binding.md#the-symfony-way). You should let the default value as it is.
 
 ### Creation Profiles
 
@@ -279,4 +291,8 @@ webauthn:
         acme: ~
 ```
 {% endcode %}
+
+## Firewall
+
+Now you have a fully configured bundle, you can protect your routes and manage the user registration and authenticatin through the [Symfony Firewall](firewall.md).
 

@@ -127,8 +127,8 @@ security:
 
 As you have noticed, there is nothing to configure to have a fully functional firewall. The firewall routes are automatically created for you. They are namely:
 
-* `/login/options`: to get the request options
-* `/login`: to submit the assertion response
+* `/login/options`: to create the request options \(POST only\)
+* `/login`: to submit the assertion response \(POST only\)
 
 You should also ensure to allow anonymous users to contact those endpoints.
 
@@ -140,7 +140,7 @@ security:
 
 ### Credential Request Options
 
-Prior to the authentication of the user, you must get a PublicKey Credential Request Options object. To do so, send a POST request to `/login/options`.
+Prior to the authentication of the user, you must create a PublicKey Credential Request Options object. To do so, send a POST request to `/login/options`.
 
 The body of this request is a JSON object that must contain a `username` field with the name of the user being authenticated.
 
@@ -171,7 +171,7 @@ fetch('/login/options', {
 })
 ```
 
-In case of success, you receive a valid `PublicKeyCredentialRequestOptions` object and your user will be asked to interact with its security devices.
+In case of success, you receive a valid `PublicKeyCredentialRequestOptions` object and your user will be asked to interact with one of its registered security devices.
 
 The default path is `/login/options`. You can change it if needed:
 
@@ -288,8 +288,8 @@ security:
 
 The firewall routes are automatically created for you. They are namely:
 
-* `/register/options`: to get the creation options
-* `/register`: to submit the attestation response
+* `/register/options`: to create the creation options \(POST only\)
+* `/register`: to submit the attestation response \(POST only\)
 
 You should also ensure to allow anonymous users to contact those endpoints.
 
@@ -301,7 +301,7 @@ security:
 
 ### Credential Creation Options
 
-Prior to the registration of a user and its authenticator, you must get a PublicKey Credential Creation Options object. To do so, send a POST request to `/register/options`.
+Prior to the registration of a user and its authenticator, you must create a PublicKey Credential Creation Options object. To do so, send a POST request to `/register/options`.
 
 The body of this request is a JSON object that must contain `username` and `displayName` fields with the username of the user being registered and the name displayed in the application.
 
@@ -329,7 +329,7 @@ fetch('/register/options', {
     })
 ```
 
-In case of success, you receive a valid `PublicKeyCredentialCreationOptions` object and your user will be asked to interact with its security devices.
+In case of success, you receive a valid `PublicKeyCredentialCreationOptions` object and your user will be asked to interact with its security device.
 
 The default path is `/register/options`. You can change it if needed:
 
@@ -421,7 +421,7 @@ Webauthn authentication and registration are 2 steps round trip processes:
 * Options issuance
 * Authenticator response verification
 
-It is needed to store the options and the user entity associated to it to verify the authenticator responses.
+It is required to store the options and the user entity associated to it to verify the authenticator responses.
 
 By default, the firewall uses `Webauthn\Bundle\Security\Storage\SessionStorage`. This storage system stores the data in a session.
 

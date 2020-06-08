@@ -52,6 +52,10 @@ class PublicKeyCredentialSource extends BasePublicKeyCredentialSource
 ```
 {% endcode %}
 
+{% hint style="info" %}
+Do not forget to update your database schema!
+{% endhint %}
+
 ### The Repository
 
 To ease the integration into your application, the bundle provides a concrete class that you can extend.
@@ -155,7 +159,7 @@ class User extends PublicKeyCredentialUserEntity implements UserInterface
     protected $id;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="json")
      */
     protected $roles;
 
@@ -265,4 +269,6 @@ services:
     App\Repository\UserRepository: ~
 ```
 {% endcode %}
+
+
 
