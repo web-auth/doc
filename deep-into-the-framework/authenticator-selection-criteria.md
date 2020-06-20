@@ -26,6 +26,21 @@ When this criterion is set to `true`, a Public Key Credential Source will be sto
 
 This criterion is needed if you want to [authenticate users without username](authentication-without-username.md).
 
+{% hint style="info" %}
+This parameter will be deprecated in the next version of the Webauthn specification.
+
+You can still set true or false as second argument, but also use the fourth one described hereafter.
+{% endhint %}
+
+Fourth argument possible values are:
+
+* `AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_NONE`: there is no requirement \(default value\),
+* `AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_DISCOURAGED`: indicates the Relying Party prefers creating a server-side credential, but will accept a client-side discoverable credential,
+* `AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_PREFERRED`: indicates the Relying Party prefers creating a client-side discoverable credential, but will accept a server-side credential.
+* `AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED`: 
+
+  indicates the Relying Party requires a client-side discoverable credential, and is prepared to receive an error if a client-side discoverable credential cannot be created
+
 ### User Verification
 
 [Please refer to this page](user-verification.md).
@@ -39,9 +54,10 @@ use Webauthn\AuthenticatorSelectionCriteria;
 use Webauthn\PublicKeyCredentialCreationOptions;
 
 $authenticatorSelectionCriteria = new AuthenticatorSelectionCriteria(
-    AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_PLATFORM,     // Platform authenticator
-    true,                                                                  // Resident key required
-    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED // User verification required
+    AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_PLATFORM,      // Platform authenticator
+    true,                                                                   // Resident key required
+    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED, // User verification required
+    AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED       // Same effect as the second argument
 );
 
 $publicKeyCredentialCreationOptions = $server->generatePublicKeyCredentialCreationOptions(
@@ -58,7 +74,8 @@ $publicKeyCredentialCreationOptions = $server->generatePublicKeyCredentialCreati
 $authenticatorSelectionCriteria = new AuthenticatorSelectionCriteria(
     null,
     false,
-    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_DISCOURAGED
+    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_DISCOURAGED,
+    AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_DISCOURAGED
 );
 
 $publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
@@ -87,10 +104,7 @@ webauthn:
                 attachment_mode: !php/const Webauthn\AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE
                 require_resident_key: false
                 user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
+                resident_key: !php/const Webauthn\AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_DISCOURAGED
 ```
 {% endcode %}
-
-{% hint style="info" %}
-To be written
-{% endhint %}
 

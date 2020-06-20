@@ -20,8 +20,9 @@ use Webauthn\PublicKeyCredentialCreationOptions;
 
 $authenticatorSelectionCriteria = new AuthenticatorSelectionCriteria(
     AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE,
-    true,                                                                  // Resident key required
-    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED // User verification required
+    true,                                                                   // Resident key required
+    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED, // User verification required
+    AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED
 );
 ```
 
@@ -44,8 +45,9 @@ Selection criteria for the registration of the authenticator:
 ```php
 $authenticatorSelectionCriteria = new AuthenticatorSelectionCriteria(
     AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE,
-    true,                                                                  // Resident key required
-    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED // User verification required
+    true,                                                                   // Resident key required
+    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED, // User verification required
+    AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED
 );
 
 $publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
@@ -88,6 +90,7 @@ webauthn:
             authenticator_selection_criteria:
                 require_resident_key: true
                 user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
+                resident_key: !php/const Webauthn\AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED
     request_profiles:
         default:
             rp_id: 'example.com'
