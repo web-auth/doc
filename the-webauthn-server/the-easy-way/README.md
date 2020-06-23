@@ -19,7 +19,7 @@ $rpEntity = new PublicKeyCredentialRpEntity(
 $publicKeyCredentialSourceRepository = …; //Your repository here. Must implement Webauthn\PublicKeyCredentialSourceRepository
 
 $server = new Server(
-    $rpEntity
+    $rpEntity,
     $publicKeyCredentialSourceRepository
 );
 ```
