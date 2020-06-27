@@ -14,7 +14,7 @@ composer require symfony/security-bundle
 
 Next, you have to create a custom [user provider](https://symfony.com/doc/current/security/user_provider.html) that will retrieve users on login requests. The following example uses the [user repository showed on this page](entities-with-doctrine.md#the-repository-1).
 
-{% code title="src/Repository/UserRepository.php" %}
+{% code title="src/Security/UserProvider.php" %}
 ```php
 <?php
 
