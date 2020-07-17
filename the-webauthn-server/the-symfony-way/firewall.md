@@ -100,7 +100,7 @@ security:
         backend:
             pattern: ^/backend/
             # ... Add your configuration here
-            
+
         main:
             webauthn:
                 user_provider: 'App\Security\UserProvider'

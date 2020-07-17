@@ -84,8 +84,8 @@ const login = useLogin({
 login({
     username: 'john.doe'
 })
-    .then((response) => console.log('Registration success'))
-    .catch((error) => console.log('Registration failure'))
+    .then((response) => console.log('Authentication success'))
+    .catch((error) => console.log('Authentication failure'))
 ;
 ```
 
@@ -96,8 +96,8 @@ login({
     username: 'john.doe',
     userVerification: 'required'
 })
-    .then((response) => console.log('Registration success'))
-    .catch((error) => console.log('Registration failure'))
+    .then((response) => console.log('Authentication success'))
+    .catch((error) => console.log('Authentication failure'))
 ;
 ```
 
