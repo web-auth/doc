@@ -81,23 +81,23 @@ const login = useLogin({
 
 
 // We can call this login function whenever we need (e.g. form submission)
-register({
+login({
     username: 'john.doe'
 })
-    .then((response) => console.log('Registration success'))
-    .catch((error) => console.log('Registration failure'))
+    .then((response) => console.log('Authentication success'))
+    .catch((error) => console.log('Authentication failure'))
 ;
 ```
 
 As done during the registration, additional options are available. See the section “Deep into the framework” to know more. Hereafter another example:
 
 ```javascript
-register({
+login({
     username: 'john.doe',
     userVerification: 'required'
 })
-    .then((response) => console.log('Registration success'))
-    .catch((error) => console.log('Registration failure'))
+    .then((response) => console.log('Authentication success'))
+    .catch((error) => console.log('Authentication failure'))
 ;
 ```
 
