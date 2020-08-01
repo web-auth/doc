@@ -152,7 +152,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 $request = Request::createFromGlobals();
 
-$publicKeyCredentialSource = $authenticatorAssertionResponse->check(
+$publicKeyCredentialSource = $authenticatorAssertionResponseValidator->check(
     $publicKeyCredential->getRawId(),
     $authenticatorAssertionResponse,
     $publicKeyCredentialRequestOptions,
