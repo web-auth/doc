@@ -17,9 +17,9 @@ It is mandatory to use the HTTPS scheme to use Webauthn otherwise it will not wo
 You can use npm or yarn to install the package:
 
 ```bash
-npm i webauthn-helper
+npm i @web-auth/webauthn-helper
 #or
-yarn add webauthn-helper
+yarn add @web-auth/webauthn-helper
 ```
 
 ## Registration
