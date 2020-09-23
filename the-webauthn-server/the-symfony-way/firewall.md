@@ -145,7 +145,7 @@ Prior to the authentication of the user, you must create a PublicKey Credential 
 The body of this request is a JSON object that must contain a `username` field with the name of the user being authenticated.
 
 {% hint style="success" %}
-No need to reinvent the wheel, you can use the [webauthn-helper](https://www.npmjs.com/package/webauthn-helper) package.
+No need to reinvent the wheel, you can use the [webauthn-helper](https://www.npmjs.com/package/@web-auth/webauthn-helper) package.
 {% endhint %}
 
 {% hint style="warning" %}

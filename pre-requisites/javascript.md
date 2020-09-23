@@ -26,7 +26,7 @@ yarn add @web-auth/webauthn-helper
 
 ```javascript
 // Import the registration hook
-import {useRegistration} from 'webauthn-helper';
+import {useRegistration} from '@web-auth/webauthn-helper';
 
 // Create your register function.
 // By default the urls are "/register" and "/register/options"
@@ -69,7 +69,7 @@ register({
 
 ```javascript
 // Import the login hook
-import {useLogin} from 'webauthn-helper';
+import {useLogin} from '@web-auth/webauthn-helper';
 
 // Create your login function.
 // By default the urls are "/login" and "/login/options"
