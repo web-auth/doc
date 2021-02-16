@@ -70,11 +70,19 @@ use Webauthn\PublicKeyCredentialRpEntity;
 
 ...
 
+// Before v3.3
 $server = new Server(
-    $rpEntity
+    $rpEntity,
     $publicKeyCredentialSourceRepository,
     $myMetadataStatementRepository        // Inject your new service here
 );
+
+// Or v3.3+
+$server = new Server(
+    $rpEntity,
+    $publicKeyCredentialSourceRepository
+);
+$server->setMetadataStatementRepository($myMetadataStatementRepository); // Inject your new service here
 ```
 
 #### The Hard Way
