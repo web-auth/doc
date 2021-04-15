@@ -178,6 +178,13 @@ webauthn:
 ```
 {% endcode %}
 
+{% hint style="info" %}
+For v4.0+, the timeout will be set to `null`. The values recommended by the specification are as follow:
+
+* If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
+* If the user verification is `preferred` or `required`, the range is 300 to 600 seconds \(5 to 10 minutes\)
+{% endhint %}
+
 #### Authenticator Selection Criteria
 
 This set of options allows you to select authenticators depending on their capabilities. The values are described in [the advanced concepts](../../deep-into-the-framework/authenticator-selection-criteria.md) of the protocol.
