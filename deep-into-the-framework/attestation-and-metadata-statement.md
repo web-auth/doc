@@ -12,6 +12,7 @@ During the Attestation Ceremony \(i.e. the registration of the authenticator\), 
 * **Basic Attestation** \(`basic`\)**:** Authenticator’s attestation key pair is specific to an authenticator model.
 * **Surrogate Basic Attestation \(or Self Attestation -** `self`**\)**: Authenticators that have no specific attestation key use the credential private key to create the attestation signature
 * **Attestation CA** \(`AttCA`\): Authenticators are based on a Trusted Platform Module \(TPM\). They can generate multiple attestation identity key pairs \(AIK\) and requests an Attestation CA to issue an AIK certificate for each.
+* **Anonymization CA** \(`AnonCA`\):  Authenticators use an Anonymization CA, which dynamically generates per-credential attestation certificates such that the attestation statements presented to Relying Parties do not provide uniquely identifiable information.
 * **Elliptic Curve based Direct Anonymous Attestation** \(`ECDAA`\): Authenticator receives direct anonymous attestation \(DAA\) credentials from a single DAA-Issuer. These DAA credentials are used along with blinding to sign the attested credential data.
 
 ## Metadata Statement
@@ -109,6 +110,7 @@ use Webauthn\AttestationStatement\FidoU2FAttestationStatementSupport;
 use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
 use Webauthn\AttestationStatement\PackedAttestationStatementSupport;
 use Webauthn\AttestationStatement\TPMAttestationStatementSupport;
+use Webauthn\AttestationStatement\AppleAttestationStatementSupport;
 
 // You normally already do this
 $attestationStatementSupportManager = new AttestationStatementSupportManager();
@@ -116,6 +118,7 @@ $attestationStatementSupportManager->add(new NoneAttestationStatementSupport());
 
 // Additional classes to add
 $attestationStatementSupportManager->add(new FidoU2FAttestationStatementSupport());
+$attestationStatementSupportManager->add(new AppleAttestationStatementSupport());
 $attestationStatementSupportManager->add(new AndroidSafetyNetAttestationStatementSupport());
 $attestationStatementSupportManager->add(new AndroidKeyAttestationStatementSupport(
     $psr18Client,         // Can be null if you don’t want to use the Google API

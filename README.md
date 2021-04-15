@@ -29,6 +29,7 @@ As an example, the [section 5.3.3 “Web Authentication Assertion”](https://ww
   * Basic
   * Self
   * Private CA
+  * Anonymization CA
   * ~~Elliptic Curve Direct Anonymous Attestation \(ECDAA\)~~
 * Attestation Formats
   * FIDO U2F
@@ -36,6 +37,7 @@ As an example, the [section 5.3.3 “Web Authentication Assertion”](https://ww
   * TPM
   * Android Key
   * Android Safetynet
+  * Apple
 * ~~Token Binding support~~
 * Cose Algorithms
   * RS1, RS256, RS384, RS512

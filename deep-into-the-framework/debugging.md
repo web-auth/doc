@@ -21,8 +21,7 @@ $server->setLogger(new MyPsr3Logger());
 
 ## The Hard Way
 
-Prior to version 3.3, the following classes have an optional constructor parameter `$logger` that can accept the logging service.
-From version 3.3 onwards you should use their `setLogger` function instead.
+Prior to version 3.3, the following classes have an optional constructor parameter `$logger` that can accept the logging service. From version 3.3 onwards you should use their `setLogger` function instead.
 
 * `Webauthn\AttestationStatement\AttestationObjectLoader`
 * `Webauthn\AuthenticatorAssertionResponseValidator`
