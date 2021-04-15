@@ -17,6 +17,13 @@ Let’s say you want to authenticate the user we used earlier. This options obje
 
 The `PublicKeyCredentialRequestOptions` object is designed to be easily serialized into a JSON object. This will ease the integration into an HTML page or through an API endpoint.
 
+{% hint style="info" %}
+For v4.0+, the timeout will be set to `null`. The values recommended by the specification are as follow:
+
+* If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
+* If the user verification is `preferred` or `required`, the range is 300 to 600 seconds \(5 to 10 minutes\)
+{% endhint %}
+
 ### Allowed Credentials
 
 The user trying to authenticate must have registered at least one device. For this user, you have to get all `Webauthn\PublicKeyCredentialDescriptor` associated to his account.
