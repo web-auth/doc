@@ -31,33 +31,15 @@ The FIDO Alliance Metadata Service provides a limited number of Metadata Stateme
 
 First of all, you must prepare an Attestation Metadata Repository. This service will manage all Metadata Statements depending on their sources \(local storage or distant service\).
 
-Your Metadata Statement Repository must implement the interface `Webauthn\MetadataService\MetadataStatementRepository` that has a unique method `findOneByAAGUID(string $aaguid)`.
 
-#### Basic Repository Implementation.
 
-The library `web-auth/metadata-service` provides a concrete class with basic support for local and distant statements with caching system: `Webauthn\MetadataService\SimpleMetadataStatementRepository`
+Your Metadata Statement Repository must implement the interface `Webauthn\MetadataService\MetadataStatementRepository` that has two methods:
 
-```php
-use Webauthn\MetadataService\MetadataStatementRepository:
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Webauthn\MetadataService\SingleMetadata;
-
-$myMetadataStatementRepository = new SimpleMetadataStatementRepository(
-    new FilesystemAdapter('webauthn') // We use filesystem caching in this example
-);
-
-// We add a local matadata statement (adapted from the Yubico website)
-$myMetadataStatementRepository->addSingleStatement('yubico', new SingleMetadata(
-    '{"description": "Yubico U2F Root CA Serial 457200631","aaguid": "f8a011f3-8c0a-4d15-8006-17111f9edc7d","protocolFamily": "fido2","attestationRootCertificates": ["MIIDHjCCAgagAwIBAgIEG0BT9zANBgkqhkiG9w0BAQsFADAuMSwwKgYDVQQDEyNZdWJpY28gVTJGIFJvb3QgQ0EgU2VyaWFsIDQ1NzIwMDYzMTAgFw0xNDA4MDEwMDAwMDBaGA8yMDUwMDkwNDAwMDAwMFowLjEsMCoGA1UEAxMjWXViaWNvIFUyRiBSb290IENBIFNlcmlhbCA0NTcyMDA2MzEwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC/jwYuhBVlqaiYWEMsrWFisgJ+PtM91eSrpI4TK7U53mwCIawSDHy8vUmk5N2KAj9abvT9NP5SMS1hQi3usxoYGonXQgfO6ZXyUA9a+KAkqdFnBnlyugSeCOep8EdZFfsaRFtMjkwz5Gcz2Py4vIYvCdMHPtwaz0bVuzneueIEz6TnQjE63Rdt2zbwnebwTG5ZybeWSwbzy+BJ34ZHcUhPAY89yJQXuE0IzMZFcEBbPNRbWECRKgjq//qT9nmDOFVlSRCt2wiqPSzluwn+v+suQEBsUjTGMEd25tKXXTkNW21wIWbxeSyUoTXwLvGS6xlwQSgNpk2qXYwf8iXg7VWZAgMBAAGjQjBAMB0GA1UdDgQWBBQgIvz0bNGJhjgpToksyKpP9xv9oDAPBgNVHRMECDAGAQH/AgEAMA4GA1UdDwEB/wQEAwIBBjANBgkqhkiG9w0BAQsFAAOCAQEAjvjuOMDSa+JXFCLyBKsycXtBVZsJ4Ue3LbaEsPY4MYN/hIQ5ZM5p7EjfcnMG4CtYkNsfNHc0AhBLdq45rnT87q/6O3vUEtNMafbhU6kthX7Y+9XFN9NpmYxr+ekVY5xOxi8h9JDIgoMP4VB1uS0aunL1IGqrNooL9mmFnL2kLVVee6/VR6C5+KSTCMCWppMuJIZII2v9o4dkoZ8Y7QRjQlLfYzd3qGtKbw7xaF1UsG/5xUb/Btwb2X2g4InpiB/yt/3CpQXpiWX/K4mBvUKiGn05ZsqeY1gx4g0xLBqcU9psmyPzK+Vsgw2jeRQ5JlKDyqE0hebfC1tvFu0CCrJFcw=="]}',
-    false // The statement is not base64 encoded
-));
-```
+* `findOneByAAGUID(string $aaguid)`: this method retrieves the `MetadataStatement` object with AAGUID. It shall return `null` in case of the absence of the MDS.
 
 {% hint style="warning" %}
-The example above is very limited and will only allow authenticators manufactured by Yubico to be registered. Make sure to add more sources of Metadata Statements to accept authenticators from other manufacturers.
+The library does not provide any Metadata Statement Repositroy. It is up to you to select the MDS suitable for your application and store them in your database.
 {% endhint %}
-
-When the repository is ready, you must inject it to your server.
 
 #### The Easy Way
 
