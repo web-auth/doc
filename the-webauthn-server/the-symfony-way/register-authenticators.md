@@ -10,7 +10,7 @@ The bundle provides a factory and manages profiles to ease the creation of the o
 webauthn:
     creation_profiles:
         acme: #Unique name of the profile
-            rp: # rp stands for Relaying Party
+            rp: # rp stands for Relying Party
                 name: 'ACME Webauthn Server'
                 id: 'acme.com'
                 icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAwFBMVEXm7NK41k3w8fDv7+q01Tyy0zqv0DeqyjOszDWnxjClxC6iwCu11z6y1DvA2WbY4rCAmSXO3JZDTxOiwC3q7tyryzTs7uSqyi6tzTCmxSukwi9aaxkWGga+3FLv8Ozh6MTT36MrMwywyVBziSC01TbT5ZW9z3Xi6Mq2y2Xu8Oioxy7f572qxzvI33Tb6KvR35ilwTmvykiwzzvV36/G2IPw8O++02+btyepyDKvzzifvSmw0TmtzTbw8PAAAADx8fEC59dUAAAA50lEQVQYV13RaXPCIBAG4FiVqlhyX5o23vfVqUq6mvD//1XZJY5T9xPzzLuwgKXKslQvZSG+6UXgCnFePtBE7e/ivXP/nRvUUl7UqNclvO3rpLqofPDAD8xiu2pOntjamqRy/RqZxs81oeVzwpCwfyA8A+8mLKFku9XfI0YnSKXnSYZ7ahSII+AwrqoMmEFKriAeVrqGM4O4Z+ADZIhjg3R6LtMpWuW0ERs5zunKVHdnnnMLNQqaUS0kyKkjE1aE98b8y9x9JYHH8aZXFMKO6JFMEvhucj3Wj0kY2D92HlHbE/9Vk77mD6srRZqmVEAZAAAAAElFTkSuQmCC'
@@ -29,7 +29,7 @@ The `name` is mandatory ; other options are `null` by default.
 {% endhint %}
 
 {% hint style="warning" %}
-The option id is highly recommended. See [this page](../../pre-requisites/the-relaying-party.md) for acceptable values.
+The option id is highly recommended. See [this page](../../pre-requisites/the-relying-party.md) for acceptable values.
 {% endhint %}
 
 With this profile, now we can create options with the following code lines:
@@ -151,7 +151,7 @@ webauthn:
 The mechanism for generating public key credentials, as well as requesting and generating Authentication assertions, can be extended to suit particular use cases. Each case is addressed by defining a registration extension.
 
 {% hint style="info" %}
-The example below is tatolly fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the supports depends on the authenticators and on the relaying parties.
+The example below is tatolly fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the supports depends on the authenticators and on the relying parties.
 {% endhint %}
 
 {% code title="app/config/webauthn.yaml" %}

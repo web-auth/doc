@@ -1,6 +1,6 @@
-# The Relaying Party
+# The Relying Party
 
-The Relaying Party \(or `rp`\) corresponds to the application that will ask for the user to interact with the authenticator.
+The Relying Party \(or `rp`\) corresponds to the application that will ask for the user to interact with the authenticator.
 
 The library provides a simple class to handle the rp information: `Webauthn\PublicKeyCredentialRpEntity`.
 

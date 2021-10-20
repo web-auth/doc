@@ -39,9 +39,9 @@ $publicKeyCredentialCreationOptions = $container
 ;
 ```
 
-### Relaying Party ID
+### Relying Party ID
 
-As mentioned earlier, it is preferable to indicate the Relaying Party ID. By default it is set to `null` i.e. the current domain is used.
+As mentioned earlier, it is preferable to indicate the Relying Party ID. By default it is set to `null` i.e. the current domain is used.
 
 {% code title="app/config/webauthn.yaml" %}
 ```yaml
@@ -96,7 +96,7 @@ webauthn:
 The mechanism for generating public key credentials, as well as requesting and generating Authentication assertions, can be extended to suit particular use cases. Each case is addressed by defining a registration extension.
 
 {% hint style="info" %}
-The example below is tatolly fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the supports depends on the authenticators and on the relaying parties.
+The example below is tatolly fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the supports depends on the authenticators and on the relying parties.
 {% endhint %}
 
 {% code title="app/config/webauthn.yaml" %}

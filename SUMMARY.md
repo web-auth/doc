@@ -10,7 +10,7 @@
 
 ## Pre-requisites
 
-* [The Relaying Party](pre-requisites/the-relaying-party.md)
+* [The Relying Party](pre-requisites/the-relying-party.md)
 * [Credential Souce Repository](pre-requisites/credential-souce-repository.md)
 * [User Entity And Repository](pre-requisites/user-entity-repository.md)
 * [Javascript](pre-requisites/javascript.md)
