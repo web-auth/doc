@@ -2,9 +2,9 @@
 description: aka the application you are interacting with
 ---
 
-# The Relaying Party
+# The Relying Party
 
-The Relaying Party \(or `rp`\) corresponds to the application that will ask for the user to interact with the authenticator.
+The Relying Party \(or `rp`\) corresponds to the application that will ask for the user to interact with the authenticator.
 
 The library provides a simple class to handle the rp information: `Webauthn\PublicKeyCredentialRpEntity`.
 
@@ -20,9 +20,9 @@ $rpEntity = new PublicKeyCredentialRpEntity(
 
 This `$rpEntity` object will be useful for the next steps.
 
-## Relaying Party ID
+## Relying Party ID
 
-In the example above, we created a simple relaying party object with it’s name. The relaying party may also have an ID that corresponds to the domain applicable for that `rp`. By default, the relaying party ID is `null` i.e. the current domain will be used.
+In the example above, we created a simple relying party object with it’s name. The relying party may also have an ID that corresponds to the domain applicable for that `rp`. By default, the relying party ID is `null` i.e. the current domain will be used.
 
 It may be useful to specify the `rp` ID, especially if your application has several sub-domains. The rp ID can be set during the creation of the object as 2nd constructor parameter.
 
@@ -58,17 +58,17 @@ Not allowed:
 The domain `localhost` can be used if the browser considers the context is safe \(especially the IP address corresponds to a local address\)
 {% endhint %}
 
-### How to determine the Relaying Party ID?
+### How to determine the Relying Party ID?
 
-The Relaying Party ID should be determined depending on the common URLs for your web application.
+The Relying Party ID should be determined depending on the common URLs for your web application.
 
-If you have a web application that can be reached at [https://m.my-app.com](https://m.my-app.com) \(for mobiles\) and [https://my-app.com](https://my-app.com) or [https://www.my-app.com](https://www.my-app.com) \(for other devices\), your Relaying Party ID should be `my-app.com`.
+If you have a web application that can be reached at [https://m.my-app.com](https://m.my-app.com) \(for mobiles\) and [https://my-app.com](https://my-app.com) or [https://www.my-app.com](https://www.my-app.com) \(for other devices\), your Relying Party ID should be `my-app.com`.
 
 If the domain is shared between sub-projects, the rp ID should be limited to that sub-projects.
 
-For example, a web site is located at `https://(www.)site1.host.com` and another at `https://(www.)site2.host.com`, then the Relaying Party IDs should be `site1.host.com` and `site2.host.com` respectively. If you set `host.com`, there is a risk that users from `site1.host.com` can log in at `site2.host.com`.
+For example, a web site is located at `https://(www.)site1.host.com` and another at `https://(www.)site2.host.com`, then the Relying Party IDs should be `site1.host.com` and `site2.host.com` respectively. If you set `host.com`, there is a risk that users from `site1.host.com` can log in at `site2.host.com`.
 
-## Relaying Party Icon
+## Relying Party Icon
 
 Your application may also have a logo. You can indicate this logo as third argument. Please note that for safety reason this icon is a priori authenticated URL i.e. an image that uses the `data` scheme.
 
