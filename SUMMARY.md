@@ -12,7 +12,7 @@
 
 ## Pre-requisites
 
-* [The Relaying Party](pre-requisites/the-relaying-party.md)
+* [The Relying Party](pre-requisites/the-relying-party.md)
 * [Credential Source Repository](pre-requisites/credential-source-repository.md)
 * [User Entity](pre-requisites/user-entity-repository.md)
 * [Javascript](pre-requisites/javascript.md)

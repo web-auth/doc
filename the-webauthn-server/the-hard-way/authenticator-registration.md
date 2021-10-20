@@ -10,7 +10,7 @@ To associate a device to a user, you need to instantiate a `Webauthn\PublicKeyCr
 
 It will need:
 
-* [The Relying Party](../../pre-requisites/the-relaying-party.md)
+* [The Relying Party](../../pre-requisites/the-relying-party.md)
 * [The User data](../../pre-requisites/user-entity-repository.md)
 * A challenge \(random binary string\)
 * A list of supported public key parameters i.e. an algorithm list \(at least one\)
