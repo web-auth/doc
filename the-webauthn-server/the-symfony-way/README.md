@@ -72,7 +72,7 @@ Only [Doctrine ORM based repositories are provided](entities-with-doctrine.md). 
 
 ## Configuration
 
-With Flex, you have a minimal configuration file installed through a Flex Recipe. You must set the repositories you have just created. You also have to modify the environment variables `RELAYING_PARTY_ID` and `RELAYING_PARTY_NAME`.
+With Flex, you have a minimal configuration file installed through a Flex Recipe. You must set the repositories you have just created. You also have to modify the environment variables `Relying_PARTY_ID` and `Relying_PARTY_NAME`.
 
 You may also need to adjust other parameters.
 
@@ -87,9 +87,9 @@ webauthn:
     token_binding_support_handler: 'Webauthn\TokenBinding\IgnoreTokenBindingHandler' # We ignore the token binding instructions by default
     creation_profiles: # Authenticator registration profiles
         default: # Unique name of the profile
-            rp: # Relaying Party information
-                name: '%env(RELAYING_PARTY_NAME)%' # CHANGE THIS! or create the corresponding env variable
-                id: '%env(RELAYING_PARTY_ID)%' # Please adapt the env file with the correct relaying party ID or set null
+            rp: # Relying Party information
+                name: '%env(Relying_PARTY_NAME)%' # CHANGE THIS! or create the corresponding env variable
+                id: '%env(Relying_PARTY_ID)%' # Please adapt the env file with the correct relying party ID or set null
 #                icon: null # Secured image (data:// scheme)
 #            challenge_length: 32
 #            timeout: 60000
@@ -114,7 +114,7 @@ webauthn:
 #            attestation_conveyance: !php/const Webauthn\PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE
     request_profiles: # Authentication profiles
         default: # Unique name of the profile
-            rp_id: '%env(RELAYING_PARTY_ID)%' # Please adapt the env file with the correct relaying party ID or set null
+            rp_id: '%env(Relying_PARTY_ID)%' # Please adapt the env file with the correct relying party ID or set null
 #            challenge_length: 32
 #            timeout: 60000
 #            user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
@@ -140,9 +140,9 @@ Please refer to [this page](../../deep-into-the-framework/token-binding.md#the-s
 If you don't create the `creation_profiles` section, a `default` profile is set.
 {% endhint %}
 
-#### Relaying Party \(rp\)
+#### Relying Party \(rp\)
 
-The realying Party corresponds to your application. Please refer [to this page](../../pre-requisites/the-relaying-party.md) for more information.
+The realying Party corresponds to your application. Please refer [to this page](../../pre-requisites/the-relying-party.md) for more information.
 
 {% hint style="warning" %}
 The parameter `id` is optional but highly recommended.
@@ -256,7 +256,7 @@ webauthn:
 You can set as many extensions as you want in the profile. Please also [refer to this page](../../deep-into-the-framework/extensions.md) for more information.
 
 {% hint style="info" %}
-The example below is totally fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the support depends on the authenticators, on the browsers and on the relaying parties \(your applications\).
+The example below is totally fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the support depends on the authenticators, on the browsers and on the relying parties \(your applications\).
 {% endhint %}
 
 {% code title="app/config/webauthn.yaml" %}
@@ -278,7 +278,7 @@ webauthn:
 If you don't create the `creation_profiles` section, a `default` profile is set.
 {% endhint %}
 
-The parameters for the request profiles \(i.e. the authentication\) are very similar to the creation profiles. The only difference is that you don’t need all the detail of the Relaying Party, but only its ID \(i.e. its domain\).
+The parameters for the request profiles \(i.e. the authentication\) are very similar to the creation profiles. The only difference is that you don’t need all the detail of the Relying Party, but only its ID \(i.e. its domain\).
 
 {% code title="app/config/webauthn.yaml" %}
 ```yaml

@@ -192,7 +192,7 @@ $publicKeyCredentialCreationOptions = $server->generatePublicKeyCredentialCreati
 use Webauthn\PublicKeyCredentialCreationOptions;
 
 $publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
-    $relayingParty
+    $relyingParty
     $userEntity,
     $challenge,
     $pubKeyCredParams,
