@@ -65,67 +65,18 @@ The User Entity Repository manages all Webauthn users of your application.
 There is no interface to implement or abstract class to extend so that it should be easy to integrate it in your application. You may already have a user repository.
 
 {% hint style="success" %}
-Whatever database you use \(MySQL, pgSQL…\), it is not necessary to create relationships between your users and the Credential Sources.
+Whatever database you use (MySQL, pgSQL…), it is not necessary to create relationships between your users and the Credential Sources.
 {% endhint %}
 
-Hereafter an example of a User Entity repository. In this example we suppose you already have methods to find users using their username or ID.
+It shall be noted that the Symfony bundle will need a user entity repository. This service shall implement `Webauthn\Bundle\Repository\PublicKeyCredentialUserEntityRepository`.
 
-{% code title="Acme\\Repository\\PublicKeyCredentialUserEntityRepository.php" %}
-```php
-<?php
+The methods required by the interface are as follow:
 
-declare(strict_types=1);
-
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) 2014-2019 Spomky-Labs
- *
- * This software may be modified and distributed under the terms
- * of the MIT license.  See the LICENSE file for details.
- */
-
-namespace Acme\Repository;
-
-use Webauthn\PublicKeyCredentialUserEntity;
-
-final class PublicKeyCredentialUserEntityRepository
-{
-    public function findWebauthnUserByUsername(string $username): ?PublicKeyCredentialUserEntity
-    {
-        //We suppose you already have a method to find a user using its username
-        $user = $this->findOneBy(['username' => $username]);
-        if (null === $user) {
-            return null;
-        }
-
-        return $this->createUserEntity($user);
-    }
-
-    public function findWebauthnUserByUserHandle(string $userHandle): ?PublicKeyCredentialUserEntity
-    {
-        //We suppose you already have a method to find a user using its ID
-        $user = $this->findOneBy(['id' => $userHandle]);
-        if (null === $user) {
-            return null;
-        }
-
-        return $this->createUserEntity($user);
-    }
-
-    private function createUserEntity(User $user): PublicKeyCredentialUserEntity
-    {
-        //We create a PublicKeyCredentialUserEntity object
-        // This object requires the username, the ID and the name to display (e.g. "John Doe")
-        // The avatar URL is optional and could be null
-        return new PublicKeyCredentialUserEntity(
-            $user->username,
-            $user->id,
-            $user->displayName,
-            $user->avatarUrl
-        );
-    }
-}
-```
-{% endcode %}
-
+* `public function findOneByUsername(string $username): ?PublicKeyCredentialUserEntity;`\
+  This method tries to find out a user entity from the username.
+* `public function findOneByUserHandle(string $userHandle): ?PublicKeyCredentialUserEntity;`\
+  This method tries to find out a user entity from the user handle i.e. the user ID.
+* `public function generateNextUserEntityId(): string;`\
+  This method creates a user entity ID. Note that this method **SHALL NOT** save that ID. Its main purpose generate a unique ID that could be used for a user entity object at a later stage.
+* `public function saveUserEntity(PublicKeyCredentialUserEntity $userEntity): void;`\
+  This method saves the user entity. If the user entity already exists, it should throw an exception.

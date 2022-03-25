@@ -8,12 +8,12 @@ To perform a user authentication using a security device, you need to instantiat
 
 Let’s say you want to authenticate the user we used earlier. This options object will need:
 
-* A challenge \(random binary string\)
-* A timeout \(optional\)
-* [The Relying Party ID](../../pre-requisites/the-relying-party.md) i.e. your application domain \(optional\)
+* A challenge (random binary string)
+* A timeout (optional)
+* [The Relying Party ID](../../pre-requisites/the-relying-party.md) i.e. your application domain (optional)
 * The list with the allowed credentials
-* [The user verification requirement](../../deep-into-the-framework/user-verification.md) \(optional\)
-* [Extensions](../../deep-into-the-framework/extensions.md) \(optional\)
+* [The user verification requirement](../../deep-into-the-framework/user-verification.md) (optional)
+* [Extensions](../../deep-into-the-framework/extensions.md) (optional)
 
 The `PublicKeyCredentialRequestOptions` object is designed to be easily serialized into a JSON object. This will ease the integration into an HTML page or through an API endpoint.
 
@@ -21,7 +21,7 @@ The `PublicKeyCredentialRequestOptions` object is designed to be easily serializ
 For v4.0+, the timeout will be set to `null`. The values recommended by the specification are as follow:
 
 * If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
-* If the user verification is `preferred` or `required`, the range is 300 to 600 seconds \(5 to 10 minutes\)
+* If the user verification is `preferred` or `required`, the range is 300 to 600 seconds (5 to 10 minutes)
 {% endhint %}
 
 ### Allowed Credentials
@@ -68,12 +68,13 @@ $allowedCredentials = array_map(
 );
 
 // Public Key Credential Request Options
-$publicKeyCredentialRequestOptions = new PublicKeyCredentialRequestOptions(
-    random_bytes(32),                                                           // Challenge
-    60000,                                                                      // Timeout
-    'foo.example.com',                                                          // Relying Party ID
-    $allowedCredentials                                                         // Extensions
-);
+$publicKeyCredentialRequestOptions = 
+    PublicKeyCredentialRequestOptions::create(
+        random_bytes(32) // Challenge
+    )
+    ->setTimeout(30_000)
+    ->setRpId('foo.example.com')
+;
 ```
 
 ## Response Handling
@@ -148,7 +149,7 @@ if (!$authenticatorAssertionResponse instanceof AuthenticatorAssertionResponse) 
 
 The second step is the verification against the Public Key Assertion Options we created earlier.
 
-The Authenticator Assertion Response Validator service \(variable `$authenticatorAssertionResponseValidator`\) will check everything for you.
+The Authenticator Assertion Response Validator service (variable `$authenticatorAssertionResponseValidator`) will check everything for you.
 
 ```php
 <?php
@@ -173,4 +174,3 @@ If no exception is thrown, the response is valid and you can continue the authen
 {% hint style="info" %}
 The Public Key Credential Source returned allows you to know which device was used by the user.
 {% endhint %}
-

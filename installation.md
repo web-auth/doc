@@ -14,9 +14,8 @@ composer require web-auth/webauthn-lib
 
 Hereafter the dependency tree:
 
-* `web-auth/webauthn-lib`: this is the core library. This package can be used in any PHP project or within any popular framework \(Laravel, CakePHP…\)
+* `web-auth/webauthn-lib`: this is the core library. This package can be used in any PHP project or within any popular framework (Laravel, CakePHP…)
 * `web-auth/webauthn-symfony-bundle`: this is a Symfony bundle that ease the integration of this authentication mechanism in your Symfony project.
-* `web-auth/conformance-toolset`: this component helps you to verify your application is compliant with the specification. It is meant to be used with the FIDO Alliance Tools. You usually don’t need it.
 
 The core library also depends on `web-auth/cose-lib` and `web-auth/metadata-service`. What are these dependencies?
 
@@ -32,7 +31,5 @@ The total size of the core package is approximately 760ko. Hereafter the detail 
 * `web-auth/metadata-service`: 81ko
 * `web-auth/webauthn-lib`: 207ko
 * `web-auth/webauthn-symfony-bundle`: 385ko
-* `web-auth/conformance-toolset`: N/A
 
 The total size of the core package + the direct dependencies is approximately 1.7Mo.
-

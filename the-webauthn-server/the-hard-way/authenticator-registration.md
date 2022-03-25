@@ -12,13 +12,13 @@ It will need:
 
 * [The Relying Party](../../pre-requisites/the-relying-party.md)
 * [The User data](../../pre-requisites/user-entity-repository.md)
-* A challenge \(random binary string\)
-* A list of supported public key parameters i.e. an algorithm list \(at least one\)
-* A timeout \(optional\)
-* A list of public key credential to exclude from the registration process \(optional\)
-* [The Authenticator Selection Criteria](../../deep-into-the-framework/authenticator-selection-criteria.md) \(e.g. user presence requirement\)
-* [Attestation conveyance preference](../../deep-into-the-framework/attestation-and-metadata-statement.md) \(optional\)
-* [Extensions](../../deep-into-the-framework/extensions.md) \(optional\)
+* A challenge (random binary string)
+* A list of supported public key parameters i.e. an algorithm list (at least one)
+* A timeout (optional)
+* A list of public key credential to exclude from the registration process (optional)
+* [The Authenticator Selection Criteria](../../deep-into-the-framework/authenticator-selection-criteria.md) (e.g. user presence requirement)
+* [Attestation conveyance preference](../../deep-into-the-framework/attestation-and-metadata-statement.md) (optional)
+* [Extensions](../../deep-into-the-framework/extensions.md) (optional)
 
 Let’s see an example of the `PublicKeyCredentialCreationOptions` object. The following example is a possible Public Key Creation page for a dummy user "@cypher-Angel-3000".
 
@@ -36,14 +36,14 @@ use Webauthn\PublicKeyCredentialRpEntity;
 use Webauthn\PublicKeyCredentialUserEntity;
 
 // RP Entity
-$rpEntity = new PublicKeyCredentialRpEntity(
+$rpEntity = PublicKeyCredentialRpEntity::create(
     'My Super Secured Application', //Name
     'foo.example.com',              //ID
     null                            //Icon
 );
 
 // User Entity
-$userEntity = new PublicKeyCredentialUserEntity(
+$userEntity = PublicKeyCredentialUserEntity::create(
     '@cypher-Angel-3000',                   //Name
     '123e4567-e89b-12d3-a456-426655440000', //ID
     'Mighty Mike',                          //Display name
@@ -58,33 +58,45 @@ $timeout = 60000; // 60 seconds
 
 // Public Key Credential Parameters
 $publicKeyCredentialParametersList = [
-    new PublicKeyCredentialParameters('public-key', Algorithms::COSE_ALGORITHM_ES256),
-    new PublicKeyCredentialParameters('public-key', Algorithms::COSE_ALGORITHM_RS256),
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ES256),
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_RS256),
 ];
 
 // Devices to exclude
 $excludedPublicKeyDescriptors = [
-    new PublicKeyCredentialDescriptor(PublicKeyCredentialDescriptor::CREDENTIAL_TYPE_PUBLIC_KEY, 'ABCDEFGH…'),
+    PublicKeyCredentialDescriptor::create(PublicKeyCredentialDescriptor::CREDENTIAL_TYPE_PUBLIC_KEY, 'ABCDEFGH…'),
 ];
 
-$publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
+$publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create(
     $rpEntity,
     $userEntity,
     $challenge,
     $publicKeyCredentialParametersList,
-    $timeout,
-    $excludedPublicKeyDescriptors,
-    new AuthenticatorSelectionCriteria(),
-    PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE,
-    null // Extensions
 );
 ```
 
 The options object can be converted into JSON and sent to the authenticator [using a JS script](../../pre-requisites/javascript.md).
 
 {% hint style="warning" %}
-It is important to store the user entity and the options object \(e.g. in the session\) for the next step; they will be needed to check the response from the device.
+It is important to store the user entity and the options object (e.g. in the session) for the next step; they will be needed to check the response from the device.
 {% endhint %}
+
+You can change the default values for each and all options
+
+```php
+$publicKeyCredentialCreationOptions =
+    PublicKeyCredentialCreationOpphptions::create(
+        $rpEntity,
+        $userEntity,
+        $challenge,
+        $publicKeyCredentialParametersList,
+    )
+    ->setTimeout(30_000)
+    ->excludeCredentials($credential1, $credential2)
+    ->setAuthenticatorSelection(AuthenticatorSelectionCriteria::create())
+    ->setAttestation(PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE)
+;
+```
 
 ## Creation Response
 
@@ -109,7 +121,7 @@ There are two steps to perform with this object:
 
 ### Data Loading
 
-Now that all components are set, we can load the data we receive using the _Public Key Credential Loader_ service \(variable `$publicKeyCredential`\).
+Now that all components are set, we can load the data we receive using the _Public Key Credential Loader_ service (variable `$publicKeyCredential`).
 
 ```php
 <?php
@@ -159,7 +171,7 @@ The second step is the verification against
 * The Public Key Creation Options we created earlier,
 * The HTTP request
 
-The Authenticator Attestation Response Validator service \(variable `$authenticatorAttestationResponseValidator`\) will check everything for you: challenge, origin, attestation statement and much more.
+The Authenticator Attestation Response Validator service (variable `$authenticatorAttestationResponseValidator`) will check everything for you: challenge, origin, attestation statement and much more.
 
 {% hint style="info" %}
 The library needs PSR-7 requests. In the example below, we use `nyholm/psr7-server` to get that request.
@@ -190,7 +202,7 @@ $publicKeyCredentialSource = $authenticatorAttestationResponseValidator->check(
 );
 ```
 
-If no exception is thrown, the response is valid. You can store the Public Key Credential Source `($publicKeyCredentialSource`\) and associate it to the user entity.
+If no exception is thrown, the response is valid. You can store the Public Key Credential Source `($publicKeyCredentialSource`) and associate it to the user entity.
 
 {% hint style="info" %}
 The way you store and associate these objects to the user is out of scope of this library. However, please note that these objects implement `\JsonSerializable` and have a static method `createFromJson(string $json)`. This will allow you to serialize the objects into JSON and easily go back to an object.
@@ -199,4 +211,3 @@ The way you store and associate these objects to the user is out of scope of thi
 {% hint style="warning" %}
 If you have just registered a new user, don’t forget to store it in your database as well.
 {% endhint %}
-

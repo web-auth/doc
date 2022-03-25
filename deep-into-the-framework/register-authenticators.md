@@ -5,12 +5,12 @@ In some circumstances, you may need to register a new authenticator for a user e
 It is possible to perform this ceremony programmatically.
 
 {% hint style="success" %}
-You can attach several authenticators to a user account. It is recommended in case of lost devices or if the user gets access on your application using multiple platforms \(smartphone, laptop…\).
+You can attach several authenticators to a user account. It is recommended in case of lost devices or if the user gets access on your application using multiple platforms (smartphone, laptop…).
 {% endhint %}
 
 ## The Easy Way
 
-The procedure is the same as [the one described in this page](../the-webauthn-server/the-easy-way/register-a-new-authentication.md), except that you don’t have to save the user entity again.
+The procedure is the same as [the one described in this page](broken-reference), except that you don’t have to save the user entity again.
 
 ## The Hard Way
 
@@ -178,7 +178,7 @@ webauthn:
                 success_handler: … # Your handler here
 ```
 
-####  Failure Handler
+#### Failure Handler
 
 This handler is called when an error occurred during the process. This handler shall implement the interface `Webauthn\Bundle\Security\Handler\SuccessHandler`. The default handler is `Webauthn\Bundle\Service\DefaultFailureHandler`.
 
@@ -191,4 +191,3 @@ webauthn:
                 …
                 failure_handler: … # Your handler here
 ```
-

@@ -39,8 +39,8 @@ With Firefox for example, the user may refuse to send information about the secu
 Hereafter the types of attestations you can have:
 
 * `none`: no attestation is provided.
-* `fido-u2f`: for non-FIDO2 compatible devices \(old U2F security tokens\).
-* `packed`: generally used by authenticators with limited resources \(e.g., secure elements\). It uses a very compact but still extensible encoding method. 
+* `fido-u2f`: for non-FIDO2 compatible devices (old U2F security tokens).
+* `packed`: generally used by authenticators with limited resources (e.g., secure elements). It uses a very compact but still extensible encoding method.
 * `android key`: commonly used by old or disconnected Android devices.
 * `android safety net`: for new Android devices like smartphones.
 * `trusted platform module`: for devices with built-in security chips.
@@ -62,10 +62,9 @@ use Webauthn\AttestationStatement\AttestationStatementSupportManager;
 use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
 
 // The manager will receive data to load and select the appropriate 
-$attestationStatementSupportManager = new AttestationStatementSupportManager();
-
-// The none type
-$attestationStatementSupportManager->add(new NoneAttestationStatementSupport());
+$attestationStatementSupportManager = AttestationStatementSupportManager::create()
+    ->add(NoneAttestationStatementSupport::create())
+;
 ```
 
 ## Attestation Object Loader
@@ -79,7 +78,9 @@ declare(strict_types=1);
 
 use Webauthn\AttestationStatement\AttestationObjectLoader;
 
-$attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager);
+$attestationObjectLoader = AttestationObjectLoader::create(
+    $attestationStatementSupportManager
+);
 ```
 
 ## Public Key Credential Loader
@@ -93,7 +94,9 @@ declare(strict_types=1);
 
 use Webauthn\PublicKeyCredentialLoader;
 
-$publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader);
+$publicKeyCredentialLoader = PublicKeyCredentialLoader::create(
+    $attestationObjectLoader
+);
 ```
 
 ## Extension Output Checker Handler
@@ -107,14 +110,14 @@ declare(strict_types=1);
 
 use Webauthn\AuthenticationExtensions\ExtensionOutputCheckerHandler;
 
-$extensionOutputCheckerHandler = new ExtensionOutputCheckerHandler();
+$extensionOutputCheckerHandler = ExtensionOutputCheckerHandler::create();
 ```
 
 You can add as many extension checkers as you want. Each extension checker must implement `Webauthn\AuthenticationExtensions\ExtensionOutputChecker` and throw a `Webauthn\AuthenticationExtensions\ExtensionOutputError` in case of an error.
 
 ## Authenticator Attestation Response Validator
 
-This object is what you will directly use when receiving Attestation Responses \(authenticator registration\).
+This object is what you will directly use when receiving Attestation Responses (authenticator registration).
 
 ```php
 <?php
@@ -123,7 +126,7 @@ declare(strict_types=1);
 
 use Webauthn\AuthenticatorAttestationResponseValidator;
 
-$authenticatorAttestationResponseValidator = new AuthenticatorAttestationResponseValidator(
+$authenticatorAttestationResponseValidator = AuthenticatorAttestationResponseValidator::create(
     $attestationStatementSupportManager,
     $publicKeyCredentialSourceRepository,
     $tokenBindingHandler,
@@ -133,7 +136,7 @@ $authenticatorAttestationResponseValidator = new AuthenticatorAttestationRespons
 
 ## Authenticator Assertion Response Validator
 
-This object is what you will directly use when receiving Assertion Responses \(user authentication\).
+This object is what you will directly use when receiving Assertion Responses (user authentication).
 
 ```php
 <?php
@@ -142,11 +145,10 @@ declare(strict_types=1);
 
 use Webauthn\AuthenticatorAssertionResponseValidator;
 
-$authenticatorAssertionResponseValidator = new AuthenticatorAssertionResponseValidator(
+$authenticatorAssertionResponseValidator = AuthenticatorAssertionResponseValidator::create(
     $publicKeyCredentialSourceRepository,  // The Credential Repository service
     $tokenBindingHandler,                  // The token binding handler
     $extensionOutputCheckerHandler,        // The extension output checker handler
     $coseAlgorithmManager                  // The COSE Algorithm Manager  
 );
 ```
-

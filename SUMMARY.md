@@ -16,13 +16,9 @@
 * [Credential Source Repository](pre-requisites/credential-source-repository.md)
 * [User Entity](pre-requisites/user-entity-repository.md)
 * [Javascript](pre-requisites/javascript.md)
-* [Easy or Hard Way?](pre-requisites/easy-or-hard-way.md)
 
 ## The Webauthn Server
 
-* [The Easy Way](the-webauthn-server/the-easy-way/README.md)
-  * [Register Authenticators](the-webauthn-server/the-easy-way/register-a-new-authentication.md)
-  * [Authenticate Your Users](the-webauthn-server/the-easy-way/user-authentication.md)
 * [The Hard Way](the-webauthn-server/the-hard-way/README.md)
   * [Register Authenticators](the-webauthn-server/the-hard-way/authenticator-registration.md)
   * [Authenticate Your Users](the-webauthn-server/the-hard-way/authenticate-your-users.md)
@@ -47,4 +43,3 @@
 
 * [From v2.x to v3.0](migration/from-v2.x-to-v3.0.md)
 * [From v3.x to v4.0](migration/from-v3.x-to-v4.0.md)
-
