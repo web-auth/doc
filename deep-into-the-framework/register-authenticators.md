@@ -8,10 +8,6 @@ It is possible to perform this ceremony programmatically.
 You can attach several authenticators to a user account. It is recommended in case of lost devices or if the user gets access on your application using multiple platforms (smartphone, laptop…).
 {% endhint %}
 
-## The Easy Way
-
-The procedure is the same as [the one described in this page](broken-reference), except that you don’t have to save the user entity again.
-
 ## The Hard Way
 
 The procedure is the same as [the one described in this page](../the-webauthn-server/the-hard-way/authenticator-registration.md).

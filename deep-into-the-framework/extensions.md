@@ -88,50 +88,6 @@ final class LocationExtensionOutputChecker
 
 To enable an authenticator feature like the geolocation, you must ask it through the creation or the request option objects.
 
-### The Easy Way
-
-#### Authenticator registration
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use Webauthn\AuthenticationExtensions\AuthenticationExtension;
-use Webauthn\AuthenticationExtensions\AuthenticationExtensionsClientInputs;
-
-// Extensions
-$extensions = new AuthenticationExtensionsClientInputs();
-$extensions->add(new AuthenticationExtension('loc', true));
-
-$publicKeyCredentialCreationOptions = $server->generatePublicKeyCredentialCreationOptions(
-    $userEntity,
-    $attestationMode,
-    $excludedPublicKeyDescriptors, $authenticatorSelectionCriteria,
-    $extensions
-);
-```
-
-#### User Authentication
-
-```php
-<?php
-
-use Webauthn\AuthenticationExtensions\AuthenticationExtension;
-use Webauthn\AuthenticationExtensions\AuthenticationExtensionsClientInputs;
-use Webauthn\PublicKeyCredentialCreationOptions;
-
-// Extensions
-$extensions = new AuthenticationExtensionsClientInputs();
-$extensions->add(new AuthenticationExtension('loc', true));
-
-$publicKeyCredentialRequestOptions = $server->generatePublicKeyCredentialRequestOptions(
-    PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_PREFERRED,
-    $allowedCredentials
-    $extensions
-);
-```
-
 ### The Hard Way
 
 #### Authenticator registration
@@ -219,4 +175,3 @@ webauthn:
                 loc: true
 ```
 {% endcode %}
-

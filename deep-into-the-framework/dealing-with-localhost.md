@@ -12,12 +12,6 @@ If your are working on a development environment, `https` may not be available b
 Please be careful using this feature. It should NOT be used in production.
 {% endhint %}
 
-### The Easy Way
-
-```php
-$server->setSecuredRelyingPartyId(['localhost']);
-```
-
 ### The Hard Way
 
 ```php
@@ -50,4 +44,3 @@ security:
                secured_rp_ids:
                    - 'localhost'
 ```
-

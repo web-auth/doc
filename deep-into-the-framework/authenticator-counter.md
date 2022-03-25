@@ -42,22 +42,6 @@ final class CustomCounterChecker implements CounterChecker
 }
 ```
 
-##  The Easy Way
-
-```php
-<?php
-
-use Webauthn\Server;
-
-$server = new Server(
-    $rpEntity
-    $publicKeyCredentialSourceRepository
-);
-
-// Set your handler here
-$server->setCounterChecker(new CustomCounterChecker());
-```
-
 ## The Hard Way
 
 ```php
@@ -78,4 +62,3 @@ webauthn:
     counter_checker: App\Service\CustomCounterChecker
 ```
 {% endcode %}
-

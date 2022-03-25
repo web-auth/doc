@@ -10,33 +10,6 @@ With Webauthn, it is possible to authenticate a user without username. This beha
 In case of failure, you should continue with the standard authentication process i.e. by asking the username of the user.
 {% endhint %}
 
-## The Easy Way
-
-Selection criteria for the registration of the authenticator:
-
-```php
-use Webauthn\AuthenticatorSelectionCriteria;
-use Webauthn\PublicKeyCredentialCreationOptions;
-
-$authenticatorSelectionCriteria = new AuthenticatorSelectionCriteria(
-    AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE,
-    true,                                                                  // Resident key required
-    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED // User verification required
-);
-```
-
-The Request Options:
-
-```php
-<?php
-
-use Webauthn\PublicKeyCredentialRequestOptions;
-
-$ublicKeyCredentialRequestOptions = $server->generatePublicKeyCredentialRequestOptions(
-    PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_REQUIRED,
-);
-```
-
 ## The Hard Way
 
 Selection criteria for the registration of the authenticator:
@@ -93,4 +66,3 @@ webauthn:
             rp_id: 'example.com'
             user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
 ```
-

@@ -10,11 +10,11 @@ The class `Webauthn\AuthenticatorSelectionCriteria` is designed for this purpose
 
 ### Authenticator Attachment Modality
 
-You can indicate if the authenticator must be attached to the client \(platform authenticator i.e. it is usually not removable from the client device\) or must be detached \(roaming authenticator\).
+You can indicate if the authenticator must be attached to the client (platform authenticator i.e. it is usually not removable from the client device) or must be detached (roaming authenticator).
 
 Possible values are:
 
-* `AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE`: there is no requirement \(default value\),
+* `AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE`: there is no requirement (default value),
 * `AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_PLATFORM`: the authenticator must be attached,
 * `AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_CROSS_PLATFORM`: must be a roaming authenticator.
 
@@ -29,28 +29,6 @@ This criterion is needed if you want to [authenticate users without username](au
 ### User Verification
 
 [Please refer to this page](user-verification.md).
-
-## The Easy Way
-
-```php
-<?php
-
-use Webauthn\AuthenticatorSelectionCriteria;
-use Webauthn\PublicKeyCredentialCreationOptions;
-
-$authenticatorSelectionCriteria = new AuthenticatorSelectionCriteria(
-    AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_PLATFORM,     // Platform authenticator
-    true,                                                                  // Resident key required
-    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED // User verification required
-);
-
-$publicKeyCredentialCreationOptions = $server->generatePublicKeyCredentialCreationOptions(
-    $userEntity,
-    PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE,
-    $excludedPublicKeyDescriptors,
-    $authenticatorSelectionCriteria
-);
-```
 
 ### The Hard Way
 
@@ -93,4 +71,3 @@ webauthn:
 {% hint style="info" %}
 To be written
 {% endhint %}
-

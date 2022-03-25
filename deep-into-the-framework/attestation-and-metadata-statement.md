@@ -1,23 +1,23 @@
 # Attestation and Metadata Statement
 
 {% hint style="danger" %}
-Disclaimer: you **should not** ask for the Attestation Statement unless you are working on an application that requires a high level of trust \(e.g. Banking/Financial Company, Government Agency...\).
+Disclaimer: you **should not** ask for the Attestation Statement unless you are working on an application that requires a high level of trust (e.g. Banking/Financial Company, Government Agency...).
 {% endhint %}
 
 ## Attestation Statement
 
-During the Attestation Ceremony \(i.e. the registration of the authenticator\), you can ask for the Attestation Statement of the authenticator. The Attestation Statements have one of the following types:
+During the Attestation Ceremony (i.e. the registration of the authenticator), you can ask for the Attestation Statement of the authenticator. The Attestation Statements have one of the following types:
 
-* **None** \(`none`\): no Attestation Statement is provided
-* **Basic Attestation** \(`basic`\)**:** Authenticator’s attestation key pair is specific to an authenticator model.
-* **Surrogate Basic Attestation \(or Self Attestation -** `self`**\)**: Authenticators that have no specific attestation key use the credential private key to create the attestation signature
-* **Attestation CA** \(`AttCA`\): Authenticators are based on a Trusted Platform Module \(TPM\). They can generate multiple attestation identity key pairs \(AIK\) and requests an Attestation CA to issue an AIK certificate for each.
-* **Anonymization CA** \(`AnonCA`\):  Authenticators use an Anonymization CA, which dynamically generates per-credential attestation certificates such that the attestation statements presented to Relying Parties do not provide uniquely identifiable information.
-* **Elliptic Curve based Direct Anonymous Attestation** \(`ECDAA`\): Authenticator receives direct anonymous attestation \(DAA\) credentials from a single DAA-Issuer. These DAA credentials are used along with blinding to sign the attested credential data.
+* **None** (`none`): no Attestation Statement is provided
+* **Basic Attestation** (`basic`)**:** Authenticator’s attestation key pair is specific to an authenticator model.
+* **Surrogate Basic Attestation (or Self Attestation -** `self`**)**: Authenticators that have no specific attestation key use the credential private key to create the attestation signature
+* **Attestation CA** (`AttCA`): Authenticators are based on a Trusted Platform Module (TPM). They can generate multiple attestation identity key pairs (AIK) and requests an Attestation CA to issue an AIK certificate for each.
+* **Anonymization CA** (`AnonCA`): Authenticators use an Anonymization CA, which dynamically generates per-credential attestation certificates such that the attestation statements presented to Relying Parties do not provide uniquely identifiable information.
+* **Elliptic Curve based Direct Anonymous Attestation** (`ECDAA`): Authenticator receives direct anonymous attestation (DAA) credentials from a single DAA-Issuer. These DAA credentials are used along with blinding to sign the attested credential data.
 
 ## Metadata Statement
 
-The Metadata Statements are issued by the manufacturers of the authenticators. These statements contain details about the authenticators \(supported algorithms, biometric capabilities...\) and all the necessary information to verify the Attestation Statements generated during the attestation ceremony.
+The Metadata Statements are issued by the manufacturers of the authenticators. These statements contain details about the authenticators (supported algorithms, biometric capabilities...) and all the necessary information to verify the Attestation Statements generated during the attestation ceremony.
 
 There are several possible sources to get these Metadata Statements. The main source is the [FIDO Alliance Metadata Service](https://fidoalliance.org/metadata) that allows fetching statements on-demand, but some of them may be provided by other means.
 
@@ -29,9 +29,7 @@ The FIDO Alliance Metadata Service provides a limited number of Metadata Stateme
 
 ### Attestation Metadata Repository
 
-First of all, you must prepare an Attestation Metadata Repository. This service will manage all Metadata Statements depending on their sources \(local storage or distant service\).
-
-
+First of all, you must prepare an Attestation Metadata Repository. This service will manage all Metadata Statements depending on their sources (local storage or distant service).
 
 Your Metadata Statement Repository must implement the interface `Webauthn\MetadataService\MetadataStatementRepository` that has two methods:
 
@@ -40,33 +38,6 @@ Your Metadata Statement Repository must implement the interface `Webauthn\Metada
 {% hint style="warning" %}
 The library does not provide any Metadata Statement Repositroy. It is up to you to select the MDS suitable for your application and store them in your database.
 {% endhint %}
-
-#### The Easy Way
-
-You just have to inject the Metadata Statement Repository to your `Server` class.
-
-```php
-<?php
-
-use Webauthn\Server;
-use Webauthn\PublicKeyCredentialRpEntity;
-
-...
-
-// Before v3.3
-$server = new Server(
-    $rpEntity,
-    $publicKeyCredentialSourceRepository,
-    $myMetadataStatementRepository        // Inject your new service here
-);
-
-// Or v3.3+
-$server = new Server(
-    $rpEntity,
-    $publicKeyCredentialSourceRepository
-);
-$server->setMetadataStatementRepository($myMetadataStatementRepository); // Inject your new service here
-```
 
 #### The Hard Way
 
@@ -162,11 +133,11 @@ The modification of these parameters is not recommended. You should try to sync 
 
 ### Credential Creation Options
 
-By default, no Attestation Statement is asked to the Authenticators \(type = `none`\). To change this behavior, you just have to set the corresponding parameter in the `Webauthn\PublicKeyCredentialCreationOptions` object.
+By default, no Attestation Statement is asked to the Authenticators (type = `none`). To change this behavior, you just have to set the corresponding parameter in the `Webauthn\PublicKeyCredentialCreationOptions` object.
 
 There are 3 conveyance modes available using PHP constants provided by the class `Webauthn\PublicKeyCredentialCreationOptions`:
 
-* `ATTESTATION_CONVEYANCE_PREFERENCE_NONE`: the Relying Party is not interested in authenticator attestation \(default\)
+* `ATTESTATION_CONVEYANCE_PREFERENCE_NONE`: the Relying Party is not interested in authenticator attestation (default)
 * `ATTESTATION_CONVEYANCE_PREFERENCE_INDIRECT`: the Relying Party prefers an attestation conveyance yielding verifiable attestation statements, but allows the client to decide how to obtain such attestation statements.
 * `ATTESTATION_CONVEYANCE_PREFERENCE_DIRECT`: the Relying Party wants to receive the attestation statement as generated by the authenticator.
 
@@ -217,4 +188,3 @@ webauthn:
                 id: 'example.com'
 ```
 {% endcode %}
-
