@@ -30,10 +30,6 @@ return function (RoutingConfigurator $routes) {
 
 The first step is to create [your credential](../../pre-requisites/credential-source-repository.md) and [user entity repositories](../../pre-requisites/user-entity-repository.md).
 
-The bundle provides a `Webauthn\Bundle\Repository\PublicKeyCredentialSourceRepository` class that may help you.&#x20;
-
-Other storage systems like filesystem or Doctrine ODM may be added in the future but, at the moment, you have to create these from scratch.
-
 ## Configuration
 
 With Flex, you have a minimal configuration file installed through a Flex Recipe. You must set the repositories you have just created. You also have to modify the environment variables `Relying_PARTY_ID` and `Relying_PARTY_NAME`.
@@ -108,7 +104,7 @@ If you don't create the `creation_profiles` section, a `default` profile is set.
 
 #### Relying Party (rp)
 
-The realying Party corresponds to your application. Please refer [to this page](../../pre-requisites/the-relying-party.md) for more information.
+The relying Party corresponds to your application. Please refer [to this page](../../pre-requisites/the-relying-party.md) for more information.
 
 {% hint style="warning" %}
 The parameter `id` is optional but highly recommended.
@@ -145,10 +141,12 @@ webauthn:
 {% endcode %}
 
 {% hint style="info" %}
-For v4.0+, the timeout will be set to `null`. The values recommended by the specification are as follow:
+For v4.0+, the timeout is set to `null`. The values recommended by the specification are as follow:
 
 * If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
 * If the user verification is `preferred` or `required`, the range is 300 to 600 seconds (5 to 10 minutes)
+
+These behaviors are not necessarily followed by the web browsers.
 {% endhint %}
 
 #### Authenticator Selection Criteria
