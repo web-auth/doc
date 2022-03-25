@@ -94,5 +94,3 @@ final class PublicKeyCredentialUserEntityRepository implements PublicKeyCredenti
 
 ```
 {% endcode %}
-
-As you can&#x20;
