@@ -23,9 +23,10 @@
   * [Register Authenticators](the-webauthn-server/the-hard-way/authenticator-registration.md)
   * [Authenticate Your Users](the-webauthn-server/the-hard-way/authenticate-your-users.md)
 * [The Symfony Way](the-webauthn-server/the-symfony-way/README.md)
-  * [Credential Source Entity and Repository](the-webauthn-server/the-symfony-way/entities-with-doctrine.md)
-  * [User Entity Entity and Repository](the-webauthn-server/the-symfony-way/entities-with-doctrine-1.md)
+  * [Credential Source Repository](the-webauthn-server/the-symfony-way/entities-with-doctrine.md)
+  * [User Entity Repository](the-webauthn-server/the-symfony-way/entities-with-doctrine-1.md)
   * [Firewall](the-webauthn-server/the-symfony-way/firewall.md)
+  * [Configuration References](the-webauthn-server/the-symfony-way/configuration-references.md)
 
 ## Deep into the framework
 
