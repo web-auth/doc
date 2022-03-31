@@ -1,14 +1,18 @@
+---
+description: Where the public keys and details are stored
+---
+
 # Credential Source Repository
 
-## Credential Source
+The Credential Source can be stored the way you want. As the `Webauthn\PublicKeyCredentialSource` class can be converted into JSON, it could be stored in a filesystem.
+
+In general, Symfony applications use Doctrine. That is why the bundle provides a way to use Doctrine as storage system.
 
 ### The Doctrine Entity
 
-With Doctrine, you have to indicate how to store the Credential Source objects. Hereafter an example of an entity. In this example we add an entity `id` and a custom field `created_at`. We also indicate the repository as we will have a custom one.
+Hereafter an example of an entity.
 
-{% hint style="info" %}
-As the ID must have a fixed length and because the `credentialId` field of `Webauthn\PublicKeyCredentialSource` hasn’t such a requirement and is a binary string, thus we need to declare our own `id` field.
-{% endhint %}
+This is the most simple example. Feel free to add custom fields that fits on your needs e.g. `created_at` _or `is_revoked`_.
 
 {% code title="App/Entity/PublicKeyCredentialSource.php" %}
 ```php
@@ -18,29 +22,28 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
+use App\Repository\PublicKeyCredentialSourceRepository;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
+use Symfony\Component\Uid\Ulid;
 use Webauthn\PublicKeyCredentialSource as BasePublicKeyCredentialSource;
 use Webauthn\TrustPath\TrustPath;
 
-/**
- * @ORM\Table(name="public_key_credential_sources")
- * @ORM\Entity(repositoryClass="App\Repository\PublicKeyCredentialSourceRepository")
- */
+#[Table(name: "public_key_credential_sources")]
+#[Entity(repositoryClass: PublicKeyCredentialSourceRepository::class)]
 class PublicKeyCredentialSource extends BasePublicKeyCredentialSource
 {
-    /**
-     * @var string
-     * @ORM\Id
-     * @ORM\Column(type="string", length=100)
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $id;
+    #[Id]
+    #[Column(type: "ulid", unique: true)]
+    #[GeneratedValue(strategy: "NONE")]
+    private string $id;
 
     public function __construct(string $publicKeyCredentialId, string $type, array $transports, string $attestationType, TrustPath $trustPath, UuidInterface $aaguid, string $credentialPublicKey, string $userHandle, int $counter)
     {
-        $this->id = Uuid::uuid4()->toString();
+        $this->id = Ulid::generate();
         parent::__construct($publicKeyCredentialId, $type, $transports, $attestationType, $trustPath, $aaguid, $credentialPublicKey, $userHandle, $counter);
     }
 
@@ -56,7 +59,7 @@ class PublicKeyCredentialSource extends BasePublicKeyCredentialSource
 Do not forget to update your database schema!
 {% endhint %}
 
-### The Repository
+## The Repository
 
 To ease the integration into your application, the bundle provides a concrete class that you can extend.
 

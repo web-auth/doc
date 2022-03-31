@@ -16,7 +16,7 @@ If you use Laravel, you may be interested in [this project: https://github.com/a
 
 ### With Symfony Flex
 
-Since the version 4.0, Symfony Flex recipes are provided through a dedicated repository. It is mandatory to add this repository before installing the bundle.
+Since the version 3.0, Symfony Flex recipes are provided through a dedicated repository. It is highly recommended to add this repository before installing the bundle.
 
 ```shell
 composer config --json extra.symfony.endpoint '["https://api.github.com/repos/web-auth/recipes/contents/index.json", "flex://defaults"]'
