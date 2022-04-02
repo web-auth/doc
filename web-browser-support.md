@@ -13,5 +13,4 @@ Webauthn is now supported by all main web browsers:
 * Safari 13+ and iOS Safari 13.3+
 * Android Browser 76+
 
-For more information and limitation on these browsers, please have a look at the following page: [https://caniuse.com/\#feat=webauthn](https://caniuse.com/#feat=webauthn)
-
+For more information and limitation on these browsers, please have a look at the following page: [https://caniuse.com/#feat=webauthn](https://caniuse.com/#feat=webauthn)

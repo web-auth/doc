@@ -66,7 +66,7 @@ register({
 ```
 
 {% hint style="info" %}
-The specification Webauthn L2 deprecates the use of the parameter `requireResidentKey`;  you should use residentKey instead with one of the following value: `required`, `preferred` or `discouraged`.
+The specification Webauthn L2 deprecates the use of the parameter `requireResidentKey`; you should use residentKey instead with one of the following value: `required`, `preferred` or `discouraged`.
 
 To have the same behavior as above, please use `required`.
 {% endhint %}
@@ -106,4 +106,3 @@ login({
     .catch((error) => console.log('Authentication failure'))
 ;
 ```
-

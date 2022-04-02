@@ -4,7 +4,7 @@ description: aka the application you are interacting with
 
 # The Relying Party
 
-The Relying Party \(or `rp`\) corresponds to the application that will ask for the user to interact with the authenticator.
+The Relying Party (or `rp`) corresponds to the application that will ask for the user to interact with the authenticator.
 
 The library provides a simple class to handle the rp information: `Webauthn\PublicKeyCredentialRpEntity`.
 
@@ -51,18 +51,18 @@ Allowed: `www.sub.domain.com`, `sub.domain.com`, `domain.com`
 Not allowed:
 
 * `www.sub.domain.com:1337`, `https://domain.com:443`, `sub.domain.com/index`, `https://user:password@www.domain.com`.
-* 12.65.76.43 or \[2001:db8:85a3:8d3:1319:8a2e:370:7348\]
+* 12.65.76.43 or \[2001:db8:85a3:8d3:1319:8a2e:370:7348]
 {% endhint %}
 
 {% hint style="info" %}
-The domain `localhost` can be used if the browser considers the context is safe \(especially the IP address corresponds to a local address\)
+The domain `localhost` can be used if the browser considers the context is safe (especially the IP address corresponds to a local address)
 {% endhint %}
 
 ### How to determine the Relying Party ID?
 
 The Relying Party ID should be determined depending on the common URLs for your web application.
 
-If you have a web application that can be reached at [https://m.my-app.com](https://m.my-app.com) \(for mobiles\) and [https://my-app.com](https://my-app.com) or [https://www.my-app.com](https://www.my-app.com) \(for other devices\), your Relying Party ID should be `my-app.com`.
+If you have a web application that can be reached at [https://m.my-app.com](https://m.my-app.com) (for mobiles) and [https://my-app.com](https://my-app.com) or [https://www.my-app.com](https://www.my-app.com) (for other devices), your Relying Party ID should be `my-app.com`.
 
 If the domain is shared between sub-projects, the rp ID should be limited to that sub-projects.
 
@@ -91,4 +91,3 @@ The Webauthn specification does not set any limit for the length of the third ar
 {% hint style="warning" %}
 The icon may be ignored by browsers, especially if its length is greater than 128 bytes.
 {% endhint %}
-

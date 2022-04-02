@@ -10,8 +10,8 @@ To associate a device to a user, you need to instantiate a `Webauthn\PublicKeyCr
 
 It will need:
 
-* [The Relying Party](../../prerequisites/the-relying-party.md)
-* [The User data](../../prerequisites/user-entity-repository.md)
+* [The Relying Party](../../pre-requisites/the-relying-party.md)
+* [The User data](../../pre-requisites/user-entity-repository.md)
 * A challenge (random binary string)
 * A list of supported public key parameters i.e. an algorithm list (at least one)
 * A timeout (optional)
@@ -75,7 +75,7 @@ $publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create
 );
 ```
 
-The options object can be converted into JSON and sent to the authenticator [using a JS script](../../prerequisites/javascript.md).
+The options object can be converted into JSON and sent to the authenticator [using a JS script](../../pre-requisites/javascript.md).
 
 {% hint style="warning" %}
 It is important to store the user entity and the options object (e.g. in the session) for the next step; they will be needed to check the response from the device.

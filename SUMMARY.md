@@ -3,9 +3,9 @@
 ## The project
 
 * [Introduction](README.md)
-* [Web Browser Support](the-project/web-browser-support.md)
-* [Installation](the-project/installation.md)
-* [Contributing](the-project/contributing.md)
+* [Web Browser Support](web-browser-support.md)
+* [Installation](installation.md)
+* [Contributing](contributing.md)
 
 ## Webauthn In A Nutshell
 
@@ -14,10 +14,10 @@
 
 ## Prerequisites
 
-* [The Relying Party](prerequisites/the-relying-party.md)
-* [Credential Source Repository](prerequisites/credential-source-repository.md)
-* [User Entity](prerequisites/user-entity-repository.md)
-* [Javascript](prerequisites/javascript.md)
+* [The Relying Party](pre-requisites/the-relying-party.md)
+* [Credential Source Repository](pre-requisites/credential-source-repository.md)
+* [User Entity](pre-requisites/user-entity-repository.md)
+* [Javascript](pre-requisites/javascript.md)
 
 ## The Webauthn Server
 
