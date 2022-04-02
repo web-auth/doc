@@ -76,7 +76,7 @@ If you don't create the `creation_profiles` section, a `default` profile is set.
 
 #### Relying Party (rp)
 
-The relying Party corresponds to your application. Please refer [to this page](../../pre-requisites/the-relying-party.md) for more information.
+The relying Party corresponds to your application. Please refer [to this page](../../prerequisites/the-relying-party.md) for more information.
 
 {% hint style="warning" %}
 The parameter `id` is optional but highly recommended.

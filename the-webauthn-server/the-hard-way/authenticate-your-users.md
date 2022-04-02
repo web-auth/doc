@@ -10,7 +10,7 @@ Let’s say you want to authenticate the user we used earlier. This options obje
 
 * A challenge (random binary string)
 * A timeout (optional)
-* [The Relying Party ID](../../pre-requisites/the-relying-party.md) i.e. your application domain (optional)
+* [The Relying Party ID](../../prerequisites/the-relying-party.md) i.e. your application domain (optional)
 * The list with the allowed credentials
 * [The user verification requirement](../../deep-into-the-framework/user-verification.md) (optional)
 * [Extensions](../../deep-into-the-framework/extensions.md) (optional)

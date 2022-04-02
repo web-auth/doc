@@ -6,7 +6,7 @@ description: If you want a fine grained Webauthn server
 
 You will need the following components before loading or verifying the data:
 
-* [The Public Key Credential Source Repository](../../pre-requisites/credential-source-repository.md)
+* [The Public Key Credential Source Repository](../../prerequisites/credential-source-repository.md)
 * [A token binding handler](../../deep-into-the-framework/token-binding.md)
 * An Attestation Statement Support Manager and at least one Attestation Statement Support object
 * An Attestation Object Loader
@@ -20,7 +20,7 @@ That’s a lot off classes! But don’t worry, as their configuration is the sam
 
 The Public Key Credential Source Repository must implement `Webauthn\PublicKeyCredentialSourceRepository`. It will retrieve the credential source and update them when needed.
 
-You can implement the required methods the way you want: Doctrine ORM, file storage… as mentioned on [the dedicated page](../../pre-requisites/credential-source-repository.md).
+You can implement the required methods the way you want: Doctrine ORM, file storage… as mentioned on [the dedicated page](../../prerequisites/credential-source-repository.md).
 
 ## Token Binding Handler
 

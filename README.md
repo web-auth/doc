@@ -72,7 +72,7 @@ Requests for new features, bug fixed and all other ideas to make this framework 
 
 If you feel comfortable writing code, you could try to fix [opened issues where help is wanted](https://github.com/web-auth/webauthn-framework/issues?q=label%3A%22help+wanted%22) or [those that are easy to fix](https://github.com/web-auth/webauthn-framework/labels/easy-pick).
 
-Do not forget to follow [these best practices](contributing.md).
+Do not forget to follow [these best practices](the-project/contributing.md).
 
 {% hint style="danger" %}
 If you think you have found a security issue, **DO NOT open an issue**. [You MUST submit your issue here](https://gitter.im/Spomky/).
