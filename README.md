@@ -4,6 +4,10 @@ description: Overview of the framework
 
 # Introduction
 
+{% hint style="danger" %}
+This outdated and not supported anymore. Please see to the documentation of the last release.
+{% endhint %}
+
 Webauthn defines an API enabling the creation and use of strong, attested, scoped, public key-based credentials by web applications, for the purpose of strongly authenticating users.
 
 The complete specification can be found on [the W3C dedicated page](https://www.w3.org/TR/webauthn/).
@@ -18,9 +22,9 @@ As an example, the [section 5.3.3 “Web Authentication Assertion”](https://ww
 
 * `authenticatorData`
 * `signature`
-* `userHandle`
+*   `userHandle`
 
-  You will find [EXACTLY the same structure](https://github.com/web-auth/webauthn-framework/blob/v3.0/src/webauthn/src/AuthenticatorAssertionResponse.php#L21) in the PHP class provided by the library.
+    You will find [EXACTLY the same structure](https://github.com/web-auth/webauthn-framework/blob/v3.0/src/webauthn/src/AuthenticatorAssertionResponse.php#L21) in the PHP class provided by the library.
 
 ## Supported features
 
@@ -29,7 +33,7 @@ As an example, the [section 5.3.3 “Web Authentication Assertion”](https://ww
   * Basic
   * Self
   * Private CA
-  * ~~Elliptic Curve Direct Anonymous Attestation \(ECDAA\)~~
+  * ~~Elliptic Curve Direct Anonymous Attestation (ECDAA)~~
 * Attestation Formats
   * FIDO U2F
   * Packed
@@ -43,7 +47,7 @@ As an example, the [section 5.3.3 “Web Authentication Assertion”](https://ww
   * ES256, ES256K, ES384, ES512
   * ED25519
 * Extensions
-  * Supported \(not fully tested\)
+  * Supported (not fully tested)
   * appid extension
 
 ## Compatible Authenticators
@@ -51,12 +55,12 @@ As an example, the [section 5.3.3 “Web Authentication Assertion”](https://ww
 The framework is already compatible with all authenticators except the one that use ECDAA Attestation format.
 
 {% hint style="info" %}
-The ECDAA Attestation format is very rare at that time \(January 2020\) thus this framework can safely be used in production.
+The ECDAA Attestation format is very rare at that time (January 2020) thus this framework can safely be used in production.
 {% endhint %}
 
 The compliance of the framework is ensured by running unit and functional tests during its development.
 
-It is also tested using the official FIDO Alliance testing tools. The status of the compliance tests are [reported in this issue](https://github.com/web-auth/webauthn-framework/issues/67). At the time of writing \(end of January. 2020\), the main features and algorithms are supported and 99% of the tests pass. Full compliance with the Webauthn specification is expected in early 2020.
+It is also tested using the official FIDO Alliance testing tools. The status of the compliance tests are [reported in this issue](https://github.com/web-auth/webauthn-framework/issues/67). At the time of writing (end of January. 2020), the main features and algorithms are supported and 99% of the tests pass. Full compliance with the Webauthn specification is expected in early 2020.
 
 ## Support
 
@@ -75,4 +79,3 @@ Do not forget to follow [these best practices](contributing.md).
 {% hint style="danger" %}
 If you think you have found a security issue, **DO NOT open an issue**. [You MUST submit your issue here](https://gitter.im/Spomky/).
 {% endhint %}
-
