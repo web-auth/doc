@@ -12,6 +12,20 @@ First of all, you have to make sure you are using the last v3.x release (v3.3.4 
 
 In addition, you have to make sure you are using PHP `8.1+`.
 
+## Symfony Flex
+
+If you use the Symfony bundle and Symfony Flex, please note that Flex Recipes are now provided through a dedicated server.
+
+It is highly recommended to declare this server within your application `composer.json` file.
+
+```shell
+composer config --json extra.symfony.endpoint '["https://api.github.com/repos/web-auth/recipes/contents/index.json?ref=main", "flex://defaults"]'
+```
+
+{% hint style="info" %}
+You can adapt this command line depending on the other Flex servers you are using.
+{% endhint %}
+
 ## Spot deprecations <a href="#spot-deprecations" id="spot-deprecations"></a>
 
 Next, you have to verify you don’t use any deprecated class, interface, method or property. If you have PHPUnit tests, [you can easily get the list of deprecation used in your application](https://symfony.com/doc/current/components/phpunit\_bridge.html).
