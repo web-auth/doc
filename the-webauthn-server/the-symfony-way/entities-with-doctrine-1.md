@@ -1,4 +1,4 @@
-# User Entity Entity and Repository
+# User Entity Repository
 
 ## User Entity
 
@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Ulid;
 use Webauthn\Bundle\Repository\PublicKeyCredentialUserEntityRepository as PublicKeyCredentialUserEntityRepositoryInterface;
 use Webauthn\PublicKeyCredentialUserEntity;
@@ -38,19 +39,24 @@ final class PublicKeyCredentialUserEntityRepository implements PublicKeyCredenti
     }
 
     /**
-     * This method saves the user or does nothing if the user already exists
-     */
+      * This method saves the user or does nothing if the user already exists.
+      * It may throw an exception. Just adapt it on your needs
+      */
     public function saveUserEntity(PublicKeyCredentialUserEntity $userEntity): void
     {
         /** @var User|null $user */
         $user = $this->userRepository->findOneBy([
             'id' => $userEntity->getId(),
         ]);
-        if ($user !== null) {
+        if (!$user instanceof UserInterface) {
             return;
         }
-        $user = new User($userEntity->getId(), $userEntity->getName(), $userEntity->getDisplayName());
-        $this->userRepository->save($user);
+        $user = new User(
+            $userEntity->getId(),
+            $userEntity->getUserIdentifier(),
+            $userEntity->getDisplayName() // Or any other similar method your entity may have
+        );
+        $this->userRepository->save($user); // Custom method to be added in your repository
     }
 
     public function findOneByUsername(string $username): ?PublicKeyCredentialUserEntity
@@ -90,7 +96,6 @@ final class PublicKeyCredentialUserEntityRepository implements PublicKeyCredenti
         );
     }
 }
-
 
 ```
 {% endcode %}
