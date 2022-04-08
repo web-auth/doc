@@ -22,36 +22,37 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\PublicKeyCredentialSourceRepository;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Table;
 use Symfony\Component\Uid\Ulid;
-use Webauthn\PublicKeyCredentialSource as BasePublicKeyCredentialSource;
+use Doctrine\ORM\Mapping as ORM;
 use Webauthn\TrustPath\TrustPath;
+use Symfony\Component\Uid\AbstractUid;
+use App\Repository\PublicKeyCredentialSourceRepository;
+use Webauthn\PublicKeyCredentialSource as BasePublicKeyCredentialSource;
 
-#[Table(name: "public_key_credential_sources")]
-#[Entity(repositoryClass: PublicKeyCredentialSourceRepository::class)]
-class PublicKeyCredentialSource extends BasePublicKeyCredentialSource
-{
-    #[Id]
-    #[Column(type: "ulid", unique: true)]
-    #[GeneratedValue(strategy: "NONE")]
+#[ORM\Entity(repositoryClass: PublicKeyCredentialSourceRepository::class)]
+class PublicKeyCredentialSource extends BasePublicKeyCredentialSource {
+    #[ORM\Id]
+    #[ORM\Column(type: "ulid", unique: true)]
+    #[ORM\GeneratedValue(strategy: "NONE")]
     private string $id;
 
-    public function __construct(string $publicKeyCredentialId, string $type, array $transports, string $attestationType, TrustPath $trustPath, UuidInterface $aaguid, string $credentialPublicKey, string $userHandle, int $counter)
-    {
+    public function __construct(string $publicKeyCredentialId, string $type, array $transports, string $attestationType, TrustPath $trustPath, AbstractUid $aaguid, string $credentialPublicKey, string $userHandle, int $counter
+    ) {
         $this->id = Ulid::generate();
         parent::__construct($publicKeyCredentialId, $type, $transports, $attestationType, $trustPath, $aaguid, $credentialPublicKey, $userHandle, $counter);
     }
 
-    public function getId(): string
-    {
+    public function getId(): ?string {
         return $this->id;
     }
+
+    public function setId(?string $id): self {
+        $this->id = $id;
+
+        return $this;
+    }
 }
+
 ```
 {% endcode %}
 
