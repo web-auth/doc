@@ -24,22 +24,26 @@ use Doctrine\ORM\EntityManagerInterface;
 use Webauthn\PublicKeyCredentialUserEntity;
 use Webauthn\Bundle\Repository\PublicKeyCredentialUserEntityRepository as PublicKeyCredentialUserEntityRepositoryInterface;
 
-final class PublicKeyCredentialUserEntityRepository implements PublicKeyCredentialUserEntityRepositoryInterface {
+final class PublicKeyCredentialUserEntityRepository implements PublicKeyCredentialUserEntityRepositoryInterface
+{
     /**
      * The UserRepository $userRepository is the Doctrine repository
      * that already exists in the application
      */
-    public function __construct(private UserRepository $userRepository, private EntityManagerInterface $em) {
+    public function __construct(private UserRepository $userRepository, private EntityManagerInterface $em)
+    {
     }
 
-    public function generateNextUserEntityId(): string {
+    public function generateNextUserEntityId(): string
+    {
         return Ulid::generate();
     }
 
     /**
      * This method saves the user or does nothing if the user already exists
      */
-    public function saveUserEntity(PublicKeyCredentialUserEntity $userEntity): void {
+    public function saveUserEntity(PublicKeyCredentialUserEntity $userEntity): void
+    {
         /** @var User|null $user */
         $user = $this->userRepository->findOneBy([
             'id' => $userEntity->getId(),
@@ -52,7 +56,8 @@ final class PublicKeyCredentialUserEntityRepository implements PublicKeyCredenti
         $this->em->flush();
     }
 
-    public function findOneByUsername(string $username): ?PublicKeyCredentialUserEntity {
+    public function findOneByUsername(string $username): ?PublicKeyCredentialUserEntity
+    {
         /** @var User|null $user */
         $user = $this->userRepository->findOneBy([
             'username' => $username,
@@ -61,7 +66,8 @@ final class PublicKeyCredentialUserEntityRepository implements PublicKeyCredenti
         return $this->getUserEntity($user);
     }
 
-    public function findOneByUserHandle(string $userHandle): ?PublicKeyCredentialUserEntity {
+    public function findOneByUserHandle(string $userHandle): ?PublicKeyCredentialUserEntity
+    {
         /** @var User|null $user */
         $user = $this->userRepository->findOneBy([
             'id' => $userHandle,
@@ -73,7 +79,8 @@ final class PublicKeyCredentialUserEntityRepository implements PublicKeyCredenti
     /**
      * Converts a Symfony User (if any) into a Webauthn User Entity
      */
-    private function getUserEntity(null|User $user): ?PublicKeyCredentialUserEntity {
+    private function getUserEntity(null|User $user): ?PublicKeyCredentialUserEntity
+    {
         if ($user === null) {
             return null;
         }
@@ -87,7 +94,6 @@ final class PublicKeyCredentialUserEntityRepository implements PublicKeyCredenti
     }
 }
 
-
 ```
 {% endcode %}
 
@@ -95,11 +101,13 @@ final class PublicKeyCredentialUserEntityRepository implements PublicKeyCredenti
 
 {% code title="src/Entity/User.php" %}
 ```php
-public function getUsername(): string {
+public function getUsername(): string
+{
     return (string) $this->email;
 }
 
-public function getDisplayName(): string {
+public function getDisplayName(): string
+{
     return (string) $this->email;
 }
 ```
