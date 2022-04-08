@@ -14,10 +14,6 @@ The procedure is the same as [the one described in this page](../the-webauthn-se
 
 ## The Symfony Way
 
-{% hint style="info" %}
-The following procedure is only available with the version 3.3.0+ of the bundle.
-{% endhint %}
-
 With a Symfony application, the fastest way for a user to register additional authenticators is to use the “controller” feature.
 
 To add a new authenticator to a user, the bundle needs to know to whom it should be added. This can be:
@@ -25,47 +21,48 @@ To add a new authenticator to a user, the bundle needs to know to whom it should
 * The current user itself e.g. from its own account
 * An administrator acting for another user from a dashboard
 
-For that purpose, a User Entity Guesser service should be created. This servuce shall implement the interface `Webauthn\Bundle\Security\Guesser\UserEntityGuesser` and its unique method `findUserEntity`. In the example herafter, the current user is used as User Entity.
+For that purpose, a User Entity Guesser service should be created. This service shall implement the interface `Webauthn\Bundle\Security\Guesser\UserEntityGuesser` and its unique method `findUserEntity`.
 
+You can directly use the `Webauthn\Bundle\Security\Guesser\CurrentUserEntityGuesser` as a Symfony service. It is designed to identify the user that is currently logged in.
+
+In the example herafter where the current user is guessed using a controller parameter. This can be used when an administrator is adding an authenticator to another user account.
+
+{% code title="App\Guesser\FromQueryParameterGuesser.php" %}
 ```php
 <?php
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Guesser;
 
 use Assert\Assertion;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
+use Webauthn\Bundle\Repository\PublicKeyCredentialUserEntityRepository;
 use Webauthn\Bundle\Security\Guesser\UserEntityGuesser;
 use Webauthn\PublicKeyCredentialUserEntity;
 
-final class CurrentUserEntityGuesser implements UserEntityGuesser
+final class FromQueryParameterGuesser implements UserEntityGuesser
 {
-    /**
-     * @var Security
-     */
-    private $security;
-
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
+    public function __construct(
+        private PublicKeyCredentialUserEntityRepository $userEntityRepository
+    ) {
     }
 
     public function findUserEntity(Request $request): PublicKeyCredentialUserEntity
     {
-        $user = $this->security->getUser();
-        Assertion::isInstanceOf($user, PublicKeyCredentialUserEntity::class, 'Unable to find the user entity');
+        $userHandle = $request->query->get('user_id');
+        Assertion::string($userHandle, 'User entity not found. Invalid user ID');
+        $user = $this->userEntityRepository->findOneByUserHandle($userHandle);
+        Assertion::isInstanceOf($user, PublicKeyCredentialUserEntity::class, 'User entity not found.');
 
         return $user;
     }
 }
 ```
+{% endcode %}
 
 {% hint style="info" %}
-In the case the current user is an administrator, the user entity can be determined using query parameters e.g. using routes like `/admin/add-authenticator/for/{USER_ID}`.
-
-The user is retrieved using the associated repository and the given ID.
+In the case the current user s supposed to be administrator, the user entity can be determined using the query parameters and a route like `/admin/add-authenticator/for/{user_id}`.
 {% endhint %}
 
 Now you just have to enable the feature and set the routes to your options and response controllers.
@@ -75,14 +72,14 @@ webauthn:
     controllers:
         enabled: true # We enable the feature
         creation:
-            from_user_account: # Unique name of our endpoints
+            from_user_account: # Endpoints accessible by the user itself
                 options_path: '/profile/security/devices/add/options' # Path to the creation options controller
                 result_path: '/profile/security/devices/add' # Path to the response controller
-                user_entity_guesser: App\Service\CurrentUserEntityGuesser # See above
-            from_admin_dashboard: # Unique name of our endpoints
-                options_path: '/admin/security/user/{USER_ID}/devices/add/options' # Path to the creation options controller
-                result_path: '/admin/security/user/{USER_ID}/devices/add' # Path to the response controller
-                user_entity_guesser: App\Service\AdminGuesser # Fictive service
+                user_entity_guesser: Webauthn\Bundle\Security\Guesser\CurrentUserEntityGuesser # See above
+            from_admin_dashboard: # Endpoint accessible by an administrator
+                options_path: '/admin/security/user/{user_id}/devices/add/options' # Path to the creation options controller
+                result_path: '/admin/security/user/{user_id}/devices/add' # Path to the response controller
+                user_entity_guesser: App\Guesser\FromQueryParameterGuesser # From the example
 ```
 
 {% hint style="warning" %}
