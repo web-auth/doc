@@ -31,6 +31,7 @@ use Doctrine\ORM\Mapping\Table;
 use Symfony\Component\Uid\Ulid;
 use Webauthn\PublicKeyCredentialSource as BasePublicKeyCredentialSource;
 use Webauthn\TrustPath\TrustPath;
+use Symfony\Component\Uid\AbstractUid;
 
 #[Table(name: "public_key_credential_sources")]
 #[Entity(repositoryClass: PublicKeyCredentialSourceRepository::class)]
@@ -41,7 +42,7 @@ class PublicKeyCredentialSource extends BasePublicKeyCredentialSource
     #[GeneratedValue(strategy: "NONE")]
     private string $id;
 
-    public function __construct(string $publicKeyCredentialId, string $type, array $transports, string $attestationType, TrustPath $trustPath, UuidInterface $aaguid, string $credentialPublicKey, string $userHandle, int $counter)
+    public function __construct(string $publicKeyCredentialId, string $type, array $transports, string $attestationType, TrustPath $trustPath, AbstractUid $aaguid, string $credentialPublicKey, string $userHandle, int $counter)
     {
         $this->id = Ulid::generate();
         parent::__construct($publicKeyCredentialId, $type, $transports, $attestationType, $trustPath, $aaguid, $credentialPublicKey, $userHandle, $counter);
