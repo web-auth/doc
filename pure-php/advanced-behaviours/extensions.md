@@ -1,15 +1,5 @@
 # Extensions
 
-The mechanism for generating public key credentials, as well as requesting and generating Authentication assertions, can be extended to suit particular use cases. Each case is addressed by defining a registration extension.
-
-{% hint style="info" %}
-This library is ready to handle extension inputs and outputs, but no concrete implementations are provided.
-
-It is up to you, depending on the extensions you want to support, to create the extension handlers.
-{% endhint %}
-
-## Creation/Request Options
-
 The following example is totally fictive. We will add an extension input `loc=true` to the request option object.
 
 ```php

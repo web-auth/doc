@@ -10,10 +10,10 @@ Let’s say you want to authenticate the user we used earlier. This options obje
 
 * A challenge (random binary string)
 * A timeout (optional)
-* [The Relying Party ID](../pre-requisites/the-relying-party.md) i.e. your application domain (optional)
+* [The Relying Party ID](../../pre-requisites/the-relying-party.md) i.e. your application domain (optional)
 * The list with the allowed credentials
-* [The user verification requirement](user-verification.md) (optional)
-* [Extensions](../webauthn-in-a-nutshell/extensions.md) (optional)
+* [The user verification requirement](../../deep-into-the-framework/user-verification.md) (optional)
+* [Extensions](../../deep-into-the-framework/extensions.md) (optional)
 
 The `PublicKeyCredentialRequestOptions` object is designed to be easily serialized into a JSON object. This will ease the integration into an HTML page or through an API endpoint.
 
@@ -42,16 +42,16 @@ $allowedCredentials = array_map(
 ```
 
 {% hint style="info" %}
-For usernameless authentication, please read the [dedicated page](advanced-behaviours/authentication-without-username.md). In this case the `$allowedCredentials` should be an empty list.
+For usernameless authentication, please read the [dedicated page](../../deep-into-the-framework/authentication-without-username.md). In this case the `$allowedCredentials` should be an empty list.
 {% endhint %}
 
 ### User Verification
 
-Eligible authenticators are filtered and only capable of satisfying this requirement will interact with the user. Please refer to the [User Verification page](user-verification.md) for all possible values.
+Eligible authenticators are filtered and only capable of satisfying this requirement will interact with the user. Please refer to the [User Verification page](../../deep-into-the-framework/user-verification.md) for all possible values.
 
 ### Extensions
 
-Please refer to the [Extension page](../webauthn-in-a-nutshell/extensions.md) to know how to manage authentication extensions.
+Please refer to the [Extension page](../../deep-into-the-framework/extensions.md) to know how to manage authentication extensions.
 
 ### Example
 

@@ -21,7 +21,6 @@ security:
             logout:
                 path: 'logout'
             ...
-
 ```
 {% endcode %}
 

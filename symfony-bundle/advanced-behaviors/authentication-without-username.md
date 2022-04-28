@@ -2,7 +2,7 @@
 
 With Webauthn, it is possible to authenticate a user without username. This behavior implies several constraints:
 
-1. During the registration of the authenticator, a [Resident Key must have been asked](../../pure-php/advanced-behaviours/authenticator-selection-criteria.md#resident-key),
+1. During the registration of the authenticator, a [Resident Key must have been asked](../../deep-into-the-framework/authenticator-selection-criteria.md#resident-key),
 2. The user verification is required,
 3. The list of allowed authenticators must be empty
 

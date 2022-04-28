@@ -24,7 +24,7 @@ A primary use case for platform authenticators is to register a particular clien
 
 When this criterion is set to `true`, a Public Key Credential Source will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such a resident credential.
 
-This criterion is needed if you want to [authenticate users without username](../../pure-php/advanced-behaviours/authentication-without-username.md).
+This criterion is needed if you want to [authenticate users without username](../../deep-into-the-framework/authentication-without-username.md).
 
 {% code title="config/packages/webauthn.yaml" %}
 ```yaml

@@ -2,8 +2,8 @@
 
 You will need the following components before loading or verifying the data:
 
-* [The Public Key Credential Source Repository](../pre-requisites/credential-source-repository.md)
-* [A token binding handler](advanced-behaviours/token-binding.md)
+* [The Public Key Credential Source Repository](../../pre-requisites/credential-source-repository.md)
+* [A token binding handler](../../deep-into-the-framework/token-binding.md)
 * An Attestation Statement Support Manager and at least one Attestation Statement Support object
 * An Attestation Object Loader
 * A Public Key Credential Loader
@@ -16,13 +16,23 @@ That’s a lot off classes! But don’t worry, as their configuration is the sam
 
 The Public Key Credential Source Repository must implement `Webauthn\PublicKeyCredentialSourceRepository`. It will retrieve the credential source and update them when needed.
 
-You can implement the required methods the way you want: Doctrine ORM, file storage… as mentioned on [the dedicated page](../pre-requisites/credential-source-repository.md).
+You can implement the required methods the way you want: Doctrine ORM, file storage… as mentioned on [the dedicated page](../../pre-requisites/credential-source-repository.md).
+
+```php
+$publicKeyCredentialSourceRepository = ...; //Instantiate your repository
+```
 
 ## Token Binding Handler
 
 The token binding handler is a service that will verify if the token binding set in the device response corresponds to the one set in the request.
 
-Please refer to [the dedicated page](advanced-behaviours/token-binding.md).
+At the time of writing, we recommend to ignore this feature. Please refer to [the dedicated page](../../deep-into-the-framework/token-binding.md) for more information.
+
+```php
+use Webauthn\TokenBinding\IgnoreTokenBindingHandler;
+
+$tokenBindingHandler = IgnoreTokenBindingHandler::create();
+```
 
 ## Attestation Statement Support Manager
 
@@ -40,14 +50,7 @@ Hereafter the types of attestations you can have:
 * `android key`: commonly used by old or disconnected Android devices.
 * `android safety net`: for new Android devices like smartphones.
 * `trusted platform module`: for devices with built-in security chips.
-
-{% hint style="danger" %}
-All these attestation types are supported, but you should only use the `none` one unless you plan to use the [Attestation and Metadata Statement](../webauthn-in-a-nutshell/attestation-and-metadata-statement.md).
-{% endhint %}
-
-{% hint style="warning" %}
-The _Android SafetyNet Attestation Statement_ is a JWT that can be verified by the library, but can also be checked online by hitting the Google API. This method drastically increases the security for the attestation type but requires a [PSR-18 compatible HTTP Client](https://www.php-fig.org/psr/psr-18/) and [an API key](https://developer.android.com/training/safetynet/attestation).
-{% endhint %}
+* `apple`: for Apple devices
 
 ```php
 <?php
@@ -62,6 +65,10 @@ $attestationStatementSupportManager = AttestationStatementSupportManager::create
     ->add(NoneAttestationStatementSupport::create())
 ;
 ```
+
+{% hint style="danger" %}
+All these attestation types are supported, but you should only use the `none` one unless you plan to use the [Attestation and Metadata Statement](../../deep-into-the-framework/attestation-and-metadata-statement.md).
+{% endhint %}
 
 ## Attestation Object Loader
 
@@ -110,6 +117,8 @@ $extensionOutputCheckerHandler = ExtensionOutputCheckerHandler::create();
 ```
 
 You can add as many extension checkers as you want. Each extension checker must implement `Webauthn\AuthenticationExtensions\ExtensionOutputChecker` and throw a `Webauthn\AuthenticationExtensions\ExtensionOutputError` in case of an error.
+
+More about that [in this page](../../pure-php/advanced-behaviours/extensions.md).
 
 ## Authenticator Attestation Response Validator
 

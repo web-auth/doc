@@ -17,6 +17,8 @@ The library provides two concrete classes for the moment:
 
 You can change this behavior by creating your own implementation. The handler must implement the interface `Webauthn\TokenBinding\TokenBindingHandler`.
 
-## The Hard Way
+## Authenticator Attestation Validation
 
-When you create your [Authenticator Attestation](../the-hard-way.md#authenticator-attestation-response-validator) and [Authenticator Assertion Response Validators](../the-hard-way.md#authenticator-assertion-response-validator), just inject the correct handler.
+## Authenticator Assertion Validation
+
+When you create your [Authenticator Attestation](../the-webauthn-server/the-hard-way/#authenticator-attestation-response-validator) and [Authenticator Assertion Response Validators](../the-webauthn-server/the-hard-way/#authenticator-assertion-response-validator), just inject the correct handler.

@@ -28,7 +28,7 @@ This criterion is needed if you want to [authenticate users without username](au
 
 ### User Verification
 
-[Please refer to this page](../user-verification.md).
+[Please refer to this page](user-verification.md).
 
 ### The Hard Way
 

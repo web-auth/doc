@@ -10,15 +10,15 @@ To associate a device to a user, you need to instantiate a `Webauthn\PublicKeyCr
 
 It will need:
 
-* [The Relying Party](../pre-requisites/the-relying-party.md)
-* [The User data](../pre-requisites/user-entity-repository.md)
+* [The Relying Party](../../pre-requisites/the-relying-party.md)
+* [The User data](../../pre-requisites/user-entity-repository.md)
 * A challenge (random binary string)
 * A list of supported public key parameters i.e. an algorithm list (at least one)
 * A timeout (optional)
 * A list of public key credential to exclude from the registration process (optional)
-* [The Authenticator Selection Criteria](advanced-behaviours/authenticator-selection-criteria.md) (e.g. user presence requirement)
-* [Attestation conveyance preference](../webauthn-in-a-nutshell/attestation-and-metadata-statement.md) (optional)
-* [Extensions](../webauthn-in-a-nutshell/extensions.md) (optional)
+* [The Authenticator Selection Criteria](../../deep-into-the-framework/authenticator-selection-criteria.md) (e.g. user presence requirement)
+* [Attestation conveyance preference](../../deep-into-the-framework/attestation-and-metadata-statement.md) (optional)
+* [Extensions](../../deep-into-the-framework/extensions.md) (optional)
 
 Let’s see an example of the `PublicKeyCredentialCreationOptions` object. The following example is a possible Public Key Creation page for a dummy user "@cypher-Angel-3000".
 
@@ -78,7 +78,7 @@ $publicKeyCredentialCreationOptions =
 ;
 ```
 
-The options object can be converted into JSON and sent to the authenticator [using a JS script](../pre-requisites/javascript.md).
+The options object can be converted into JSON and sent to the authenticator [using a JS script](../../pre-requisites/javascript.md).
 
 {% hint style="warning" %}
 It is important to store the user entity and the options object (e.g. in the session) for the next step; they will be needed to check the response from the device.
