@@ -72,6 +72,7 @@ $publicKeyCredentialRequestOptions =
     PublicKeyCredentialRequestOptions::create(
         random_bytes(32) // Challenge
     )
+    ->allowCredentials(...$allowedCredentials)
     ->setTimeout(30_000)
     ->setRpId('foo.example.com')
 ;

@@ -22,26 +22,22 @@ use Webauthn\AuthenticationExtensions\AuthenticationExtensionsClientInputs;
 use Webauthn\PublicKeyCredentialRequestOptions;
 
 // Extensions
-$extensions = new AuthenticationExtensionsClientInputs();
-$extensions->add(new AuthenticationExtension('loc', true));
-
-// List of registered PublicKeyCredentialDescriptor classes associated to the user
-$registeredPublicKeyCredentialDescriptors = …;
+$extensions = AuthenticationExtensionsClientInputs::create()
+    ->add(AuthenticationExtension::create('loc', true))
+;
 
 // Public Key Credential Request Options
-$publicKeyCredentialRequestOptions = new PublicKeyCredentialRequestOptions(
-    random_bytes(32),                                                           // Challenge
-    60000,                                                                      // Timeout
-    'foo.example.com',                                                          // Relying Party ID
-    $registeredPublicKeyCredentialDescriptors,                                  // Registered PublicKeyCredentialDescriptor classes
-    PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_PREFERRED, // User verification requirement
-    $extensions
-);
+$publicKeyCredentialRequestOptions = 
+    PublicKeyCredentialRequestOptions::create(
+        random_bytes(32) // Challenge
+    )
+    ->setExtensions($extensions)
+;
 ```
 
 ## Extension Output Checker
 
-An Extension Output Checker will check the extension inputs and output.
+An Extension Output Checker will check the extension output.
 
 It must implement the interface `Webauthn\AuthenticationExtensions\ExtensionOutputChecker` and throw an exception of type `Webauthn\AuthenticationExtension\ExtensionOutputError` in case of error.
 
@@ -82,75 +78,6 @@ final class LocationExtensionOutputChecker
         // or verifying it is in a specific area.
     }
 }
-```
-
-## Extension Input
-
-To enable an authenticator feature like the geolocation, you must ask it through the creation or the request option objects.
-
-### The Hard Way
-
-#### Authenticator registration
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use Webauthn\AuthenticationExtensions\AuthenticationExtension;
-use Webauthn\AuthenticationExtensions\AuthenticationExtensionsClientInputs;
-use Webauthn\PublicKeyCredentialCreationOptions;
-
-// Extensions
-$extensions = new AuthenticationExtensionsClientInputs();
-$extensions->add(new AuthenticationExtension('loc', true));
-
-$publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
-    $rpEntity,
-    $userEntity,
-    $challenge,
-    $publicKeyCredentialParametersList,
-    $timeout,
-    $excludedPublicKeyDescriptors,
-    $authenticatorSelectionCriteria,
-    PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE,
-    $extensions
-);
-```
-
-#### User Authentication
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use Webauthn\AuthenticationExtensions\AuthenticationExtension;
-use Webauthn\AuthenticationExtensions\AuthenticationExtensionsClientInputs;
-use Webauthn\PublicKeyCredentialRequestOptions;
-
-// Extensions
-$extensions = new AuthenticationExtensionsClientInputs();
-$extensions->add(new AuthenticationExtension('loc', true));
-
-// List of registered PublicKeyCredentialDescriptor classes associated to the user
-$registeredAuthenticators = $publicKeyCredentialSourceRepository->findAllForUserEntity($userEntity);
-$allowedCredentials = array_map(
-    static function (PublicKeyCredentialSource $credential): PublicKeyCredentialDescriptor {
-        return $credential->getPublicKeyCredentialDescriptor();
-    },
-    $registeredAuthenticators
-);
-
-// Public Key Credential Request Options
-$publicKeyCredentialRequestOptions = new PublicKeyCredentialRequestOptions(
-    random_bytes(32),                                                           // Challenge
-    60000,                                                                      // Timeout
-    'foo.example.com',                                                          // Relying Party ID
-    $allowedCredentials,                                                        // Registered PublicKeyCredentialDescriptor classes
-    PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_PREFERRED, // User verification requirement
-    $extensions                                                                 // Extensions
-);
 ```
 
 ### The Symfony Way
