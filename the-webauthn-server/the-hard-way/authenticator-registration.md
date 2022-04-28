@@ -67,12 +67,15 @@ $excludedPublicKeyDescriptors = [
     PublicKeyCredentialDescriptor::create(PublicKeyCredentialDescriptor::CREDENTIAL_TYPE_PUBLIC_KEY, 'ABCDEFGH…'),
 ];
 
-$publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create(
-    $rpEntity,
-    $userEntity,
-    $challenge,
-    $publicKeyCredentialParametersList,
-);
+$publicKeyCredentialCreationOptions =
+    PublicKeyCredentialCreationOptions::create(
+        $rpEntity,
+        $userEntity,
+        $challenge,
+        $publicKeyCredentialParametersList,
+    )
+    ->excludeCredentials(...$excludedPublicKeyDescriptors)
+;
 ```
 
 The options object can be converted into JSON and sent to the authenticator [using a JS script](../../pre-requisites/javascript.md).
@@ -85,14 +88,14 @@ You can change the default values for each and all options
 
 ```php
 $publicKeyCredentialCreationOptions =
-    PublicKeyCredentialCreationOpphptions::create(
+    PublicKeyCredentialCreationOptions::create(
         $rpEntity,
         $userEntity,
         $challenge,
         $publicKeyCredentialParametersList,
     )
     ->setTimeout(30_000)
-    ->excludeCredentials($credential1, $credential2)
+    ->excludeCredentials(...$excludedPublicKeyDescriptors)
     ->setAuthenticatorSelection(AuthenticatorSelectionCriteria::create())
     ->setAttestation(PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE)
 ;

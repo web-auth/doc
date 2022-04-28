@@ -18,7 +18,7 @@ Let’s say you want to authenticate the user we used earlier. This options obje
 The `PublicKeyCredentialRequestOptions` object is designed to be easily serialized into a JSON object. This will ease the integration into an HTML page or through an API endpoint.
 
 {% hint style="info" %}
-For v4.0+, the timeout will be set to `null`. The values recommended by the specification are as follow:
+For v4.0+, the timeout default value will be set to `null`. If you want to set a value, pleaase read the following recommended behavior showed in the specification:
 
 * If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
 * If the user verification is `preferred` or `required`, the range is 300 to 600 seconds (5 to 10 minutes)
@@ -40,6 +40,10 @@ $allowedCredentials = array_map(
     $registeredAuthenticators
 );
 ```
+
+{% hint style="info" %}
+For usernameless authentication, please read the [dedicated page](../../deep-into-the-framework/authentication-without-username.md). In this case the `$allowedCredentials` should be an empty list.
+{% endhint %}
 
 ### User Verification
 
