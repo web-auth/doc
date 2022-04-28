@@ -11,12 +11,3 @@ Prior to version 3.3, the following classes have an optional constructor paramet
 * `Webauthn\AuthenticatorAttestationResponseValidator`
 * `Webauthn\PublicKeyCredentialLoader`
 * `Webauthn\Counter\ThrowExceptionIfInvalid`
-
-## The Symfony Way
-
-{% code title="config/packages/webauthn.yaml" %}
-```yaml
-webauthn:
-    logger: App\Service\MyPsr3Logger
-```
-{% endcode %}

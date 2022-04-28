@@ -1,8 +1,4 @@
----
-description: Lucky Symfony applications!
----
-
-# The Symfony Way
+# Bundle Installation
 
 This framework provides a Symfony bundle that will help you to use the components within your Symfony application.
 

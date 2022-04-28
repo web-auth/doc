@@ -1,7 +1,3 @@
----
-description: aka non-https relying parties
----
-
 # Dealing with “localhost”
 
 ## Secured Context
@@ -11,8 +7,6 @@ If your are working on a development environment, `https` may not be available b
 {% hint style="danger" %}
 Please be careful using this feature. It should NOT be used in production.
 {% endhint %}
-
-### The Hard Way
 
 ```php
 $publicKeyCredentialSource = $authenticatorAttestationResponseValidator->check(
@@ -32,15 +26,4 @@ $publicKeyCredentialSource = $authenticatorAssertionResponse->check(
     $userHandle,
     ['localhost']
 );
-```
-
-### The Symfony Way
-
-```yaml
-security:
-    firewalls:
-        main:
-            webauthn:
-               secured_rp_ids:
-                   - 'localhost'
 ```

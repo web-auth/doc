@@ -24,33 +24,7 @@ A primary use case for platform authenticators is to register a particular clien
 
 When this criterion is set to `true`, a Public Key Credential Source will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such a resident credential.
 
-This criterion is needed if you want to [authenticate users without username](authentication-without-username.md).
-
-### User Verification
-
-[Please refer to this page](user-verification.md).
-
-### The Hard Way
-
-```php
-$authenticatorSelectionCriteria = new AuthenticatorSelectionCriteria(
-    null,
-    false,
-    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_DISCOURAGED
-);
-
-$publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
-    $rpEntity,
-    $userEntity,
-    $challenge,
-    $publicKeyCredentialParametersList,
-    $timeout,
-    $excludedPublicKeyDescriptors,
-    $authenticatorSelectionCriteria
-);
-```
-
-### The Symfony Way
+This criterion is needed if you want to [authenticate users without username](../../pure-php/advanced-behaviours/authentication-without-username.md).
 
 {% code title="config/packages/webauthn.yaml" %}
 ```yaml

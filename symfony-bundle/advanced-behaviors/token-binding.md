@@ -17,12 +17,6 @@ The library provides two concrete classes for the moment:
 
 You can change this behavior by creating your own implementation. The handler must implement the interface `Webauthn\TokenBinding\TokenBindingHandler`.
 
-## The Hard Way
-
-When you create your [Authenticator Attestation](../the-webauthn-server/the-hard-way/#authenticator-attestation-response-validator) and [Authenticator Assertion Response Validators](../the-webauthn-server/the-hard-way/#authenticator-assertion-response-validator), just inject the correct handler.
-
-## The Symfony Way
-
 {% code title="config/packages/webauthn.yaml" %}
 ```yaml
 webauthn:

@@ -8,12 +8,6 @@ It is possible to perform this ceremony programmatically.
 You can attach several authenticators to a user account. It is recommended in case of lost devices or if the user gets access on your application using multiple platforms (smartphone, laptop…).
 {% endhint %}
 
-## The Hard Way
-
-The procedure is the same as [the one described in this page](../the-webauthn-server/the-hard-way/authenticator-registration.md).
-
-## The Symfony Way
-
 With a Symfony application, the fastest way for a user to register additional authenticators is to use the “controller” feature.
 
 To add a new authenticator to a user, the bundle needs to know to whom it should be added. This can be:
@@ -121,7 +115,7 @@ register({})
 
 ### Creation Profile
 
-The `default` [creation profile](../the-webauthn-server/the-symfony-way/#creation-profiles) is used. You can change it using the dedicated option.
+The `default` [creation profile](../the-symfony-way.md#creation-profiles) is used. You can change it using the dedicated option.
 
 ```yaml
 webauthn:

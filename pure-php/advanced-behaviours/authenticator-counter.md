@@ -53,12 +53,3 @@ $authenticatorAssertionResponseValidator = new AuthenticatorAssertionResponseVal
     new CustomCounterChecker()
 );
 ```
-
-## The Symfony Way
-
-{% code title="config/packages/webauthn.yaml" %}
-```yaml
-webauthn:
-    counter_checker: App\Service\CustomCounterChecker
-```
-{% endcode %}

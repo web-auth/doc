@@ -44,25 +44,3 @@ $publicKeyCredentialRequestOptions = new PublicKeyCredentialRequestOptions(
     PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_REQUIRED
 );
 ```
-
-## The Symfony Way
-
-The bundle configuration should have a profile with the constraints listed above:
-
-```javascript
-webauthn:
-    credential_repository: '…'
-    user_repository: '…'
-    creation_profiles:
-        default:
-            rp:
-                name: 'My application'
-                id: 'example.com'
-            authenticator_selection_criteria:
-                require_resident_key: true
-                user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
-    request_profiles:
-        default:
-            rp_id: 'example.com'
-            user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
-```

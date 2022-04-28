@@ -1,7 +1,5 @@
 # Configuration References
 
-
-
 ## Configuration
 
 With Flex, you have a minimal configuration file installed through a Flex Recipe. You must set the repositories you have just created. You also have to modify the environment variables `Relying_PARTY_ID` and `Relying_PARTY_NAME`.
@@ -66,7 +64,7 @@ The credential\_repository and user\_repository parameters correspond to the ser
 
 ### Token Binding Handler
 
-Please refer to [this page](../../deep-into-the-framework/token-binding.md#the-symfony-way). You should let the default value as it is.
+Please refer to [this page](../pure-php/advanced-behaviours/token-binding.md#the-symfony-way). You should let the default value as it is.
 
 ### Creation Profiles
 
@@ -76,7 +74,7 @@ If you don't create the `creation_profiles` section, a `default` profile is set.
 
 #### Relying Party (rp)
 
-The relying Party corresponds to your application. Please refer [to this page](../../pre-requisites/the-relying-party.md) for more information.
+The relying Party corresponds to your application. Please refer [to this page](../pre-requisites/the-relying-party.md) for more information.
 
 {% hint style="warning" %}
 The parameter `id` is optional but highly recommended.
@@ -123,7 +121,7 @@ These behaviors are not necessarily followed by the web browsers.
 
 #### Authenticator Selection Criteria
 
-This set of options allows you to select authenticators depending on their capabilities. The values are described in [the advanced concepts](../../deep-into-the-framework/authenticator-selection-criteria.md) of the protocol.
+This set of options allows you to select authenticators depending on their capabilities. The values are described in [the advanced concepts](../pure-php/advanced-behaviours/authenticator-selection-criteria.md) of the protocol.
 
 {% code title="app/config/webauthn.yaml" %}
 ```yaml
@@ -166,7 +164,7 @@ webauthn:
 
 #### Attestation Conveyance
 
-If you need the [attestation of the authenticator](../../deep-into-the-framework/attestation-and-metadata-statement.md), you can specify the preference regarding attestation conveyance during credential generation.
+If you need the [attestation of the authenticator](../webauthn-in-a-nutshell/attestation-and-metadata-statement.md), you can specify the preference regarding attestation conveyance during credential generation.
 
 {% hint style="warning" %}
 Please note that the metadata service is mandatory when you use this option.
@@ -189,7 +187,7 @@ webauthn:
 
 #### Extensions
 
-You can set as many extensions as you want in the profile. Please also [refer to this page](../../deep-into-the-framework/extensions.md) for more information.
+You can set as many extensions as you want in the profile. Please also [refer to this page](../webauthn-in-a-nutshell/extensions.md) for more information.
 
 {% hint style="info" %}
 The example below is totally fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the support depends on the authenticators, on the browsers and on the relying parties (your applications).

@@ -1,13 +1,9 @@
----
-description: If you want a fine grained Webauthn server
----
-
-# The Hard Way
+# Fine Grained Webauthn Server
 
 You will need the following components before loading or verifying the data:
 
-* [The Public Key Credential Source Repository](../../pre-requisites/credential-source-repository.md)
-* [A token binding handler](../../deep-into-the-framework/token-binding.md)
+* [The Public Key Credential Source Repository](../pre-requisites/credential-source-repository.md)
+* [A token binding handler](advanced-behaviours/token-binding.md)
 * An Attestation Statement Support Manager and at least one Attestation Statement Support object
 * An Attestation Object Loader
 * A Public Key Credential Loader
@@ -20,13 +16,13 @@ That’s a lot off classes! But don’t worry, as their configuration is the sam
 
 The Public Key Credential Source Repository must implement `Webauthn\PublicKeyCredentialSourceRepository`. It will retrieve the credential source and update them when needed.
 
-You can implement the required methods the way you want: Doctrine ORM, file storage… as mentioned on [the dedicated page](../../pre-requisites/credential-source-repository.md).
+You can implement the required methods the way you want: Doctrine ORM, file storage… as mentioned on [the dedicated page](../pre-requisites/credential-source-repository.md).
 
 ## Token Binding Handler
 
 The token binding handler is a service that will verify if the token binding set in the device response corresponds to the one set in the request.
 
-Please refer to [the dedicated page](../../deep-into-the-framework/token-binding.md).
+Please refer to [the dedicated page](advanced-behaviours/token-binding.md).
 
 ## Attestation Statement Support Manager
 
@@ -46,7 +42,7 @@ Hereafter the types of attestations you can have:
 * `trusted platform module`: for devices with built-in security chips.
 
 {% hint style="danger" %}
-All these attestation types are supported, but you should only use the `none` one unless you plan to use the [Attestation and Metadata Statement](../../deep-into-the-framework/attestation-and-metadata-statement.md).
+All these attestation types are supported, but you should only use the `none` one unless you plan to use the [Attestation and Metadata Statement](../webauthn-in-a-nutshell/attestation-and-metadata-statement.md).
 {% endhint %}
 
 {% hint style="warning" %}

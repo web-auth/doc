@@ -79,26 +79,3 @@ final class LocationExtensionOutputChecker
     }
 }
 ```
-
-### The Symfony Way
-
-The easiest way to manage that is by using the creation and request profiles.
-
-{% code title="config/packages/webauthn.yaml" %}
-```yaml
-webauthn:
-    …
-    creation_profiles:
-        default:
-            rp:
-                name: 'My Application'
-                id: 'example.com'
-            extensions:
-                loc: true
-    request_profiles:
-        default:
-            rp_id: 'example.com'
-            extensions:
-                loc: true
-```
-{% endcode %}
