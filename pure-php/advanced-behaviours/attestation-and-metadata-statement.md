@@ -15,10 +15,8 @@ Your Metadata Statement Repository must implement the interface `Webauthn\Metada
 * `findOneByAAGUID(string $aaguid)`: this method retrieves the `MetadataStatement` object with AAGUID. It shall return `null` in case of the absence of the MDS.
 
 {% hint style="warning" %}
-The library does not provide any Metadata Statement Repositroy. It is up to you to select the MDS suitable for your application and store them in your database.
+The library does not provide any Metadata Statement Repository. It is up to you to select the MDS suitable for your application and store them in your database.
 {% endhint %}
-
-#### The Hard Way
 
 There are few steps to acheive. First, you have to add support classes for all attestation statement types into your Attestation Metatdata Manager.
 

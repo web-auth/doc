@@ -22,30 +22,34 @@ A primary use case for platform authenticators is to register a particular clien
 
 ### Resident Key
 
-When this criterion is set to `true`, a Public Key Credential Source will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such a resident credential.
+With this criterion, a Public Key Credential Source will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such a resident credential.
 
-This criterion is needed if you want to [authenticate users without username](authentication-without-username.md).
+{% hint style="info" %}
+A resident key shall be created you want to [authenticate users without username](authentication-without-username.md).
+{% endhint %}
 
 ### User Verification
 
 [Please refer to this page](../pure-php/advanced-behaviours/user-verification.md).
 
-### The Hard Way
+### Example
+
+With this example, with require the user verification (PIN, fingerprint...), a resident key and an authenticator embedded onto a device. This is typacally what you will require for Windows Hello or Face ID authentication.
 
 ```php
-$authenticatorSelectionCriteria = new AuthenticatorSelectionCriteria(
-    null,
-    false,
-    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_DISCOURAGED
-);
+$authenticatorSelectionCriteria = AuthenticatorSelectionCriteria::create()
+    ->setUserVerification(AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED)
+    ->setResidentKey(AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED)
+    ->setAuthenticatorAttachment(AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_PLATFORM)
+;
 
-$publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
-    $rpEntity,
-    $userEntity,
-    $challenge,
-    $publicKeyCredentialParametersList,
-    $timeout,
-    $excludedPublicKeyDescriptors,
-    $authenticatorSelectionCriteria
-);
+$publicKeyCredentialCreationOptions =
+    PublicKeyCredentialCreationOptions::create(
+        $rpEntity,
+        $userEntity,
+        $challenge,
+        $publicKeyCredentialParametersList,
+    )
+    ->setAuthenticatorSelection($authenticatorSelectionCriteria)
+;
 ```
