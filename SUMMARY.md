@@ -23,7 +23,7 @@
 
 ## Pure PHP
 
-* [Fine Grained Webauthn Server](the-webauthn-server/the-hard-way/README.md)
+* [Webauthn Server](the-webauthn-server/the-hard-way/README.md)
 * [Register Authenticators](the-webauthn-server/the-hard-way/authenticator-registration.md)
 * [Authenticate Your Users](the-webauthn-server/the-hard-way/authenticate-your-users.md)
 * [User Verification](deep-into-the-framework/user-verification.md)

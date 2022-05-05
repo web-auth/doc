@@ -10,15 +10,18 @@ To associate a device to a user, you need to instantiate a `Webauthn\PublicKeyCr
 
 It will need:
 
-* [The Relying Party](../../pre-requisites/the-relying-party.md)
-* [The User data](../../pre-requisites/user-entity-repository.md)
+* The Relying Party
+* The User data
 * A challenge (random binary string)
 * A list of supported public key parameters i.e. an algorithm list (at least one)
-* A timeout (optional)
-* A list of public key credential to exclude from the registration process (optional)
-* [The Authenticator Selection Criteria](../../deep-into-the-framework/authenticator-selection-criteria.md) (e.g. user presence requirement)
-* [Attestation conveyance preference](../../deep-into-the-framework/attestation-and-metadata-statement.md) (optional)
-* [Extensions](../../deep-into-the-framework/extensions.md) (optional)
+
+Optionally, you can customize the following parameters:
+
+* A timeout
+* A list of public key credential to exclude from the registration process
+* The Authenticator Selection Criteria
+* Attestation conveyance preference
+* Extensions
 
 Let’s see an example of the `PublicKeyCredentialCreationOptions` object. The following example is a possible Public Key Creation page for a dummy user "@cypher-Angel-3000".
 
@@ -35,7 +38,7 @@ use Webauthn\PublicKeyCredentialParameters;
 use Webauthn\PublicKeyCredentialRpEntity;
 use Webauthn\PublicKeyCredentialUserEntity;
 
-// RP Entity
+// RP Entity i.e. the application
 $rpEntity = PublicKeyCredentialRpEntity::create(
     'My Super Secured Application', //Name
     'foo.example.com',              //ID
@@ -53,18 +56,20 @@ $userEntity = PublicKeyCredentialUserEntity::create(
 // Challenge
 $challenge = random_bytes(16);
 
-// Timeout
-$timeout = 60000; // 60 seconds
-
 // Public Key Credential Parameters
 $publicKeyCredentialParametersList = [
     PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ES256),
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ES256K),
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ES384),
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ES512),
     PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_RS256),
-];
-
-// Devices to exclude
-$excludedPublicKeyDescriptors = [
-    PublicKeyCredentialDescriptor::create(PublicKeyCredentialDescriptor::CREDENTIAL_TYPE_PUBLIC_KEY, 'ABCDEFGH…'),
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_RS384),
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_RS512),
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_PS256),
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_PS384),
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_PS512),
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ED256),
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ED512),
 ];
 
 $publicKeyCredentialCreationOptions =
@@ -74,14 +79,13 @@ $publicKeyCredentialCreationOptions =
         $challenge,
         $publicKeyCredentialParametersList,
     )
-    ->excludeCredentials(...$excludedPublicKeyDescriptors)
 ;
 ```
 
-The options object can be converted into JSON and sent to the authenticator [using a JS script](../../pre-requisites/javascript.md).
+The options object can be converted into JSON and sent to the authenticator [using the API](https://developer.mozilla.org/en-US/docs/Web/API/Web\_Authentication\_API).
 
 {% hint style="warning" %}
-It is important to store the user entity and the options object (e.g. in the session) for the next step; they will be needed to check the response from the device.
+It is important to store the user entity and the options object (e.g. in the session) for the next step. The data will be needed to check the response from the device.
 {% endhint %}
 
 You can change the default values for each and all options
@@ -154,7 +158,7 @@ Now we have a fully loaded Public Key Credential object, but we need now to make
 1. The authenticator response is of type `AuthenticatorAttestationResponse`
 2. This response is valid.
 
-The first is easy to perform:
+The first step is easy to perform:
 
 ```php
 <?php
@@ -209,8 +213,4 @@ If no exception is thrown, the response is valid. You can store the Public Key C
 
 {% hint style="info" %}
 The way you store and associate these objects to the user is out of scope of this library. However, please note that these objects implement `\JsonSerializable` and have a static method `createFromJson(string $json)`. This will allow you to serialize the objects into JSON and easily go back to an object.
-{% endhint %}
-
-{% hint style="warning" %}
-If you have just registered a new user, don’t forget to store it in your database as well.
 {% endhint %}
