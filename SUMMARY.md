@@ -12,6 +12,7 @@
 * [Authenticators](webauthn-in-a-nutshell/authenticators.md)
 * [Ceremonies](webauthn-in-a-nutshell/ceremonies.md)
 * [Metadata Statement](deep-into-the-framework/attestation-and-metadata-statement.md)
+* [User Verification](webauthn-in-a-nutshell/user-verification.md)
 * [Extensions](deep-into-the-framework/extensions.md)
 
 ## Prerequisites
@@ -26,9 +27,9 @@
 * [Webauthn Server](the-webauthn-server/the-hard-way/README.md)
 * [Register Authenticators](the-webauthn-server/the-hard-way/authenticator-registration.md)
 * [Authenticate Your Users](the-webauthn-server/the-hard-way/authenticate-your-users.md)
-* [User Verification](deep-into-the-framework/user-verification.md)
 * [Advanced Behaviours](pure-php/advanced-behaviours/README.md)
   * [Debugging](deep-into-the-framework/debugging.md)
+  * [User Verification](pure-php/advanced-behaviours/user-verification.md)
   * [Authenticator Selection Criteria](deep-into-the-framework/authenticator-selection-criteria.md)
   * [Attestation and Metadata Statement](pure-php/advanced-behaviours/attestation-and-metadata-statement.md)
   * [Authentication without username](deep-into-the-framework/authentication-without-username.md)

@@ -9,16 +9,19 @@ To perform a user authentication using a security device, you need to instantiat
 Let’s say you want to authenticate the user we used earlier. This options object will need:
 
 * A challenge (random binary string)
-* A timeout (optional)
-* [The Relying Party ID](../../pre-requisites/the-relying-party.md) i.e. your application domain (optional)
-* The list with the allowed credentials
-* [The user verification requirement](../../deep-into-the-framework/user-verification.md) (optional)
-* [Extensions](../../deep-into-the-framework/extensions.md) (optional)
+* The list with the allowed credentials (may be an option in certain circumstances)
+
+Optionally, you can customize the following parameters:
+
+* A timeout
+* The Relying Party ID i.e. your application domain
+* The user verification requirement
+* Extensions
 
 The `PublicKeyCredentialRequestOptions` object is designed to be easily serialized into a JSON object. This will ease the integration into an HTML page or through an API endpoint.
 
 {% hint style="info" %}
-For v4.0+, the timeout default value will be set to `null`. If you want to set a value, pleaase read the following recommended behavior showed in the specification:
+The timeout default value is set to `null`. If you want to set a value, pleaase read the following recommended behavior showed in the specification:
 
 * If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
 * If the user verification is `preferred` or `required`, the range is 300 to 600 seconds (5 to 10 minutes)
@@ -42,18 +45,74 @@ $allowedCredentials = array_map(
 ```
 
 {% hint style="info" %}
-For usernameless authentication, please read the [dedicated page](../../deep-into-the-framework/authentication-without-username.md). In this case the `$allowedCredentials` should be an empty list.
+For usernameless authentication, please read the [dedicated page](../../deep-into-the-framework/authentication-without-username.md). In this case no Public Key Credential Descriptors should be passed to the the options.
 {% endhint %}
+
+### Example
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Webauthn\PublicKeyCredentialDescriptor;
+use Webauthn\PublicKeyCredentialRequestOptions;
+use Webauthn\PublicKeyCredentialSource;
+
+// List of registered PublicKeyCredentialDescriptor classes associated to the user
+$registeredAuthenticators = $publicKeyCredentialSourceRepository->findAllForUserEntity($userEntity);
+$allowedCredentials = array_map(
+    static function (PublicKeyCredentialSource $credential): PublicKeyCredentialDescriptor {
+        return $credential->getPublicKeyCredentialDescriptor();
+    },
+    $registeredAuthenticators
+);
+
+// Public Key Credential Request Options
+$publicKeyCredentialRequestOptions = 
+    PublicKeyCredentialRequestOptions::create(
+        random_bytes(32) // Challenge
+    )
+    ->allowCredentials(...$allowedCredentials)
+;
+```
 
 ### User Verification
 
-Eligible authenticators are filtered and only capable of satisfying this requirement will interact with the user. Please refer to the [User Verification page](../../deep-into-the-framework/user-verification.md) for all possible values.
+Eligible authenticators are filtered and only capable of satisfying this requirement will interact with the user. Please refer to the [User Verification page](../../pure-php/advanced-behaviours/user-verification.md) for all possible values.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Webauthn\PublicKeyCredentialDescriptor;
+use Webauthn\PublicKeyCredentialRequestOptions;
+use Webauthn\PublicKeyCredentialSource;
+
+// List of registered PublicKeyCredentialDescriptor classes associated to the user
+$registeredAuthenticators = $publicKeyCredentialSourceRepository->findAllForUserEntity($userEntity);
+$allowedCredentials = array_map(
+    static function (PublicKeyCredentialSource $credential): PublicKeyCredentialDescriptor {
+        return $credential->getPublicKeyCredentialDescriptor();
+    },
+    $registeredAuthenticators
+);
+
+// Public Key Credential Request Options
+$publicKeyCredentialRequestOptions = 
+    PublicKeyCredentialRequestOptions::create(
+        random_bytes(32) // Challenge
+    )
+    ->setUserVerification(
+        PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_REQUIRED
+    )
+;
+```
 
 ### Extensions
 
 Please refer to the [Extension page](../../deep-into-the-framework/extensions.md) to know how to manage authentication extensions.
-
-### Example
 
 ```php
 <?php
@@ -76,9 +135,10 @@ $publicKeyCredentialRequestOptions =
     PublicKeyCredentialRequestOptions::create(
         random_bytes(32) // Challenge
     )
-    ->allowCredentials(...$allowedCredentials)
-    ->setTimeout(30_000)
-    ->setRpId('foo.example.com')
+    ->addExtension(
+        AuthenticationExtension::create('loc', true),
+        AuthenticationExtension::create('txAuthSimple', 'Please log in with a registered authenticator'),
+    )
 ;
 ```
 

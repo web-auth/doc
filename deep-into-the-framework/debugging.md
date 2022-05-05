@@ -2,9 +2,7 @@
 
 If you have troubles during the development of your application or if you want to keep track of every critical/error messages in production, you can use a [PSR-3 compatible logger](https://www.php-fig.org/psr/psr-3/).
 
-## The Hard Way
-
-Prior to version 3.3, the following classes have an optional constructor parameter `$logger` that can accept the logging service. From version 3.3 onwards you should use their `setLogger` function instead.
+The following classes provide a `setLogger` function to pass your PSR-3 logger instance.
 
 * `Webauthn\AttestationStatement\AttestationObjectLoader`
 * `Webauthn\AuthenticatorAssertionResponseValidator`
