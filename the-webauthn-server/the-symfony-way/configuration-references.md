@@ -64,7 +64,7 @@ The credential\_repository and user\_repository parameters correspond to the ser
 
 ### Token Binding Handler
 
-Please refer to [this page](../../deep-into-the-framework/token-binding.md#the-symfony-way). You should let the default value as it is.
+Please refer to [this page](broken-reference). You should let the default value as it is.
 
 ### Creation Profiles
 

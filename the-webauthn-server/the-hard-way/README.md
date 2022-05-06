@@ -31,7 +31,7 @@ $publicKeyCredentialSourceRepository = ...; //Instantiate your repository
 
 The token binding handler is a service that will verify if the token binding set in the device response corresponds to the one set in the request.
 
-At the time of writing, we recommend to ignore this feature. Please refer to [the dedicated page](../../deep-into-the-framework/token-binding.md) for more information.
+At the time of writing, we recommend to ignore this feature. Please refer to [the dedicated page](../../webauthn-in-a-nutshell/token-binding.md) for more information.
 
 ```php
 use Webauthn\TokenBinding\IgnoreTokenBindingHandler;

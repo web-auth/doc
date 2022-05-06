@@ -10,37 +10,37 @@ With Webauthn, it is possible to authenticate a user without username. This beha
 In case of failure, you should continue with the standard authentication process i.e. by asking the username of the user.
 {% endhint %}
 
-## The Hard Way
-
 Selection criteria for the registration of the authenticator:
 
 ```php
-$authenticatorSelectionCriteria = new AuthenticatorSelectionCriteria(
-    AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE,
-    true,                                                                  // Resident key required
-    AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED // User verification required
-);
+$authenticatorSelectionCriteria = AuthenticatorSelectionCriteria::create()
+    ->setUserVerification(AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED)
+    ->setResidentKey(AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED)
+;
 
-$publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
-    $rpEntity,
-    $userEntity,
-    $challenge,
-    $publicKeyCredentialParametersList,
-    $timeout,
-    $excludedPublicKeyDescriptors,
-    $authenticatorSelectionCriteria
-);
+$publicKeyCredentialCreationOptions =
+    PublicKeyCredentialCreationOptions::create(
+        $rpEntity,
+        $userEntity,
+        $challenge,
+        $publicKeyCredentialParametersList,
+    )
+    ->setAuthenticatorSelection($authenticatorSelectionCriteria)
+;
 ```
 
 The Request Options:
 
 ```php
 // Public Key Credential Request Options
-$publicKeyCredentialRequestOptions = new PublicKeyCredentialRequestOptions(
-    random_bytes(32),
-    60000, 
-    'foo.example.com',
-    [],
-    PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_REQUIRED
-);
+
+$publicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions::create(random_bytes(32))
+    ->setUserVerification(
+        PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_REQUIRED
+    )
+;
 ```
+
+{% hint style="success" %}
+The default values for the user verification and the resident key are set to preferred and resident keys may be created if the authenticator is compatible. This means that some users may log in without username.
+{% endhint %}

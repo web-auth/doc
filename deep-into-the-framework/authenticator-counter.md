@@ -45,11 +45,13 @@ final class CustomCounterChecker implements CounterChecker
 ## The Hard Way
 
 ```php
-$authenticatorAssertionResponseValidator = new AuthenticatorAssertionResponseValidator(
-    $publicKeyCredentialSourceRepository,
-    $tokenBindingHandler,
-    $extensionOutputCheckerHandler,
-    $coseAlgorithmManager,
-    new CustomCounterChecker()
-);
+$authenticatorAssertionResponseValidator =
+    AuthenticatorAssertionResponseValidator::create(
+        $publicKeyCredentialSourceRepository,
+        $tokenBindingHandler,
+        $extensionOutputCheckerHandler,
+        $coseAlgorithmManager
+    )
+    ->setCounterChecker(new CustomCounterChecker())
+;
 ```

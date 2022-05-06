@@ -14,6 +14,7 @@
 * [Metadata Statement](deep-into-the-framework/attestation-and-metadata-statement.md)
 * [User Verification](webauthn-in-a-nutshell/user-verification.md)
 * [Extensions](deep-into-the-framework/extensions.md)
+* [Token Binding](webauthn-in-a-nutshell/token-binding.md)
 
 ## Prerequisites
 
@@ -34,7 +35,6 @@
   * [Attestation and Metadata Statement](pure-php/advanced-behaviours/attestation-and-metadata-statement.md)
   * [Authentication without username](deep-into-the-framework/authentication-without-username.md)
   * [Extensions](pure-php/advanced-behaviours/extensions.md)
-  * [Token Binding](deep-into-the-framework/token-binding.md)
   * [Authenticator Counter](deep-into-the-framework/authenticator-counter.md)
   * [Dealing with “localhost”](deep-into-the-framework/dealing-with-localhost.md)
 

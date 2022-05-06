@@ -12,13 +12,7 @@ This feature is not yet implemented in the library, but you can decide how the l
 
 The library provides two concrete classes for the moment:
 
-* `Webauthn\TokenBinding\IgnoreTokenBindingHandler`: the library will ignore the token binding,
+* `Webauthn\TokenBinding\IgnoreTokenBindingHandler`: the library will ignore the token binding (recommended),
 * `Webauthn\TokenBinding\TokenBindingNotSupportedHandler`: the library will throw an exception if the token binding is present.
 
 You can change this behavior by creating your own implementation. The handler must implement the interface `Webauthn\TokenBinding\TokenBindingHandler`.
-
-## Authenticator Attestation Validation
-
-## Authenticator Assertion Validation
-
-When you create your [Authenticator Attestation](../the-webauthn-server/the-hard-way/#authenticator-attestation-response-validator) and [Authenticator Assertion Response Validators](../the-webauthn-server/the-hard-way/#authenticator-assertion-response-validator), just inject the correct handler.
