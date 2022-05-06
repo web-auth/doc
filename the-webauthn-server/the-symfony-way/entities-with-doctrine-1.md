@@ -2,7 +2,7 @@
 
 ## User Entity
 
-Your application certainly has a user repository. Good news: there is no need to modify!
+Your application certainly has a user repository. Good news: there is no need to modify it!
 
 The User Entity Repository can be completely decoupled from the user entity used by your application.
 
@@ -27,13 +27,17 @@ use Webauthn\PublicKeyCredentialUserEntity;
 final class PublicKeyCredentialUserEntityRepository implements PublicKeyCredentialUserEntityRepositoryInterface
 {
     /**
-     * The UserRepository $userRepository is the Doctrine repository
+     * The UserRepository $userRepository is the repository
      * that already exists in the application
      */
     public function __construct(private UserRepository $userRepository)
     {
     }
 
+    /**
+     * This method creates the next Webauthn User Entity ID
+     * In this example, we use Ulid
+     */
     public function generateNextUserEntityId(): string {
         return Ulid::generate();
     }

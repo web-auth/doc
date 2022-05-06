@@ -58,14 +58,6 @@ webauthn:
 ```
 {% endcode %}
 
-### Repositories
-
-The credential\_repository and user\_repository parameters correspond to the services we created above.
-
-### Token Binding Handler
-
-Please refer to [this page](broken-reference). You should let the default value as it is.
-
 ### Creation Profiles
 
 {% hint style="success" %}
@@ -165,10 +157,6 @@ webauthn:
 #### Attestation Conveyance
 
 If you need the [attestation of the authenticator](../../deep-into-the-framework/attestation-and-metadata-statement.md), you can specify the preference regarding attestation conveyance during credential generation.
-
-{% hint style="warning" %}
-Please note that the metadata service is mandatory when you use this option.
-{% endhint %}
 
 {% hint style="warning" %}
 The use of Attestation Statements is generally not recommended unless you REALLY need this information.

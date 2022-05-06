@@ -144,8 +144,8 @@ You can customize the responses returned by the firewall by using a custom handl
 
 There are 4 types of responses and handlers:
 
-* Request options,
-* Creation options,
+* Request options: options returned during the authentication ceremony,
+* Creation options: options returned during the registration ceremony,
 * Authentication Success,
 * Authentication Failure,
 

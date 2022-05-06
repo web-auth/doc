@@ -126,7 +126,7 @@ final class PublicKeyCredentialSourceRepository extends BasePublicKeyCredentialS
 This repository should be declared as a Symfony service.
 
 {% hint style="info" %}
-With Symfony Flex, this is usually done automatically
+With Symfony autowiring and autoconfiguration, this is usually done automatically
 {% endhint %}
 
 {% code title="config/services.yaml" %}
