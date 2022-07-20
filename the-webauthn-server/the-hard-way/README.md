@@ -1,6 +1,6 @@
 # Webauthn Server
 
-To laucnh a Webauthn server, you will need the following components:
+To launch a Webauthn server, you will need the following components:
 
 * [A Public Key Credential Source Repository](./#public-key-credential-source-repository)
 * [A token binding handler](./#token-binding-handler)
