@@ -212,5 +212,5 @@ $publicKeyCredentialSource = $authenticatorAttestationResponseValidator->check(
 If no exception is thrown, the response is valid. You can store the Public Key Credential Source `($publicKeyCredentialSource`) and associate it to the user entity.
 
 {% hint style="info" %}
-The way you store and associate these objects to the user is out of scope of this library. However, please note that these objects implement `\JsonSerializable` and have a static method `createFromJson(string $json)`. This will allow you to serialize the objects into JSON and easily go back to an object.
+The way you store and associate these objects to the user is out of scope of this library. However, please note that these objects implement `\JsonSerializable` and have a static method `createFromArray(array $data)`. This will allow you to serialize the objects into JSON and easily go back to an object.
 {% endhint %}
