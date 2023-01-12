@@ -68,9 +68,8 @@ use Webauthn\AttestationStatement\AttestationStatementSupportManager;
 use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
 
 // The manager will receive data to load and select the appropriate 
-$attestationStatementSupportManager = AttestationStatementSupportManager::create()
-    ->add(NoneAttestationStatementSupport::create())
-;
+$attestationStatementSupportManager = AttestationStatementSupportManager::create();
+$attestationStatementSupportManager->add(NoneAttestationStatementSupport::create());
 ```
 
 ## Attestation Object Loader
