@@ -225,6 +225,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 $request = Request::createFromGlobals();
 
+$userHandle = $userEntity->getId();
 $publicKeyCredentialSource = $authenticatorAssertionResponseValidator->check(
     $publicKeyCredential->getRawId(),
     $authenticatorAssertionResponse,
