@@ -55,7 +55,7 @@ The Stimulus Controller should be configured to fits on your needs. In particula
         '@web-auth/webauthn-stimulus/webauthn',
         {
             requestResultUrl: path('webauthn.controller.security.main.request.result'),
-            requestOptionsUrl: ptwath('webauthn.controller.security.main.request.options')
+            requestOptionsUrl: path('webauthn.controller.security.main.request.options')
         }
     )
 }}
