@@ -36,6 +36,8 @@ use Webauthn\PublicKeyCredentialSource;
 
 // We gather all registered authenticators for this user
 // $publicKeyCredentialSourceRepository corresponds to your own service
+// The purpose of the fictive method findAllForUserEntity is to return all credential source objects
+// registered by the user.
 $registeredAuthenticators = $publicKeyCredentialSourceRepository->findAllForUserEntity($userEntity);
 
 // We don’t need the Credential Sources, just the associated Descriptors
@@ -92,15 +94,6 @@ declare(strict_types=1);
 use Webauthn\PublicKeyCredentialDescriptor;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialSource;
-
-// List of registered PublicKeyCredentialDescriptor classes associated to the user
-$registeredAuthenticators = $publicKeyCredentialSourceRepository->findAllForUserEntity($userEntity);
-$allowedCredentials = array_map(
-    static function (PublicKeyCredentialSource $credential): PublicKeyCredentialDescriptor {
-        return $credential->getPublicKeyCredentialDescriptor();
-    },
-    $registeredAuthenticators
-);
 
 // Public Key Credential Request Options
 $publicKeyCredentialRequestOptions =
@@ -214,8 +207,9 @@ The Authenticator Assertion Response Validator service (variable `$authenticator
 
 declare(strict_types=1);
 
-$credentialId = $publicKeyCredential->rawId;
-$publicKeyCredentialSource =  $publicKeyCredentialSourceRepository->findOneByCredentialId($credentialId);
+$publicKeyCredentialSource =  $publicKeyCredentialSourceRepository->findOneByCredentialId(
+    $publicKeyCredential->rawId
+);
 if ($publicKeyCredentialSource === null) {
    // Throw an exception if the credential is not found.
    // It can also be rejected depending on your security policy (e.g. disabled by the user because of loss)
@@ -225,8 +219,7 @@ $publicKeyCredentialSource = $authenticatorAssertionResponseValidator->check(
     $publicKeyCredentialSource,
     $authenticatorAssertionResponse,
     $publicKeyCredentialRequestOptions,
-    'my-application.com',
-    $userHandle
+    'my-application.com'
 );
 
 // Optional, but highly recommended, you can save the credential source as it may be modified
