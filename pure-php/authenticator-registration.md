@@ -31,7 +31,6 @@ Let’s see an example of the `PublicKeyCredentialCreationOptions` object. The f
 declare(strict_types=1);
 
 use Webauthn\PublicKeyCredentialCreationOptions;
-use Webauthn\PublicKeyCredentialParameters;
 use Webauthn\PublicKeyCredentialRpEntity;
 use Webauthn\PublicKeyCredentialUserEntity;
 
