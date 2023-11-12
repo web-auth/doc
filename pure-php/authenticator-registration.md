@@ -92,6 +92,41 @@ $publicKeyCredentialCreationOptions =
 ;
 ```
 
+### Public Key Credential Parameters
+
+The argument `pubKeyCredParams` contains a list of `Webauthn\PublicKeyCredentialParameters` objects that refer to COSE algorithms. The authenticators must use one of the algorithms in this list, respecting the order of preference on this list.
+
+An empty list corresponds to the default algorithms that are `ES256` and `RS256` (in this order). Those two algorithms are required by the specification.
+
+```php
+use Cose\Algorithms;
+use Webauthn\PublicKeyCredentialParameters;
+
+$publicKeyCredentialParametersList = [
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ES256K), // More interesting algorithm
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ES256),  //      ||
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_RS256),  //      || 
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_PS256),  //      \/
+    PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ED256),  // Less interesting algorithm
+];
+```
+
+{% hint style="warning" %}
+Customizing this list may lead to unexpected behavior. Please use with caution.
+{% endhint %}
+
+### Authenticator Selection
+
+Please read detail [on this page](advanced-behaviours/authenticator-selection-criteria.md).
+
+### Attestation
+
+Please read detail [on this page](advanced-behaviours/attestation-and-metadata-statement.md).
+
+### Exclude Credentials
+
+When the user already registered authenticators, you can pass a list of `Webauthn\PublicKeyCredentialDescriptor` objects as argument to avoid registering multiple times the same authenticator.
+
 ## Creation Response
 
 What you receive must be a JSON object that looks like as follow:
