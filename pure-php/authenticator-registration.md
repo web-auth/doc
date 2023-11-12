@@ -30,9 +30,6 @@ Let’s see an example of the `PublicKeyCredentialCreationOptions` object. The f
 
 declare(strict_types=1);
 
-use Cose\Algorithms;
-use Webauthn\AuthenticatorSelectionCriteria;
-use Webauthn\PublicKeyCredentialDescriptor;
 use Webauthn\PublicKeyCredentialCreationOptions;
 use Webauthn\PublicKeyCredentialParameters;
 use Webauthn\PublicKeyCredentialRpEntity;
