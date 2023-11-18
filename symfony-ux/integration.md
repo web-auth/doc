@@ -33,14 +33,14 @@ We now have only two Twig functions to call: `stimulus_controller` and `stimulus
 
 ```twig
 <form
-    {{ stimulus_controller('@web-auth/webauthn-stimulus/webauthn') }}
+    {{ stimulus_controller('@web-auth/webauthn-stimulus') }}
 >
     <label for="username">Username</label>
     <input name="username" type="text" id="username" placeholder="Type your username here" autocomplete="username webauthn">
 
     <button
         type="submit"
-        {{ stimulus_action('@web-auth/webauthn-stimulus/webauthn', 'signin') }}
+        {{ stimulus_action('@web-auth/webauthn-stimulus', 'signin') }}
     >
         Sign in
     </button>
