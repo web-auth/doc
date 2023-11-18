@@ -37,13 +37,23 @@ We now have only two Twig functions to call: `stimulus_controller` and `stimulus
 The Stimulus Controller should be configured to fits on your needs. In particular, the routes to the options and authenticator result. The route names used below are automatically created by the firewall from the bundle package. By using these values, we make sure the routes are always in line with the firewall configuration.
 
 ```twig
-{{
-    stimulus_controller(
-        '@web-auth/webauthn-stimulus/webauthn',
+<form
+    {{ stimulus_controller('@web-auth/webauthn-stimulus',
         {
             requestResultUrl: path('webauthn.controller.security.main.request.result'),
             requestOptionsUrl: path('webauthn.controller.security.main.request.options')
         }
-    )
-}}
+    ) }}
+>
+    <label for="username">Username</label>
+    <input name="username" type="text" id="username" placeholder="Type your username here" autocomplete="username webauthn">
+
+    <button
+        type="submit"
+        {{ stimulus_action('@web-auth/webauthn-stimulus', 'signin') }}
+    >
+        Sign in
+    </button>
+</form>
+
 ```
