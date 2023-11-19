@@ -220,7 +220,7 @@ $publicKeyCredentialSource = $authenticatorAssertionResponseValidator->check(
     $authenticatorAssertionResponse,
     $publicKeyCredentialRequestOptions,
     'my-application.com',
-    $userHandle
+    $publicKeyCredentialSource->userHandle
 );
 
 // Optional, but highly recommended, you can save the credential source as it may be modified
