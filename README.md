@@ -46,7 +46,7 @@ As an example, the [section 5.2.2 “Web Authentication Assertion”](https://ww
   * ED25519
 * Extensions
   * Supported (not fully tested)
-  * appid extension (compatibility with FIDO U2F authenticator
+  * appid extension (compatibility with FIDO U2F authenticator)
 
 ## Compatible Authenticators
 
