@@ -1,52 +1,53 @@
 # Table of contents
 
+* [WebAuthn: Strong Authentication for your PHP applications](README.md)
+
 ## The project
 
-* [Introduction](README.md)
-* [Web Browser Support](web-browser-support.md)
-* [Installation](installation.md)
-* [Contributing](contributing.md)
+* [What is Webauthn?](the-project/the-project.md)
+* [Web Browser Support](the-project/web-browser-support.md)
+* [Installation](the-project/installation.md)
+* [Contributing](the-project/contributing.md)
 
 ## Webauthn In A Nutshell
 
 * [Authenticators](webauthn-in-a-nutshell/authenticators.md)
 * [Ceremonies](webauthn-in-a-nutshell/ceremonies.md)
-* [Metadata Statement](deep-into-the-framework/attestation-and-metadata-statement.md)
 * [User Verification](webauthn-in-a-nutshell/user-verification.md)
-* [Extensions](deep-into-the-framework/extensions.md)
-* [Token Binding](webauthn-in-a-nutshell/token-binding.md)
+* [Metadata Statement](webauthn-in-a-nutshell/attestation-and-metadata-statement.md)
+* [Extensions](webauthn-in-a-nutshell/extensions.md)
 
 ## Prerequisites
 
-* [The Relying Party](pre-requisites/the-relying-party.md)
-* [Credential Source Repository](pre-requisites/credential-source-repository.md)
-* [User Entity](pre-requisites/user-entity-repository.md)
-* [Javascript](pre-requisites/javascript.md)
+* [The Relying Party](prerequisites/the-relying-party.md)
+* [Credential Source](prerequisites/credential-source-repository.md)
+* [User Entity](prerequisites/user-entity-repository.md)
+* [Javascript](prerequisites/javascript.md)
 
 ## Pure PHP
 
-* [Webauthn Server](the-webauthn-server/the-hard-way/README.md)
-* [Register Authenticators](the-webauthn-server/the-hard-way/authenticator-registration.md)
-* [Authenticate Your Users](the-webauthn-server/the-hard-way/authenticate-your-users.md)
+* [Webauthn Server](pure-php/the-hard-way.md)
+* [Register Authenticators](pure-php/authenticator-registration.md)
+* [Authenticate Your Users](pure-php/authenticate-your-users.md)
 * [Advanced Behaviours](pure-php/advanced-behaviours/README.md)
-  * [Debugging](deep-into-the-framework/debugging.md)
+  * [Debugging](pure-php/advanced-behaviours/debugging.md)
   * [User Verification](pure-php/advanced-behaviours/user-verification.md)
-  * [Authenticator Selection Criteria](deep-into-the-framework/authenticator-selection-criteria.md)
+  * [Authenticator Selection Criteria](pure-php/advanced-behaviours/authenticator-selection-criteria.md)
   * [Attestation and Metadata Statement](pure-php/advanced-behaviours/attestation-and-metadata-statement.md)
-  * [Authentication without username](deep-into-the-framework/authentication-without-username.md)
+  * [Authentication without username](pure-php/advanced-behaviours/authentication-without-username.md)
   * [Extensions](pure-php/advanced-behaviours/extensions.md)
-  * [Authenticator Counter](deep-into-the-framework/authenticator-counter.md)
-  * [Dealing with “localhost”](deep-into-the-framework/dealing-with-localhost.md)
+  * [Authenticator Counter](pure-php/advanced-behaviours/authenticator-counter.md)
+  * [Dealing with “localhost”](pure-php/advanced-behaviours/dealing-with-localhost.md)
 
 ## Symfony Bundle
 
-* [Bundle Installation](the-webauthn-server/the-symfony-way/README.md)
-* [Credential Source Repository](the-webauthn-server/the-symfony-way/entities-with-doctrine.md)
-* [User Entity Repository](the-webauthn-server/the-symfony-way/entities-with-doctrine-1.md)
-* [Firewall](the-webauthn-server/the-symfony-way/firewall.md)
-* [Configuration References](the-webauthn-server/the-symfony-way/configuration-references.md)
+* [Bundle Installation](symfony-bundle/the-symfony-way.md)
+* [Credential Source Repository](symfony-bundle/entities-with-doctrine.md)
+* [User Entity Repository](symfony-bundle/entities-with-doctrine-1.md)
+* [Firewall](symfony-bundle/firewall.md)
+* [Configuration References](symfony-bundle/configuration-references.md)
 * [Advanced Behaviors](symfony-bundle/advanced-behaviors/README.md)
-  * [Register Additional Authenticators](deep-into-the-framework/register-authenticators.md)
+  * [Register Additional Authenticators](symfony-bundle/advanced-behaviors/register-authenticators.md)
   * [Debugging](symfony-bundle/advanced-behaviors/debugging.md)
   * [User Verification](symfony-bundle/advanced-behaviors/user-verification.md)
   * [Attestation and Metadata Statement](symfony-bundle/advanced-behaviors/attestation-and-metadata-statement.md)
@@ -60,3 +61,9 @@
 ## Migration
 
 * [From v3.x to v4.0](migration/from-v3.x-to-v4.0.md)
+* [From 4.x to 5.0](migration/from-v3.x-to-v4.0-1.md)
+
+## Symfony UX
+
+* [Installation](symfony-ux/installation.md)
+* [Integration](symfony-ux/integration.md)

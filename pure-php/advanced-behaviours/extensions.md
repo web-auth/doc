@@ -12,17 +12,15 @@ use Webauthn\AuthenticationExtensions\AuthenticationExtensionsClientInputs;
 use Webauthn\PublicKeyCredentialRequestOptions;
 
 // Extensions
-$extensions = AuthenticationExtensionsClientInputs::create()
-    ->add(AuthenticationExtension::create('loc', true))
-;
+$extensions = AuthenticationExtensionsClientInputs::create([
+    AuthenticationExtension::create('loc', true)
+]);
 
 // Public Key Credential Request Options
-$publicKeyCredentialRequestOptions = 
-    PublicKeyCredentialRequestOptions::create(
-        random_bytes(32) // Challenge
-    )
-    ->setExtensions($extensions)
-;
+$publicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions::create(
+    random_bytes(32), // Challenge
+    extensions: $extensions
+);
 ```
 
 ## Extension Output Checker

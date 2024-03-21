@@ -16,7 +16,7 @@ The roaming authenticator may have different forms. The most common form is a US
 
 Authenticators of this class are removable from, and can "roam" among, client devices.
 
-![Webauthn compatible devices](<../.gitbook/assets/fido2 (1).jpeg>)
+![Webauthn compatible devices](../.gitbook/assets/fido2.jpeg)
 
 ## Platform Authenticators
 

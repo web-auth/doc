@@ -22,26 +22,35 @@ A primary use case for platform authenticators is to register a particular clien
 
 ### Resident Key
 
-When this criterion is set to `true`, a Public Key Credential Source will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such a resident credential.
-
-This criterion is needed if you want to [authenticate users without username](../../pure-php/advanced-behaviours/authentication-without-username.md).
-
-{% code title="config/packages/webauthn.yaml" %}
-```yaml
-webauthn:
-    …
-    creation_profiles:
-        default:
-            rp:
-                name: 'My Application'
-                id: 'example.com'
-            authenticator_selection_criteria:
-                attachment_mode: !php/const Webauthn\AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE
-                require_resident_key: false
-                user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
-```
-{% endcode %}
+With this criterion, a Public Key Credential Source will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such a resident credential.
 
 {% hint style="info" %}
-To be written
+A resident key shall be created you want to [authenticate users without username](authentication-without-username.md).
 {% endhint %}
+
+### User Verification
+
+[Please refer to this page](user-verification.md).
+
+### Example
+
+With this example, with require the user verification (PIN, fingerprint...), a resident key and an authenticator embedded onto a device. This is typacally what you will require for Windows Hello or Face ID authentication.
+
+```php
+use Webauthn\AuthenticatorSelectionCriteria;
+use Webauthn\PublicKeyCredentialCreationOptions;
+
+$authenticatorSelectionCriteria = AuthenticatorSelectionCriteria::create(
+    userVerification: AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED,
+    residentKey:AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED,
+    authenticatorAttachment: AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_PLATFORM
+);
+
+$publicKeyCredentialCreationOptions =
+    PublicKeyCredentialCreationOptions::create(
+        $rpEntity,
+        $userEntity,
+        $challenge,
+        authenticatorSelection: $authenticatorSelectionCriteria
+);
+```

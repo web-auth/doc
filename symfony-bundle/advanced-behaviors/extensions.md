@@ -26,21 +26,20 @@ final class LocationExtensionOutputChecker
 {
     public function check(AuthenticationExtensionsClientInputs $inputs, AuthenticationExtensionsClientOutputs $outputs): void
     {
-        if (!$inputs->has('loc') || $inputs->get('loc') !== true) {
+        if (!$inputs->has('uvm') || $inputs->get('uvm') !== true) {
             return;
         }
 
-        if (!$outputs->has('loc')) {
+        if (!$outputs->has('uvm')) {
             //You may simply return but here we consider it is a mandatory extension output.
             throw new ExtensionOutputError(
-                $inputs->get('loc'),
-                'The location of the device is missing'
+                $inputs->get('uvm'),
+                'The User Verification Method is missing'
             );
         }
 
-        $location = $outputs->get('loc');
-        //... Proceed with the output e.g. by logging the location of the device
-        // or verifying it is in a specific area.
+        $uvm = $outputs->get('uvm');
+        //... Proceed with the output
     }
 }
 ```
@@ -59,11 +58,11 @@ webauthn:
                 name: 'My Application'
                 id: 'example.com'
             extensions:
-                loc: true
+                uvm: true
     request_profiles:
         default:
             rp_id: 'example.com'
             extensions:
-                loc: true
+                uvm: true
 ```
 {% endcode %}

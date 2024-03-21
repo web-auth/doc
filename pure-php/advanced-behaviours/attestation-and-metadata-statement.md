@@ -24,6 +24,12 @@ There are few steps to acheive. First, you have to add support classes for all a
 The _Android SafetyNet Attestation Statement_ is a JWT that can be verified by the library, but can also be checked online by hitting the Google API. This method drastically increase the security for the attestation type but requires a [PSR-18 compatible HTTP Client](https://www.php-fig.org/psr/psr-18/) and [an API key](https://developer.android.com/training/safetynet/attestation).
 {% endhint %}
 
+{% hint style="warning" %}
+For 4.5.0, the `TPMAttestationStatementSupport` class accepts a PSR-20 clock as argument. This argument will be mandatory for 5.0.0.
+
+In the example below, we use `symfony/clock` component.
+{% endhint %}
+
 ```php
 <?php
 
@@ -41,36 +47,40 @@ use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
 use Webauthn\AttestationStatement\PackedAttestationStatementSupport;
 use Webauthn\AttestationStatement\TPMAttestationStatementSupport;
 use Webauthn\AttestationStatement\AppleAttestationStatementSupport;
+use Symfony\Component\Clock\NativeClock;
+
+//We need a PSR-20 clock
+$clock = new NativeClock();
 
 // You normally already do this
-$attestationStatementSupportManager = new AttestationStatementSupportManager();
-$attestationStatementSupportManager->add(new NoneAttestationStatementSupport());
+$attestationStatementSupportManager = AttestationStatementSupportManager::create();
+$attestationStatementSupportManager->add(NoneAttestationStatementSupport::create());
 
 // Additional classes to add
-$attestationStatementSupportManager->add(new FidoU2FAttestationStatementSupport());
-$attestationStatementSupportManager->add(new AppleAttestationStatementSupport());
-$attestationStatementSupportManager->add(new AndroidSafetyNetAttestationStatementSupport());
-$attestationStatementSupportManager->add(new AndroidKeyAttestationStatementSupport(
-    $psr18Client,         // Can be null if you don’t want to use the Google API
-    $googleApiKey,        // Can be null if you don’t want to use the Google API
-    $psr17RequestFactory  // Can be null if you don’t want to use the Google API
-));
-$attestationStatementSupportManager->add(new TPMAttestationStatementSupport());
+$attestationStatementSupportManager->add(FidoU2FAttestationStatementSupport::create());
+$attestationStatementSupportManager->add(AppleAttestationStatementSupport::create());
+
+$androidSafetyNetAttestationStatementSupport = AndroidSafetyNetAttestationStatementSupport::create()
+    ->enableApiVerification( $psr18Client, $googleApiKey, $psr17RequestFactory) // Optional
+;
+$attestationStatementSupportManager->add($androidSafetyNetAttestationStatementSupport);
+$attestationStatementSupportManager->add(AndroidKeyAttestationStatementSupport::create());
+$attestationStatementSupportManager->add(TPMAttestationStatementSupport::create($clock));
 
 // Cose Algorithm Manager
 // The list of algorithm depends on the algorithm list you defined in your options
 // You should use at least ES256 and RS256 algorithms that are widely used.
-$coseAlgorithmManager = new Manager();
-$coseAlgorithmManager->add(new ECDSA\ES256());
-$coseAlgorithmManager->add(new RSA\RS256());
+$coseAlgorithmManager = Manager::create();
+$coseAlgorithmManager->add(ECDSA\ES256::create());
+$coseAlgorithmManager->add(RSA\RS256::create());
 
-$attestationStatementSupportManager->add(new PackedAttestationStatementSupport($coseAlgorithmManager));
+$attestationStatementSupportManager->add(PackedAttestationStatementSupport::create($coseAlgorithmManager));
 ```
 
 Next, you must inject the Metadata Statement Repository to your Attestation Object Loader.
 
 ```php
-$attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager, $metadataStatementRepository);
+$attestationObjectLoader = AttestationObjectLoader::create($attestationStatementSupportManager);
 ```
 
 ### Credential Creation Options
@@ -90,14 +100,10 @@ There are 3 conveyance modes available using PHP constants provided by the class
 
 use Webauthn\PublicKeyCredentialCreationOptions;
 
-$publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
-    $relyingParty
+$publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create(
+    $relyingParty,
     $userEntity,
     $challenge,
-    $pubKeyCredParams,
-    $timeout, 
-    $excludeCredentials,
-    $authenticatorSelection,
-    PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_DIRECT
+    attestation: PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_DIRECT,
 );
 ```

@@ -30,7 +30,7 @@ You can adapt this command line depending on the other Flex servers you are usin
 
 Next, you have to verify you don’t use any deprecated class, interface, method or property. If you have PHPUnit tests, [you can easily get the list of deprecation used in your application](https://symfony.com/doc/current/components/phpunit\_bridge.html).
 
-* The  class `Webauthn\Server` is removed and there is no replacement.
+* The class `Webauthn\Server` is removed and there is no replacement.
 * The Metadata Statement embraces the version 3 of the specification. There is no migration tool to convert the MDS from v2 to v3. We suggest to refer to [this blog post](https://medium.com/webauthnworks/webauthn-fido2-whats-new-in-mds3-migrating-from-mds2-to-mds3-a271d82cb774) from Yuriy Ackermann, a Fido Alliance staff member who regulary write articles on Webauthn.
 
 ## Dependency Changes:

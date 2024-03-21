@@ -1,3 +1,7 @@
+---
+description: Prove to me who you claim to be!
+---
+
 # User Verification
 
 User verification may be instigated through various authorization gesture modalities: a touch plus PIN code, password entry, or biometric recognition (presenting a fingerprint). The intent is to be able to distinguish individual users.
