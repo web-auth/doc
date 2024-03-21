@@ -59,12 +59,12 @@ The User Entity Repository manages all Webauthn users of your application.
 There is no interface to implement or abstract class to extend so that it should be easy to integrate it in your application. You may already have a user repository.
 
 {% hint style="success" %}
-Whatever the database you use\(MySQL, pgSQL…\), it is not necessary to create relationships between your users and the Credential Sources.
+Whatever the database you use(MySQL, pgSQL…), it is not necessary to create relationships between your users and the Credential Sources.
 {% endhint %}
 
 Hereafter an example of a User Entity repository. In this example we suppose you already have methods to find users using their username or ID.
 
-{% code title="Acme\\Repository\\PublicKeyCredentialUserEntityRepository.php" %}
+{% code title="Acme\Repository\PublicKeyCredentialUserEntityRepository.php" %}
 ```php
 <?php
 
@@ -120,9 +120,5 @@ final class PublicKeyCredentialUserEntityRepository
         );
     }
 }
-
 ```
 {% endcode %}
-
-
-
