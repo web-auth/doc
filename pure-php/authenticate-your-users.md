@@ -174,7 +174,7 @@ $data = '
     }
 }';
 
-$publicKeyCredential = $publicKeyCredentialLoader->load($data);
+$publicKeyCredential = $serializer->deserialize($data, PublicKeyCredential::class, 'json');
 ```
 
 ### Response Verification

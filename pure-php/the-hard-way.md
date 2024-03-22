@@ -50,36 +50,23 @@ $attestationStatementSupportManager->add(NoneAttestationStatementSupport::create
 The Android SafetyNet Attestation API is deprecated. Full turndown is planned in June 2024. More information at [https://developer.android.com/training/safetynet/deprecation-timeline](https://developer.android.com/training/safetynet/deprecation-timeline)
 {% endhint %}
 
-## Attestation Object Loader
+## The Serializer
 
-This object will load the Attestation statements received from the devices. It will need the Attestation Statement Support Manager created above.
+To convert Authenticator Responses from the encoded string to an object, you will need a Serializer.
 
-```php
-<?php
-
-declare(strict_types=1);
-
-use Webauthn\AttestationStatement\AttestationObjectLoader;
-
-$attestationObjectLoader = AttestationObjectLoader::create(
-    $attestationStatementSupportManager
-);
-```
-
-## Public Key Credential Loader
-
-This object will load the Public Key using from the Attestation Object.
+{% hint style="danger" %}
+Before 4.8.0, you were asked to create a PublicKeyCredentialLoader object. For 4.8.0, you can use a Symfony Serializer object. THis will become the standard way to load data for 5.0.0.
+{% endhint %}
 
 ```php
 <?php
 
 declare(strict_types=1);
 
-use Webauthn\PublicKeyCredentialLoader;
+use Webauthn\Denormalizer\WebauthnSerializerFactory;
 
-$publicKeyCredentialLoader = PublicKeyCredentialLoader::create(
-    $attestationObjectLoader
-);
+$factory = new WebauthnSerializerFactory($attestationStatementSupportManager);
+$serializer = $factory->create();
 ```
 
 ## Extension Output Checker Handler

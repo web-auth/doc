@@ -77,12 +77,6 @@ $coseAlgorithmManager->add(RSA\RS256::create());
 $attestationStatementSupportManager->add(PackedAttestationStatementSupport::create($coseAlgorithmManager));
 ```
 
-Next, you must inject the Metadata Statement Repository to your Attestation Object Loader.
-
-```php
-$attestationObjectLoader = AttestationObjectLoader::create($attestationStatementSupportManager);
-```
-
 ### Credential Creation Options
 
 By default, no Attestation Statement is asked to the Authenticators (type = `none`). To change this behavior, you just have to set the corresponding parameter in the `Webauthn\PublicKeyCredentialCreationOptions` object.

@@ -146,12 +146,14 @@ There are two steps to perform with this object:
 
 ### Data Loading
 
-Now that all components are set, we can load the data we receive using the _Public Key Credential Loader_ service (variable `$publicKeyCredential`).
+Now that all components are set, we can load the data we receive using the [_Serializer_](the-hard-way.md#the-serializer) (variable `$serializer`).
 
 ```php
 <?php
 
 declare(strict_types=1);
+
+use Webauthn\PublicKeyCredential;
 
 $data = '
 {
@@ -164,7 +166,7 @@ $data = '
     }
 }';
 
-$publicKeyCredential = $publicKeyCredentialLoader->load($data);
+$publicKeyCredential = $serializer->deserialize($data, PublicKeyCredential::class, 'json');
 ```
 
 If no exception is thrown, you can go to the next step: the verification.

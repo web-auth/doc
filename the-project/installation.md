@@ -12,7 +12,16 @@ The preferred way to install the library you need is to use composer:
 composer require web-auth/webauthn-lib
 ```
 
-If you use Symfony, you may be interested in the bundle and, optionally,  the Stimulus component.
+{% hint style="danger" %}
+For 4.8.0+, the following dependencies ar recommended and will be mandatory for 5.0.0
+
+* symfony/serializer
+* symfony/property-access
+* symfony/property-info
+* phpdocumentor/reflection-docblock
+{% endhint %}
+
+If you use Symfony Framework, you may be interested in the bundle and, optionally,  the Stimulus component.
 
 ```sh
 composer require web-auth/webauthn-symfony-bundle web-auth/webauthn-stimulus
