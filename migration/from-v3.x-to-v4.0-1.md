@@ -79,7 +79,11 @@ The following services are removed:
 ## Dependency Changes:
 
 * Added:
-  * `symfony/clock`: `^6.3`
+  * `symfony/clock`
+  * `symfony/serializer`
+  * `symfony/property-access`
+  * `symfony/property-info`
+  * `phpdocumentor/reflection-docblock`
 * Bumped:
   * `PHP`: `>=8.3`
   * `symfony/*`: `^7.0`
