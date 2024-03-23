@@ -16,7 +16,7 @@ The following attestation types are supported. Note that you should only use the
 * `fido-u2f`: for non-FIDO2 compatible devices (old FIDO / U2F security tokens).
 * `packed`: generally used by authenticators with limited resources (e.g. secure elements). It uses a very compact but still extensible encoding method.
 * `android key`: commonly used by old or disconnected Android devices.
-* `android safety net`: for new Android devices like smartphones.
+* ~~`android safety net`: for new Android devices like smartphones~~ (deprecated).
 * `trusted platform module`: for devices with built-in security chips.
 * `apple`: for Apple devices
 
