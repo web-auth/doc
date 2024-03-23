@@ -82,5 +82,5 @@ If you feel comfortable writing code, you could try to fix [opened issues where 
 Do not forget to follow [these best practices](contributing.md).
 
 {% hint style="danger" %}
-If you think you have found a security issue, **DO NOT open an issue**. [You MUST submit your issue here](https://gitter.im/Spomky/).
+If you think you have found a security issue, **DO NOT open an issue**. [You MUST submit your issue here](https://github.com/web-auth/webauthn-framework/security).
 {% endhint %}

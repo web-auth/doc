@@ -35,15 +35,15 @@ You can customize its behavior to fit the specific needs of your application by 
 
 These CSM services are meant to be used by Response Validators. On a similar way, there are two types of validators:
 
-* Authenticator Attestation Response Validator: used during the creation ceremony
-* Authenticator Assertion Response Validator: used during the request ceremony
+* **Authenticator Attestation Response Validator**: used during the creation ceremony
+* **Authenticator Assertion Response Validator**: used during the request ceremony
 
 ## Response Validators
 
 The Authenticator Attestation Response Validator and Authenticator Assertion Response Validator services are directly used when receiving Authenticator Responses in order to [register authenticators](authenticator-registration.md) or [authenticate users](authenticate-your-users.md).
 
 {% hint style="info" %}
-All null values correspond to deprecated parameters. They will be removed in 5.0.0
+All null values below correspond to deprecated parameters. They will be removed in 5.0.0
 {% endhint %}
 
 {% code lineNumbers="true" %}
