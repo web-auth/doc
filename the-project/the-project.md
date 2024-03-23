@@ -40,7 +40,7 @@ Note that _Elliptic Curve Direct Anonymous Attestation (ECDAA)_ is deprecated an
   * Packed
   * TPM
   * Android Key
-  * Android Safetynet
+  * ~~Android Safetynet~~ (deprecated)
   * Apple
 * Cose Algorithms
   * RS1, RS256, RS384, RS512
