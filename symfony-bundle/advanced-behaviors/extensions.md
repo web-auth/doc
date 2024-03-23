@@ -12,6 +12,7 @@ Devices may ignore the extension inputs. The extension outputs are therefore not
 
 In the previous example, we asked for the location of the device and we expect to receive geolocation data in the extension output.
 
+{% code lineNumbers="true" %}
 ```php
 <?php
 
@@ -43,12 +44,11 @@ final class LocationExtensionOutputChecker
     }
 }
 ```
-
-### The Symfony Way
+{% endcode %}
 
 The easiest way to manage that is by using the creation and request profiles.
 
-{% code title="config/packages/webauthn.yaml" %}
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     …

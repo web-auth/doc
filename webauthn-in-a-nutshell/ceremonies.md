@@ -6,8 +6,8 @@ description: Registration and Authentication process overview
 
 In the Webauthn context, there are two ceremonies:
 
-* The attestation ceremony
-* The assertion ceremony: it is used for the authentication of a user.
+* The **attestation ceremony** or **creation ceremony**: associates an authenticator to a user account
+* The **assertion ceremony** or **request ceremony**: used for the authentication of a user.
 
 For both ceremonies, there are two steps to perform:
 
@@ -20,7 +20,7 @@ Depending on the options and the capabilities of the authenticator, the user int
 
 This ceremony aims at registering an authenticator. It can be used during the creation of a new user account or when an existing user wants to add an additional authenticator.
 
-![The attestation ceremony](<../.gitbook/assets/registration (1).png>)
+![The attestation ceremony](<../.gitbook/assets/registration (2).png>)
 
 ## Assertion ceremony
 

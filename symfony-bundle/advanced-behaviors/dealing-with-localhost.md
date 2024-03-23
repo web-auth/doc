@@ -8,6 +8,7 @@ If your are working on a development environment, `https` may not be available b
 Please be careful using this feature. It should NOT be used in production.
 {% endhint %}
 
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 security:
     firewalls:
@@ -16,3 +17,4 @@ security:
                secured_rp_ids:
                    - 'localhost'
 ```
+{% endcode %}

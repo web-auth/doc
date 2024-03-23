@@ -8,22 +8,15 @@ If your are working on a development environment, `https` may not be available b
 Please be careful using this feature. It should NOT be used in production.
 {% endhint %}
 
+{% code lineNumbers="true" %}
 ```php
-$publicKeyCredentialSource = $authenticatorAttestationResponseValidator->check(
-    $authenticatorAttestationResponse,
-    $publicKeyCredentialCreationOptions,
-    'my-application.com',
-    ['localhost']
-);
-```
+<?php
 
-```php
-$publicKeyCredentialSource = $authenticatorAssertionResponse->check(
-    $publicKeyCredentialSource,
-    $authenticatorAssertionResponse,
-    $publicKeyCredentialRequestOptions,
-    'my-application.com',
-    $userHandle,
-    ['localhost']
-);
+declare(strict_types=1);
+
+use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
+
+$csmFactory = new CeremonyStepManagerFactory();
+$csmFactory->setSecuredRelyingPartyId(['secure.localhost']);
 ```
+{% endcode %}

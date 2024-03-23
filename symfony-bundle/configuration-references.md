@@ -8,7 +8,7 @@ You may also need to adjust other parameters.
 
 If you don’t use Flex, hereafter an example of configuration file:
 
-{% code title="config/packages/webauthn.yaml" %}
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
 #    logger: null # PSR-3 compatible logging service
@@ -76,7 +76,7 @@ The parameter `id` is optional but highly recommended.
 
 By default, the length of the challenge is 32 bytes. You may need to select a smaller or higher length. This length can be configured for each profile:
 
-{% code title="app/config/webauthn.yaml" %}
+{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     creation_profiles:
@@ -91,7 +91,7 @@ webauthn:
 
 The default timeout is set to 60 seconds (60 000 milliseconds). You can change this value as follows:
 
-{% code title="app/config/webauthn.yaml" %}
+{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     creation_profiles:
@@ -115,7 +115,7 @@ These behaviors are not necessarily followed by the web browsers.
 
 This set of options allows you to select authenticators depending on their capabilities. The values are described in [the advanced concepts](../pure-php/advanced-behaviours/authenticator-selection-criteria.md) of the protocol.
 
-{% code title="app/config/webauthn.yaml" %}
+{% code title="app/config/webauthn.yaml" lineNumbers="true" fullWidth="false" %}
 ```yaml
 webauthn:
     creation_profiles:
@@ -141,7 +141,7 @@ The order is important. Preferred algorithms go first.
 It is not recommended changing the default list unless you exactly know what you are doing.
 {% endhint %}
 
-{% code title="app/config/webauthn.yaml" %}
+{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     creation_profiles:
@@ -162,7 +162,7 @@ If you need the [attestation of the authenticator](../webauthn-in-a-nutshell/att
 The use of Attestation Statements is generally not recommended unless you REALLY need this information.
 {% endhint %}
 
-{% code title="app/config/webauthn.yaml" %}
+{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     creation_profiles:
@@ -181,7 +181,7 @@ You can set as many extensions as you want in the profile. Please also [refer to
 The example below is totally fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the support depends on the authenticators, on the browsers and on the relying parties (your applications).
 {% endhint %}
 
-{% code title="app/config/webauthn.yaml" %}
+{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     creation_profiles:
@@ -202,7 +202,7 @@ If you don't create the `creation_profiles` section, a `default` profile is set.
 
 The parameters for the request profiles (i.e. the authentication) are very similar to the creation profiles. The only difference is that you don’t need all the detail of the Relying Party, but only its ID (i.e. its domain).
 
-{% code title="app/config/webauthn.yaml" %}
+{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     request_profiles:
@@ -213,7 +213,7 @@ webauthn:
 
 Please note that all parameters are optional. The following configuration is perfectly valid. However, and as mentioned above, the parameter `id` is highly recommended.
 
-{% code title="app/config/webauthn.yaml" %}
+{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     request_profiles:

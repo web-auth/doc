@@ -36,6 +36,7 @@ A resident key shall be created you want to [authenticate users without username
 
 With this example, with require the user verification (PIN, fingerprint...), a resident key and an authenticator embedded onto a device. This is typacally what you will require for Windows Hello or Face ID authentication.
 
+{% code lineNumbers="true" %}
 ```php
 use Webauthn\AuthenticatorSelectionCriteria;
 use Webauthn\PublicKeyCredentialCreationOptions;
@@ -54,3 +55,4 @@ $publicKeyCredentialCreationOptions =
         authenticatorSelection: $authenticatorSelectionCriteria
 );
 ```
+{% endcode %}

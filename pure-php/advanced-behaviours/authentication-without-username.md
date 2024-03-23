@@ -12,6 +12,7 @@ In case of failure, you should continue with the standard authentication process
 
 Selection criteria for the registration of the authenticator:
 
+{% code lineNumbers="true" %}
 ```php
 use Webauthn\AuthenticatorSelectionCriteria;
 use Webauthn\PublicKeyCredentialCreationOptions;
@@ -29,9 +30,11 @@ $publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create
     authenticatorSelection: $authenticatorSelectionCriteria
 );
 ```
+{% endcode %}
 
 The Request Options:
 
+{% code lineNumbers="true" %}
 ```php
 // Public Key Credential Request Options
 
@@ -42,6 +45,7 @@ $publicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions::create(
     userVerification: PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_REQUIRED
 );
 ```
+{% endcode %}
 
 {% hint style="success" %}
 The default values for the user verification and the resident key are set to preferred and resident keys may be created if the authenticator is compatible. This means that some users may log in without username.

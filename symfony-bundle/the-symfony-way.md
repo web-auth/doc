@@ -3,7 +3,9 @@
 This framework provides a Symfony bundle that will help you to use the components within your Symfony application.
 
 {% hint style="info" %}
-If you use Laravel, you may be interested in [this project: https://github.com/asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
+Implementations for other frameworks and web applications exist.
+
+As an example if you use Laravel, you may be interested in [this project: https://github.com/asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
 {% endhint %}
 
 ## Installation
@@ -22,7 +24,7 @@ As the recipes are third party ones not officially supported by Symfony, you wil
 
 If you don't use Symfony Flex, you must register the bundle and route manually.
 
-{% code title="config/bundles.php" %}
+{% code title="config/bundles.php" lineNumbers="true" %}
 ```php
 <?php
 
@@ -33,7 +35,7 @@ return [
 ```
 {% endcode %}
 
-{% code title="config/routes/webauthn.php" %}
+{% code title="config/routes/webauthn.php" lineNumbers="true" %}
 ```php
 <?php
 

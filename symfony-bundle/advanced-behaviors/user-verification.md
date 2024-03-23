@@ -2,7 +2,7 @@
 
 The easiest way to manage the user verification requirements in your Symfony application is by using the creation and request profiles.
 
-{% code title="config/packages/webauthn.yaml" %}
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     …

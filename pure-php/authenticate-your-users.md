@@ -31,6 +31,7 @@ The timeout default value is set to `null`. If you want to set a value, pleaase 
 
 The user trying to authenticate must have registered at least one device. For this user, you have to get all `Webauthn\PublicKeyCredentialDescriptor` associated to his account.
 
+{% code lineNumbers="true" %}
 ```php
 use Webauthn\PublicKeyCredentialSource;
 
@@ -48,6 +49,7 @@ $allowedCredentials = array_map(
     $registeredAuthenticators
 );
 ```
+{% endcode %}
 
 {% hint style="info" %}
 For usernameless authentication, please read the [dedicated page](advanced-behaviours/authentication-without-username.md). In this case no Public Key Credential Descriptors should be passed to the the options.
@@ -55,6 +57,7 @@ For usernameless authentication, please read the [dedicated page](advanced-behav
 
 ### Example
 
+{% code lineNumbers="true" %}
 ```php
 <?php
 
@@ -81,11 +84,13 @@ $publicKeyCredentialRequestOptions =
     )
 ;
 ```
+{% endcode %}
 
 ### User Verification
 
 Eligible authenticators are filtered and only capable of satisfying this requirement will interact with the user. Please refer to the [User Verification page](advanced-behaviours/user-verification.md) for all possible values.
 
+{% code lineNumbers="true" %}
 ```php
 <?php
 
@@ -103,11 +108,13 @@ $publicKeyCredentialRequestOptions =
     )
 ;
 ```
+{% endcode %}
 
 ### Extensions
 
 Please refer to the [Extension page](../webauthn-in-a-nutshell/extensions.md) to know how to manage authentication extensions.
 
+{% code lineNumbers="true" %}
 ```php
 <?php
 
@@ -128,6 +135,7 @@ $publicKeyCredentialRequestOptions =
     )
 ;
 ```
+{% endcode %}
 
 ## Response Handling
 
@@ -135,6 +143,7 @@ The way you receive this response is out of scope of this library. In the previo
 
 What you receive must be a JSON object that looks like as follows:
 
+{% code lineNumbers="true" %}
 ```javascript
 {
     "id":"KVb8CnwDjpgAo[…]op61BTLaa0tczXvz4JrQ23usxVHA8QJZi3L9GZLsAtkcVvWObA",
@@ -148,16 +157,18 @@ What you receive must be a JSON object that looks like as follows:
     }
 }
 ```
+{% endcode %}
 
 There are two steps to perform with this object:
 
-* Load the data
-* Verify the loaded data against the assertion options set above
+* [Load the data](input-loading.md)
+* [Verify the loaded data against the assertion options set above](input-validation.md)
 
 ### Data Loading
 
 This step is exactly the same as the one described in [Public Key Credential Creation](authenticator-registration.md) process.
 
+{% code lineNumbers="true" %}
 ```php
 <?php
 
@@ -176,6 +187,7 @@ $data = '
 
 $publicKeyCredential = $serializer->deserialize($data, PublicKeyCredential::class, 'json');
 ```
+{% endcode %}
 
 ### Response Verification
 
@@ -186,6 +198,7 @@ Now we have a fully loaded Public Key Credential object, but we need now to make
 
 The first is easy to perform:
 
+{% code lineNumbers="true" %}
 ```php
 <?php
 
@@ -197,17 +210,19 @@ if (!$publicKeyCredential->response instanceof AuthenticatorAssertionResponse) {
     //e.g. process here with a redirection to the public key login/MFA page. 
 }
 ```
+{% endcode %}
 
 The second step is the verification against the Public Key Assertion Options we created earlier.
 
 The Authenticator Assertion Response Validator service (variable `$authenticatorAssertionResponseValidator`) will check everything for you.
 
+{% code lineNumbers="true" %}
 ```php
 <?php
 
 declare(strict_types=1);
 
-$publicKeyCredentialSource =  $publicKeyCredentialSourceRepository->findOneByCredentialId(
+$publicKeyCredentialSource = $publicKeyCredentialSourceRepository->findOneByCredentialId(
     $publicKeyCredential->rawId
 );
 if ($publicKeyCredentialSource === null) {
@@ -227,5 +242,6 @@ $publicKeyCredentialSource = $authenticatorAssertionResponseValidator->check(
 $publicKeyCredentialSourceRepository->saveCredential($publicKeyCredentialSource);
 
 ```
+{% endcode %}
 
 If no exception is thrown, the response is valid and you can continue the authentication of the user.

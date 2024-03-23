@@ -10,7 +10,7 @@ To authenticate or register your users with Symfony, the best and easiest way is
 
 At the end of the installation and configuration, you should have a `config/packages/security.yaml` file that looks like as follow:
 
-{% code title="config/packages/security.yaml" %}
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 security:
     providers:
@@ -28,7 +28,7 @@ security:
 
 To enable the user authentication, you just have to declare the webauthn authenticator if the appropriate firewall (here `main`).
 
-{% code title="config/packages/security.yaml" %}
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 security:
     providers:
@@ -52,6 +52,7 @@ As you have noticed, there is nothing to configure to have a fully functional fi
 
 If you need, you can customize those endpoints.
 
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 security:
     firewalls:
@@ -65,11 +66,13 @@ security:
     access_control:
         - { path: ^/assertion,  roles: PUBLIC_ACCESS, requires_channel: 'https'}
 ```
+{% endcode %}
 
 ### Request Profile
 
 By default, the `default` profile is used (see `request_profiles` in the [Configuration References](configuration-references.md)). You may have created a request profile in the bundle configuration. You can use this profile instead of the default one.
 
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 security:
     firewalls:
@@ -78,11 +81,13 @@ security:
                 authentication:
                     profile: 'acme'
 ```
+{% endcode %}
 
 ## User Registration
 
 The user registration can also by managed by the firewall. It is disabled by default. If you want that feature, please enable it:
 
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 security:
     firewalls:
@@ -91,6 +96,7 @@ security:
                 registration:
                     enabled: true
 ```
+{% endcode %}
 
 The firewall routes are automatically created for you. They are namely:
 
@@ -99,11 +105,13 @@ The firewall routes are automatically created for you. They are namely:
 
 You should also ensure to allow anonymous users to contact those endpoints.
 
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 security:
     access_control:
         - { path: ^/register,  roles: PUBLIC_ACCESS}
 ```
+{% endcode %}
 
 ## Authentication Attributes
 
@@ -114,11 +122,13 @@ The security token returned by the firewall sets some attributes depending on th
 
 You can then set constraints to the access controls. In the example below, the /admin path can be reached by users with the role `ROLE_ADMIN` and that **have been verified** during the ceremony.
 
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 security:
     access_control:
         - { path: ^/admin,  roles: [ROLE_ADMIN, IS_USER_VERIFIED]}
 ```
+{% endcode %}
 
 ## Response Handlers
 
@@ -139,6 +149,7 @@ Your custom handler has to implement the interface `Webauthn\Bundle\Security\Han
 
 When done, you can set your new service in the firewall configuration:
 
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 security:
     firewalls:
@@ -147,11 +158,13 @@ security:
                 authentication:
                     options_handler: 'App\Handler\MyCustomRequestOptionsHandler'
 ```
+{% endcode %}
 
 ### Creation Options Handler
 
 This handler is very similar to the previous one, except that it is called during the registration of a new user and has to implement the interface `Webauthn\Bundle\Security\Handler\CreationOptionsHandler`.
 
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 ecurity:
     firewalls:
@@ -160,6 +173,7 @@ ecurity:
                 registration:
                     options_handler: 'App\Handler\MyCustomRequestOptionsHandler'
 ```
+{% endcode %}
 
 ### Authentication Success Handler
 
@@ -169,6 +183,7 @@ Your custom handler has to implement the interface `Symfony\Component\Security\H
 
 When done, you can set your new service in the firewall configuration:
 
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 security:
     firewalls:
@@ -176,6 +191,7 @@ security:
             webauthn:
                 success_handler: 'App\Handler\MyCustomAuthenticationSuccessHandler'
 ```
+{% endcode %}
 
 ### Authentication Failure Handler
 
@@ -185,6 +201,7 @@ Your custom handler has to implement the interface `Symfony\Component\Security\H
 
 When done, you can set your new service in the firewall configuration:
 
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 security:
     firewalls:
@@ -192,3 +209,4 @@ security:
             webauthn:
                 failure_handler: 'App\Handler\MyCustomAuthenticationFailureHandler'
 ```
+{% endcode %}

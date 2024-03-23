@@ -20,9 +20,9 @@ In general, Symfony applications use Doctrine. That is why the bundle provides a
 
 Hereafter an example of an entity.
 
-This is the most simple example. Feel free to add custom fields that fits on your needs e.g. `created_at` _or `is_revoked`_.
+This is the most simple example. Feel free to add custom fields that fits on your needs e.g. `created_at` or `is_revoked`.
 
-{% code title="App/Entity/WebauthnCredential.php" %}
+{% code title="App/Entity/WebauthnCredential.php" lineNumbers="true" %}
 ```php
 <?php
 
@@ -90,7 +90,7 @@ In this following example, we extend that class and add a method to get all cred
 We must override the method `saveCredentialSource` because we may receive `Webauthn\PublicKeyCredentialSource` objects instead of `App\Entity\WebauthnCredential`.
 {% endhint %}
 
-{% code title="App/Repository/WebauthnCredentialRepository.php" %}
+{% code title="App/Repository/WebauthnCredentialRepository.php" lineNumbers="true" %}
 ```php
 <?php
 

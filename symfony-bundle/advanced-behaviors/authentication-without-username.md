@@ -12,7 +12,8 @@ In case of failure, you should continue with the standard authentication process
 
 The bundle configuration should have a profile with the constraints listed above:
 
-```javascript
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
+```yaml
 webauthn:
     credential_repository: '…'
     user_repository: '…'
@@ -29,3 +30,4 @@ webauthn:
             rp_id: 'example.com'
             user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
 ```
+{% endcode %}

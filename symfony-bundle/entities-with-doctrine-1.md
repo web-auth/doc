@@ -10,7 +10,7 @@ This repository should be declared as a Symfony service and shall implement `Web
 
 Hereafter an example where the application User Repository is injected. This repository uses Doctrine and provides `findOneBy*` methods.
 
-{% code title="src/Repository/WebauthnUserEntityRepository.php" %}
+{% code title="src/Repository/WebauthnUserEntityRepository.php" lineNumbers="true" %}
 ```php
 <?php
 

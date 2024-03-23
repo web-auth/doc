@@ -21,7 +21,7 @@ You can directly use the `Webauthn\Bundle\Security\Guesser\CurrentUserEntityGues
 
 In the example herafter where the current user is guessed using a controller parameter. This can be used when an administrator is adding an authenticator to another user account.
 
-{% code title="App\Guesser\FromQueryParameterGuesser.php" %}
+{% code title="App\Guesser\FromQueryParameterGuesser.php" lineNumbers="true" %}
 ```php
 <?php
 
@@ -61,6 +61,7 @@ In the case the current user s supposed to be administrator, the user entity can
 
 Now you just have to enable the feature and set the routes to your options and response controllers.
 
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     controllers:
@@ -75,12 +76,13 @@ webauthn:
                 result_path: '/admin/security/user/{user_id}/devices/add' # Path to the response controller
                 user_entity_guesser: App\Guesser\FromQueryParameterGuesser # From the example
 ```
+{% endcode %}
 
 {% hint style="warning" %}
 As the user shall be authenticated to register a new authenticator, you should protect these routes in the `security.yaml` file.
 {% endhint %}
 
-{% code title="config/packages/security.yaml" %}
+{% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
 security:
     access_control:
@@ -91,6 +93,7 @@ security:
 
 Now you can send requests to these new endpoints. For example, if you are using the Javascript library, the calls will look like as follow:
 
+{% code lineNumbers="true" %}
 ```javascript
 // Import the registration hook
 import {useRegistration} from 'webauthn-helper';
@@ -112,11 +115,13 @@ register({})
     .catch((error) => console.log('Registration failure'))
 ;
 ```
+{% endcode %}
 
 ### Creation Profile
 
 The `default` [creation profile](../the-symfony-way.md#creation-profiles) is used. You can change it using the dedicated option.
 
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     controllers:
@@ -126,6 +131,7 @@ webauthn:
                 …
                 profile: custom_profile
 ```
+{% endcode %}
 
 ### Response Handlers
 
@@ -141,6 +147,7 @@ There are 3 types of responses and handlers:
 
 This handler is called during the registration of a authenticator and has to implement the interface `Webauthn\Bundle\Security\Handler\CreationOptionsHandler`.
 
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     controllers:
@@ -150,11 +157,13 @@ webauthn:
                 …
                 options_handler: … # Your handler here
 ```
+{% endcode %}
 
 #### Success Handler
 
 This handler is called when a client sends a valid assertion from the authenticator. This handler shall implement the interface `Webauthn\Bundle\Security\Handler\SuccessHandler`. The default handler is `Webauthn\Bundle\Service\DefaultSuccessHandler`.
 
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     controllers:
@@ -164,11 +173,13 @@ webauthn:
                 …
                 success_handler: … # Your handler here
 ```
+{% endcode %}
 
 #### Failure Handler
 
 This handler is called when an error occurred during the process. This handler shall implement the interface `Webauthn\Bundle\Security\Handler\SuccessHandler`. The default handler is `Webauthn\Bundle\Service\DefaultFailureHandler`.
 
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     controllers:
@@ -178,3 +189,4 @@ webauthn:
                 …
                 failure_handler: … # Your handler here
 ```
+{% endcode %}

@@ -8,6 +8,7 @@ The Relying Party (or `rp`) corresponds to the application that will ask for the
 
 The library provides a simple class to handle the rp information: `Webauthn\PublicKeyCredentialRpEntity`.
 
+{% code lineNumbers="true" %}
 ```php
 <?php
 
@@ -17,6 +18,7 @@ $rpEntity = PublicKeyCredentialRpEntity::create(
     'ACME Webauthn Server' // The application name
 );
 ```
+{% endcode %}
 
 This `$rpEntity` object will be useful for the next steps.
 
@@ -26,6 +28,7 @@ In the example above, we created a simple relying party object with it’s name.
 
 It may be useful to specify the `rp` ID, especially if your application has several sub-domains. The rp ID can be set during the creation of the object as 2nd constructor parameter.
 
+{% code lineNumbers="true" %}
 ```php
 <?php
 
@@ -36,6 +39,7 @@ $rpEntity = PublicKeyCredentialRpEntity::create(
     'acme.com'              // The application ID = the domain
 );
 ```
+{% endcode %}
 
 {% hint style="info" %}
 Even if it is optional, we highly recommend setting the application ID
@@ -76,6 +80,7 @@ Discussion is ongoing for associating authenticators to multiple RP IDs such as 
 
 Your application may also have a logo. You can indicate this logo as third argument. Please note that for safety reason this icon is a priori authenticated URL i.e. an image that uses the `data` scheme.
 
+{% code lineNumbers="true" %}
 ```php
 <?php
 
@@ -87,6 +92,7 @@ $rpEntity = PublicKeyCredentialRpEntity::create(
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAwFBMVEXm7NK41k3w8fDv7+q01Tyy0zqv0DeqyjOszDWnxjClxC6iwCu11z6y1DvA2WbY4rCAmSXO3JZDTxOiwC3q7tyryzTs7uSqyi6tzTCmxSukwi9aaxkWGga+3FLv8Ozh6MTT36MrMwywyVBziSC01TbT5ZW9z3Xi6Mq2y2Xu8Oioxy7f572qxzvI33Tb6KvR35ilwTmvykiwzzvV36/G2IPw8O++02+btyepyDKvzzifvSmw0TmtzTbw8PAAAADx8fEC59dUAAAA50lEQVQYV13RaXPCIBAG4FiVqlhyX5o23vfVqUq6mvD//1XZJY5T9xPzzLuwgKXKslQvZSG+6UXgCnFePtBE7e/ivXP/nRvUUl7UqNclvO3rpLqofPDAD8xiu2pOntjamqRy/RqZxs81oeVzwpCwfyA8A+8mLKFku9XfI0YnSKXnSYZ7ahSII+AwrqoMmEFKriAeVrqGM4O4Z+ADZIhjg3R6LtMpWuW0ERs5zunKVHdnnnMLNQqaUS0kyKkjE1aE98b8y9x9JYHH8aZXFMKO6JFMEvhucj3Wj0kY2D92HlHbE/9Vk77mD6srRZqmVEAZAAAAAElFTkSuQmCC'
 );
 ```
+{% endcode %}
 
 {% hint style="info" %}
 The Webauthn specification does not set any limit for the length of the third argument.

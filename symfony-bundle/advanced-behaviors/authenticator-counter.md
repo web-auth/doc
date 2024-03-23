@@ -6,7 +6,7 @@ The default behaviour is to reject the assertions. This might cause some trouble
 
 To do so , you have to create a custom Counter Checker and inject it to your Authenticator Assertion Response Validator. The checker must implement the interface `Webauthn\Counter\CounterChecker`.
 
-{% code title="config/packages/webauthn.yaml" %}
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     counter_checker: App\Service\CustomCounterChecker
@@ -15,6 +15,7 @@ webauthn:
 
 The following example is fictive and show how to lock a user, log the error and throw an exception.
 
+{% code lineNumbers="true" %}
 ```php
 <?php
 
@@ -50,3 +51,4 @@ final class CustomCounterChecker implements CounterChecker
     }
 }
 ```
+{% endcode %}

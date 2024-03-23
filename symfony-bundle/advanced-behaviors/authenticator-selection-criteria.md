@@ -26,7 +26,7 @@ When this criterion is set to `true`, a Public Key Credential Source will be sto
 
 This criterion is needed if you want to [authenticate users without username](../../pure-php/advanced-behaviours/authentication-without-username.md).
 
-{% code title="config/packages/webauthn.yaml" %}
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
     …
