@@ -57,14 +57,12 @@ The _Token Binding support_ feature is now deprecated as not part of the latest 
 
 ## Compatible Authenticators
 
-The framework is already compatible with all authenticators.
+As of January 2023, our framework supports every authenticator with full feature and algorithm support, achieving a 100% success rate across all tests. Official FIDO Alliance testing tools have validated its compliance.
 
-The compliance of the framework is ensured by running unit and functional tests during its development.
-
-It is also tested using the official FIDO Alliance testing tools. The status of the compliance tests are [reported in this issue](https://github.com/web-auth/webauthn-framework/issues/67). At the time of writing (January 2023, all features and algorithms are supported and 100% of the tests pass.
+We ensure continuous conformity through rigorous unit and functional testing throughout the development process.
 
 {% hint style="info" %}
-See [https://github.com/herrjemand/awesome-webauthn/pull/61](https://github.com/herrjemand/awesome-webauthn/pull/61) and [https://github.com/herrjemand/awesome-webauthn#server-libs](https://github.com/herrjemand/awesome-webauthn#server-libs)
+See [https://github.com/herrjemand/awesome-webauthn/pull/61](https://github.com/herrjemand/awesome-webauthn/pull/61) and [https://github.com/herrjemand/awesome-webauthn#server-libs](https://github.com/herrjemand/awesome-webauthn?#server-libraries)
 {% endhint %}
 
 ## Support
