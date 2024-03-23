@@ -20,10 +20,6 @@ The following attestation types are supported. Note that you should only use the
 * `trusted platform module`: for devices with built-in security chips.
 * `apple`: for Apple devices
 
-{% hint style="warning" %}
-The Android SafetyNet Attestation API is deprecated. Full turndown is planned in June 2024. More information at [https://developer.android.com/training/safetynet/deprecation-timeline](https://developer.android.com/training/safetynet/deprecation-timeline)
-{% endhint %}
-
 {% code lineNumbers="true" %}
 ```php
 <?php

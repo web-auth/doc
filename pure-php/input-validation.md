@@ -25,10 +25,12 @@ $requestCSM = $csmFactory->requestCeremony();
 You can customize its behavior to fit the specific needs of your application by modifying the provided factory. Please refer to the dedicated pages for more information.
 
 * [Counter Checker](advanced-behaviours/authenticator-counter.md)
-* [Attestation Statement Support Manager](advanced-behaviours/attestation-and-metadata-statement.md)
+* [Attestation Statement Support Manager](advanced-behaviours/attestation-and-metadata-statement.md#attestation-statement-support-manager)
 * [Extension Output Checker Handler](advanced-behaviours/extensions.md)
 * [Algorithm Manager](advanced-behaviours/authenticator-algorithms.md)
-* Certification Chain Validator (page to be written)
+* [Metadata Statement Repository](advanced-behaviours/attestation-and-metadata-statement.md#metadata-statement-repository)
+* [Status Report Repository](advanced-behaviours/attestation-and-metadata-statement.md#status-report-repository)
+* [Certification Chain Validator](advanced-behaviours/attestation-and-metadata-statement.md#certificate-chain-validator)
 {% endhint %}
 
 These CSM services are meant to be used by Response Validators. On a similar way, there are two types of validators:
