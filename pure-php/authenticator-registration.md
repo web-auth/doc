@@ -154,7 +154,7 @@ There are two steps to perform with this object:
 
 ### Data Loading
 
-Now that all components are set, we can load the data we receive using the [_Serializer_](the-hard-way.md#the-serializer) (variable `$serializer`).
+Now that all components are set, we can load the data we receive using the [_Serializer_](webauthn-server.md#the-serializer) (variable `$serializer`).
 
 <pre class="language-php" data-line-numbers><code class="lang-php"><strong>&#x3C;?php
 </strong>

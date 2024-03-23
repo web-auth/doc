@@ -26,7 +26,7 @@
 
 ## Pure PHP
 
-* [Webauthn Server](pure-php/the-hard-way.md)
+* [Webauthn Server](pure-php/webauthn-server.md)
 * [Input Loading](pure-php/input-loading.md)
 * [Input Validation](pure-php/input-validation.md)
 * [Register Authenticators](pure-php/authenticator-registration.md)
