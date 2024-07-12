@@ -51,7 +51,7 @@ declare(strict_types=1);
 
 use Webauthn\Denormalizer\WebauthnSerializerFactory;
 
-$factory = new WebauthnSerializerFactory($attestationStatementSupportManager)
+$factory = new WebauthnSerializerFactory($attestationStatementSupportManager);
 $serializer = $factory->create();
 ```
 {% endcode %}
