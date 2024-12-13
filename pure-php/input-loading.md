@@ -55,7 +55,7 @@ $serializer = $factory->create();
 Please do not use `json_encode` or `json_decode` to convert this data either way.
 {% endhint %}
 
-## Loding Data
+## Loading Data
 
 In general, the data you receive looks like as follows.
 
