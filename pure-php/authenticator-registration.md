@@ -73,9 +73,9 @@ use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 $jsonObject = $serializer->serialize(
     $publicKeyCredentialCreationOptions,
     'json',
-    [ // Optional
-        AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
-        JsonEncode::OPTIONS => JSON_THROW_ON_ERROR,
+    [
+        AbstractObjectNormalizer::SKIP_NULL_VALUES => true, // Highly recommended!
+        JsonEncode::OPTIONS => JSON_THROW_ON_ERROR, // Optional
     ]
 );
 ```
