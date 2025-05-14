@@ -65,7 +65,7 @@ If you want to redirect the user to another page after the login succeeded, you 
 ```twig
 {{ stimulus_controller('@web-auth/webauthn-stimulus',
     {
-        requestSuccessRedirectUri: path('app.dashboard')
+        requestSuccessRedirectUri: path('app.dashboard'),
         requestResultUrl: path('webauthn.controller.security.main.request.result'),
         requestOptionsUrl: path('webauthn.controller.security.main.request.options')
     }
@@ -80,7 +80,7 @@ When authenticators are available on the device and the browser is aware of them
 {{ stimulus_controller('@web-auth/webauthn-stimulus',
     {
         useBrowserAutofill: true,
-        requestSuccessRedirectUri: path('app.dashboard')
+        requestSuccessRedirectUri: path('app.dashboard'),
         requestResultUrl: path('webauthn.controller.security.main.request.result'),
         requestOptionsUrl: path('webauthn.controller.security.main.request.options')
     }
