@@ -25,7 +25,7 @@ A primary use case for platform authenticators is to register a particular clien
 With this criterion, a Public Key Credential Source will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such a resident credential.
 
 {% hint style="info" %}
-A resident key shall be created you want to [authenticate users without username](authentication-without-username.md).
+A resident key shall be created if you want to [authenticate users without username](authentication-without-username.md).
 {% endhint %}
 
 ### User Verification

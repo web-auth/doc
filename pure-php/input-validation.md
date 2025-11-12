@@ -1,6 +1,6 @@
 # Input Validation
 
-The loaded data needs to be verified. The library will perform several actions to make sure the input you received is valid. This verification process is performed by a Ceremony Step Manager (CSM). The Webauthn Specification distinguish two types of ceremonies[ described in this page](../webauthn-in-a-nutshell/ceremonies.md).
+The loaded data needs to be verified. The library will perform several actions to make sure the input you received is valid. This verification process is performed by a Ceremony Step Manager (CSM). The Webauthn Specification distinguish two types of ceremonies [described in this page](../webauthn-in-a-nutshell/ceremonies.md).
 
 ## Ceremony Step Manager Factory
 

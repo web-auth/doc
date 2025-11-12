@@ -1,5 +1,5 @@
 ---
-description: Step-by-step guide for migrating from 4.x to 5.0
+description: Step-by-step guide for migrating from 5.x to 6.0
 ---
 
 # From 5.x to 6.0
@@ -63,7 +63,7 @@ webauthn:
 
 #After
 webauthn:
-  options_storage: ...\CustomSessionStorage'
+  options_storage: '...\CustomSessionStorage'
   controllers:
     enabled: true
     creation:
@@ -74,9 +74,9 @@ webauthn:
         user_entity_guesser: 'Webauthn\Bundle\Security\Guesser\CurrentUserEntityGuesser'
 ```
 
-### Firewal
+### Firewall
 
-The `webauthn` firewall is deprecated.. Please use the dedicated `Passport` and `Badge` instead.
+The `webauthn` firewall is deprecated. Please use the dedicated `Passport` and `Badge` instead.
 
 #### The configuration:
 
@@ -200,7 +200,7 @@ With the Stimulus Controller
         ) }}
     >
         <input type="hidden" id="assertion" name="_assertion">
-        <button id="login" name="login" type="submit" {{ stimulus_controller('@web-auth/webauthn-stimulus', 'signin') }}>login</button>
+        <button id="login" name="login" type="submit" {{ stimulus_action('@web-auth/webauthn-stimulus', 'signin') }}>login</button>
     </form>
 {% endblock %}
 ```

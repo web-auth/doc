@@ -63,11 +63,11 @@
 
 ## Migration
 
-* [From 5.x to 6.0](migration/from-v3.x-to-v4.0-1.md)
+* [From 5.x to 6.0](migration/from-v5.x-to-v6.0.md)
 
 ## Symfony UX
 
 * [Installation](symfony-ux/installation.md)
 * [User Authentication](symfony-ux/integration.md)
-* [User Registration](symfony-ux/integration-1.md)
-* [Additional Authenticators](symfony-ux/integration-2.md)
+* [User Registration](symfony-ux/user-registration.md)
+* [Additional Authenticators](symfony-ux/additional-authenticators.md)

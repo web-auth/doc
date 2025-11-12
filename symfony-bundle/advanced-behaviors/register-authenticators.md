@@ -125,7 +125,7 @@ register({})
 
 ### Creation Profile
 
-The `default` [creation profile](../the-symfony-way.md#creation-profiles) is used. You can change it using the dedicated option.
+The `default` [creation profile](../configuration-references.md#creation-profiles) is used. You can change it using the dedicated option.
 
 {% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml

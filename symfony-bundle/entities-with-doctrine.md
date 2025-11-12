@@ -28,7 +28,7 @@ By default, the User Entity Repository is not able to register any user account.
 
 ## Doctrine Repository
 
-In general, Symfony applications use Doctrine and is why the bundle provides a way to use Doctrine as storage system.
+In general, Symfony applications use Doctrine, which is why the bundle provides a way to use Doctrine as storage system.
 
 ### The Doctrine Entity
 

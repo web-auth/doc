@@ -7,6 +7,6 @@ We highly recommend the use of [@simplewebauthn/browser](https://simplewebauthn.
 If you use the Symfony UX, you may be interested in the [Stimulus Controller](../symfony-ux/installation.md).
 
 {% hint style="danger" %}
-Note that is mandatory to use the HTTPS scheme to use Webauthn otherwise it will not work. This is also mandatory for `localhost`.
+Note that it is mandatory to use the HTTPS scheme to use Webauthn otherwise it will not work. This is also mandatory for `localhost`.
 {% endhint %}
 

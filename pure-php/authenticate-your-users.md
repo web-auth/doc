@@ -21,7 +21,7 @@ Optionally, you can customize the following parameters:
 The `PublicKeyCredentialRequestOptions` object is designed to be easily serialized into a JSON object. This will ease the integration into an HTML page or through an API endpoint.
 
 {% hint style="info" %}
-The timeout default value is set to `null`. If you want to set a value, pleaase read the following recommended behavior showed in the specification:
+The timeout default value is set to `null`. If you want to set a value, please read the following recommended behavior showed in the specification:
 
 * If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
 * If the user verification is `preferred` or `required`, the range is 300 to 600 seconds (5 to 10 minutes)
@@ -53,11 +53,11 @@ $allowedCredentials = array_map(
 {% endcode %}
 
 {% hint style="info" %}
-For usernameless authentication, please read the [dedicated page](advanced-behaviours/authentication-without-username.md). In this case no Public Key Credential Descriptors should be passed to the the options.
+For usernameless authentication, please read the [dedicated page](advanced-behaviours/authentication-without-username.md). In this case no Public Key Credential Descriptors should be passed to the options.
 {% endhint %}
 
 {% hint style="danger" %}
-To prevent username enumeration, when the authentication process is performed using the username, it is highly recommended to continue the ceremony even is the user entity does not exist. The allowad credential list should be set with random data.
+To prevent username enumeration, when the authentication process is performed using the username, it is highly recommended to continue the ceremony even if the user entity does not exist. The allowed credential list should be set with random data.
 {% endhint %}
 
 ### Example

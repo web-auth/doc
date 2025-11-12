@@ -58,7 +58,7 @@ class LoginController extends AbstractController
 
 Below an example of a login form using the [Stimulus Controller](../symfony-ux/integration.md). Also, please note that:
 
-* The usenrame field is not required
+* The username field is not required
 * The username field should have the attribute `autocomplete="username webauthn"`&#x20;
 
 ```twig
@@ -80,7 +80,7 @@ Below an example of a login form using the [Stimulus Controller](../symfony-ux/i
              }
         ) }}
     >
-        <label for="username">Usenrame:</label>
+        <label for="username">Username:</label>
         <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Type your username here" autocomplete="username webauthn">
         <input type="hidden" id="assertion" name="_assertion">
         <button id="login" name="login" type="submit">login</button>

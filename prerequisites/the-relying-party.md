@@ -78,7 +78,7 @@ Discussion is ongoing for associating authenticators to multiple RP IDs such as 
 
 ## Relying Party Icon
 
-Your application may also have a logo. You can indicate this logo as third argument. Please note that for safety reason this icon is a priori authenticated URL i.e. an image that uses the `data` scheme.
+Your application may also have a logo. You can indicate this logo as third argument. Please note that for safety reason this icon should be an authenticated URL, i.e. an image that uses the `data` scheme.
 
 {% code lineNumbers="true" %}
 ```php

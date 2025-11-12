@@ -60,4 +60,4 @@ You may also want to configure the other options offered by the bundle. Please r
 
 ## Firewall
 
-Now you have a fully configured bundle, you can protect your routes and manage the user registration and authenticatin through the [Symfony Firewall](firewall.md).
+Now you have a fully configured bundle, you can protect your routes and manage the user registration and authentication through the [Symfony Firewall](firewall.md).

@@ -104,7 +104,7 @@ $certificateChainValidator = PhpCertificateChainValidator::create(
 
 ## Ceremony Step Manager Factory
 
-The services described above must be set to the [Ceremony Step Manager Factory](../input-validation.md). The CSM you will create will verifiy the attestation statement sent by the authenticator.
+The services described above must be set to the [Ceremony Step Manager Factory](../input-validation.md). The CSM you will create will verify the attestation statement sent by the authenticator.
 
 {% code lineNumbers="true" %}
 ```php
