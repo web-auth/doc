@@ -64,8 +64,97 @@ The icon may be ignored by browsers, especially if its length is greater than 12
 
 ## User Entity Repository
 
-Except if you use the Symfony bundle, there is no interface to implement or abstract class to extend so that it should be easy to integrate it in your application. You may already have a user repository.
+Except if you use the Symfony bundle, there is no interface to implement or abstract class to extend, making it easy to integrate into your application. You may already have a user repository that can be adapted.
+
+Your repository needs to provide these main operations:
+
+1. **Find a user by username** (for authentication)
+2. **Find a user by user handle** (for usernameless authentication)
+3. **Create a new user entity** (during registration)
 
 {% hint style="success" %}
-Whatever database you use (MySQL, pgSQL…), it is not necessary to create relationships between your users and the Credential Sources.
+Whatever database you use (MySQL, PostgreSQL, MongoDB…), it is not necessary to create foreign key relationships between your users and the Credential Sources. The `userHandle` in the Credential Source links to the user ID.
 {% endhint %}
+
+### Repository Example
+
+Here's a simple example using an array storage (for demonstration purposes):
+
+{% code lineNumbers="true" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Repository;
+
+use Webauthn\PublicKeyCredentialUserEntity;
+
+final class InMemoryUserEntityRepository
+{
+    private array $users = [];
+
+    public function createUserEntity(
+        string $username,
+        string $displayName,
+        ?string $icon = null
+    ): PublicKeyCredentialUserEntity {
+        $userHandle = random_bytes(64); // Generate unique user ID
+
+        $userEntity = PublicKeyCredentialUserEntity::create(
+            $username,
+            $userHandle,
+            $displayName,
+            $icon
+        );
+
+        $this->users[$userHandle] = $userEntity;
+
+        return $userEntity;
+    }
+
+    public function findOneByUsername(string $username): ?PublicKeyCredentialUserEntity
+    {
+        foreach ($this->users as $userEntity) {
+            if ($userEntity->name === $username) {
+                return $userEntity;
+            }
+        }
+
+        return null;
+    }
+
+    public function findOneByUserHandle(string $userHandle): ?PublicKeyCredentialUserEntity
+    {
+        return $this->users[$userHandle] ?? null;
+    }
+}
+```
+{% endcode %}
+
+{% hint style="info" %}
+For production use, implement your repository with your preferred storage backend. See the [Symfony Bundle section](../symfony-bundle/entities-with-doctrine-1.md) for a complete Doctrine example.
+{% endhint %}
+
+### Important Notes About User ID (userHandle)
+
+* **Must be unique**: Each user must have a unique user ID
+* **Must be persistent**: The user ID must never change for a given user
+* **Should be random**: Use at least 32 bytes of random data (64 bytes recommended)
+* **Must not be PII**: Do not use email, username, or any personally identifiable information
+* **Maximum 64 bytes**: The WebAuthn specification limits user IDs to 64 bytes
+
+{% code lineNumbers="true" %}
+```php
+<?php
+
+// Good examples
+$userHandle = random_bytes(64); // Cryptographically secure random bytes
+$userHandle = Uuid::v4()->toBinary(); // UUID v4 (16 bytes)
+
+// Bad examples - DO NOT USE
+$userHandle = $email; // Email can change and is PII
+$userHandle = (string) $autoIncrementId; // Sequential IDs are predictable
+$userHandle = hash('sha256', $username); // Derived from username, not random
+```
+{% endcode %}
