@@ -14,7 +14,6 @@ webauthn:
 #    logger: null # PSR-3 compatible logging service
     credential_repository: 'Webauthn\Bundle\Repository\DummyPublicKeyCredentialSourceRepository' # CREATE YOUR REPOSITORY AND CHANGE THIS!
     user_repository: 'Webauthn\Bundle\Repository\DummyPublicKeyCredentialUserEntityRepository' # CREATE YOUR REPOSITORY AND CHANGE THIS!
-    token_binding_support_handler: 'Webauthn\TokenBinding\IgnoreTokenBindingHandler' # We ignore the token binding instructions by default
     creation_profiles: # Authenticator registration profiles
         default: # Unique name of the profile
             rp: # Relying Party information
@@ -24,7 +23,7 @@ webauthn:
 #            challenge_length: 32
 #            timeout: 60000
 #            authenticator_selection_criteria:
-#                attachment_mode: !php/const Webauthn\AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE
+#                authenticator_attachment: !php/const Webauthn\AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE
 #                require_resident_key: false
 #                user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
 #            extensions:
@@ -123,7 +122,7 @@ webauthn:
             rp:
                 name: 'ACME Webauthn Server'
             authenticator_selection_criteria:
-                attachment_mode: !php/const Webauthn\AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_PLATFORM
+                authenticator_attachment: !php/const Webauthn\AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_PLATFORM
                 require_resident_key: true
                 user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
 ```

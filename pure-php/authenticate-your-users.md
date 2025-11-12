@@ -131,7 +131,7 @@ use Webauthn\AuthenticationExtensions\AuthenticationExtension;
 $publicKeyCredentialRequestOptions =
     PublicKeyCredentialRequestOptions::create(
         random_bytes(32), // Challenge
-        extensions: AuthenticationExtensionsClientInputs::create([
+        extensions: AuthenticationExtensions::create([
             AuthenticationExtension::create('loc', true),
             AuthenticationExtension::create('txAuthSimple', 'Please log in with a registered authenticator'),
         ])
@@ -243,7 +243,7 @@ $publicKeyCredentialSource = $authenticatorAssertionResponseValidator->check(
 
 // Optional, but highly recommended, you can save the credential source as it may be modified
 // during the verification process (counter may be higher).
-$publicKeyCredentialSourceRepository->saveCredential($publicKeyCredentialSource);
+$publicKeyCredentialSourceRepository->saveCredentialSource($publicKeyCredentialSource);
 
 ```
 {% endcode %}

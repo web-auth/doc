@@ -37,15 +37,15 @@ final class CustomCounterChecker implements CounterChecker
 
     public function check(PublicKeyCredentialSource $publicKeyCredentialSource, int $currentCounter): void
     {
-        if ($currentCounter > $publicKeyCredentialSource->getCounter()) {
+        if ($currentCounter > $publicKeyCredentialSource->counter) {
             return;
         }
-        
-        $userId = $publicKeyCredentialSource->getUserHandle();
+
+        $userId = $publicKeyCredentialSource->userHandle;
         $user = $this->userRepository->lockUserWithId($userId);
         $this->logger->error('The counter is invalid', [
             'current' => $currentCounter,
-            'new' => $publicKeyCredentialSource->getCounter(),
+            'new' => $publicKeyCredentialSource->counter,
         ]);
         throw new CustomSecurityException('Invalid counter. User is now locked.');
     }

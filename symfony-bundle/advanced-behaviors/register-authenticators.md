@@ -31,14 +31,14 @@ namespace App\Guesser;
 
 use Assert\Assertion;
 use Symfony\Component\HttpFoundation\Request;
-use Webauthn\Bundle\Repository\PublicKeyCredentialUserEntityRepository;
+use Webauthn\Bundle\Repository\PublicKeyCredentialUserEntityRepositoryInterface;
 use Webauthn\Bundle\Security\Guesser\UserEntityGuesser;
 use Webauthn\PublicKeyCredentialUserEntity;
 
 final class FromQueryParameterGuesser implements UserEntityGuesser
 {
     public function __construct(
-        private PublicKeyCredentialUserEntityRepository $userEntityRepository
+        private PublicKeyCredentialUserEntityRepositoryInterface $userEntityRepository
     ) {
     }
 
