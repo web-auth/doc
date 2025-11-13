@@ -14,6 +14,12 @@ webauthn:
 #    logger: null # PSR-3 compatible logging service
     credential_repository: 'Webauthn\Bundle\Repository\DummyPublicKeyCredentialSourceRepository' # CREATE YOUR REPOSITORY AND CHANGE THIS!
     user_repository: 'Webauthn\Bundle\Repository\DummyPublicKeyCredentialUserEntityRepository' # CREATE YOUR REPOSITORY AND CHANGE THIS!
+#    allowed_origins: # List of allowed origins for WebAuthn operations (new in 5.2.0)
+#        - 'https://example.com'
+#        - 'https://app.example.com'
+#        - 'android:apk-key-hash://your-app-hash' # For Android FIDO2
+#        - 'ios:bundle-id://your.bundle.id' # For iOS
+#    allow_subdomains: false # Allow subdomains when validating origins (new in 5.2.0)
     creation_profiles: # Authenticator registration profiles
         default: # Unique name of the profile
             rp: # Relying Party information

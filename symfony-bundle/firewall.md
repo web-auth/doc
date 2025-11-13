@@ -166,6 +166,10 @@ security:
 ```
 {% endcode %}
 
+{% hint style="info" %}
+**Multiple User Providers (v5.2.1+):** The bundle now supports multiple user providers. If your application uses multiple providers, you can configure them in the security configuration and the WebauthnBadge will work correctly with all of them.
+{% endhint %}
+
 Also, you need to define the credential options endpoint.
 
 {% code title="config/packages/webauthn.yaml" lineNumbers="true" %}

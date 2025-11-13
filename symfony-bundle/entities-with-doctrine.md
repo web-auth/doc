@@ -94,6 +94,10 @@ Do not forget to update your database schema!
 
 ## The Repository
 
+{% hint style="warning" %}
+**Deprecation Notice (v5.2.0):** The `DoctrineCredentialSourceRepository` class is deprecated and will be removed in version 6.0.0. You should create your own Doctrine-based repository implementation instead of extending the provided class. See the example below for guidance.
+{% endhint %}
+
 To ease the integration into your application, the bundle provides a concrete class that you can extend.
 
 {% hint style="info" %}

@@ -40,6 +40,8 @@ The most commonly used WebAuthn extensions include:
 | `credProtect` | Credential protection | Require user verification for certain credentials |
 | `minPINLength` | Minimum PIN length | Enforce PIN complexity requirements |
 | `hmacSecret` | HMAC secret | Generate symmetric secrets for encryption |
+| `prf` | Pseudo-Random Function | Generate cryptographic keys for encryption (new in 5.2.0) |
+| `uvm` | User Verification Method | Information about how the user was verified |
 
 ### Registry
 
@@ -150,6 +152,32 @@ $extensions = AuthenticationExtensions::create([
         'write' => base64_encode('encrypted user data')
     ])
 ]);
+```
+{% endcode %}
+
+### 4. Pseudo-Random Function (prf Extension)
+
+{% hint style="info" %}
+PRF extension support was added in version 5.2.0
+{% endhint %}
+
+The PRF (Pseudo-Random Function) extension allows you to generate cryptographic keys from authenticator secrets. This is particularly useful for encryption scenarios:
+
+{% code lineNumbers="true" %}
+```php
+// Request PRF during authentication
+$extensions = AuthenticationExtensions::create([
+    AuthenticationExtension::create('prf', [
+        'eval' => [
+            'first' => base64_encode(random_bytes(32))
+        ]
+    ])
+]);
+
+$publicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions::create(
+    random_bytes(32),
+    extensions: $extensions
+);
 ```
 {% endcode %}
 
