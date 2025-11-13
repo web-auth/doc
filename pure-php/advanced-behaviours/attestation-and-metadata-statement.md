@@ -6,7 +6,7 @@
 
 ## Attestation Statement Support Manager
 
-There are few steps to acheive. First, you have to add support classes for all attestation statement types into your Attestation Metatdata Manager.
+There are a few steps to achieve. First, you have to add support classes for all attestation statement types into your Attestation Metadata Manager.
 
 {% hint style="warning" %}
 For 4.5.0, the `TPMAttestationStatementSupport` class accepts a PSR-20 clock as argument. This argument will be mandatory for 5.0.0.

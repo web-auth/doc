@@ -60,7 +60,7 @@ See [https://github.com/herrjemand/awesome-webauthn/pull/61](https://github.com/
 
 I bring solutions to your problems and answer your questions.
 
-If you really love that project, and the work I have done or if you want I prioritize your issues, then [you can help me out for a couple of🍻 or more](https://github.com/sponsors/Spomky)!
+If you really love this project and the work I have done, or if you want me to prioritize your issues, then [you can help me out for a couple of🍻 or more](https://github.com/sponsors/Spomky)!
 
 ## Contributing
 

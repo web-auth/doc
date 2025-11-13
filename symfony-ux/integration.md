@@ -23,7 +23,7 @@ You now have only two Twig functions to call: `stimulus_controller` and `stimulu
 * The first one is placed on the `form` level;
 * The latter on the `button`.
 
-The Stimulus Controller should be configured to fits on your needs. The route names used below are automatically created by the bundle configuration.
+The Stimulus Controller should be configured to fit your needs. The route names used below are automatically created by the bundle configuration.
 
 The `requestResultField` parameter corresponds to the selector to the hidden field added above. Please use the corresponding field name.
 
@@ -56,7 +56,7 @@ The behavior after the login is managed by your Symfony Security Authenticator.
 
 ### Browser Autofill
 
-When authenticators are available on the device and the browser is aware of them, you can simplify the way the users will sign in. When this feature is enable, the user will see the list of available authenticators when focusing on the username field. By selecting an account in the list will automatically perform the authentication actions. There is a simple option to enable this feature:
+When authenticators are available on the device and the browser is aware of them, you can simplify the way users will sign in. When this feature is enabled, the user will see the list of available authenticators when focusing on the username field. Selecting an account in the list will automatically perform the authentication actions. There is a simple option to enable this feature:
 
 ```twig
 {{ stimulus_controller('@web-auth/webauthn-stimulus',

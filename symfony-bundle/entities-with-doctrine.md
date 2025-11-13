@@ -34,7 +34,7 @@ In general, Symfony applications use Doctrine, which is why the bundle provides 
 
 Hereafter an example of an entity.
 
-This is the most simple example. Feel free to add custom fields that fits on your needs e.g. `created_at` or `is_revoked`.
+This is the most simple example. Feel free to add custom fields that fit your needs e.g. `created_at` or `is_revoked`.
 
 {% code title="App/Entity/WebauthnCredential.php" lineNumbers="true" %}
 ```php
