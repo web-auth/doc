@@ -54,8 +54,16 @@ $coseAlgorithmManager->add(ECDSA\ES256::create());
 $coseAlgorithmManager->add(RSA\RS256::create());
 
 $attestationStatementSupportManager->add(PackedAttestationStatementSupport::create($coseAlgorithmManager));
+
+// New in v5.3.0: Compound Attestation Statement Support
+use Webauthn\AttestationStatement\CompoundAttestationStatementSupport;
+$attestationStatementSupportManager->add(CompoundAttestationStatementSupport::create($attestationStatementSupportManager));
 ```
 {% endcode %}
+
+{% hint style="info" %}
+**Compound Attestation Statement (v5.3.0+):** The Compound Attestation format allows multiple attestation statements to be bundled together. This is useful for authenticators that support multiple attestation mechanisms. The `CompoundAttestationStatementSupport` requires the `AttestationStatementSupportManager` to process the individual attestation statements within the compound format.
+{% endhint %}
 
 {% hint style="warning" %}
 The Android SafetyNet Attestation API is deprecated. Full turndown is planned in June 2024. More information at [https://developer.android.com/training/safetynet/deprecation-timeline](https://developer.android.com/training/safetynet/deprecation-timeline)

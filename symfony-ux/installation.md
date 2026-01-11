@@ -51,6 +51,11 @@ The package provides a Stimulus controller that handles:
 * **Base64 encoding/decoding** - Automatically handles data conversion
 * **Error handling** - Gracefully handles common WebAuthn errors
 * **Browser autofill** - Supports conditional UI for passkey selection
+* **Conditional create** (v5.3.0+) - Enhanced conditional UI support for both registration and authentication
+
+{% hint style="info" %}
+**Enhanced in v5.3.0:** The Stimulus controllers have been completely rewritten with improved error handling, better disconnection support, and enhanced conditional UI support for modern passkey workflows.
+{% endhint %}
 
 ## Basic Usage
 

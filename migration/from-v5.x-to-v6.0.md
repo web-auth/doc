@@ -14,7 +14,48 @@ This project follows the [Semantic Versioning principles](https://semver.org) an
 
 ### PublicKeyCredentialEntity.icon
 
-`PublicKeyCredentialEntity.icon` is deprecated since `5.1.0` . This property is removed from the specification and is not used anymore.
+`PublicKeyCredentialEntity.icon` is deprecated since `5.1.0`. This property is removed from the specification and is not used anymore.
+
+### PublicKeyCredentialRpEntity.name
+
+{% hint style="warning" %}
+**Deprecated in v5.3.0**
+{% endhint %}
+
+The `name` property of `PublicKeyCredentialRpEntity` is deprecated in version 5.3.0 and will be removed in version 6.0.0. According to the WebAuthn Level 3 specification, the Relying Party name is no longer required.
+
+```php
+# Before (deprecated)
+$rpEntity = PublicKeyCredentialRpEntity::create(
+    name: 'My Application',
+    id: 'example.com'
+);
+
+# After
+$rpEntity = PublicKeyCredentialRpEntity::create(
+    id: 'example.com'
+);
+```
+
+### Authenticator Transport CABLE
+
+{% hint style="warning" %}
+**Deprecated in v5.3.0**
+{% endhint %}
+
+The constant `AUTHENTICATOR_TRANSPORT_CABLE` is deprecated in favor of `AUTHENTICATOR_TRANSPORT_HYBRID` to align with the WebAuthn specification updates.
+
+```php
+# Before (deprecated)
+use Webauthn\PublicKeyCredentialDescriptor;
+
+$transport = PublicKeyCredentialDescriptor::AUTHENTICATOR_TRANSPORT_CABLE;
+
+# After
+use Webauthn\PublicKeyCredentialDescriptor;
+
+$transport = PublicKeyCredentialDescriptor::AUTHENTICATOR_TRANSPORT_HYBRID;
+```
 
 ### Secured RP IDs
 

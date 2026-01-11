@@ -178,6 +178,39 @@ webauthn:
 ```
 {% endcode %}
 
+#### Hints
+
+{% hint style="info" %}
+**New in v5.3.0:** Support for WebAuthn hints to guide user authentication choices.
+{% endhint %}
+
+Hints provide guidance to the user agent about how the user might authenticate. This can help improve the user experience by suggesting the most appropriate authentication method.
+
+{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
+```yaml
+webauthn:
+    creation_profiles:
+        acme:
+            rp:
+                name: 'ACME Webauthn Server'
+            hints:
+                - 'security-key'
+                - 'client-device'
+                - 'hybrid'
+    request_profiles:
+        acme:
+            rp_id: 'example.com'
+            hints:
+                - 'security-key'
+                - 'client-device'
+```
+{% endcode %}
+
+Available hint values:
+- `security-key`: External security key (like YubiKey)
+- `client-device`: Platform authenticator (like Touch ID, Windows Hello)
+- `hybrid`: Hybrid transport (like phone as authenticator)
+
 #### Extensions
 
 You can set as many extensions as you want in the profile. Please also [refer to this page](../webauthn-in-a-nutshell/extensions.md) for more information.

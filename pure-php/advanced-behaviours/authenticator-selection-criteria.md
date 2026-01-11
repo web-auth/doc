@@ -28,6 +28,10 @@ With this criterion, a Public Key Credential Source will be stored in the authen
 A resident key shall be created if you want to [authenticate users without username](authentication-without-username.md).
 {% endhint %}
 
+{% hint style="warning" %}
+**Backward Compatibility (v5.3.0+):** The `requireResidentKey` property has been restored for backward compatibility with WebAuthn Level 3 specification. While `residentKey` is the preferred modern approach, `requireResidentKey` is still supported for legacy implementations.
+{% endhint %}
+
 ### User Verification
 
 [Please refer to this page](user-verification.md).
