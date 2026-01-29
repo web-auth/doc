@@ -60,7 +60,7 @@ This class is removed in 5.0. You should use Symfony Serializer or create a dedi
 
 ### Webauthn\PublicKeyCredentialSourceRepository
 
-This interface is deprecated and removed. There is no replacement as it became useless for the library. The Symfony bundle uses its own interface `Webauthn\Bundle\Repository\Webauthn\Bundle\Repository` you are asked to use in the Symfony context.
+This interface is deprecated and removed. There is no replacement as it became useless for the library. The Symfony bundle uses its own interface `Webauthn\Bundle\Repository` you are asked to use in the Symfony context.
 
 ### Symfony Http Client
 
