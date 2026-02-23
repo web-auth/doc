@@ -18,7 +18,7 @@ It will need:
 Optionally, you can customize the following parameters:
 
 * A timeout
-* A list of public key credential to exclude from the registration process
+* A list of public key credentials to exclude from the registration process
 * The Authenticator Selection Criteria
 * Attestation conveyance preference
 * Extensions
@@ -167,7 +167,7 @@ On the contrary when adding new authenticators to already authenticated users, t
 
 ## Creation Response
 
-What you receive must be a JSON object that looks like as follow:
+What you receive must be a JSON object that looks like the following:
 
 {% code lineNumbers="true" %}
 ```javascript

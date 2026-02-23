@@ -29,6 +29,6 @@ To contribute use [Pull Requests](https://help.github.com/articles/using-pull-re
 
 ### Run test suite
 
-* install composer: `curl -s http://getcomposer.org/installer | php`
+* install composer: `curl -s https://getcomposer.org/installer | php`
 * install dependencies: `php composer.phar install`
 * run tests: `vendor/bin/phpunit`

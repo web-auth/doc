@@ -2,7 +2,7 @@
 
 ## Configuration
 
-With Flex, you have a minimal configuration file installed through a Flex Recipe. You must set the repositories you have just created. You also have to modify the environment variables `Relying_PARTY_ID` and `Relying_PARTY_NAME`.
+With Flex, you have a minimal configuration file installed through a Flex Recipe. You must set the repositories you have just created. You also have to modify the environment variables `RELYING_PARTY_ID` and `RELYING_PARTY_NAME`.
 
 You may also need to adjust other parameters.
 
@@ -23,8 +23,8 @@ webauthn:
     creation_profiles: # Authenticator registration profiles
         default: # Unique name of the profile
             rp: # Relying Party information
-                name: '%env(Relying_PARTY_NAME)%' # CHANGE THIS! or create the corresponding env variable
-                id: '%env(Relying_PARTY_ID)%' # Please adapt the env file with the correct relying party ID or set null
+                name: '%env(RELYING_PARTY_NAME)%' # CHANGE THIS! or create the corresponding env variable
+                id: '%env(RELYING_PARTY_ID)%' # Please adapt the env file with the correct relying party ID or set null
 #                icon: null # Secured image (data:// scheme)
 #            challenge_length: 32
 #            timeout: 60000
@@ -67,7 +67,7 @@ webauthn:
 #                    enabled: true
     request_profiles: # Authentication profiles
         default: # Unique name of the profile
-            rp_id: '%env(Relying_PARTY_ID)%' # Please adapt the env file with the correct relying party ID or set null
+            rp_id: '%env(RELYING_PARTY_ID)%' # Please adapt the env file with the correct relying party ID or set null
 #            challenge_length: 32
 #            timeout: 60000
 #            user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
@@ -95,7 +95,7 @@ If you don't create the `creation_profiles` section, a `default` profile is set.
 
 #### Relying Party (rp)
 
-The relying Party corresponds to your application. Please refer [to this page](../prerequisites/the-relying-party.md) for more information.
+The Relying Party corresponds to your application. Please refer [to this page](../prerequisites/the-relying-party.md) for more information.
 
 {% hint style="warning" %}
 The parameter `id` is optional but highly recommended.
@@ -111,7 +111,7 @@ webauthn:
     creation_profiles:
         acme:
             rp:
-                name: 'ACME Webauthn Server'
+                name: 'ACME WebAuthn Server'
             challenge_length: 16
 ```
 {% endcode %}
@@ -126,13 +126,13 @@ webauthn:
     creation_profiles:
         acme:
             rp:
-                name: 'ACME Webauthn Server'
+                name: 'ACME WebAuthn Server'
             timeout: 30000
 ```
 {% endcode %}
 
 {% hint style="info" %}
-For v4.0+, the timeout is set to `null`. The values recommended by the specification are as follow:
+For v4.0+, the timeout is set to `null`. The values recommended by the specification are as follows:
 
 * If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
 * If the user verification is `preferred` or `required`, the range is 300 to 600 seconds (5 to 10 minutes)
@@ -150,7 +150,7 @@ webauthn:
     creation_profiles:
         acme:
             rp:
-                name: 'ACME Webauthn Server'
+                name: 'ACME WebAuthn Server'
             authenticator_selection_criteria:
                 authenticator_attachment: !php/const Webauthn\AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_PLATFORM
                 require_resident_key: true
@@ -167,7 +167,7 @@ The order is important. Preferred algorithms go first.
 {% endhint %}
 
 {% hint style="warning" %}
-It is not recommended changing the default list unless you exactly know what you are doing.
+It is not recommended to change the default list unless you exactly know what you are doing.
 {% endhint %}
 
 {% code title="app/config/webauthn.yaml" lineNumbers="true" %}
@@ -176,7 +176,7 @@ webauthn:
     creation_profiles:
         acme:
             rp:
-                name: 'ACME Webauthn Server'
+                name: 'ACME WebAuthn Server'
             public_key_credential_parameters:
                 - !php/const Cose\Algorithms::COSE_ALGORITHM_ES256
                 - !php/const Cose\Algorithms::COSE_ALGORITHM_RS256
@@ -197,7 +197,7 @@ webauthn:
     creation_profiles:
         acme:
             rp:
-                name: 'ACME Webauthn Server'
+                name: 'ACME WebAuthn Server'
             attestation_conveyance: !php/const Webauthn\PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_DIRECT
 ```
 {% endcode %}
@@ -216,7 +216,7 @@ webauthn:
     creation_profiles:
         acme:
             rp:
-                name: 'ACME Webauthn Server'
+                name: 'ACME WebAuthn Server'
             hints:
                 - 'security-key'
                 - 'client-device'
@@ -249,7 +249,7 @@ webauthn:
     creation_profiles:
         acme:
             rp:
-                name: 'ACME Webauthn Server'
+                name: 'ACME WebAuthn Server'
             hide_existing_credentials: true
 ```
 {% endcode %}
@@ -315,7 +315,7 @@ webauthn:
     creation_profiles:
         acme:
             rp:
-                name: 'ACME Webauthn Server'
+                name: 'ACME WebAuthn Server'
             extensions:
                 loc: true
                 txAuthSimple: 'Please add your new authenticator'

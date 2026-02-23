@@ -15,7 +15,7 @@ The library provides a simple class to handle the rp information: `Webauthn\Publ
 use Webauthn\PublicKeyCredentialRpEntity;
 
 $rpEntity = PublicKeyCredentialRpEntity::create(
-    'ACME Webauthn Server' // The application name
+    'ACME WebAuthn Server' // The application name
 );
 ```
 {% endcode %}
@@ -35,7 +35,7 @@ It may be useful to specify the `rp` ID, especially if your application has seve
 use Webauthn\PublicKeyCredentialRpEntity;
 
 $rpEntity = PublicKeyCredentialRpEntity::create(
-    'ACME Webauthn Server', // The application name
+    'ACME WebAuthn Server', // The application name
     'acme.com'              // The application ID = the domain
 );
 ```
@@ -68,17 +68,17 @@ The Relying Party ID should be determined depending on the common URLs for your 
 
 If you have a web application that can be reached at [https://m.my-app.com](https://m.my-app.com) (for mobiles) and [https://my-app.com](https://my-app.com) or [https://www.my-app.com](https://www.my-app.com) (for other devices), your Relying Party ID should be `my-app.com`.
 
-If the domain is shared between sub-projects, the rp ID should be limited to that sub-projects.
+If the domain is shared between sub-projects, the rp ID should be limited to that sub-project.
 
 For example, a web site is located at `https://(www.)site1.host.com` and another at `https://(www.)site2.host.com`, then the Relying Party IDs should be `site1.host.com` and `site2.host.com` respectively. If you set `host.com`, there is a risk that users from `site1.host.com` can log in at `site2.host.com`.
 
 {% hint style="info" %}
-Discussion is ongoing for associating authenticators to multiple RP IDs such as `my-company.com`, `meine-firma.de` et `ma-compagnie.fr`
+Discussion is ongoing for associating authenticators to multiple RP IDs such as `my-company.com`, `meine-firma.de` and `ma-compagnie.fr`
 {% endhint %}
 
 ## Relying Party Icon
 
-Your application may also have a logo. You can indicate this logo as third argument. Please note that for safety reason this icon should be an authenticated URL, i.e. an image that uses the `data` scheme.
+Your application may also have a logo. You can indicate this logo as third argument. Please note that for safety reasons this icon should be an authenticated URL, i.e. an image that uses the `data` scheme.
 
 {% code lineNumbers="true" %}
 ```php
@@ -87,7 +87,7 @@ Your application may also have a logo. You can indicate this logo as third argum
 use Webauthn\PublicKeyCredentialRpEntity;
 
 $rpEntity = PublicKeyCredentialRpEntity::create(
-    'ACME Webauthn Server',
+    'ACME WebAuthn Server',
     'acme.com',
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAwFBMVEXm7NK41k3w8fDv7+q01Tyy0zqv0DeqyjOszDWnxjClxC6iwCu11z6y1DvA2WbY4rCAmSXO3JZDTxOiwC3q7tyryzTs7uSqyi6tzTCmxSukwi9aaxkWGga+3FLv8Ozh6MTT36MrMwywyVBziSC01TbT5ZW9z3Xi6Mq2y2Xu8Oioxy7f572qxzvI33Tb6KvR35ilwTmvykiwzzvV36/G2IPw8O++02+btyepyDKvzzifvSmw0TmtzTbw8PAAAADx8fEC59dUAAAA50lEQVQYV13RaXPCIBAG4FiVqlhyX5o23vfVqUq6mvD//1XZJY5T9xPzzLuwgKXKslQvZSG+6UXgCnFePtBE7e/ivXP/nRvUUl7UqNclvO3rpLqofPDAD8xiu2pOntjamqRy/RqZxs81oeVzwpCwfyA8A+8mLKFku9XfI0YnSKXnSYZ7ahSII+AwrqoMmEFKriAeVrqGM4O4Z+ADZIhjg3R6LtMpWuW0ERs5zunKVHdnnnMLNQqaUS0kyKkjE1aE98b8y9x9JYHH8aZXFMKO6JFMEvhucj3Wj0kY2D92HlHbE/9Vk77mD6srRZqmVEAZAAAAAElFTkSuQmCC'
 );
@@ -95,7 +95,7 @@ $rpEntity = PublicKeyCredentialRpEntity::create(
 {% endcode %}
 
 {% hint style="info" %}
-The Webauthn specification does not set any limit for the length of the third argument.
+The WebAuthn specification does not set any limit for the length of the third argument.
 {% endhint %}
 
 {% hint style="warning" %}

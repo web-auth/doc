@@ -17,7 +17,7 @@ Doctrine users: the field type for `transports` and `other_ui` changed from `arr
 
 Please make sure to reflect the changes to your data model.
 
-Hereafter an example for Postgres:
+Here is an example for Postgres:
 
 ```sql
 ALTER TABLE [/*TABLE NAME HERE*/] ALTER transports TYPE JSON USING transports::JSON
@@ -28,7 +28,7 @@ ALTER TABLE [/*TABLE NAME HERE*/] ALTER other_ui TYPE JSON USING other_ui::JSON
 
 ## Registration Capability
 
-By default, the User Entity Repository is not able to register any user account. You can add this behaviour by implementing the interface `Webauthn\Bundle\Repository\CanRegisterUserEntity`.
+By default, the User Entity Repository is not able to register any user account. You can add this behavior by implementing the interface `Webauthn\Bundle\Repository\CanRegisterUserEntity`.
 
 ## Doctrine Repository
 
@@ -36,7 +36,7 @@ In general, Symfony applications use Doctrine, which is why the bundle provides 
 
 ### The Doctrine Entity
 
-Hereafter an example of an entity.
+Here is an example of an entity.
 
 This is the most simple example. Feel free to add custom fields that fit your needs e.g. `created_at` or `is_revoked`.
 

@@ -73,7 +73,7 @@ It is not described on this page, but available in the previous versions of the 
 
 ## Metadata Statement Repository
 
-Then, you must prepare an Metadata Statement Repository. This service will manage all Metadata Statements depending on their sources (local storage or distant service).
+Then, you must prepare a Metadata Statement Repository. This service will manage all Metadata Statements depending on their sources (local storage or distant service).
 
 Your Metadata Statement Repository must implement the interface `Webauthn\MetadataService\MetadataStatementRepository` that has only one method:
 

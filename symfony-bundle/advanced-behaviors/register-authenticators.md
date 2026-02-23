@@ -19,7 +19,7 @@ For that purpose, a User Entity Guesser service should be created. This service 
 
 You can directly use the `Webauthn\Bundle\Security\Guesser\CurrentUserEntityGuesser` as a Symfony service. It is designed to identify the user that is currently logged in.
 
-In the example herafter where the current user is guessed using a controller parameter. This can be used when an administrator is adding an authenticator to another user account.
+In the following example the current user is guessed using a controller parameter. This can be used when an administrator is adding an authenticator to another user account.
 
 {% code title="App\Guesser\FromQueryParameterGuesser.php" lineNumbers="true" %}
 ```php
@@ -56,7 +56,7 @@ final class FromQueryParameterGuesser implements UserEntityGuesser
 {% endcode %}
 
 {% hint style="info" %}
-In the case the current user s supposed to be administrator, the user entity can be determined using the query parameters and a route like `/admin/add-authenticator/for/{user_id}`.
+In the case the current user is supposed to be an administrator, the user entity can be determined using the query parameters and a route like `/admin/add-authenticator/for/{user_id}`.
 {% endhint %}
 
 Now you just have to enable the feature and set the routes to your options and response controllers.
@@ -97,7 +97,7 @@ security:
 ```
 {% endcode %}
 
-Now you can send requests to these new endpoints. For example, if you are using the Javascript library, the calls will look like as follow:
+Now you can send requests to these new endpoints. For example, if you are using the JavaScript library, the calls will look like as follow:
 
 {% code lineNumbers="true" %}
 ```javascript
@@ -151,7 +151,7 @@ There are 3 types of responses and handlers:
 
 #### Creation Options Handler
 
-This handler is called during the registration of a authenticator and has to implement the interface `Webauthn\Bundle\Security\Handler\CreationOptionsHandler`.
+This handler is called during the registration of an authenticator and has to implement the interface `Webauthn\Bundle\Security\Handler\CreationOptionsHandler`.
 
 {% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
@@ -183,7 +183,7 @@ webauthn:
 
 #### Failure Handler
 
-This handler is called when an error occurred during the process. This handler shall implement the interface `Webauthn\Bundle\Security\Handler\SuccessHandler`. The default handler is `Webauthn\Bundle\Service\DefaultFailureHandler`.
+This handler is called when an error occurred during the process. This handler shall implement the interface `Webauthn\Bundle\Security\Handler\FailureHandler`. The default handler is `Webauthn\Bundle\Service\DefaultFailureHandler`.
 
 {% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml

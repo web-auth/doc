@@ -8,7 +8,7 @@ description: How to register and authenticate my users?
 
 To authenticate or register your users with Symfony, the best and easiest way is to use the Security Bundle. First, install that bundle and follow the instructions given by [the official documentation](https://symfony.com/doc/current/security.html).
 
-At the end of the installation and configuration, you should have a `config/packages/security.yaml` file that looks like as follow:
+At the end of the installation and configuration, you should have a `config/packages/security.yaml` file that looks like the following:
 
 {% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml
@@ -26,7 +26,7 @@ security:
 
 ## Controller
 
-If you are familiar with the Username/Password authentication with Symfony, it is not very different with Webauthn.  You first need a controller to display the login form
+If you are familiar with the Username/Password authentication with Symfony, it is not very different with WebAuthn.  You first need a controller to display the login form
 
 ```php
 namespace App\Controller;
@@ -56,7 +56,7 @@ class LoginController extends AbstractController
 
 ## Template
 
-Below an example of a login form using the [Stimulus Controller](../symfony-ux/user-authentication.md). Also, please note that:
+Below is an example of a login form using the [Stimulus Controller](../symfony-ux/user-authentication.md). Also, please note that:
 
 * The username field is not required
 * The username field should have the attribute `autocomplete="username webauthn"`&#x20;
@@ -90,11 +90,11 @@ Below an example of a login form using the [Stimulus Controller](../symfony-ux/u
 
 ## Login Authenticator
 
-Next, we need a Symfony Authenticator to handle login form submissions. With Webauthn, we use a dedicated Passport that shall contain a specific Badge.
+Next, we need a Symfony Authenticator to handle login form submissions. With WebAuthn, we use a dedicated Passport that shall contain a specific Badge.
 
-The Webauthn Badge will receive the current host (i.e. the current domain) and the result from the FIDO2 Authenticator.
+The WebAuthn Badge will receive the current host (i.e. the current domain) and the result from the FIDO2 Authenticator.
 
-The Webauthn Passport can receive any other badge you need e.g. the CRSF Token Badge or a custom badge required for your authentication login.
+The WebAuthn Passport can receive any other badge you need e.g. the CSRF Token Badge or a custom badge required for your authentication flow.
 
 ```php
 <?php
@@ -147,7 +147,7 @@ final class LoginAuthenticator extends WebauthnAuthenticator
 
 ## Security Configuration
 
-To enable the user authentication, you just have to declare the Symfony Authenticator if the appropriate firewall (here `main`).
+To enable the user authentication, you just have to declare the Symfony Authenticator in the appropriate firewall (here `main`).
 
 {% code title="config/packages/security.yaml" lineNumbers="true" %}
 ```yaml

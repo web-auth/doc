@@ -4,12 +4,12 @@
 
 ## The project
 
-* [What is Webauthn?](the-project/the-project.md)
+* [What is WebAuthn?](the-project/the-project.md)
 * [Web Browser Support](the-project/web-browser-support.md)
 * [Installation](the-project/installation.md)
 * [Contributing](the-project/contributing.md)
 
-## Webauthn In A Nutshell
+## WebAuthn In A Nutshell
 
 * [Authenticators](webauthn-in-a-nutshell/authenticators.md)
 * [Ceremonies](webauthn-in-a-nutshell/ceremonies.md)
@@ -22,16 +22,16 @@
 * [The Relying Party](prerequisites/the-relying-party.md)
 * [Credential Record](prerequisites/credential-record.md)
 * [User Entity](prerequisites/user-entity.md)
-* [Javascript](prerequisites/javascript.md)
+* [JavaScript](prerequisites/javascript.md)
 
 ## Pure PHP
 
-* [Webauthn Server](pure-php/webauthn-server.md)
+* [WebAuthn Server](pure-php/webauthn-server.md)
 * [Input Loading](pure-php/input-loading.md)
 * [Input Validation](pure-php/input-validation.md)
 * [Register Authenticators](pure-php/authenticator-registration.md)
 * [Authenticate Your Users](pure-php/authenticate-your-users.md)
-* [Advanced Behaviours](pure-php/advanced-behaviours/README.md)
+* [Advanced Behaviors](pure-php/advanced-behaviours/README.md)
   * [Debugging](pure-php/advanced-behaviours/debugging.md)
   * [User Verification](pure-php/advanced-behaviours/user-verification.md)
   * [Authenticator Selection Criteria](pure-php/advanced-behaviours/authenticator-selection-criteria.md)

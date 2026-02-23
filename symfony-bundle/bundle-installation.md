@@ -5,7 +5,7 @@ This framework provides a Symfony bundle that will help you to use the component
 {% hint style="info" %}
 Implementations for other frameworks and web applications exist.
 
-As an example if you use Laravel, you may be interested in [this project: https://github.com/asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
+As an example, if you use Laravel, you may be interested in [this project: https://github.com/asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
 {% endhint %}
 
 ## Installation

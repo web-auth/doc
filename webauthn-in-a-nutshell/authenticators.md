@@ -12,7 +12,7 @@ Authenticators may have additional features such as PIN code or biometric sensor
 
 ## Roaming Authenticators
 
-The roaming authenticator may have different forms. The most common form is a USB device the user plugs into its computer. It can be a paired Bluetooth device or a card with NFC capabilities.
+The roaming authenticator may have different forms. The most common form is a USB device the user plugs into their computer. It can be a paired Bluetooth device or a card with NFC capabilities.
 
 Authenticators of this class are removable from, and can "roam" among, client devices.
 
@@ -30,7 +30,7 @@ A platform authenticator is usually not removable from the client device. For ex
 
 <figure><img src="../.gitbook/assets/FIDO_Passkey_mark_A_black-e1702581853266.png" alt="" width="188"><figcaption><p>Passkey Logo</p></figcaption></figure>
 
-Passkey are virtual authenticators that have extended capabilities and in particular:
+Passkeys are virtual authenticators that have extended capabilities and in particular:
 
 * Synchronized and stored in an integrated password manager (e.g., iCloud Keychain, Google Password Manager).
 * Simple and integrated use, no need for an external device.

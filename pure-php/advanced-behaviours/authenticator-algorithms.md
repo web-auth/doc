@@ -1,6 +1,6 @@
 # Authenticator Algorithms
 
-The Webauthn data verification is based on cryptographic signatures and thus you need to provide cryptographic algorithms to perform those checks.
+The WebAuthn data verification is based on cryptographic signatures and thus you need to provide cryptographic algorithms to perform those checks.
 
 The following algorithms are required in most situations:
 
@@ -24,7 +24,7 @@ $algorithmManager = Manager::create()
 {% endcode %}
 
 {% hint style="info" %}
-The order is important. By adding `ES256` first, the relyaing party prefers an `ES256` credential. Browsers are eager to satisfy preferences.
+The order is important. By adding `ES256` first, the relying party prefers an `ES256` credential. Browsers are eager to satisfy preferences.
 {% endhint %}
 
 The complete list of supported algorithms:

@@ -8,7 +8,7 @@ The User Entity Repository can be completely decoupled from the user entity used
 
 This repository should be declared as a Symfony service and shall implement `Webauthn\Bundle\Repository\PublicKeyCredentialUserEntityRepositoryInterface`.
 
-Hereafter an example where the application User Repository is injected. This repository uses Doctrine and provides `findOneBy*` methods.
+Here is an example where the application User Repository is injected. This repository uses Doctrine and provides `findOneBy*` methods.
 
 {% code title="src/Repository/WebauthnUserEntityRepository.php" lineNumbers="true" %}
 ```php
@@ -53,7 +53,7 @@ final class WebauthnUserEntityRepository implements PublicKeyCredentialUserEntit
     }
 
     /**
-     * Converts a Symfony User (if any) into a Webauthn User Entity
+     * Converts a Symfony User (if any) into a WebAuthn User Entity
      */
     private function getUserEntity(null|User $user): ?PublicKeyCredentialUserEntity
     {
@@ -75,7 +75,7 @@ final class WebauthnUserEntityRepository implements PublicKeyCredentialUserEntit
 
 ## Registration Capability
 
-By default, the User Entity Repository is not able to register any user account. You can add this behaviour by implementing the following interfaces:
+By default, the User Entity Repository is not able to register any user account. You can add this behavior by implementing the following interfaces:
 
 * `Webauthn\Bundle\Repository\CanRegisterUserEntity`
 * `Webauthn\Bundle\Repository\CanGenerateUserEntity`

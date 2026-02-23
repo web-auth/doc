@@ -45,7 +45,7 @@ Most applications will work fine with the default WebAuthn configuration. Consid
 
 For basic WebAuthn implementation, start with these pages:
 
-1. [Webauthn Server](../webauthn-server.md) - Set up the basic server components
+1. [WebAuthn Server](../webauthn-server.md) - Set up the basic server components
 2. [Authenticator Registration](../authenticator-registration.md) - Register user authenticators
 3. [Authenticate Your Users](../authenticate-your-users.md) - Perform authentication
 

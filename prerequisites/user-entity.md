@@ -6,12 +6,12 @@ description: It's all about users
 
 ## User Entity Class
 
-A User Entity object represents a user in the Webauthn context. It has the following constraints:
+A User Entity object represents a user in the WebAuthn context. It has the following constraints:
 
 * The user ID must be unique and must be a string,
 * The username must be unique,
 
-Hereafter a minimalist example of user entity:
+Here is a minimalist example of user entity:
 
 {% code lineNumbers="true" %}
 ```php
@@ -34,7 +34,7 @@ Developers should not add rules that prevent users from choosing the username th
 {% endhint %}
 
 {% hint style="warning" %}
-For privacy reasons, it is not recommended using the e-mail as username.
+For privacy reasons, it is not recommended to use the e-mail as username.
 {% endhint %}
 
 As for the `rp` Entity, the User Entity may have an icon. This icon must also be secured.
@@ -55,7 +55,7 @@ $userEntity = PublicKeyCredentialUserEntity::create(
 {% endcode %}
 
 {% hint style="info" %}
-The Webauthn specification does not set any limit for the length of the icon.
+The WebAuthn specification does not set any limit for the length of the icon.
 {% endhint %}
 
 {% hint style="warning" %}
@@ -73,7 +73,7 @@ Your repository needs to provide these main operations:
 3. **Create a new user entity** (during registration)
 
 {% hint style="success" %}
-Whatever database you use (MySQL, PostgreSQL, MongoDB…), it is not necessary to create foreign key relationships between your users and the Credential Sources. The `userHandle` in the Credential Source links to the user ID.
+Whatever database you use (MySQL, PostgreSQL, MongoDB…), it is not necessary to create foreign key relationships between your users and the Credential Records. The `userHandle` in the Credential Record links to the user ID.
 {% endhint %}
 
 ### Repository Example

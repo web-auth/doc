@@ -8,7 +8,7 @@ description: Step-by-step guide for migrating from 5.x to 6.0
 This page is subject to changes as the version 6.0.0 is not available at the time of writing.
 {% endhint %}
 
-This project follows the [Semantic Versioning principles](https://semver.org) and, contrary to upgrade a minor version (where the middle number changes) where no difficulty should be encountered, upgrade a major version (where the first number changes) is subject to significant modifications.
+This project follows the [Semantic Versioning principles](https://semver.org) and, contrary to upgrading a minor version (where the middle number changes) where no difficulty should be encountered, upgrading a major version (where the first number changes) is subject to significant modifications.
 
 ## Deprecations
 

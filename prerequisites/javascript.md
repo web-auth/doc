@@ -1,4 +1,4 @@
-# Javascript
+# JavaScript
 
 WebAuthn requires JavaScript to interact with authenticators in the browser. This page explains the client-side implementation using the WebAuthn Browser API and recommended libraries.
 

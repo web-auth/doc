@@ -1,7 +1,7 @@
 # Metadata Statement
 
 {% hint style="info" %}
-This page is about an advanced feature. You can skip it if you are new with Webauthn
+This page is about an advanced feature. You can skip it if you are new with WebAuthn.
 {% endhint %}
 
 {% hint style="danger" %}
@@ -15,7 +15,7 @@ During the Attestation Ceremony (i.e. the registration of the authenticator), yo
 * **None** (`none`): no Attestation Statement is provided
 * **Basic Attestation** (`basic`)**:** Authenticator’s attestation key pair is specific to an authenticator model.
 * **Surrogate Basic Attestation (or Self Attestation -** `self`**)**: Authenticators that have no specific attestation key use the credential private key to create the attestation signature
-* **Attestation CA** (`AttCA`): Authenticators are based on a Trusted Platform Module (TPM). They can generate multiple attestation identity key pairs (AIK) and requests an Attestation CA to issue an AIK certificate for each.
+* **Attestation CA** (`AttCA`): Authenticators are based on a Trusted Platform Module (TPM). They can generate multiple attestation identity key pairs (AIK) and request an Attestation CA to issue an AIK certificate for each.
 * **Anonymization CA** (`AnonCA`): Authenticators use an Anonymization CA, which dynamically generates per-credential attestation certificates such that the attestation statements presented to Relying Parties do not provide uniquely identifiable information.
 * **Compound Attestation** (new in 5.3.0): A combination of multiple attestation statements that allows authenticators to provide multiple levels of attestation in a single response.
 

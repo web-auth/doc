@@ -1,6 +1,6 @@
 ---
 description: >-
-  Seamless Integration with PHP Applications: Our Webauthn Documentation and
+  Seamless Integration with PHP Applications: Our WebAuthn Documentation and
   Tutorials
 layout: landing
 ---

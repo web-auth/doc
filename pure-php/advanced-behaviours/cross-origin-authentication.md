@@ -101,7 +101,7 @@ use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
 
 $csmFactory = new CeremonyStepManagerFactory();
 $csmFactory->setAllowedOrigins([
-    'http://localhost.com',
+    'http://localhost',
 ]);
 ```
 {% endcode %}

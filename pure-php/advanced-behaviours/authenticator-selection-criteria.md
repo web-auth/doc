@@ -1,8 +1,8 @@
 # Authenticator Selection Criteria
 
-By default, any type of authenticator can be used by your users and interact with you application. In certain circumstances, you may need to select specific authenticators e.g. when user verification is required.
+By default, any type of authenticator can be used by your users and interact with your application. In certain circumstances, you may need to select specific authenticators e.g. when user verification is required.
 
-The Webauthn API and this library allow you to define a set of options to disallow the registration of authenticators that do not fulfill with the conditions.
+The WebAuthn API and this library allow you to define a set of options to disallow the registration of authenticators that do not fulfill the conditions.
 
 The class `Webauthn\AuthenticatorSelectionCriteria` is designed for this purpose. It is used when generating the `Webauthn\PublicKeyCredentialCreationOptions` object.
 
@@ -22,7 +22,7 @@ A primary use case for platform authenticators is to register a particular clien
 
 ### Resident Key
 
-With this criterion, a Public Key Credential Source will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such a resident credential.
+With this criterion, a credential record will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such a resident credential.
 
 {% hint style="info" %}
 A resident key shall be created if you want to [authenticate users without username](authentication-without-username.md).
@@ -38,7 +38,7 @@ A resident key shall be created if you want to [authenticate users without usern
 
 ### Example
 
-With this example, with require the user verification (PIN, fingerprint...), a resident key and an authenticator embedded onto a device. This is typacally what you will require for Windows Hello or Face ID authentication.
+With this example, we require the user verification (PIN, fingerprint...), a resident key and an authenticator embedded onto a device. This is typically what you will require for Windows Hello or Face ID authentication.
 
 {% code lineNumbers="true" %}
 ```php

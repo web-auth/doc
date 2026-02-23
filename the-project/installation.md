@@ -12,7 +12,7 @@ The preferred way to install the library you need is to use composer:
 composer require web-auth/webauthn-lib
 ```
 
-If you use Symfony Framework, you may be interested in the bundle and, optionally,  the Stimulus component.
+If you use Symfony Framework, you may be interested in the bundle and, optionally, the Stimulus component.
 
 ```sh
 composer require web-auth/webauthn-symfony-bundle web-auth/webauthn-stimulus

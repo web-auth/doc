@@ -2,12 +2,12 @@
 
 With the version 5.2 of the bundle, the login process is very similar to the username/password login.
 
-First, your login form needs a username field. This field is not required ([usernameless authentication](../pure-php/advanced-behaviours/authentication-without-username.md)). You can indicate the autocomplete method is `webauthn`; this helps browser understanding the purpose of this field.
+First, your login form needs a username field. This field is not required ([usernameless authentication](../pure-php/advanced-behaviours/authentication-without-username.md)). You can indicate the autocomplete method is `webauthn`; this helps the browser understand the purpose of this field.
 
 Second, a hidden field `assertion` where the authenticator assertion will be placed is required. The name `assertion` can be changed, but shall be the same declared in the next step.
 
 ```twig
-<form action={{ path('app_login') }} method="post">
+<form action="{{ path('app_login') }}" method="post">
     <label for="username">Username</label>
     <input name="username" type="text" id="username" placeholder="Type your username here" autocomplete="username webauthn">
     <input type="hidden" id="assertion" name="assertion">
@@ -31,7 +31,7 @@ The `requestResultField` parameter corresponds to the selector to the hidden fie
 <form action={{ path('app_login') }} method="post"
     {{ stimulus_controller('@web-auth/webauthn-stimulus',
         {
-             requestOptionsUrl: path('webauthn.controller.request.request.login')
+             requestOptionsUrl: path('webauthn.controller.request.request.login'),
              requestResultField: 'input[name="assertion"]'
         }
     ) }}

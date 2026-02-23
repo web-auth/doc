@@ -1,4 +1,4 @@
-# Webauthn Server
+# WebAuthn Server
 
 This page provides an overview of the components needed to build a WebAuthn server in pure PHP, without framework dependencies.
 

@@ -2,9 +2,9 @@
 description: Overview of the framework
 ---
 
-# What is Webauthn?
+# What is WebAuthn?
 
-Webauthn defines an API enabling the creation and use of strong, attested, scoped, public key-based credentials by web applications, for the purpose of strongly authenticating users.
+WebAuthn defines an API enabling the creation and use of strong, attested, scoped, public key-based credentials by web applications, for the purpose of strongly authenticating users.
 
 The complete specification can be found on [the W3C dedicated page](https://www.w3.org/TR/webauthn-3/).
 
@@ -73,7 +73,7 @@ If you really love this project and the work I have done, or if you want me to p
 
 ## Contributing
 
-Requests for new features, bug fixed and all other ideas to make this framework useful are welcome.
+Requests for new features, bug fixes and all other ideas to make this framework useful are welcome.
 
 If you feel comfortable writing code, you could try to fix [opened issues where help is wanted](https://github.com/web-auth/webauthn-framework/issues?q=label%3A%22help+wanted%22) or [those that are easy to fix](https://github.com/web-auth/webauthn-framework/labels/easy-pick).
 

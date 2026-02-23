@@ -4,7 +4,7 @@ description: Adoption by web browsers
 
 # Web Browser Support
 
-Webauthn is now supported by all main web browsers:
+WebAuthn is now supported by all main web browsers:
 
 * Mozilla Firefox 60+ and Firefox for Android 68+
 * Google Chrome 67+

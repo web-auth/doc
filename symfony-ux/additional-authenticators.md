@@ -195,10 +195,10 @@ Allow users to give friendly names to their authenticators for easier management
 {% code title="src/Entity/WebauthnCredential.php" lineNumbers="true" %}
 ```php
 use Doctrine\ORM\Mapping as ORM;
-use Webauthn\PublicKeyCredentialSource;
+use Webauthn\CredentialRecord;
 
 #[ORM\Entity]
-class WebauthnCredential extends PublicKeyCredentialSource
+class WebauthnCredential extends CredentialRecord
 {
     #[ORM\Id]
     #[ORM\Column(type: 'string')]
