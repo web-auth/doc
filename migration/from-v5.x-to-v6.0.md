@@ -59,6 +59,33 @@ $credential = new CredentialRecord(/* ... */);
 
 Similarly, the repository interface `PublicKeyCredentialSourceRepositoryInterface` is deprecated in favor of `CredentialRecordRepositoryInterface`.
 
+### DoctrineCredentialSourceRepository
+
+{% hint style="warning" %}
+**Deprecated in v5.2.0**
+{% endhint %}
+
+The class `Webauthn\Bundle\Repository\DoctrineCredentialSourceRepository` provided by the Symfony bundle is deprecated and will be removed in version 6.0.0. You should create your own Doctrine-based repository instead.
+
+```php
+# Before (deprecated)
+use Webauthn\Bundle\Repository\DoctrineCredentialSourceRepository;
+
+# After — create your own repository
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use Webauthn\Bundle\Repository\CredentialRecordRepositoryInterface;
+use Webauthn\Bundle\Repository\CanSaveCredentialRecord;
+use Webauthn\CredentialRecord;
+
+class WebauthnCredentialRepository extends ServiceEntityRepository implements CredentialRecordRepositoryInterface, CanSaveCredentialRecord
+{
+    // Implement findOneByCredentialId(), findAllForUserEntity(), saveCredentialRecord()
+}
+```
+
+See the [Credential Record Repository](../symfony-bundle/credential-record-repository.md) page for a complete implementation example.
+
 ### createFormJson
 
 {% hint style="warning" %}
@@ -86,6 +113,50 @@ use Webauthn\PublicKeyCredentialDescriptor;
 
 $transport = PublicKeyCredentialDescriptor::AUTHENTICATOR_TRANSPORT_HYBRID;
 ```
+
+### Options Handlers Signature
+
+{% hint style="warning" %}
+**Changed in v5.3.0**
+{% endhint %}
+
+The `CreationOptionsHandler` and `RequestOptionsHandler` interfaces now accept an optional `?Request $request` parameter. If you implement these interfaces, you must update the signature of your methods.
+
+```php
+# Before
+use Symfony\Component\HttpFoundation\Response;
+use Webauthn\PublicKeyCredentialCreationOptions;
+use Webauthn\PublicKeyCredentialUserEntity;
+
+class MyCreationOptionsHandler implements CreationOptionsHandler
+{
+    public function onCreationOptions(
+        PublicKeyCredentialCreationOptions $options,
+        PublicKeyCredentialUserEntity $userEntity,
+    ): Response {
+        // ...
+    }
+}
+
+# After
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Webauthn\PublicKeyCredentialCreationOptions;
+use Webauthn\PublicKeyCredentialUserEntity;
+
+class MyCreationOptionsHandler implements CreationOptionsHandler
+{
+    public function onCreationOptions(
+        PublicKeyCredentialCreationOptions $options,
+        PublicKeyCredentialUserEntity $userEntity,
+        ?Request $request = null,
+    ): Response {
+        // ...
+    }
+}
+```
+
+The same applies to `RequestOptionsHandler::onRequestOptions()`.
 
 ### Secured RP IDs
 

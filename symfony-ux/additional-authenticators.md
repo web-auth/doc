@@ -291,5 +291,5 @@ Display useful information about each authenticator:
 ## See Also
 
 * [User Registration](user-registration.md) - Register the first authenticator
-* [User Authentication](integration.md) - Authenticate with any registered authenticator
+* [User Authentication](user-authentication.md) - Authenticate with any registered authenticator
 * [Advanced Behaviors](../symfony-bundle/advanced-behaviors/README.md) - Advanced configuration options
