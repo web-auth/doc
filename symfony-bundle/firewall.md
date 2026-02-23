@@ -56,7 +56,7 @@ class LoginController extends AbstractController
 
 ## Template
 
-Below an example of a login form using the [Stimulus Controller](../symfony-ux/integration.md). Also, please note that:
+Below an example of a login form using the [Stimulus Controller](../symfony-ux/user-authentication.md). Also, please note that:
 
 * The username field is not required
 * The username field should have the attribute `autocomplete="username webauthn"`&#x20;

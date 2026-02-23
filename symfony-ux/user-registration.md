@@ -276,6 +276,6 @@ document.addEventListener('webauthn:registration:success', (event) => {
 
 ## See Also
 
-* [User Authentication](integration.md) - Authenticate users with registered authenticators
+* [User Authentication](user-authentication.md) - Authenticate users with registered authenticators
 * [Additional Authenticators](additional-authenticators.md) - Manage multiple authenticators
 * [Bundle Configuration](../symfony-bundle/configuration-references.md) - Complete configuration reference

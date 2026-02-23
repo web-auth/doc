@@ -1,6 +1,6 @@
 # Cross Origin Authentication
 
-Please [refer to this page](../../pure-php/advanced-behaviours/dealing-with-localhost.md) to know more about the Cross Origin Authentication.
+Please [refer to this page](../../pure-php/advanced-behaviours/cross-origin-authentication.md) to know more about the Cross Origin Authentication.
 
 ## Configuration
 

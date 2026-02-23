@@ -30,7 +30,7 @@ While the basic WebAuthn implementation covers most use cases, you may need to c
 
 * **[Authenticator Algorithms](authenticator-algorithms.md)** - Configure supported cryptographic algorithms
 * **[Extensions](extensions.md)** - Use WebAuthn extensions for additional features
-* **[Cross Origin Authentication](dealing-with-localhost.md)** - Handle localhost and development environments
+* **[Cross Origin Authentication](cross-origin-authentication.md)** - Handle localhost and development environments
 
 ## When to Use Advanced Features
 

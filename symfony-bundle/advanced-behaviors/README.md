@@ -30,7 +30,7 @@ The Symfony WebAuthn Bundle provides sensible defaults for most applications. Ho
 ### Technical Configuration
 
 * **[Extensions](extensions.md)** - Use WebAuthn protocol extensions
-* **[Cross Origin Authentication](dealing-with-localhost.md)** - Development environment configuration
+* **[Cross Origin Authentication](cross-origin-authentication.md)** - Development environment configuration
 
 ## Configuration vs Code
 
@@ -91,5 +91,5 @@ webauthn:
 * [Pure PHP Advanced Behaviours](../../pure-php/advanced-behaviours/README.md) - Framework-agnostic implementations
 
 {% hint style="info" %}
-Start with the basic bundle setup in [Bundle Installation](../the-symfony-way.md) before diving into advanced behaviors.
+Start with the basic bundle setup in [Bundle Installation](../bundle-installation.md) before diving into advanced behaviors.
 {% endhint %}

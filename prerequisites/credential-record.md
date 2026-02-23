@@ -106,7 +106,7 @@ final class InMemoryCredentialRecordRepository
 {% endcode %}
 
 {% hint style="info" %}
-For production use, implement your repository with your preferred storage backend (Doctrine ORM, PDO, MongoDB, Redis, etc.). See the [Symfony Bundle section](../symfony-bundle/entities-with-doctrine.md) for a complete Doctrine example.
+For production use, implement your repository with your preferred storage backend (Doctrine ORM, PDO, MongoDB, Redis, etc.). See the [Symfony Bundle section](../symfony-bundle/credential-record-repository.md) for a complete Doctrine example.
 {% endhint %}
 
 ### Important Notes

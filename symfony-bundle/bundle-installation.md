@@ -53,8 +53,8 @@ return function (RoutingConfigurator $routes) {
 
 The first steps are:
 
-* The creation of your [Credential Source repository](entities-with-doctrine.md)
-* The creation of your [User Entity repository](entities-with-doctrine-1.md).
+* The creation of your [Credential Record Repository](credential-record-repository.md)
+* The creation of your [User Entity Repository](user-entity-repository.md).
 
 You may also want to configure the other options offered by the bundle. Please refer to the [configuration references](configuration-references.md).
 

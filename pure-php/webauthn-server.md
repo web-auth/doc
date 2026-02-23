@@ -37,8 +37,8 @@ To set up a WebAuthn server, you need components from these categories:
 
 Storage for credentials and users:
 
-* **[Credential Source Repository](../prerequisites/credential-source-repository.md)**: Store and retrieve authenticator credentials
-* **[User Entity Repository](../prerequisites/user-entity-repository.md)**: Manage user accounts
+* **[Credential Record](../prerequisites/credential-record.md)**: Store and retrieve authenticator credentials
+* **[User Entity](../prerequisites/user-entity.md)**: Manage user accounts
 
 ### 4. Relying Party Configuration
 
@@ -187,5 +187,5 @@ Before going to production:
 ## See Also
 
 * [Prerequisites](../prerequisites/the-relying-party.md) - Understanding the basics
-* [Symfony Bundle](../symfony-bundle/the-symfony-way.md) - Framework integration
+* [Symfony Bundle](../symfony-bundle/bundle-installation.md) - Framework integration
 * [JavaScript Integration](../prerequisites/javascript.md) - Client-side implementation

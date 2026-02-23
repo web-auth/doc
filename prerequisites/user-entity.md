@@ -133,7 +133,7 @@ final class InMemoryUserEntityRepository
 {% endcode %}
 
 {% hint style="info" %}
-For production use, implement your repository with your preferred storage backend. See the [Symfony Bundle section](../symfony-bundle/entities-with-doctrine-1.md) for a complete Doctrine example.
+For production use, implement your repository with your preferred storage backend. See the [Symfony Bundle section](../symfony-bundle/user-entity-repository.md) for a complete Doctrine example.
 {% endhint %}
 
 ### Important Notes About User ID (userHandle)
