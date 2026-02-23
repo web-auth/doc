@@ -37,6 +37,36 @@ $rpEntity = PublicKeyCredentialRpEntity::create(
 );
 ```
 
+### PublicKeyCredentialSource
+
+{% hint style="warning" %}
+**Deprecated in v5.3.0**
+{% endhint %}
+
+The class `Webauthn\PublicKeyCredentialSource` has been renamed to `Webauthn\CredentialRecord` to better reflect its purpose. The old class now extends `CredentialRecord` for backward compatibility but will be removed in version 6.0.0.
+
+```php
+# Before (deprecated)
+use Webauthn\PublicKeyCredentialSource;
+
+$credential = new PublicKeyCredentialSource(/* ... */);
+
+# After
+use Webauthn\CredentialRecord;
+
+$credential = new CredentialRecord(/* ... */);
+```
+
+Similarly, the repository interface `PublicKeyCredentialSourceRepositoryInterface` is deprecated in favor of `CredentialRecordRepositoryInterface`.
+
+### createFormJson
+
+{% hint style="warning" %}
+**Deprecated in v5.3.0**
+{% endhint %}
+
+The `createFormJson` method is deprecated and will be removed in version 6.0.0. Use the standard Symfony Serializer to deserialize credential responses instead.
+
 ### Authenticator Transport CABLE
 
 {% hint style="warning" %}

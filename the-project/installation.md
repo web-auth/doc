@@ -17,3 +17,9 @@ If you use Symfony Framework, you may be interested in the bundle and, optionall
 ```sh
 composer require web-auth/webauthn-symfony-bundle web-auth/webauthn-stimulus
 ```
+
+## Requirements
+
+* **PHP**: 8.2 or higher
+* **Symfony** (for the bundle): 6.4, 7.x, or 8.0+
+* **Extensions**: json, openssl

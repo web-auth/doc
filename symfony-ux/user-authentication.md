@@ -67,3 +67,80 @@ When authenticators are available on the device and the browser is aware of them
     }
 ) }}
 ```
+
+## Dedicated Authentication Controller
+
+{% hint style="info" %}
+**New in v5.3.0:** The Stimulus package now provides dedicated controllers for authentication and registration, in addition to the combined controller.
+{% endhint %}
+
+The new `authentication-controller` provides a focused controller specifically for sign-in flows, with built-in support for conditional UI and better error handling.
+
+### Basic Usage
+
+{% code title="templates/security/login.html.twig" lineNumbers="true" %}
+```twig
+<form
+    action="{{ path('app_login') }}"
+    method="post"
+    {{ stimulus_controller('@web-auth/webauthn-stimulus/authentication', {
+        optionsUrl: path('webauthn.controller.request.request.login'),
+        resultUrl: path('app_login'),
+        submitViaForm: true
+    }) }}
+>
+    <input
+        type="text"
+        name="username"
+        autocomplete="username webauthn"
+        {{ stimulus_target('@web-auth/webauthn-stimulus/authentication', 'username') }}
+    >
+    <input
+        type="hidden"
+        name="assertion"
+        {{ stimulus_target('@web-auth/webauthn-stimulus/authentication', 'result') }}
+    >
+
+    <button
+        type="button"
+        {{ stimulus_action('@web-auth/webauthn-stimulus/authentication', 'authenticate') }}
+    >
+        Sign in
+    </button>
+</form>
+```
+{% endcode %}
+
+### Conditional UI (Autofill)
+
+The dedicated controller supports conditional UI natively:
+
+{% code lineNumbers="true" %}
+```twig
+{{ stimulus_controller('@web-auth/webauthn-stimulus/authentication', {
+    optionsUrl: path('webauthn.controller.request.request.login'),
+    resultUrl: path('app_login'),
+    submitViaForm: true,
+    conditionalUi: true
+}) }}
+```
+{% endcode %}
+
+### Authentication Controller Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `optionsUrl` | string | `/authentication/options` | URL to fetch assertion options |
+| `resultUrl` | string | `/authentication/verify` | URL to submit the assertion response |
+| `submitViaForm` | boolean | `false` | Submit via form instead of fetch |
+| `successRedirectUri` | string | - | URL to redirect after successful auth |
+| `conditionalUi` | boolean | `false` | Enable conditional UI (autofill) |
+| `verifyAutofillInput` | boolean | `true` | Verify autofill input fields exist |
+
+### Authentication Controller Targets
+
+| Target | Description |
+|--------|-------------|
+| `username` | Input field for the username |
+| `userVerification` | Input field for user verification preference |
+| `result` | Hidden input for the assertion response |

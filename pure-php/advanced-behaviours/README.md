@@ -20,6 +20,12 @@ While the basic WebAuthn implementation covers most use cases, you may need to c
 * **[Authenticator Selection Criteria](authenticator-selection-criteria.md)** - Control which authenticators can be used
 * **[Authentication without Username](authentication-without-username.md)** - Enable resident keys for passwordless login
 
+### Credential Management
+
+* **[Signal API](signal-api.md)** - Inform clients about credential status changes (new in 5.3.0)
+* **[Backup Events](backup-events.md)** - React to backup eligibility and status changes (new in 5.3.0)
+* **[Conditional Create](conditional-create.md)** - Auto-register credentials after password login (new in 5.3.0)
+
 ### Technical Configuration
 
 * **[Authenticator Algorithms](authenticator-algorithms.md)** - Configure supported cryptographic algorithms

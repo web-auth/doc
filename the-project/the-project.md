@@ -6,7 +6,7 @@ description: Overview of the framework
 
 Webauthn defines an API enabling the creation and use of strong, attested, scoped, public key-based credentials by web applications, for the purpose of strongly authenticating users.
 
-The complete specification can be found on [the W3C dedicated page](https://www.w3.org/TR/webauthn-2/).
+The complete specification can be found on [the W3C dedicated page](https://www.w3.org/TR/webauthn-3/).
 
 This framework contains PHP libraries and Symfony bundle to allow developers to integrate that authentication mechanism into their web applications.
 
@@ -37,6 +37,7 @@ As an example, the [section 5.2.2 “Web Authentication Assertion”](https://ww
   * TPM
   * Android Key
   * Apple
+  * Compound (new in 5.3.0)
 * Cose Algorithms
   * RS1, RS256, RS384, RS512
   * PS256, PS384, PS512
@@ -44,7 +45,15 @@ As an example, the [section 5.2.2 “Web Authentication Assertion”](https://ww
   * ED25519
 * Extensions
   * Supported (not fully tested)
-  * appid extension (compatibility with FIDO U2F authenticator
+  * appid extension (compatibility with FIDO U2F authenticator)
+* Signal API (new in 5.3.0)
+  * AllAcceptedCredentials
+  * CurrentUserDetails
+  * UnknownCredential
+* Passkey Endpoints (new in 5.3.0)
+  * .well-known/passkey-endpoints discovery
+* Conditional Create (new in 5.3.0)
+  * Auto-register credentials after password authentication
 
 ## Compatible Authenticators
 

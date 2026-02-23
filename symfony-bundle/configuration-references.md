@@ -6,7 +6,7 @@ With Flex, you have a minimal configuration file installed through a Flex Recipe
 
 You may also need to adjust other parameters.
 
-If you don’t use Flex, hereafter an example of configuration file:
+If you don't use Flex, hereafter an example of configuration file:
 
 {% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
@@ -28,10 +28,13 @@ webauthn:
 #                icon: null # Secured image (data:// scheme)
 #            challenge_length: 32
 #            timeout: 60000
+#            hide_existing_credentials: false # Hide existing credentials during registration (new in 5.3.0)
+#            conditional_create: false # Enable Conditional Create for auto-registration (new in 5.3.0)
 #            authenticator_selection_criteria:
 #                authenticator_attachment: !php/const Webauthn\AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE
 #                require_resident_key: false
 #                user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
+#            hints: [] # WebAuthn hints: security-key, client-device, hybrid (new in 5.3.0)
 #            extensions:
 #                loc: true
 #            public_key_credential_parameters: # You should not change this list
@@ -47,14 +50,35 @@ webauthn:
 #                - !php/const Cose\Algorithms::COSE_ALGORITHM_PS384
 #                - !php/const Cose\Algorithms::COSE_ALGORITHM_PS512
 #            attestation_conveyance: !php/const Webauthn\PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE
+#            client_override_policy: # Granular control over client overrides (new in 5.3.0)
+#                user_verification:
+#                    enabled: true
+#                    allowed_values: ['required', 'preferred', 'discouraged']
+#                authenticator_attachment:
+#                    enabled: true
+#                    allowed_values: ['platform', 'cross-platform']
+#                resident_key:
+#                    enabled: true
+#                    allowed_values: ['required', 'preferred', 'discouraged']
+#                attestation_conveyance:
+#                    enabled: true
+#                    allowed_values: ['none', 'indirect', 'direct', 'enterprise']
+#                extensions:
+#                    enabled: true
     request_profiles: # Authentication profiles
         default: # Unique name of the profile
             rp_id: '%env(Relying_PARTY_ID)%' # Please adapt the env file with the correct relying party ID or set null
 #            challenge_length: 32
 #            timeout: 60000
 #            user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
+#            hints: [] # WebAuthn hints: security-key, client-device, hybrid (new in 5.3.0)
 #            extensions:
 #                loc: true
+#    passkey_endpoints: # .well-known/passkey-endpoints discovery (new in 5.3.0)
+#        enabled: false
+#        enroll: 'https://example.com/passkeys/register'
+#        manage: 'https://example.com/passkeys/manage'
+#        prf_usage_details: 'https://example.com/passkeys/prf-info'
 #    metadata:
 #        enabled: false
 #        mds_repository: 'App\Repository\MetadataStatementRepository'
@@ -211,6 +235,72 @@ Available hint values:
 - `client-device`: Platform authenticator (like Touch ID, Windows Hello)
 - `hybrid`: Hybrid transport (like phone as authenticator)
 
+#### Hide Existing Credentials
+
+{% hint style="info" %}
+**New in v5.3.0:** Exposed in bundle configuration.
+{% endhint %}
+
+When set to `true`, the server will automatically add the user's existing credentials to the `excludeCredentials` list in the creation options. This prevents the user from re-registering the same authenticator.
+
+{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
+```yaml
+webauthn:
+    creation_profiles:
+        acme:
+            rp:
+                name: 'ACME Webauthn Server'
+            hide_existing_credentials: true
+```
+{% endcode %}
+
+#### Conditional Create
+
+{% hint style="info" %}
+**New in v5.3.0**
+{% endhint %}
+
+Enable Conditional Create (auto-register) for a profile. When `true`, user presence can be `false` during registration, allowing silent credential creation after the user has authenticated via another method (e.g., password).
+
+{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
+```yaml
+webauthn:
+    creation_profiles:
+        passkey_upgrade:
+            rp:
+                id: 'example.com'
+            conditional_create: true
+            authenticator_selection_criteria:
+                require_resident_key: true
+```
+{% endcode %}
+
+See [Conditional Create](../pure-php/advanced-behaviours/conditional-create.md) for detailed usage.
+
+#### Client Override Policy
+
+{% hint style="info" %}
+**New in v5.3.0**
+{% endhint %}
+
+Control which WebAuthn options can be overridden by client request parameters. See [Client Override Policy](advanced-behaviors/client-override-policy.md) for detailed configuration.
+
+{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
+```yaml
+webauthn:
+    creation_profiles:
+        acme:
+            rp:
+                id: 'example.com'
+            client_override_policy:
+                user_verification:
+                    enabled: true
+                    allowed_values: ['required', 'preferred']
+                authenticator_attachment:
+                    enabled: false  # Prevent client override
+```
+{% endcode %}
+
 #### Extensions
 
 You can set as many extensions as you want in the profile. Please also [refer to this page](../webauthn-in-a-nutshell/extensions.md) for more information.
@@ -235,10 +325,10 @@ webauthn:
 ### Request Profiles
 
 {% hint style="success" %}
-If you don't create the `creation_profiles` section, a `default` profile is set.
+If you don't create the `request_profiles` section, a `default` profile is set.
 {% endhint %}
 
-The parameters for the request profiles (i.e. the authentication) are very similar to the creation profiles. The only difference is that you don’t need all the detail of the Relying Party, but only its ID (i.e. its domain).
+The parameters for the request profiles (i.e. the authentication) are very similar to the creation profiles. The only difference is that you don't need all the detail of the Relying Party, but only its ID (i.e. its domain).
 
 {% code title="app/config/webauthn.yaml" lineNumbers="true" %}
 ```yaml
@@ -256,5 +346,23 @@ Please note that all parameters are optional. The following configuration is per
 webauthn:
     request_profiles:
         acme: ~
+```
+{% endcode %}
+
+### Passkey Endpoints
+
+{% hint style="info" %}
+**New in v5.3.0**
+{% endhint %}
+
+Enable the `.well-known/passkey-endpoints` discovery endpoint. See [Passkey Endpoints](advanced-behaviors/passkey-endpoints.md) for detailed configuration.
+
+{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
+```yaml
+webauthn:
+    passkey_endpoints:
+        enabled: true
+        enroll: 'https://example.com/passkeys/register'
+        manage: 'https://example.com/passkeys/manage'
 ```
 {% endcode %}

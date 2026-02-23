@@ -2,11 +2,11 @@
 description: Authenticator details and how to manage them
 ---
 
-# Credential Source
+# Credential Record
 
-## Credential Source Class
+## Credential Record Class
 
-After the registration of an authenticator, you will get a `Webauthn\PublicKeyCredentialSource` object. This object contains all the credential data needed to perform user authentication:
+After the registration of an authenticator, you will get a `Webauthn\CredentialRecord` object. This object contains all the credential data needed to perform user authentication:
 
 * **publicKeyCredentialId**: The unique identifier of the credential (binary string)
 * **type**: The credential type (always `"public-key"`)
@@ -22,33 +22,37 @@ After the registration of an authenticator, you will get a `Webauthn\PublicKeyCr
 * **uvInitialized**: Whether user verification was initialized (since 5.1)
 * **otherUI**: Optional additional UI hints (array)
 
+{% hint style="warning" %}
+**Renamed in v5.3.0:** The class `Webauthn\PublicKeyCredentialSource` has been renamed to `Webauthn\CredentialRecord`. The old class name is deprecated and will be removed in version 6.0. `PublicKeyCredentialSource` now extends `CredentialRecord` for backward compatibility.
+{% endhint %}
+
 {% code lineNumbers="true" %}
 ```php
 <?php
 
 declare(strict_types=1);
 
-use Webauthn\PublicKeyCredentialSource;
+use Webauthn\CredentialRecord;
 
-// After successful registration, you receive a PublicKeyCredentialSource object
-$credentialSource = $authenticatorAttestationResponseValidator->check(
+// After successful registration, you receive a CredentialRecord object
+$credentialRecord = $authenticatorAttestationResponseValidator->check(
     $authenticatorAttestationResponse,
     $publicKeyCredentialCreationOptions,
     'https://example.com'
 );
 
 // Access credential properties
-$credentialId = $credentialSource->publicKeyCredentialId;
-$userId = $credentialSource->userHandle;
-$counter = $credentialSource->counter;
-$transports = $credentialSource->transports; // ['usb', 'nfc']
+$credentialId = $credentialRecord->publicKeyCredentialId;
+$userId = $credentialRecord->userHandle;
+$counter = $credentialRecord->counter;
+$transports = $credentialRecord->transports; // ['usb', 'nfc']
 
 // Get the descriptor for authentication
-$descriptor = $credentialSource->getPublicKeyCredentialDescriptor();
+$descriptor = $credentialRecord->getPublicKeyCredentialDescriptor();
 ```
 {% endcode %}
 
-## Credential Source Repository
+## Credential Record Repository
 
 Since 4.6.0 and except if you use the Symfony bundle, there is no interface to implement or abstract class to extend, making it easy to integrate into your application.
 
@@ -58,7 +62,7 @@ Your repository needs to provide two main operations:
 2. **Find credentials** by credential ID or user handle
 
 {% hint style="success" %}
-Whatever database you use (MySQL, PostgreSQL, MongoDB…), it is not necessary to create foreign key relationships between your users and the Credential Sources. The `userHandle` property is sufficient to link credentials to users.
+Whatever database you use (MySQL, PostgreSQL, MongoDB…), it is not necessary to create foreign key relationships between your users and the Credential Records. The `userHandle` property is sufficient to link credentials to users.
 {% endhint %}
 
 ### Repository Example
@@ -73,18 +77,18 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Webauthn\PublicKeyCredentialSource;
+use Webauthn\CredentialRecord;
 
-final class InMemoryCredentialSourceRepository
+final class InMemoryCredentialRecordRepository
 {
     private array $credentials = [];
 
-    public function saveCredentialSource(PublicKeyCredentialSource $publicKeyCredentialSource): void
+    public function saveCredentialRecord(CredentialRecord $credentialRecord): void
     {
-        $this->credentials[$publicKeyCredentialSource->publicKeyCredentialId] = $publicKeyCredentialSource;
+        $this->credentials[$credentialRecord->publicKeyCredentialId] = $credentialRecord;
     }
 
-    public function findOneByCredentialId(string $publicKeyCredentialId): ?PublicKeyCredentialSource
+    public function findOneByCredentialId(string $publicKeyCredentialId): ?CredentialRecord
     {
         return $this->credentials[$publicKeyCredentialId] ?? null;
     }
@@ -93,7 +97,7 @@ final class InMemoryCredentialSourceRepository
     {
         return array_filter(
             $this->credentials,
-            static fn(PublicKeyCredentialSource $credential): bool =>
+            static fn(CredentialRecord $credential): bool =>
                 $credential->userHandle === $userHandle
         );
     }

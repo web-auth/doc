@@ -33,18 +33,18 @@ The user trying to authenticate must have registered at least one device. For th
 
 {% code lineNumbers="true" %}
 ```php
-use Webauthn\PublicKeyCredentialSource;
+use Webauthn\CredentialRecord;
 use Webauthn\PublicKeyCredentialDescriptor;
 
 // We gather all registered authenticators for this user
-// $publicKeyCredentialSourceRepository corresponds to your own service
-// The purpose of the fictive method findAllForUserEntity is to return all credential source objects
+// $credentialRecordRepository corresponds to your own service
+// The purpose of the fictive method findAllForUserEntity is to return all credential records
 // registered by the user.
-$registeredAuthenticators = $publicKeyCredentialSourceRepository->findAllForUserEntity($userEntity);
+$registeredAuthenticators = $credentialRecordRepository->findAllForUserEntity($userEntity);
 
-// We don’t need the Credential Sources, just the associated Descriptors
+// We don’t need the Credential Records, just the associated Descriptors
 $allowedCredentials = array_map(
-    static function (PublicKeyCredentialSource $credential): PublicKeyCredentialDescriptor {
+    static function (CredentialRecord $credential): PublicKeyCredentialDescriptor {
         return $credential->getPublicKeyCredentialDescriptor();
     },
     $registeredAuthenticators
@@ -68,14 +68,14 @@ To prevent username enumeration, when the authentication process is performed us
 
 declare(strict_types=1);
 
+use Webauthn\CredentialRecord;
 use Webauthn\PublicKeyCredentialDescriptor;
 use Webauthn\PublicKeyCredentialRequestOptions;
-use Webauthn\PublicKeyCredentialSource;
 
 // List of registered PublicKeyCredentialDescriptor classes associated to the user
-$registeredAuthenticators = $publicKeyCredentialSourceRepository->findAllForUserEntity($userEntity);
+$registeredAuthenticators = $credentialRecordRepository->findAllForUserEntity($userEntity);
 $allowedCredentials = array_map(
-    static function (PublicKeyCredentialSource $credential): PublicKeyCredentialDescriptor {
+    static function (CredentialRecord $credential): PublicKeyCredentialDescriptor {
         return $credential->getPublicKeyCredentialDescriptor();
     },
     $registeredAuthenticators
@@ -225,25 +225,25 @@ The Authenticator Assertion Response Validator service (variable `$authenticator
 
 declare(strict_types=1);
 
-$publicKeyCredentialSource = $publicKeyCredentialSourceRepository->findOneByCredentialId(
+$credentialRecord = $credentialRecordRepository->findOneByCredentialId(
     $publicKeyCredential->rawId
 );
-if ($publicKeyCredentialSource === null) {
+if ($credentialRecord === null) {
    // Throw an exception if the credential is not found.
    // It can also be rejected depending on your security policy (e.g. disabled by the user because of loss)
 }
 
-$publicKeyCredentialSource = $authenticatorAssertionResponseValidator->check(
-    $publicKeyCredentialSource,
+$credentialRecord = $authenticatorAssertionResponseValidator->check(
+    $credentialRecord,
     $authenticatorAssertionResponse,
     $publicKeyCredentialRequestOptions,
     'my-application.com',
     $userEntity?->id // Should be `null` if the user entity is not known before this step
 );
 
-// Optional, but highly recommended, you can save the credential source as it may be modified
+// Optional, but highly recommended, you can save the credential record as it may be modified
 // during the verification process (counter may be higher).
-$publicKeyCredentialSourceRepository->saveCredentialSource($publicKeyCredentialSource);
+$credentialRecordRepository->saveCredentialRecord($credentialRecord);
 
 ```
 {% endcode %}

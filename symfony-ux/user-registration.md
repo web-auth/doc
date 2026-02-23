@@ -193,6 +193,70 @@ Automatically start the registration process when the page loads:
 Use `autoRegister` carefully as it immediately prompts the user for biometric authentication or security key interaction.
 {% endhint %}
 
+## Dedicated Registration Controller
+
+{% hint style="info" %}
+**New in v5.3.0:** A dedicated registration controller is available alongside the combined controller.
+{% endhint %}
+
+The dedicated `registration-controller` provides a focused controller for credential registration with enhanced features like conditional create support.
+
+### Basic Usage
+
+{% code title="templates/registration/register.html.twig" lineNumbers="true" %}
+```twig
+<form
+    action="{{ path('app_register') }}"
+    method="post"
+    {{ stimulus_controller('@web-auth/webauthn-stimulus/registration', {
+        optionsUrl: path('webauthn.controller.creation.creation.new_user'),
+        resultUrl: path('app_register'),
+        submitViaForm: true
+    }) }}
+>
+    <input
+        type="text"
+        name="username"
+        required
+        {{ stimulus_target('@web-auth/webauthn-stimulus/registration', 'username') }}
+    >
+    <input
+        type="hidden"
+        name="attestation"
+        {{ stimulus_target('@web-auth/webauthn-stimulus/registration', 'result') }}
+    >
+
+    <button
+        type="button"
+        {{ stimulus_action('@web-auth/webauthn-stimulus/registration', 'register') }}
+    >
+        Register with Passkey
+    </button>
+</form>
+```
+{% endcode %}
+
+### Registration Controller Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `optionsUrl` | string | `/registration/options` | URL to fetch creation options |
+| `resultUrl` | string | `/registration/verify` | URL to submit the attestation response |
+| `submitViaForm` | boolean | `false` | Submit via form instead of fetch |
+| `successRedirectUri` | string | - | URL to redirect after successful registration |
+| `autoRegister` | boolean | `false` | Auto-start registration on page load |
+
+### Registration Controller Targets
+
+| Target | Description |
+|--------|-------------|
+| `username` | Input field for the username |
+| `attestation` | Select field for attestation preference |
+| `residentKey` | Select field for resident key preference |
+| `userVerification` | Select field for user verification preference |
+| `authenticatorAttachment` | Select field for authenticator attachment preference |
+| `result` | Hidden input for the attestation response |
+
 ## Error Handling
 
 Handle registration errors in your custom event listeners:

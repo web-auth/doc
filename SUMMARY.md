@@ -20,8 +20,8 @@
 ## Prerequisites
 
 * [The Relying Party](prerequisites/the-relying-party.md)
-* [Credential Source](prerequisites/credential-source-repository.md)
-* [User Entity](prerequisites/user-entity-repository.md)
+* [Credential Record](prerequisites/credential-record.md)
+* [User Entity](prerequisites/user-entity.md)
 * [Javascript](prerequisites/javascript.md)
 
 ## Pure PHP
@@ -40,13 +40,16 @@
   * [Attestation and Metadata Statement](pure-php/advanced-behaviours/attestation-and-metadata-statement.md)
   * [Extensions](pure-php/advanced-behaviours/extensions.md)
   * [Authenticator Counter](pure-php/advanced-behaviours/authenticator-counter.md)
-  * [Cross Origin Authentication](pure-php/advanced-behaviours/dealing-with-localhost.md)
+  * [Cross Origin Authentication](pure-php/advanced-behaviours/cross-origin-authentication.md)
+  * [Signal API](pure-php/advanced-behaviours/signal-api.md)
+  * [Backup Events](pure-php/advanced-behaviours/backup-events.md)
+  * [Conditional Create](pure-php/advanced-behaviours/conditional-create.md)
 
 ## Symfony Bundle
 
-* [Bundle Installation](symfony-bundle/the-symfony-way.md)
-* [Credential Source Repository](symfony-bundle/entities-with-doctrine.md)
-* [User Entity Repository](symfony-bundle/entities-with-doctrine-1.md)
+* [Bundle Installation](symfony-bundle/bundle-installation.md)
+* [Credential Record Repository](symfony-bundle/credential-record-repository.md)
+* [User Entity Repository](symfony-bundle/user-entity-repository.md)
 * [Firewall](symfony-bundle/firewall.md)
 * [Configuration References](symfony-bundle/configuration-references.md)
 * [Advanced Behaviors](symfony-bundle/advanced-behaviors/README.md)
@@ -59,7 +62,9 @@
   * [Authentication without username](symfony-bundle/advanced-behaviors/authentication-without-username.md)
   * [Extensions](symfony-bundle/advanced-behaviors/extensions.md)
   * [Authenticator Counter](symfony-bundle/advanced-behaviors/authenticator-counter.md)
-  * [Cross Origin Authentication](symfony-bundle/advanced-behaviors/dealing-with-localhost.md)
+  * [Cross Origin Authentication](symfony-bundle/advanced-behaviors/cross-origin-authentication.md)
+  * [Client Override Policy](symfony-bundle/advanced-behaviors/client-override-policy.md)
+  * [Passkey Endpoints](symfony-bundle/advanced-behaviors/passkey-endpoints.md)
 
 ## Migration
 
@@ -68,6 +73,6 @@
 ## Symfony UX
 
 * [Installation](symfony-ux/installation.md)
-* [User Authentication](symfony-ux/integration.md)
+* [User Authentication](symfony-ux/user-authentication.md)
 * [User Registration](symfony-ux/user-registration.md)
 * [Additional Authenticators](symfony-ux/additional-authenticators.md)

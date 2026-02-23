@@ -2,11 +2,15 @@
 description: Where the public keys and details are stored
 ---
 
-# Credential Source Repository
+# Credential Record Repository
 
-The Credential Source can be stored the way you want. As the `Webauthn\PublicKeyCredentialSource` class can be converted into JSON, it could be stored in a filesystem.
+The Credential Record can be stored the way you want. As the `Webauthn\CredentialRecord` class can be converted into JSON, it could be stored in a filesystem.
 
-It is up to you to create a credential source repository. This service shall implement `Webauthn\Bundle\Repository\PublicKeyCredentialSourceRepositoryInterface`.
+It is up to you to create a credential record repository. This service shall implement `Webauthn\Bundle\Repository\CredentialRecordRepositoryInterface`.
+
+{% hint style="warning" %}
+**Renamed in v5.3.0:** `PublicKeyCredentialSource` has been renamed to `CredentialRecord` and `PublicKeyCredentialSourceRepositoryInterface` to `CredentialRecordRepositoryInterface`. The old names are deprecated and will be removed in 6.0.
+{% endhint %}
 
 {% hint style="warning" %}
 Doctrine users: the field type for `transports` and `other_ui` changed from `array` to `json` (`array` is now deprecated) between the bundle v4.x and 5.0.
@@ -44,7 +48,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\PublicKeyCredentialSourceRepository;
+use App\Repository\WebauthnCredentialRepository;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -52,12 +56,12 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 use Symfony\Component\Uid\AbstractUid;
 use Symfony\Component\Uid\Ulid;
-use Webauthn\PublicKeyCredentialSource;
+use Webauthn\CredentialRecord;
 use Webauthn\TrustPath\TrustPath;
 
 #[Table(name: "webauthn_credentials")]
 #[Entity(repositoryClass: WebauthnCredentialRepository::class)]
-class WebauthnCredential extends PublicKeyCredentialSource
+class WebauthnCredential extends CredentialRecord
 {
     #[Id]
     #[Column(unique: true)]
@@ -105,7 +109,7 @@ In this following example, we extend that class and add a method to get all cred
 {% endhint %}
 
 {% hint style="warning" %}
-We must override the method `saveCredentialSource` because we may receive `Webauthn\PublicKeyCredentialSource` objects instead of `App\Entity\WebauthnCredential`.
+We must override the method `saveCredentialRecord` because we may receive `Webauthn\CredentialRecord` objects instead of `App\Entity\WebauthnCredential`.
 {% endhint %}
 
 <pre class="language-php" data-title="App/Repository/WebauthnCredentialRepository.php" data-line-numbers><code class="lang-php">&#x3C;?php
@@ -117,7 +121,7 @@ namespace App\Repository;
 <strong>use App\Entity\WebauthnCredential;
 </strong>use Doctrine\Persistence\ManagerRegistry;
 use Webauthn\Bundle\Repository\DoctrineCredentialSourceRepository;
-use Webauthn\PublicKeyCredentialSource;
+use Webauthn\CredentialRecord;
 
 final class WebauthnCredentialRepository extends DoctrineCredentialSourceRepository
 {
@@ -126,22 +130,22 @@ final class WebauthnCredentialRepository extends DoctrineCredentialSourceReposit
         parent::__construct($registry, WebauthnCredential::class);
     }
 
-    public function saveCredentialSource(PublicKeyCredentialSource $publicKeyCredentialSource): void
+    public function saveCredentialRecord(CredentialRecord $credentialRecord): void
     {
-        if (!$publicKeyCredentialSource instanceof WebauthnCredential) {
-            $publicKeyCredentialSource = new WebauthnCredential(
-                $publicKeyCredentialSource->publicKeyCredentialId,
-                $publicKeyCredentialSource->type,
-                $publicKeyCredentialSource->transports,
-                $publicKeyCredentialSource->attestationType,
-                $publicKeyCredentialSource->trustPath,
-                $publicKeyCredentialSource->aaguid,
-                $publicKeyCredentialSource->credentialPublicKey,
-                $publicKeyCredentialSource->userHandle,
-                $publicKeyCredentialSource->counter
+        if (!$credentialRecord instanceof WebauthnCredential) {
+            $credentialRecord = new WebauthnCredential(
+                $credentialRecord->publicKeyCredentialId,
+                $credentialRecord->type,
+                $credentialRecord->transports,
+                $credentialRecord->attestationType,
+                $credentialRecord->trustPath,
+                $credentialRecord->aaguid,
+                $credentialRecord->credentialPublicKey,
+                $credentialRecord->userHandle,
+                $credentialRecord->counter
             );
         }
-        parent::saveCredentialSource($publicKeyCredentialSource);
+        parent::saveCredentialSource($credentialRecord);
     }
 }
 

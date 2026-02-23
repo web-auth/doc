@@ -44,7 +44,7 @@ Check that the Stimulus controller is properly registered in your `assets/contro
 
 ## What's Included
 
-The package provides a Stimulus controller that handles:
+The package provides Stimulus controllers that handle:
 
 * **Registration flows** - Calls `navigator.credentials.create()` for you
 * **Authentication flows** - Calls `navigator.credentials.get()` for you
@@ -52,9 +52,16 @@ The package provides a Stimulus controller that handles:
 * **Error handling** - Gracefully handles common WebAuthn errors
 * **Browser autofill** - Supports conditional UI for passkey selection
 * **Conditional create** (v5.3.0+) - Enhanced conditional UI support for both registration and authentication
+* **PRF extension** - Built-in support for the Pseudo-Random Function extension
 
 {% hint style="info" %}
-**Enhanced in v5.3.0:** The Stimulus controllers have been completely rewritten with improved error handling, better disconnection support, and enhanced conditional UI support for modern passkey workflows.
+**Enhanced in v5.3.0:** The Stimulus package now provides three controllers:
+
+* **`@web-auth/webauthn-stimulus`** - Combined controller (legacy, still supported)
+* **`@web-auth/webauthn-stimulus/authentication`** - Dedicated authentication controller
+* **`@web-auth/webauthn-stimulus/registration`** - Dedicated registration controller
+
+The dedicated controllers offer better separation of concerns, enhanced conditional UI support, and improved error handling. The combined controller remains available for backward compatibility.
 {% endhint %}
 
 ## Basic Usage

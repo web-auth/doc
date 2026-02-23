@@ -22,6 +22,11 @@ The Symfony WebAuthn Bundle provides sensible defaults for most applications. Ho
 * **[Authentication without Username](authentication-without-username.md)** - Passwordless authentication with resident keys
 * **[Register Additional Authenticators](register-authenticators.md)** - Allow users to add backup authenticators
 
+### Policy & Discovery
+
+* **[Client Override Policy](client-override-policy.md)** - Control which options clients can override (new in 5.3.0)
+* **[Passkey Endpoints](passkey-endpoints.md)** - Expose .well-known/passkey-endpoints discovery (new in 5.3.0)
+
 ### Technical Configuration
 
 * **[Extensions](extensions.md)** - Use WebAuthn protocol extensions

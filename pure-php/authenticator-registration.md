@@ -254,7 +254,7 @@ The Authenticator Attestation Response Validator service (variable `$authenticat
 
 declare(strict_types=1);
 
-$publicKeyCredentialSource = $authenticatorAttestationResponseValidator->check(
+$credentialRecord = $authenticatorAttestationResponseValidator->check(
     $authenticatorAttestationResponse,
     $publicKeyCredentialCreationOptions,
     'my-application.com'
@@ -262,7 +262,7 @@ $publicKeyCredentialSource = $authenticatorAttestationResponseValidator->check(
 ```
 {% endcode %}
 
-If no exception is thrown, the response is valid. You can store the Public Key Credential Source (`$publicKeyCredentialSource`).
+If no exception is thrown, the response is valid. You can store the Credential Record (`$credentialRecord`).
 
 {% hint style="info" %}
 The way you store and associate these objects to the user is out of scope of this library.&#x20;
