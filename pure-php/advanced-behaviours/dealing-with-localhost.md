@@ -108,6 +108,84 @@ $csmFactory->setAllowedOrigins([
 
 Be aware that this should only be enabled in non-production environments.
 
+## Top Origin Validation (Cross-Origin iframes)
+
+When your WebAuthn authentication is embedded in a cross-origin iframe (e.g., `auth.example.com` is loaded inside an iframe on `app.example.com`), the browser includes a `topOrigin` field in the client data. By default, the library **does not validate** this field.
+
+If you need to restrict which top-level origins are allowed to embed your authentication page, you must explicitly enable top origin validation by providing a `TopOriginValidator` implementation.
+
+### Using the Built-in Host Validator
+
+The `HostTopOriginValidator` performs a strict comparison between the top origin and a given host:
+
+{% code lineNumbers="true" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
+use Webauthn\CeremonyStep\HostTopOriginValidator;
+
+$csmFactory = new CeremonyStepManagerFactory();
+$csmFactory->enableTopOriginValidator(
+    new HostTopOriginValidator('app.example.com')
+);
+```
+{% endcode %}
+
+### Using a Custom Validator
+
+For more advanced scenarios (e.g., allowing multiple top origins), implement the `TopOriginValidator` interface:
+
+{% code lineNumbers="true" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+use Webauthn\CeremonyStep\TopOriginValidator;
+use Webauthn\Exception\AuthenticatorResponseVerificationException;
+
+final readonly class AllowedTopOriginsValidator implements TopOriginValidator
+{
+    /**
+     * @param string[] $allowedTopOrigins
+     */
+    public function __construct(
+        private array $allowedTopOrigins
+    ) {
+    }
+
+    public function validate(string $topOrigin): void
+    {
+        if (!in_array($topOrigin, $this->allowedTopOrigins, true)) {
+            throw AuthenticatorResponseVerificationException::create(
+                'The top origin is not allowed.'
+            );
+        }
+    }
+}
+```
+{% endcode %}
+
+Then register it:
+
+{% code lineNumbers="true" %}
+```php
+$csmFactory->enableTopOriginValidator(
+    new AllowedTopOriginsValidator([
+        'https://app.example.com',
+        'https://dashboard.example.com',
+    ])
+);
+```
+{% endcode %}
+
+{% hint style="warning" %}
+If you do not call `enableTopOriginValidator()`, the top origin is **not validated**. Enable it if your authentication page can be embedded in cross-origin iframes and you want to control which parent origins are permitted.
+{% endhint %}
+
 ## Security Considerations
 
 When modifying allowed origins, ensure that:
