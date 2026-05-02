@@ -16,6 +16,8 @@ Each policy field has:
 
 ## Configuration
 
+The example below shows every field with an explicit value. You only need to declare the fields you want to change — the rest fall back to the [defaults](#configurable-fields) listed in the next section.
+
 {% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
 webauthn:
@@ -26,7 +28,7 @@ webauthn:
             client_override_policy:
                 user_verification:
                     enabled: true
-                    allowed_values: ['required', 'preferred', 'discouraged']
+                    allowed_values: ['required', 'preferred']
                 authenticator_attachment:
                     enabled: true
                     allowed_values: ['platform', 'cross-platform']
@@ -46,14 +48,18 @@ webauthn:
 
 ## Configurable Fields
 
-| Field | Default | Allowed Values | Description |
-|-------|---------|----------------|-------------|
-| `user_verification` | enabled | `required`, `preferred`, `discouraged` | Whether the client can request a specific user verification level |
+| Field | Default | Default Allowed Values | Description |
+|-------|---------|------------------------|-------------|
+| `user_verification` | **disabled** | `required`, `preferred` | Whether the client can request a specific user verification level. Disabled by default to prevent downgrade attacks; `discouraged` is excluded from the defaults even when you enable the override. |
 | `authenticator_attachment` | enabled | `platform`, `cross-platform` | Whether the client can request a specific authenticator type |
 | `resident_key` | enabled | `required`, `preferred`, `discouraged` | Whether the client can request resident key behavior |
 | `attestation_conveyance` | enabled | `none`, `indirect`, `direct`, `enterprise` | Whether the client can request attestation preference |
 | `extensions` | enabled | N/A | Whether the client can provide additional extensions |
 | `mediation` | **disabled** | `default`, `conditional` | Whether the client can request the [Conditional Create](../../pure-php/advanced-behaviours/conditional-create.md) flow (auto-register) — opt-in. |
+
+{% hint style="warning" %}
+**Why `user_verification` is disabled by default.** Allowing a client to override the user verification requirement makes it possible to request `discouraged` against a profile that mandates `required`, which silently weakens the security guarantee. If you enable this override, keep `discouraged` out of `allowed_values` and **always re-check the `UV` flag at the application layer** — see [User Verification](../../webauthn-in-a-nutshell/user-verification.md#checking-the-uv-flag).
+{% endhint %}
 
 ## Examples
 
