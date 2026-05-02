@@ -133,6 +133,41 @@ Please read detail [on this page](advanced-behaviours/authenticator-selection-cr
 
 Please read detail [on this page](advanced-behaviours/attestation-and-metadata-statement.md).
 
+### Hints
+
+{% hint style="info" %}
+**New in v5.3.0**
+{% endhint %}
+
+WebAuthn Level 3 lets the relying party suggest one or several authentication methods through the `hints` parameter. The user agent uses the list (in order) to tailor the prompt — for example, showing the QR code for hybrid transport first.
+
+The valid values are exposed as constants on `Webauthn\PublicKeyCredentialOptions`:
+
+* `HINT_SECURITY_KEY` (`security-key`) — external security key (e.g. YubiKey)
+* `HINT_CLIENT_DEVICE` (`client-device`) — platform authenticator (Touch ID, Windows Hello…)
+* `HINT_HYBRID` (`hybrid`) — phone as authenticator over the hybrid transport
+
+{% code lineNumbers="true" %}
+```php
+use Webauthn\PublicKeyCredentialCreationOptions;
+use Webauthn\PublicKeyCredentialOptions;
+
+$publicKeyCredentialCreationOptions =
+    PublicKeyCredentialCreationOptions::create(
+        $rpEntity,
+        $userEntity,
+        $challenge,
+        hints: [
+            PublicKeyCredentialOptions::HINT_CLIENT_DEVICE,
+            PublicKeyCredentialOptions::HINT_HYBRID,
+        ],
+    )
+;
+```
+{% endcode %}
+
+The same `hints` parameter is available on `PublicKeyCredentialRequestOptions` for authentication ceremonies.
+
 ### Exclude Credentials
 
 When the user already registered authenticators, you can pass a list of `Webauthn\PublicKeyCredentialDescriptor` objects as argument to avoid registering multiple times the same authenticator.

@@ -37,6 +37,18 @@ We highly recommend using [@simplewebauthn/browser](https://simplewebauthn.dev/d
 
 If you're using Symfony, the [Stimulus Controller](../symfony-ux/installation.md) provides seamless integration with forms and authentication workflows without writing JavaScript code.
 
+{% hint style="warning" %}
+**Recommended since v5.3.0:** install the Stimulus controllers from npm — `@web-auth/webauthn-stimulus` — and let your asset pipeline (Symfony AssetMapper, Webpack Encore, Vite, esbuild…) pick them up. The dedicated PHP package `web-auth/webauthn-stimulus` is deprecated and will be removed in 6.0.0.
+
+```bash
+# AssetMapper
+php bin/console importmap:require @web-auth/webauthn-stimulus
+
+# Or any other bundler
+npm install @web-auth/webauthn-stimulus
+```
+{% endhint %}
+
 ## Registration (Attestation) Flow
 
 ### Using Native Browser API

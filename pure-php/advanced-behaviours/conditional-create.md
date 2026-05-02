@@ -18,7 +18,36 @@ This is particularly useful for:
 
 ## Pure PHP Usage
 
-The `CeremonyStepManagerFactory` provides a dedicated method for creating a ceremony manager that allows user presence to be false:
+There are two equivalent ways to relax the User Presence (UP) check during validation: a per-request hint on the options, or a dedicated ceremony manager. The first option is the recommended one since v5.3.0 because the hint travels with the options across the storage round-trip and applies automatically.
+
+### Option 1 — Set `mediation` on the options (recommended)
+
+`PublicKeyCredentialCreationOptions` exposes two constants — `MEDIATION_DEFAULT` and `MEDIATION_CONDITIONAL` — and a nullable `$mediation` property. When the property is set to `MEDIATION_CONDITIONAL`, `CheckUserWasPresent` skips the UP check at runtime regardless of which ceremony manager you use.
+
+{% code lineNumbers="true" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+use Webauthn\PublicKeyCredentialCreationOptions;
+
+$options = PublicKeyCredentialCreationOptions::create(
+    $rpEntity,
+    $userEntity,
+    $challenge,
+    mediation: PublicKeyCredentialCreationOptions::MEDIATION_CONDITIONAL,
+);
+```
+{% endcode %}
+
+{% hint style="info" %}
+The `mediation` property is intentionally **not** serialized to the JSON sent to the browser — the browser receives `mediation: 'conditional'` via the JS API. The property is only used server-side and survives PHP `serialize`/`unserialize` so it can be stored in the session between the options request and the response validation.
+{% endhint %}
+
+### Option 2 — Use a dedicated ceremony manager
+
+The `CeremonyStepManagerFactory` still provides a dedicated method that returns a manager configured with `userPresenceRequired = false`:
 
 {% code lineNumbers="true" %}
 ```php
@@ -63,7 +92,7 @@ $credentialRecord = $validator->check(
 
 ## Symfony Bundle Configuration
 
-Enable conditional create per creation profile:
+Enable conditional create per creation profile. The bundle's `CeremonyStepManagerFactory` translates the `conditional_create: true` flag into `mediation = 'conditional'` on the produced options, so existing 5.3.x configurations behave identically:
 
 {% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
 ```yaml
@@ -76,6 +105,22 @@ webauthn:
             authenticator_selection_criteria:
                 require_resident_key: true
                 user_verification: preferred
+```
+{% endcode %}
+
+If you would rather decide per request — for example, only enable conditional create when the JavaScript client explicitly asks for it — opt in via the [Client Override Policy](../../symfony-bundle/advanced-behaviors/client-override-policy.md):
+
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
+```yaml
+webauthn:
+    creation_profiles:
+        passkey_upgrade:
+            rp:
+                id: 'example.com'
+            client_override_policy:
+                mediation:
+                    enabled: true
+                    allowed_values: ['default', 'conditional']
 ```
 {% endcode %}
 

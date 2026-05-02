@@ -65,6 +65,9 @@ webauthn:
 #                    allowed_values: ['none', 'indirect', 'direct', 'enterprise']
 #                extensions:
 #                    enabled: true
+#                mediation: # Opt-in: let the client request a Conditional Create flow
+#                    enabled: false
+#                    allowed_values: ['default', 'conditional']
     request_profiles: # Authentication profiles
         default: # Unique name of the profile
             rp_id: '%env(RELYING_PARTY_ID)%' # Please adapt the env file with the correct relying party ID or set null

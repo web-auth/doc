@@ -94,13 +94,36 @@ See the [Credential Record Repository](../symfony-bundle/credential-record-repos
 
 The `createFormJson` method is deprecated and will be removed in version 6.0.0. Use the standard Symfony Serializer to deserialize credential responses instead.
 
+### Composer package `web-auth/webauthn-stimulus`
+
+{% hint style="warning" %}
+**Deprecated in v5.3.0 — removed in v6.0.0**
+{% endhint %}
+
+The dedicated PHP package `web-auth/webauthn-stimulus` (the Symfony Flex/AssetMapper wrapper around the Stimulus controllers) is deprecated. The same JavaScript is now published to npm as [`@web-auth/webauthn-stimulus`](https://www.npmjs.com/package/@web-auth/webauthn-stimulus) and that is the only package that will keep being maintained in 6.0.0.
+
+Migrate your application before upgrading to 6.0.0:
+
+```bash
+# Before (deprecated)
+composer remove web-auth/webauthn-stimulus
+
+# After — pin from npm via AssetMapper
+php bin/console importmap:require @web-auth/webauthn-stimulus
+
+# Or with any bundler (Webpack Encore, Vite, esbuild…)
+npm install @web-auth/webauthn-stimulus
+```
+
+The Stimulus controller names (`@web-auth/webauthn-stimulus`, `@web-auth/webauthn-stimulus/authentication`, `@web-auth/webauthn-stimulus/registration`) are unchanged, so your Twig templates do not need to be modified.
+
 ### Authenticator Transport CABLE
 
 {% hint style="warning" %}
 **Deprecated in v5.3.0**
 {% endhint %}
 
-The constant `AUTHENTICATOR_TRANSPORT_CABLE` is deprecated in favor of `AUTHENTICATOR_TRANSPORT_HYBRID` to align with the WebAuthn specification updates.
+The constant `AUTHENTICATOR_TRANSPORT_CABLE` is deprecated and will be removed in version 6.0.0. Use `AUTHENTICATOR_TRANSPORT_HYBRID` (the spec-aligned successor for caBLE / cloud-assisted BLE) instead.
 
 ```php
 # Before (deprecated)
@@ -113,6 +136,19 @@ use Webauthn\PublicKeyCredentialDescriptor;
 
 $transport = PublicKeyCredentialDescriptor::AUTHENTICATOR_TRANSPORT_HYBRID;
 ```
+
+### New Authenticator Transports
+
+{% hint style="info" %}
+**Added in v5.3.0**
+{% endhint %}
+
+`PublicKeyCredentialDescriptor` exposes two new transport constants in addition to the historic `usb`, `nfc`, `ble` and `internal`:
+
+- `AUTHENTICATOR_TRANSPORT_SMART_CARD` (`smart-card`)
+- `AUTHENTICATOR_TRANSPORT_HYBRID` (`hybrid`, replaces `cable`)
+
+All seven values are referenced by `PublicKeyCredentialDescriptor::AUTHENTICATOR_TRANSPORTS`.
 
 ### Options Handlers Signature
 

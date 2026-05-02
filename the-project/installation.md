@@ -12,11 +12,21 @@ The preferred way to install the library you need is to use composer:
 composer require web-auth/webauthn-lib
 ```
 
-If you use Symfony Framework, you may be interested in the bundle and, optionally, the Stimulus component.
+If you use Symfony Framework, you may be interested in the bundle:
 
 ```sh
-composer require web-auth/webauthn-symfony-bundle web-auth/webauthn-stimulus
+composer require web-auth/webauthn-symfony-bundle
 ```
+
+For the Stimulus controllers (frontend integration), pull them straight from npm via AssetMapper or your favourite bundler — see [Symfony UX Installation](../symfony-ux/installation.md) for details:
+
+```bash
+php bin/console importmap:require @web-auth/webauthn-stimulus
+```
+
+{% hint style="warning" %}
+The legacy PHP package `web-auth/webauthn-stimulus` is deprecated since v5.3.0 and will be removed in 6.0.0. Install the controllers via npm instead.
+{% endhint %}
 
 ## Requirements
 

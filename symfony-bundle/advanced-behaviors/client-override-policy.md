@@ -38,6 +38,9 @@ webauthn:
                     allowed_values: ['none', 'indirect', 'direct', 'enterprise']
                 extensions:
                     enabled: true
+                mediation:
+                    enabled: false   # disabled by default; opt-in
+                    allowed_values: ['default', 'conditional']
 ```
 {% endcode %}
 
@@ -50,6 +53,7 @@ webauthn:
 | `resident_key` | enabled | `required`, `preferred`, `discouraged` | Whether the client can request resident key behavior |
 | `attestation_conveyance` | enabled | `none`, `indirect`, `direct`, `enterprise` | Whether the client can request attestation preference |
 | `extensions` | enabled | N/A | Whether the client can provide additional extensions |
+| `mediation` | **disabled** | `default`, `conditional` | Whether the client can request the [Conditional Create](../../pure-php/advanced-behaviours/conditional-create.md) flow (auto-register) — opt-in. |
 
 ## Examples
 
@@ -115,6 +119,24 @@ webauthn:
                 user_verification:
                     enabled: true
                     allowed_values: ['required', 'preferred']
+```
+{% endcode %}
+
+### Opt-in Conditional Create from the Client
+
+Conditional mediation is the only override that is **disabled by default**. Enable it on a per-profile basis if you want the JavaScript client to request the [Conditional Create](../../pure-php/advanced-behaviours/conditional-create.md) flow without the profile being permanently configured for it:
+
+{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
+```yaml
+webauthn:
+    creation_profiles:
+        default:
+            rp:
+                id: 'example.com'
+            client_override_policy:
+                mediation:
+                    enabled: true
+                    allowed_values: ['default', 'conditional']
 ```
 {% endcode %}
 

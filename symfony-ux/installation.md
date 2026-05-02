@@ -11,36 +11,71 @@ Before installing the Stimulus Controller, you need:
 
 ## Installation
 
-Install the WebAuthn Stimulus Controller via Composer:
+{% hint style="warning" %}
+**Recommended since v5.3.0 — composer install path deprecated.**
 
-```bash
-composer require web-auth/webauthn-stimulus
-```
-
-This command will automatically:
-* Install the PHP package
-* Register the Stimulus controller via Symfony Flex
-* Configure AssetMapper to import the necessary JavaScript files
-
-{% hint style="info" %}
-**No build step required!** The package works with Symfony AssetMapper, so you don't need Node.js, npm, yarn, or any JavaScript build tools. The browser imports the JavaScript files directly.
+The dedicated PHP package `web-auth/webauthn-stimulus` will be **deprecated in the next 5.3.x release and removed in 6.0.0**. The Stimulus controllers are now published to npm as [`@web-auth/webauthn-stimulus`](https://www.npmjs.com/package/@web-auth/webauthn-stimulus) and should be installed directly via your asset pipeline (Symfony AssetMapper, Webpack Encore, Vite, esbuild…). The npm package is the only one that will continue to be maintained in 6.0.0.
 {% endhint %}
 
-## Verify Installation
+### Recommended: install via AssetMapper (or any bundler)
 
-Check that the Stimulus controller is properly registered in your `assets/controllers.json`:
+With Symfony AssetMapper, pin the package straight from npm:
+
+```bash
+php bin/console importmap:require @web-auth/webauthn-stimulus
+```
+
+Then register the controllers you want to use in `assets/controllers.json`:
 
 {% code title="assets/controllers.json" lineNumbers="true" %}
 ```json
 {
     "controllers": {
         "@web-auth/webauthn-stimulus": {
-            "enabled": true
+            "authentication": {
+                "enabled": true,
+                "fetch": "eager"
+            },
+            "registration": {
+                "enabled": true,
+                "fetch": "eager"
+            }
         }
     }
 }
 ```
 {% endcode %}
+
+If you use Webpack Encore, Vite or any other bundler, install with npm/yarn/pnpm and import the controllers directly into your Stimulus application:
+
+```bash
+npm install @web-auth/webauthn-stimulus
+```
+
+```javascript
+// assets/bootstrap.js
+import { Application } from '@hotwired/stimulus';
+import AuthenticationController from '@web-auth/webauthn-stimulus/authentication';
+import RegistrationController from '@web-auth/webauthn-stimulus/registration';
+
+const app = Application.start();
+app.register('webauthn-stimulus--authentication', AuthenticationController);
+app.register('webauthn-stimulus--registration', RegistrationController);
+```
+
+The npm package depends on `@hotwired/stimulus` and `@simplewebauthn/browser`, which are pulled in automatically by AssetMapper or your bundler.
+
+### Deprecated: install via Composer (`web-auth/webauthn-stimulus`)
+
+{% hint style="danger" %}
+This installation path is kept for backward compatibility only. New projects should use the npm package above.
+{% endhint %}
+
+```bash
+composer require web-auth/webauthn-stimulus
+```
+
+This command installs the PHP wrapper, which used to register the Stimulus controllers via Symfony Flex and configure AssetMapper to import them from a vendored copy. As of v5.3.0 the same JavaScript is shipped on npm and the PHP wrapper no longer brings any added value — it is scheduled for removal in 6.0.0.
 
 ## What's Included
 
