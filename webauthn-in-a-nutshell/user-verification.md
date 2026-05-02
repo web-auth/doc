@@ -103,25 +103,38 @@ $authenticatorSelection = AuthenticatorSelectionCriteria::create(
 
 ## Checking the UV Flag
 
-After authentication or registration, verify whether user verification actually occurred:
+The `userVerification` setting in the credential options is a **request** sent to the authenticator, not a guarantee. The `CheckUserVerification` ceremony step enforces it against the options that were actually emitted to the client — so if those options were built with a weaker requirement than your profile (for example, because [Client Override Policy](../symfony-bundle/advanced-behaviors/client-override-policy.md) is configured to allow a client to lower it), the ceremony will pass even though no verification took place.
+
+{% hint style="warning" %}
+**Mandatory for sensitive operations.** Do not rely solely on `userVerification: required` in the profile to gate access to privileged actions (admin, payment, secret rotation, AAL2/AAL3 compliance). Always re-check the `UV` flag on the returned authenticator data after a successful ceremony. This is your final, authoritative signal that user verification actually occurred.
+{% endhint %}
+
+After authentication or registration, inspect the flag on the response's authenticator data and decide whether to proceed:
 
 {% code lineNumbers="true" %}
 ```php
-// During assertion validation
-$authenticatorData = $publicKeyCredential->response->getAuthenticatorData();
+// $authenticatorResponse is the AuthenticatorAssertionResponse or
+// AuthenticatorAttestationResponse that was just successfully validated.
+$authenticatorData = $authenticatorResponse instanceof AuthenticatorAssertionResponse
+    ? $authenticatorResponse->authenticatorData
+    : $authenticatorResponse->attestationObject->authData;
 
-// Check if user was verified
-$userVerified = $authenticatorData->isUserVerified();
-
-if ($userVerified) {
-    echo "User identity verified via PIN, biometric, or password";
-} else {
-    echo "Only user presence confirmed (button press/touch)";
+if (! $authenticatorData->isUserVerified()) {
+    // Only user presence was confirmed (button press / touch).
+    // Reject for sensitive flows even if the ceremony succeeded.
+    throw new AccessDeniedHttpException('User verification is required for this action.');
 }
 
-// You can also check the flags directly
+// Safe to proceed with the privileged operation
+```
+{% endcode %}
+
+You can also read the raw flags if you need fine-grained checks (for example combining `UV` with `BS`/`BE` for backup-eligibility policies):
+
+{% code lineNumbers="true" %}
+```php
 $flags = $authenticatorData->getFlags();
-$uvFlag = ($flags & 0x04) !== 0;  // UV flag is bit 2
+$uvFlag = (ord($flags) & 0x04) !== 0;  // UV flag is bit 2
 ```
 {% endcode %}
 
