@@ -45,6 +45,7 @@
   * [Backup Events](pure-php/advanced-behaviours/backup-events.md)
   * [Conditional Create](pure-php/advanced-behaviours/conditional-create.md)
   * [Secure Payment Confirmation](pure-php/advanced-behaviours/secure-payment-confirmation.md)
+  * [PRF Extension](pure-php/advanced-behaviours/prf-extension.md)
 
 ## Symfony Bundle
 
