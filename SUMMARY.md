@@ -44,6 +44,7 @@
   * [Signal API](pure-php/advanced-behaviours/signal-api.md)
   * [Backup Events](pure-php/advanced-behaviours/backup-events.md)
   * [Conditional Create](pure-php/advanced-behaviours/conditional-create.md)
+  * [Secure Payment Confirmation](pure-php/advanced-behaviours/secure-payment-confirmation.md)
 
 ## Symfony Bundle
 
