@@ -85,6 +85,28 @@ Cannot build a PRF extension without any input. Call withInputs() or withCredent
 
 This catches a silent failure mode where the browser would simply ignore an empty `prf` block, leaving the relying party convinced PRF was active when it never was.
 
+### Detecting the `hmac-secret-mc` requirement
+
+CTAP 2.2 introduced `hmac-secret-mc`, the PRF authenticator extension variant that supports PRF evaluation at credential creation time and multi-credential `evalByCredential` queries. The wire format is unchanged — the user agent picks `hmac-secret` vs `hmac-secret-mc` based on the inputs you ship.
+
+`PseudoRandomFunctionInputExtensionBuilder::requiresHmacSecretMc()` returns `true` when the builder carries `evalByCredential` entries for more than one credential — the case the builder can detect on its own:
+
+{% code lineNumbers="true" %}
+```php
+$builder = PseudoRandomFunctionInputExtensionBuilder::create()
+    ->withCredentialInputs($credIdA, $saltA)
+    ->withCredentialInputs($credIdB, $saltB);
+
+if ($builder->requiresHmacSecretMc()) {
+    // Authenticator must speak hmac-secret-mc; surface a fallback flow if it does not.
+}
+```
+{% endcode %}
+
+{% hint style="warning" %}
+The create-time eval case (`eval` set during a registration ceremony) also requires `hmac-secret-mc`, but the builder cannot tell which ceremony its output will attach to — it is the caller's responsibility to flag that case at the call site.
+{% endhint %}
+
 ## Reading the PRF Output
 
 The browser surfaces the PRF result in the assertion's `clientExtensionResults.prf.results.first` (and optionally `.second`) as `ArrayBuffer`. Verifying the assertion through `AuthenticatorAssertionResponseValidator::check(...)` does not consume the output — you read it from the deserialized `PublicKeyCredential->response->clientExtensionResults` after validation succeeds and pipe it into your application-level KDF.

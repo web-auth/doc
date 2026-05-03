@@ -46,6 +46,7 @@
   * [Conditional Create](pure-php/advanced-behaviours/conditional-create.md)
   * [Secure Payment Confirmation](pure-php/advanced-behaviours/secure-payment-confirmation.md)
   * [PRF Extension](pure-php/advanced-behaviours/prf-extension.md)
+  * [Authenticator Extensions (CTAP 2.1)](pure-php/advanced-behaviours/authenticator-extensions.md)
 
 ## Symfony Bundle
 

@@ -113,6 +113,35 @@ $publicKeyCredentialRequestOptions =
 ```
 {% endcode %}
 
+### UI Mode (v5.4.0+)
+
+{% hint style="info" %}
+**New in v5.4.0**
+{% endhint %}
+
+The W3C Credential Management editor's draft (§2.3.3) adds `uiMode` on `CredentialRequestOptions`. When set to `immediate`, the user agent must either return a credential immediately available locally or fail with `NotAllowedError` — no UI shown. The framework exposes the two values as constants:
+
+* `PublicKeyCredentialRequestOptions::UI_MODE_AUTO` — default browser behaviour (`auto`)
+* `PublicKeyCredentialRequestOptions::UI_MODE_IMMEDIATE` — synchronous, no UI
+
+{% code lineNumbers="true" %}
+```php
+use Webauthn\PublicKeyCredentialRequestOptions;
+
+$options = PublicKeyCredentialRequestOptions::create(
+    challenge: random_bytes(32),
+    rpId: 'example.com',
+    uiMode: PublicKeyCredentialRequestOptions::UI_MODE_IMMEDIATE,
+);
+```
+{% endcode %}
+
+The Stimulus authentication controller routes `uiMode === "immediate"` straight through `navigator.credentials.get()` (bypassing SimpleWebAuthn, which has no native `uiMode` support yet) so no controller-side change is required to use it.
+
+{% hint style="warning" %}
+`uiMode` is distinct from the `mediation` enum used by [Conditional Create](advanced-behaviours/conditional-create.md). They live on different specs and may both be set on the same request.
+{% endhint %}
+
 ### Extensions
 
 Please refer to the [Extension page](../webauthn-in-a-nutshell/extensions.md) to know how to manage authentication extensions.

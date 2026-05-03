@@ -156,3 +156,47 @@ $publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create
 );
 ```
 {% endcode %}
+
+### attestation on RequestOptions (v5.4.0+)
+
+{% hint style="info" %}
+**New in v5.4.0**
+{% endhint %}
+
+WebAuthn Level 3 §5.5 lets the relying party request an *assertion* attestation through the same `attestation` enum on `PublicKeyCredentialRequestOptions`. The accepted values are identical to creation options (`none`, `indirect`, `direct`, `enterprise`):
+
+{% code lineNumbers="true" %}
+```php
+use Webauthn\PublicKeyCredentialRequestOptions;
+
+$publicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions::create(
+    challenge: random_bytes(32),
+    rpId: 'example.com',
+    attestation: PublicKeyCredentialRequestOptions::ATTESTATION_CONVEYANCE_PREFERENCE_DIRECT,
+);
+```
+{% endcode %}
+
+### attestationFormats (v5.4.0+)
+
+{% hint style="info" %}
+**New in v5.4.0**
+{% endhint %}
+
+WebAuthn L3 §5.4 introduces `attestationFormats` — an ordered list of the formats the relying party prefers. It is exposed on both `PublicKeyCredentialCreationOptions` and `PublicKeyCredentialRequestOptions`:
+
+{% code lineNumbers="true" %}
+```php
+use Webauthn\PublicKeyCredentialCreationOptions;
+
+$publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create(
+    $relyingParty,
+    $userEntity,
+    $challenge,
+    attestation: PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_DIRECT,
+    attestationFormats: ['packed', 'tpm', 'fido-u2f'],
+);
+```
+{% endcode %}
+
+When the list is non-empty, `CheckAttestationFormatIsKnownAndValid` cross-checks the format the authenticator returned against it and throws `AuthenticatorResponseVerificationException` on mismatch. An empty list keeps the historical behaviour (any registered format is accepted). Empty lists are also omitted from the JSON payload, matching the spec's "absent == empty preference" semantics — no Stimulus change is needed: the field rides along inside `optionsJSON` and reaches `navigator.credentials.{create,get}()` as-is.
