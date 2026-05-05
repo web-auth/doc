@@ -105,17 +105,35 @@ The dedicated PHP package `web-auth/webauthn-stimulus` (the Symfony Flex/AssetMa
 Migrate your application before upgrading to 6.0.0:
 
 ```bash
-# Before (deprecated)
+# 1. Drop the Composer wrapper
 composer remove web-auth/webauthn-stimulus
 
-# After — pin from npm via AssetMapper
-php bin/console importmap:require @web-auth/webauthn-stimulus
-
-# Or with any bundler (Webpack Encore, Vite, esbuild…)
-npm install @web-auth/webauthn-stimulus
+# 2. Pin the npm package — pick one
+php bin/console importmap:require @web-auth/webauthn-stimulus   # AssetMapper
+npm install @web-auth/webauthn-stimulus                          # Encore / Vite / esbuild
 ```
 
-The Stimulus controller names (`@web-auth/webauthn-stimulus`, `@web-auth/webauthn-stimulus/authentication`, `@web-auth/webauthn-stimulus/registration`) are unchanged, so your Twig templates do not need to be modified.
+Then register the controllers from your Stimulus bootstrap file (`assets/bootstrap.js` with the default AssetMapper recipe) under their package-prefixed identifiers:
+
+```javascript
+import { Application } from '@hotwired/stimulus';
+import {
+    AuthenticationController,
+    RegistrationController,
+    WebauthnController,
+} from '@web-auth/webauthn-stimulus';
+
+const app = Application.start();
+app.register('web-auth--webauthn-stimulus--authentication', AuthenticationController);
+app.register('web-auth--webauthn-stimulus--registration', RegistrationController);
+app.register('web-auth--webauthn-stimulus', WebauthnController);
+```
+
+{% hint style="danger" %}
+**Do not add `@web-auth/webauthn-stimulus` to `assets/controllers.json`.** Symfony UX `StimulusBundle` resolves `controllers.json` entries against installed Composer packages, so it throws `Could not find package "web-auth/webauthn-stimulus" referred to from controllers.json` once the Composer wrapper is gone. Register from JavaScript instead, as shown above.
+{% endhint %}
+
+Your Twig templates do not need any change — `stimulus_controller('@web-auth/webauthn-stimulus/authentication')` still resolves to the `web-auth--webauthn-stimulus--authentication` identifier you just registered.
 
 ### Authenticator Transport CABLE
 
