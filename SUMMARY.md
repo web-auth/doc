@@ -54,6 +54,7 @@
 * [Credential Record Repository](symfony-bundle/credential-record-repository.md)
 * [User Entity Repository](symfony-bundle/user-entity-repository.md)
 * [Firewall](symfony-bundle/firewall.md)
+* [Options Helpers](symfony-bundle/options-helpers.md)
 * [Configuration References](symfony-bundle/configuration-references.md)
 * [Advanced Behaviors](symfony-bundle/advanced-behaviors/README.md)
   * [Fake Credentials](symfony-bundle/advanced-behaviors/fake-credentials.md)
