@@ -99,7 +99,24 @@ public function __invoke(Request $request): Response
 
 ## Configuring the ceremony
 
-The verifier classes are intentionally lean: most of the configuration that influenced the ceremony has already happened on the *options* side. Only the registration verifier exposes one extra knob.
+Most of the ceremony configuration has already happened on the *options* side; the verifier exposes a small surface to override the bits that matter at validation time.
+
+### Common (both attestation and assertion)
+
+| Setter | Default |
+| --- | --- |
+| `withAllowedOrigins(string ...)` | the global `webauthn.allowed_origins` configuration |
+| `withAllowSubdomains(bool = true)` | the global `webauthn.allow_subdomains` configuration |
+
+Per-verifier override of the accepted origins. When set, the verifier asks the autowired `CeremonyStepManagerFactory` to produce a fresh `CeremonyStepManager` and a fresh validator on top, so the singleton factory's state stays untouched. Use it when one route accepts a different list of origins than the rest of the application (multi-tenant, internal-vs-public, staging vs production, etc.).
+
+```php
+$result = $this->verifier
+    ->forAttestation('example.com')
+    ->withAllowedOrigins('https://app.example.com', 'https://admin.example.com')
+    ->withAllowSubdomains(true)
+    ->verify($request);
+```
 
 ### Attestation only
 
