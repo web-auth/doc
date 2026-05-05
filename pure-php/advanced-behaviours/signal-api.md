@@ -345,7 +345,31 @@ security:
 
 ## Stimulus Integration
 
-The `@web-auth/webauthn-stimulus` controllers will pick up the `signals: [...]` envelope automatically and dispatch each entry to the matching `PublicKeyCredential.signalXxx()` JS API (feature-detected, silently no-op on browsers that do not expose the method).
+The `@web-auth/webauthn-stimulus` controllers (`AuthenticationController`, `RegistrationController`, `WebauthnController`) pick up the `signals: [...]` envelope automatically after a successful `verify` call and dispatch each entry to the matching `PublicKeyCredential.signalXxx()` JS API. Each call is feature-detected, silently no-ops on browsers that do not expose the method, and swallows the spec-defined `TypeError` / `SecurityError` so the rest of your application flow proceeds unchanged.
+
+If you want to fire signals outside of a controller flow (e.g. from a custom JS handler after a profile update), the package also exports four helpers from its entry point:
+
+{% code lineNumbers="true" %}
+```javascript
+import {
+    dispatchUnknownCredential,
+    dispatchAllAcceptedCredentials,
+    dispatchCurrentUserDetails,
+    dispatchSignals,
+} from '@web-auth/webauthn-stimulus';
+
+// One-shot single signal:
+await dispatchUnknownCredential({ rpId: 'example.com', credentialId: 'aabbcc' });
+
+// Or replay a server-issued envelope:
+await dispatchSignals({
+    signals: [
+        { type: 'allAcceptedCredentials', options: { rpId, userId, allAcceptedCredentialIds } },
+        { type: 'currentUserDetails',     options: { rpId, userId, name, displayName } },
+    ],
+});
+```
+{% endcode %}
 
 {% hint style="info" %}
 **Browser support.** The Signal API requires Chrome/Edge ≥ 128, Safari ≥ 18.4 (or 18.5 for the `allAcceptedCredentials` and `currentUserDetails` variants). Firefox does not implement it yet. The Stimulus dispatch is intentionally fire-and-forget so the rest of your application flow proceeds unchanged on unsupported user agents.
