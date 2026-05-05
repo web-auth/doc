@@ -12,19 +12,19 @@ The bundle ships an autowired helper that lets you write your own attestation/as
 
 ```php
 $this->options->forCreation(string $rpId, PublicKeyCredentialUserEntity|UserEntityGuesser $user): WebauthnCreationOptionsBuilder
-$this->options->forRequest(string $rpId, PublicKeyCredentialUserEntity|UserEntityGuesser|null $user = null): WebauthnRequestOptionsBuilder
+$this->options->forRequest(string $rpId): WebauthnRequestOptionsBuilder
 ```
 
 The required pieces are constructor arguments of the factory call. Everything else has a sensible default and is fluently overridable via `with…()` setters on the returned builder. The terminal call `->build($request)` returns a `JsonResponse` ready to ship.
 
 ### User: entity or guesser
 
-The user argument accepts either:
+For **registration** (`forCreation`), the user is required and must be passed positionally. It accepts either:
 
 * a `PublicKeyCredentialUserEntity`, when your controller already has it in hand (typical for authenticated flows where you just read `Security::getUser()` and map it to a user entity yourself);
 * a `UserEntityGuesser`, when the user has to be resolved from the request body (typical for the *new user* registration flow where you read `username` / `displayName` from the JSON payload).
 
-For assertion the user is optional: omitting it produces a userless ceremony (passkeys discoverable on the platform side).
+For **assertion** (`forRequest`), the user is optional. Omit it for a userless ceremony (passkeys discoverable on the platform side); attach a known user via `withUser()` for a step-up / explicit login flow.
 
 ### Defaults
 
@@ -99,13 +99,14 @@ public function __invoke(Request $request): JsonResponse
     $user = $this->mapToWebauthnUserEntity($this->getUser());
 
     return $this->options
-        ->forRequest('example.com', $user)
+        ->forRequest('example.com')
+        ->withUser($user)
         ->build($request);
 }
 ```
 {% endcode %}
 
-`allowCredentials` is automatically derived from your `CredentialRecordRepositoryInterface` for the resolved user.
+`allowCredentials` is automatically derived from your `CredentialRecordRepositoryInterface` for the resolved user. If you have a `UserEntityGuesser` instead of a ready-made entity, pass it the same way: `withUser($myGuesser)`.
 
 ## Configuring the ceremony
 
@@ -136,6 +137,7 @@ Every optional field has a `with…()` setter on the returned builder. Each call
 
 | Setter | Default |
 | --- | --- |
+| `withUser(PublicKeyCredentialUserEntity\|UserEntityGuesser)` | none (userless ceremony) |
 | `withUserVerification(?string)` | `null` (= `preferred` per W3C) |
 | `withUiMode(?string)` | `null` (= `auto`); use `'immediate'` for the L3 immediate flow |
 | `withAllowCredentials(PublicKeyCredentialDescriptor ...)` | derived automatically when a user is resolved |
