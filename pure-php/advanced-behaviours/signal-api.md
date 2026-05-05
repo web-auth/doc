@@ -343,6 +343,125 @@ security:
 ```
 {% endcode %}
 
+## Authenticator + Passport flow
+
+{% hint style="info" %}
+**Recommended flow.** The legacy `webauthn` firewall is being phased out in favour of a standard Symfony custom authenticator with the `WebauthnPassport` / `WebauthnBadge` pair. The signal helpers work transparently in this world too: no `SuccessHandler` / `FailureHandler` to wire separately, everything lives on the authenticator.
+{% endhint %}
+
+### Custom authenticator
+
+Extend `Webauthn\Bundle\Security\Authentication\WebauthnAuthenticator` and inject the two signal helpers. `onAuthenticationSuccess()` receives a `WebauthnToken` (built by the bundle) that already exposes `getPublicKeyCredentialUserEntity()`, `getPublicKeyCredentialOptions()` and `getPublicKeyCredentialDescriptor()`. `onAuthenticationFailure()` receives a `WebauthnAuthenticationFailureException` that carries the deserialized credential when the failure happened after the bundle recognised the request as a WebAuthn ceremony.
+
+{% code title="src/Security/WebauthnAuthenticator.php" lineNumbers="true" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Security;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use Webauthn\Bundle\Security\Authentication\Exception\WebauthnAuthenticationFailureException;
+use Webauthn\Bundle\Security\Authentication\Token\WebauthnToken;
+use Webauthn\Bundle\Security\Authentication\WebauthnAuthenticator as BaseWebauthnAuthenticator;
+use Webauthn\Bundle\Security\Authentication\WebauthnBadge;
+use Webauthn\Bundle\Security\Authentication\WebauthnPassport;
+use Webauthn\Bundle\Service\WebauthnSignalFactory;
+use Webauthn\Bundle\Service\WebauthnSignalResponse;
+
+final class WebauthnAuthenticator extends BaseWebauthnAuthenticator
+{
+    private const RP_ID = 'example.com';
+
+    public function __construct(
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly WebauthnSignalFactory $signals,
+        private readonly WebauthnSignalResponse $response,
+    ) {
+    }
+
+    public function authenticate(Request $request): Passport
+    {
+        return new WebauthnPassport(
+            new WebauthnBadge($request->getHost(), $request->request->get('_assertion', '')),
+            [],
+        );
+    }
+
+    public function onAuthenticationSuccess(
+        Request $request,
+        TokenInterface $token,
+        string $firewallName,
+    ): ?Response {
+        \assert($token instanceof WebauthnToken);
+
+        $user = $token->getPublicKeyCredentialUserEntity();
+
+        return $this->response->withSignals(
+            ['success' => true],
+            $this->signals->forAllAccepted(self::RP_ID, $user),
+            $this->signals->forCurrentUser(self::RP_ID, $user),
+        );
+    }
+
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
+    {
+        $signals = [];
+        if ($exception instanceof WebauthnAuthenticationFailureException) {
+            $signal = $this->signals->forUnknownCredentialFromException(self::RP_ID, $exception);
+            if ($signal !== null) {
+                $signals[] = $signal;
+            }
+        }
+
+        return $this->response->withSignals(
+            ['success' => false, 'errorMessage' => $exception->getMessage()],
+            ...$signals,
+        );
+    }
+
+    protected function getLoginUrl(Request $request): string
+    {
+        return $this->urlGenerator->generate('app_login');
+    }
+}
+```
+{% endcode %}
+
+### Wiring
+
+The authenticator is registered as any other Symfony custom authenticator:
+
+{% code title="config/packages/security.yaml" %}
+```yaml
+security:
+    firewalls:
+        main:
+            custom_authenticator: 'App\Security\WebauthnAuthenticator'
+```
+{% endcode %}
+
+No `webauthn:` block under the firewall, no `success_handler` / `failure_handler` to declare separately.
+
+### About `WebauthnAuthenticationFailureException`
+
+Failures raised inside `WebauthnBadgeListener` after it has recognised the request as a WebAuthn ceremony are wrapped in `Webauthn\Bundle\Security\Authentication\Exception\WebauthnAuthenticationFailureException`. The exception extends `Symfony\Component\Security\Core\Exception\AuthenticationException`, so any existing catch on that parent keeps matching, and exposes:
+
+| Property | Description |
+| --- | --- |
+| `publicKeyCredential` | The deserialized `PublicKeyCredential` (carries `rawId` / descriptor). `null` if the failure happened pre-deserialization. |
+| `authenticatorResponse` | The matching `AuthenticatorResponse` (assertion or attestation). |
+| `publicKeyCredentialOptions` | The stored `PublicKeyCredentialOptions` of the ceremony. |
+| `userEntity` | The resolved `PublicKeyCredentialUserEntity` if the badge got that far. |
+
+`WebauthnSignalFactory::forUnknownCredentialFromException()` extracts the descriptor from the carried credential and produces the signal in one call. Pre-deserialization failures (malformed body, missing stored options) keep the historical silent-fail so other authenticators on the same firewall stay free to handle the request.
+
 ## Stimulus Integration
 
 The `@web-auth/webauthn-stimulus` controllers (`AuthenticationController`, `RegistrationController`, `WebauthnController`) pick up the `signals: [...]` envelope automatically after a successful `verify` call and dispatch each entry to the matching `PublicKeyCredential.signalXxx()` JS API. Each call is feature-detected, silently no-ops on browsers that do not expose the method, and swallows the spec-defined `TypeError` / `SecurityError` so the rest of your application flow proceeds unchanged.
