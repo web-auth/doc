@@ -142,6 +142,30 @@ Every optional field has a `with…()` setter on the returned builder. Each call
 | `withUiMode(?string)` | `null` (= `auto`); use `'immediate'` for the L3 immediate flow |
 | `withAllowCredentials(PublicKeyCredentialDescriptor ...)` | derived automatically when a user is resolved |
 | `withDeriveAllowCredentialsFromUser(bool = true)` | `true` |
+| `withFakeCredentialGenerator(?FakeCredentialGenerator)` | the autowired generator (`SimpleFakeCredentialGenerator`); pass `null` to opt out |
+
+#### Username-enumeration protection
+
+When the JSON body carries a `username` (typical login form post: `{"username":"alice"}`) but `alice` does not resolve to a known user, the request builder consults the autowired `FakeCredentialGenerator` and emits **fake** `allowCredentials` instead of an empty list. From the client's standpoint, the response shape is identical whether or not the username matches a real account, so an attacker cannot probe for valid usernames.
+
+Default behaviour (no setup needed):
+
+```php
+return $this->options
+    ->forRequest('example.com')
+    ->build($request);
+```
+
+Opt out (response will be a true userless / empty `allowCredentials` ceremony when the username is unknown):
+
+```php
+return $this->options
+    ->forRequest('example.com')
+    ->withFakeCredentialGenerator(null)
+    ->build($request);
+```
+
+Or swap with a custom implementation of `Webauthn\FakeCredentialGenerator` (e.g. a hash-keyed deterministic generator backed by your `kernel.secret`) by passing it to `withFakeCredentialGenerator($custom)`.
 
 ## Client overrides
 
