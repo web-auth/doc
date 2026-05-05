@@ -10,7 +10,182 @@ This page is subject to changes as the version 6.0.0 is not available at the tim
 
 This project follows the [Semantic Versioning principles](https://semver.org) and, contrary to upgrading a minor version (where the middle number changes) where no difficulty should be encountered, upgrading a major version (where the first number changes) is subject to significant modifications.
 
+## What does an application look like in 6.0?
+
+The biggest shift in 5.4 is the move from a **profile-driven** YAML configuration to **autowired helpers** invoked from controllers you write yourself. Once 6.0 lands, a typical Symfony application looks like this:
+
+{% code title="config/packages/webauthn.yaml" %}
+```yaml
+webauthn:
+    credential_repository: 'App\Repo\CredentialRepository'
+    user_repository:       'App\Repo\UserRepository'
+    options_storage:       'App\Storage\SessionStorage'
+
+    metadata:
+        enabled: true
+        mds_repository:           'App\Webauthn\MetadataStatementRepository'
+        status_report_repository: 'App\Webauthn\StatusReportRepository'
+```
+{% endcode %}
+
+{% code title="config/services.yaml (optional)" %}
+```yaml
+parameters:
+    app.webauthn.origins:
+        - 'https://app.example.com'
+        - 'https://admin.example.com'
+```
+{% endcode %}
+
+Four user-written controllers cover the request and response sides of registration and authentication, calling the autowired `WebauthnOptionsResponse` and `WebauthnResponseVerifier` helpers. See the [Options Helpers](../symfony-bundle/options-helpers.md) and [Verification Helpers](../symfony-bundle/verification-helpers.md) pages for the concrete patterns.
+
+| Concern | 5.3 (config-driven) | 6.0 (helper-driven) |
+|---|---|---|
+| Routes | `controllers.creation[].options_path`, `result_path` | `#[Route]` attributes on user controllers |
+| Profile (challenge length, RP, UV, attestation, etc.) | `creation_profiles` / `request_profiles` | `with*()` setters on the builder returned by `forCreation()` / `forRequest()` |
+| Allowed origins | `allowed_origins` (root + per-controller) | `withAllowedOrigins(...)` on the verifier (or omit for the W3C same-origin fallback on single-domain apps) |
+| Client overrides | `client_override_policy` (array-in-array YAML) | `ClientOverridePolicy` built inline + `withClientOverrides()` |
+| Anti-enumeration | implicit, via `fake_credential_generator` service ID | active by default on `forRequest()`; `withFakeCredentialGenerator(null)` opts out |
+| User entity guesser | `controllers.creation[].user_entity_guesser` | second positional argument of `forCreation($rpId, $guesser)` |
+| Conditional Create | `creation_profiles[].conditional_create: true` | `withMediation('conditional')` on the creation builder; the verifier auto-detects from the stored options |
+
 ## Deprecations
+
+### Profile-driven configuration superseded by helpers
+
+{% hint style="warning" %}
+**Deprecated in v5.4.0**
+{% endhint %}
+
+The bundle's profile- and controller-driven YAML sections are superseded by the autowired helpers introduced in 5.4. Every section keeps working until 6.0; this section lists the migration path for each.
+
+#### `webauthn.creation_profiles` / `webauthn.request_profiles`
+
+Move to the `WebauthnOptionsResponse` helper from a controller of your own.
+
+```yaml
+# Before (deprecated)
+webauthn:
+    creation_profiles:
+        default:
+            rp:
+                id: 'example.com'
+            challenge_length: 32
+            authenticator_selection_criteria:
+                user_verification: 'preferred'
+                resident_key: 'preferred'
+            attestation_conveyance: 'none'
+    request_profiles:
+        default:
+            rp_id: 'example.com'
+            user_verification: 'preferred'
+```
+
+```php
+// After
+use Webauthn\AuthenticatorSelectionCriteria;
+use Webauthn\Bundle\Service\WebauthnOptionsResponse;
+
+#[Route('/webauthn/register/options', methods: ['POST'])]
+public function __invoke(Request $request): JsonResponse
+{
+    return $this->options
+        ->forCreation('example.com', $this->newUserGuesser)
+        ->withChallengeLength(32)
+        ->withAuthenticatorSelectionCriteria(
+            AuthenticatorSelectionCriteria::create(
+                userVerification: AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED,
+                residentKey: AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_PREFERRED,
+            )
+        )
+        ->build($request);
+}
+```
+
+#### `webauthn.controllers`
+
+Replace each `controllers.creation[name]` and `controllers.request[name]` block by a pair of user controllers (one for the options endpoint, one for the response endpoint). Routes move to `#[Route]` attributes; the per-controller `host`, `allowed_origins`, `allow_subdomains`, `hide_existing_credentials`, `user_entity_guesser` etc. all have a direct `with*()` equivalent on the helper.
+
+The full refactored example is on the [Verification Helpers](../symfony-bundle/verification-helpers.md) page.
+
+#### `webauthn.client_override_policy`
+
+Build a `ClientOverridePolicy` inline in the controller and attach it to the helper.
+
+```yaml
+# Before (deprecated)
+webauthn:
+    client_override_policy:
+        user_verification:
+            enabled: true
+            allowed_values: [preferred, required]
+```
+
+```php
+// After
+use Webauthn\Bundle\Policy\ClientOverridePolicy;
+
+return $this->options
+    ->forRequest('example.com')
+    ->withClientOverrides(new ClientOverridePolicy([
+        'user_verification' => [
+            'enabled' => true,
+            'allowed_values' => ['preferred', 'required'],
+        ],
+    ]))
+    ->build($request);
+```
+
+The `ClientOverridePolicy` constructor will be redesigned around typed value objects in 6.0; the YAML shape goes away with the deprecation.
+
+#### `webauthn.allowed_origins` / `webauthn.allow_subdomains`
+
+Two migration paths depending on your topology.
+
+**Single-origin app (most common)**: drop the YAML node entirely. The verifier falls back to the W3C-recommended same-origin check (`CheckOrigin` against the request host). Nothing else to do.
+
+**Multi-origin app**: spread a Symfony parameter into the helper.
+
+```yaml
+# Before (deprecated)
+webauthn:
+    allowed_origins:
+        - 'https://app.example.com'
+        - 'https://admin.example.com'
+    allow_subdomains: true
+```
+
+```yaml
+# After — config/services.yaml
+parameters:
+    app.webauthn.origins:
+        - 'https://app.example.com'
+        - 'https://admin.example.com'
+```
+
+```php
+// After — every verification controller
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+
+public function __construct(
+    private readonly WebauthnResponseVerifier $verifier,
+    #[Autowire('%app.webauthn.origins%')]
+    private readonly array $origins,
+) {}
+
+#[Route('/webauthn/register', methods: ['POST'])]
+public function __invoke(Request $request): Response
+{
+    $result = $this->verifier
+        ->forAttestation('example.com')
+        ->withAllowedOrigins(...$this->origins)
+        ->withAllowSubdomains(true)
+        ->verify($request);
+    // ...
+}
+```
+
+The list lives in a single Symfony parameter, the security-critical decision is visible right where it applies, and per-route overrides become trivial.
 
 ### PublicKeyCredentialEntity.icon
 
