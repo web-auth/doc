@@ -247,13 +247,15 @@ final readonly class WebauthnSignalingSuccessHandler implements SuccessHandler
         ?PublicKeyCredentialUserEntity $userEntity = null,
     ): Response {
         if ($userEntity === null) {
-            return $this->response->withSignals(['status' => 'ok']);
+            return $this->response->withSignals(['status' => 'ok'], []);
         }
 
         return $this->response->withSignals(
             ['status' => 'ok'],
-            $this->signals->forAllAccepted(self::RP_ID, $userEntity),
-            $this->signals->forCurrentUser(self::RP_ID, $userEntity),
+            [
+                $this->signals->forAllAccepted(self::RP_ID, $userEntity),
+                $this->signals->forCurrentUser(self::RP_ID, $userEntity),
+            ],
         );
     }
 }
@@ -316,7 +318,7 @@ final readonly class WebauthnSignalingFailureHandler implements FailureHandler
 
         return $this->response->withSignals(
             ['status' => 'error', 'errorMessage' => $exception?->getMessage() ?? 'Unexpected error'],
-            ...$signals,
+            $signals,
         );
     }
 }
@@ -405,8 +407,10 @@ final class WebauthnAuthenticator extends BaseWebauthnAuthenticator
 
         return $this->response->withSignals(
             ['success' => true],
-            $this->signals->forAllAccepted(self::RP_ID, $user),
-            $this->signals->forCurrentUser(self::RP_ID, $user),
+            [
+                $this->signals->forAllAccepted(self::RP_ID, $user),
+                $this->signals->forCurrentUser(self::RP_ID, $user),
+            ],
         );
     }
 
@@ -422,7 +426,7 @@ final class WebauthnAuthenticator extends BaseWebauthnAuthenticator
 
         return $this->response->withSignals(
             ['success' => false, 'errorMessage' => $exception->getMessage()],
-            ...$signals,
+            $signals,
         );
     }
 

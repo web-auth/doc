@@ -119,9 +119,9 @@ Every optional field has a `with…()` setter on the returned builder. Each call
 | `withChallengeLength(int)` | 32 |
 | `withTimeout(?int)` | `null` (UA decides) |
 | `withAttestation(?string)` | `null` (= `none`) |
-| `withAttestationFormats(string ...)` | empty (any format accepted) |
+| `withAttestationFormats(array)` | empty (any format accepted) |
 | `withExtensions(AuthenticationExtensions)` | none |
-| `withHints(string ...)` | none |
+| `withHints(array)` | none |
 | `withClientOverrides(ClientOverridePolicy)` | none (no client field has effect) |
 | `withOptionsStorage(OptionsStorage)` | the global `webauthn.options_storage` |
 | `withCredentialRepository(CredentialRecordRepositoryInterface)` | the global `webauthn.credential_repository` |
@@ -141,7 +141,7 @@ return $this->options
 | Setter | Default |
 | --- | --- |
 | `withAuthenticatorSelectionCriteria(AuthenticatorSelectionCriteria)` | none |
-| `withPubKeyCredParams(PublicKeyCredentialParameters ...)` | the W3C-recommended baseline list |
+| `withPubKeyCredParams(array)` | the W3C-recommended baseline list |
 | `withMediation(?string)` | `null` (= `default`); use `'conditional'` for [Conditional Create](../pure-php/advanced-behaviours/conditional-create.md) |
 | `withHideExistingCredentials(bool = true)` | `false` (excluded credentials are derived from the repository) |
 
@@ -152,7 +152,7 @@ return $this->options
 | `withUser(PublicKeyCredentialUserEntity\|UserEntityGuesser)` | none (userless ceremony) |
 | `withUserVerification(?string)` | `null` (= `preferred` per W3C) |
 | `withUiMode(?string)` | `null` (= `auto`); use `'immediate'` for the L3 immediate flow |
-| `withAllowCredentials(PublicKeyCredentialDescriptor ...)` | derived automatically when a user is resolved |
+| `withAllowCredentials(array)` | derived automatically when a user is resolved |
 | `withDeriveAllowCredentialsFromUser(bool = true)` | `true` |
 | `withFakeCredentialGenerator(?FakeCredentialGenerator)` | the autowired generator (`SimpleFakeCredentialGenerator`); pass `null` to opt out |
 
