@@ -105,7 +105,7 @@ Most of the ceremony configuration has already happened on the *options* side; t
 
 | Setter | Default |
 | --- | --- |
-| `withAllowedOrigins(string ...)` | the global `webauthn.allowed_origins` configuration |
+| `withAllowedOrigins(array)` | the global `webauthn.allowed_origins` configuration |
 | `withAllowSubdomains(bool = true)` | the global `webauthn.allow_subdomains` configuration |
 | `withTopOriginValidator(?TopOriginValidator)` | the global `webauthn.top_origin_validator` (or none) |
 | `withOptionsStorage(OptionsStorage)` | the global `webauthn.options_storage` |
@@ -116,7 +116,7 @@ Most of the ceremony configuration has already happened on the *options* side; t
 ```php
 $result = $this->verifier
     ->forAttestation('example.com')
-    ->withAllowedOrigins('https://app.example.com', 'https://admin.example.com')
+    ->withAllowedOrigins(['https://app.example.com', 'https://admin.example.com'])
     ->withAllowSubdomains(true)
     ->verify($request);
 ```
@@ -173,7 +173,7 @@ try {
 
     return $this->signalResponse->withSignals(
         ['error' => 'authentication failed'],
-        ...array_filter([$signal])
+        array_values(array_filter([$signal]))
     );
 }
 ```

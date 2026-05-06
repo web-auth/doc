@@ -187,7 +187,7 @@ public function __invoke(Request $request): Response
 {
     $result = $this->verifier
         ->forAttestation('example.com')
-        ->withAllowedOrigins(...$this->origins)
+        ->withAllowedOrigins($this->origins)
         ->withAllowSubdomains(true)
         ->verify($request);
     // ...
