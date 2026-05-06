@@ -107,8 +107,11 @@ Most of the ceremony configuration has already happened on the *options* side; t
 | --- | --- |
 | `withAllowedOrigins(string ...)` | the global `webauthn.allowed_origins` configuration |
 | `withAllowSubdomains(bool = true)` | the global `webauthn.allow_subdomains` configuration |
+| `withTopOriginValidator(?TopOriginValidator)` | the global `webauthn.top_origin_validator` (or none) |
+| `withOptionsStorage(OptionsStorage)` | the global `webauthn.options_storage` |
+| `withCredentialRepository(CredentialRecordRepositoryInterface)` | the global `webauthn.credential_repository` |
 
-Per-verifier override of the accepted origins. When set, the verifier asks the autowired `CeremonyStepManagerFactory` to produce a fresh `CeremonyStepManager` and a fresh validator on top, so the singleton factory's state stays untouched. Use it when one route accepts a different list of origins than the rest of the application (multi-tenant, internal-vs-public, staging vs production, etc.).
+`withAllowedOrigins(...)` / `withAllowSubdomains(bool)` override the accepted origins. When set, the verifier asks the autowired `CeremonyStepManagerFactory` to produce a fresh `CeremonyStepManager` and a fresh validator on top, so the singleton factory's state stays untouched. Use it when one route accepts a different list of origins than the rest of the application (multi-tenant, internal-vs-public, staging vs production, etc.).
 
 ```php
 $result = $this->verifier
@@ -118,13 +121,42 @@ $result = $this->verifier
     ->verify($request);
 ```
 
+`withTopOriginValidator(...)` overrides the cross-origin top-origin validator scoped to this verification. Pass `null` to **disable** top-origin validation per call when the global `webauthn.top_origin_validator` is set but the current endpoint should not enforce it.
+
+`withOptionsStorage(...)` and `withCredentialRepository(...)` override the challenge-storage backend and the credential lookup repository for this verification only. Useful for multi-tenant setups where some routes read/write to a tenant-scoped cache or credential store.
+
+```php
+$result = $this->verifier
+    ->forAssertion('example.com')
+    ->withOptionsStorage($tenantA->optionsStorage)
+    ->withCredentialRepository($tenantA->credentialRepository)
+    ->verify($request);
+```
+
 ### Attestation only
 
 | Setter | Default |
 | --- | --- |
 | `withSaveCredential(bool = true)` | `true` (auto-persist via `CanSaveCredentialRecord`) |
+| `withMetadata(MetadataStatementRepository, StatusReportRepository, CertificateChainValidator)` | inherits the global `webauthn.metadata` config |
+| `withoutMetadata()` | inherits the global `webauthn.metadata` config |
 
 If your `CredentialRecordRepositoryInterface` does not implement `CanSaveCredentialRecord`, calling `verify()` with the default behaviour throws `Webauthn\Bundle\Exception\MissingFeatureException`. Implement the interface or pass `withSaveCredential(false)` and persist yourself.
+
+### Assertion only
+
+| Setter | Default |
+| --- | --- |
+| `withCounterChecker(CounterChecker)` | the global `webauthn.counter_checker` |
+
+Override the signature counter checker for this assertion only. Useful for a permissive admin endpoint that accepts counter rollbacks while the rest of the application enforces strict counter monotonicity. The default global counter checker (`ThrowExceptionIfInvalid`) rejects any counter that is not strictly increasing.
+
+```php
+$result = $this->verifier
+    ->forAssertion('example.com')
+    ->withCounterChecker($lenientCounterChecker)
+    ->verify($request);
+```
 
 ## Failure handling
 
