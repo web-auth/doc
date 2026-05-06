@@ -6,6 +6,10 @@
 
 The Client Override Policy provides granular control over which WebAuthn options clients can override via request parameters. This allows you to define strict server-side defaults while optionally allowing clients to customize specific fields within constrained boundaries.
 
+{% hint style="warning" %}
+**5.4 helper-side API recommended.** When you build options through the [Options Helpers](../options-helpers.md), attach the policy with `withClientOverrides(...)` and use the typed `ClientOverridePolicy::fromRules()` factory documented under *Client overrides* on that page. The YAML `creation_profiles[].client_override_policy` form below stays supported but is deprecated alongside `creation_profiles` in 5.4.
+{% endhint %}
+
 ## Overview
 
 When building WebAuthn options from a profile, the server uses configured defaults. With the Client Override Policy, you can control whether HTTP request parameters can override these defaults and which values are acceptable.
@@ -13,6 +17,31 @@ When building WebAuthn options from a profile, the server uses configured defaul
 Each policy field has:
 * **enabled**: Whether the client can override this field at all
 * **allowed_values**: An optional list of accepted values (if omitted, all valid values are allowed)
+
+## Helper-side, typed API (5.4)
+
+`ClientOverridePolicy::fromRules()` and `ClientOverrideRule` give you a named-argument, typed alternative to the YAML / nested-array form. Both shapes are first-class — pick whichever fits your use case best.
+
+```php
+use Webauthn\Bundle\Policy\ClientOverridePolicy;
+use Webauthn\Bundle\Policy\ClientOverrideRule;
+
+$policy = ClientOverridePolicy::fromRules(
+    userVerification:        ClientOverrideRule::restrictTo(['preferred', 'required']),
+    authenticatorAttachment: ClientOverrideRule::restrictTo(['platform', 'cross-platform']),
+    residentKey:             ClientOverrideRule::any(),
+    extensions:              ClientOverrideRule::any(),
+);
+
+return $this->options
+    ->forCreation('example.com', $this->guesser)
+    ->withClientOverrides($policy)
+    ->build($request);
+```
+
+* Pass `null` (the default) for fields the client must NOT be able to override.
+* `ClientOverrideRule::any()` accepts any value the client submits.
+* `ClientOverrideRule::restrictTo($allowedValues)` restricts to a list.
 
 ## Configuration
 

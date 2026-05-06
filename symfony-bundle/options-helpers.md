@@ -181,12 +181,42 @@ Or swap with a custom implementation of `Webauthn\FakeCredentialGenerator` (e.g.
 
 ## Client overrides
 
-By default, **anything in the client request body is ignored**: the server alone decides every field. To let the client influence specific fields, attach a `Webauthn\Bundle\Policy\ClientOverridePolicy`:
+By default, **anything in the client request body is ignored**: the server alone decides every field. To let the client influence specific fields, attach a `Webauthn\Bundle\Policy\ClientOverridePolicy`. Two equivalent build paths are supported as first-class APIs.
+
+### Typed factory (recommended)
+
+Build the policy with named arguments and `ClientOverrideRule` value objects:
+
+{% code lineNumbers="true" %}
+```php
+use Webauthn\Bundle\Policy\ClientOverridePolicy;
+use Webauthn\Bundle\Policy\ClientOverrideRule;
+
+return $this->options
+    ->forRequest('example.com')
+    ->withUser($user)
+    ->withUserVerification(AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED)
+    ->withClientOverrides(ClientOverridePolicy::fromRules(
+        userVerification: ClientOverrideRule::restrictTo(['preferred', 'required']),
+        extensions:       ClientOverrideRule::any(),
+    ))
+    ->build($request);
+```
+{% endcode %}
+
+* `ClientOverrideRule::any()` — accepts any value the client submits
+* `ClientOverrideRule::restrictTo($allowedValues)` — restricts the client value to a list
+* Pass `null` (the default) for fields the client must NOT be able to override
+
+### Nested-array form
+
+The legacy `array<string, array{enabled, allowed_values?}>` shape stays supported as a first-class API; it can be useful when the policy is loaded from a config file or a database row:
 
 {% code lineNumbers="true" %}
 ```php
 return $this->options
-    ->forRequest('example.com', $user)
+    ->forRequest('example.com')
+    ->withUser($user)
     ->withUserVerification(AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED)
     ->withClientOverrides(new ClientOverridePolicy([
         'user_verification' => [
@@ -197,6 +227,10 @@ return $this->options
     ->build($request);
 ```
 {% endcode %}
+
+The constructor also accepts a mix of typed `ClientOverrideRule` entries and legacy `{enabled, allowed_values?}` arrays in the same call.
+
+### Behaviour
 
 If the client posts `{"userVerification": "required"}`, the merged options carry `required`. If it posts `"discouraged"`, the policy rejects it (not in the allow-list) and the default (`preferred`) wins. Anything outside the policy keys is ignored regardless of what the body contains.
 

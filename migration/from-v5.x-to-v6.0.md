@@ -110,7 +110,7 @@ The full refactored example is on the [Verification Helpers](../symfony-bundle/v
 
 #### `webauthn.client_override_policy`
 
-Build a `ClientOverridePolicy` inline in the controller and attach it to the helper.
+Build a `ClientOverridePolicy` inline in the controller and attach it to the helper. 5.4 ships a typed `ClientOverrideRule` value object that makes the call site much clearer than the legacy nested-array form (both shapes stay supported as first-class APIs):
 
 ```yaml
 # Before (deprecated)
@@ -122,9 +122,20 @@ webauthn:
 ```
 
 ```php
-// After
+// After (5.4) — typed factory recommended
 use Webauthn\Bundle\Policy\ClientOverridePolicy;
+use Webauthn\Bundle\Policy\ClientOverrideRule;
 
+return $this->options
+    ->forRequest('example.com')
+    ->withClientOverrides(ClientOverridePolicy::fromRules(
+        userVerification: ClientOverrideRule::restrictTo(['preferred', 'required']),
+    ))
+    ->build($request);
+```
+
+```php
+// Or the legacy nested-array form, also first-class
 return $this->options
     ->forRequest('example.com')
     ->withClientOverrides(new ClientOverridePolicy([
@@ -135,8 +146,6 @@ return $this->options
     ]))
     ->build($request);
 ```
-
-The `ClientOverridePolicy` constructor will be redesigned around typed value objects in 6.0; the YAML shape goes away with the deprecation.
 
 #### `webauthn.allowed_origins` / `webauthn.allow_subdomains`
 
