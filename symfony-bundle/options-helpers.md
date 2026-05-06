@@ -120,7 +120,7 @@ Every optional field has a `with…()` setter on the returned builder. Each call
 | `withTimeout(?int)` | `null` (UA decides) |
 | `withAttestation(?string)` | `null` (= `none`) |
 | `withAttestationFormats(array)` | empty (any format accepted) |
-| `withExtensions(AuthenticationExtensions)` | none |
+| `withExtensions(array)` | none — pass a `list<AuthenticationExtension>`; the builder wraps it as `AuthenticationExtensions` |
 | `withHints(array)` | none |
 | `withClientOverrides(ClientOverridePolicy)` | none (no client field has effect) |
 | `withOptionsStorage(OptionsStorage)` | the global `webauthn.options_storage` |
