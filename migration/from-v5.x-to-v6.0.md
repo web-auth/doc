@@ -187,6 +187,47 @@ public function __invoke(Request $request): Response
 
 The list lives in a single Symfony parameter, the security-critical decision is visible right where it applies, and per-route overrides become trivial.
 
+### DI service ID YAML nodes superseded by `services.yaml` aliases
+
+{% hint style="warning" %}
+**Deprecated in v5.4.0**
+{% endhint %}
+
+The ten root-level scalar YAML nodes that only act as DI aliases are deprecated in 5.4 and will be removed in 6.0. Each one has a direct standard Symfony equivalent: a service alias declared in your own `services.yaml`. Behaviour is unchanged; the YAML nodes still work in 5.x, only the new deprecation message points to the interface or alias to bind for 6.0.
+
+| Deprecated YAML node | Replacement (in your `services.yaml`) |
+|---|---|
+| `webauthn.fake_credential_generator` | alias `Webauthn\FakeCredentialGenerator` |
+| `webauthn.clock` | alias `Psr\Clock\ClockInterface` (or rely on Symfony's autowiring) |
+| `webauthn.options_storage` | alias `Webauthn\Bundle\Security\Storage\OptionsStorage` |
+| `webauthn.event_dispatcher` | alias `webauthn.event_dispatcher` (or rely on the autowired `EventDispatcherInterface`) |
+| `webauthn.http_client` | alias `webauthn.http_client` (or rely on the autowired `HttpClientInterface`) |
+| `webauthn.logger` | alias `webauthn.logger` (or rely on the autowired `LoggerInterface`) |
+| `webauthn.credential_repository` | alias `Webauthn\Bundle\Repository\CredentialRecordRepositoryInterface` |
+| `webauthn.user_repository` | alias `Webauthn\Bundle\Repository\PublicKeyCredentialUserEntityRepositoryInterface` |
+| `webauthn.counter_checker` | alias `Webauthn\Counter\CounterChecker` |
+| `webauthn.top_origin_validator` | alias `Webauthn\CeremonyStep\TopOriginValidator` |
+
+Most apps only override two or three of these. A typical 5.3 config:
+
+```yaml
+# Before (deprecated)
+webauthn:
+    credential_repository: 'App\Repo\CredentialRepository'
+    user_repository:       'App\Repo\UserRepository'
+    options_storage:       'App\Storage\SessionStorage'
+```
+
+becomes:
+
+```yaml
+# After — config/services.yaml
+services:
+    Webauthn\Bundle\Repository\CredentialRecordRepositoryInterface: '@App\Repo\CredentialRepository'
+    Webauthn\Bundle\Repository\PublicKeyCredentialUserEntityRepositoryInterface: '@App\Repo\UserRepository'
+    Webauthn\Bundle\Security\Storage\OptionsStorage: '@App\Storage\SessionStorage'
+```
+
 ### PublicKeyCredentialEntity.icon
 
 `PublicKeyCredentialEntity.icon` is deprecated since `5.1.0`. This property is removed from the specification and is not used anymore.
