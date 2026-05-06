@@ -143,6 +143,32 @@ $result = $this->verifier
 
 If your `CredentialRecordRepositoryInterface` does not implement `CanSaveCredentialRecord`, calling `verify()` with the default behaviour throws `Webauthn\Bundle\Exception\MissingFeatureException`. Implement the interface or pass `withSaveCredential(false)` and persist yourself.
 
+#### Metadata Statement validation
+
+When `webauthn.metadata.enabled: true` is set in YAML, every attestation verifier inherits the configured `MetadataStatementRepository` / `StatusReportRepository` / `CertificateChainValidator` services and runs the `CheckMetadataStatement` step. Most apps stop there.
+
+Two setters layer per-verifier overrides on top of that default:
+
+* **`withMetadata($mds, $status, $cert)`** swaps the three services for this verification only. Useful when one endpoint needs a different MDS source, or when the global `webauthn.metadata` toggle is off but you want metadata validation on a specific route:
+
+  ```php
+  $result = $this->verifier
+      ->forAttestation('example.com')
+      ->withMetadata($strictMds, $strictStatus, $strictCertChain)
+      ->verify($request);
+  ```
+
+* **`withoutMetadata()`** opts the current verification out of metadata validation, even when the global toggle is on. Useful when a registration route has to accept authenticators that don't publish a Metadata Statement:
+
+  ```php
+  $result = $this->verifier
+      ->forAttestation('example.com')
+      ->withoutMetadata()
+      ->verify($request);
+  ```
+
+Both setters clone the autowired `CeremonyStepManagerFactory` before reconfiguring it, so the singleton's global state is untouched.
+
 ### Assertion only
 
 | Setter | Default |
