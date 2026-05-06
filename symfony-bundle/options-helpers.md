@@ -123,6 +123,18 @@ Every optional field has a `with…()` setter on the returned builder. Each call
 | `withExtensions(AuthenticationExtensions)` | none |
 | `withHints(string ...)` | none |
 | `withClientOverrides(ClientOverridePolicy)` | none (no client field has effect) |
+| `withOptionsStorage(OptionsStorage)` | the global `webauthn.options_storage` |
+| `withCredentialRepository(CredentialRecordRepositoryInterface)` | the global `webauthn.credential_repository` |
+
+`withOptionsStorage(...)` and `withCredentialRepository(...)` override the challenge-storage backend and the credential lookup repository for this options build only. Multi-tenant setups can pre-build a per-tenant builder once and reuse it across requests:
+
+```php
+return $this->options
+    ->forCreation('example.com', $this->guesser)
+    ->withOptionsStorage($tenantA->optionsStorage)
+    ->withCredentialRepository($tenantA->credentialRepository)
+    ->build($request);
+```
 
 ### Creation only
 
