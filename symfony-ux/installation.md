@@ -67,7 +67,7 @@ Once installed, you can use the Stimulus controller in your Twig templates with 
     action="{{ path('app_register') }}"
     method="post"
     {{ stimulus_controller('@web-auth/webauthn-stimulus', {
-        creationOptionsUrl: path('webauthn.controller.creation.creation.new_user'),
+        creationOptionsUrl: path('webauthn.controller.creation.request.new_user'),
         creationResultField: 'input[name="attestation"]'
     }) }}
 >
@@ -76,7 +76,7 @@ Once installed, you can use the Stimulus controller in your Twig templates with 
 
     <button
         type="submit"
-        {{ stimulus_action('@web-auth/webauthn-stimulus', 'register') }}
+        {{ stimulus_action('@web-auth/webauthn-stimulus', 'signup') }}
     >
         Register
     </button>
@@ -148,7 +148,7 @@ Create a simple test page to verify everything works:
             action="{{ path('app_register') }}"
             method="post"
             {{ stimulus_controller('@web-auth/webauthn-stimulus', {
-                creationOptionsUrl: path('webauthn.controller.creation.creation.new_user'),
+                creationOptionsUrl: path('webauthn.controller.creation.request.new_user'),
                 creationResultField: 'input[name="attestation"]'
             }) }}
         >
@@ -160,7 +160,7 @@ Create a simple test page to verify everything works:
 
             <button
                 type="submit"
-                {{ stimulus_action('@web-auth/webauthn-stimulus', 'register') }}
+                {{ stimulus_action('@web-auth/webauthn-stimulus', 'signup') }}
             >
                 Register with WebAuthn
             </button>
