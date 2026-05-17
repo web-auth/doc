@@ -118,7 +118,7 @@ The first argument is the package-prefixed name — it will resolve to the `--`-
     action="{{ path('app_register') }}"
     method="post"
     {{ stimulus_controller('@web-auth/webauthn-stimulus/registration', {
-        optionsUrl: path('webauthn.controller.creation.creation.new_user'),
+        optionsUrl: path('webauthn.controller.creation.request.new_user'),
         resultUrl: path('app_register'),
         submitViaForm: true
     }) }}
