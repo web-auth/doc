@@ -117,7 +117,7 @@ Allow authenticated users to register additional authenticators:
         method="post"
         {{ stimulus_controller('@web-auth/webauthn-stimulus',
             {
-                creationOptionsUrl: path('webauthn.controller.creation.creation.add_device'),
+                creationOptionsUrl: path('webauthn.controller.creation.request.add_device'),
                 creationResultField: 'input[name="attestation"]'
             }
         ) }}
@@ -126,7 +126,7 @@ Allow authenticated users to register additional authenticators:
 
         <button
             type="submit"
-            {{ stimulus_action('@web-auth/webauthn-stimulus', 'register') }}
+            {{ stimulus_action('@web-auth/webauthn-stimulus', 'signup') }}
         >
             Register New Authenticator
         </button>
