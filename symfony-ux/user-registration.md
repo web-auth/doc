@@ -20,7 +20,7 @@ Your registration form needs:
     method="post"
     {{ stimulus_controller('@web-auth/webauthn-stimulus',
         {
-            creationOptionsUrl: path('webauthn.controller.creation.creation.new_user'),
+            creationOptionsUrl: path('webauthn.controller.creation.request.new_user'),
             creationResultField: 'input[name="attestation"]'
         }
     ) }}
@@ -46,7 +46,7 @@ Your registration form needs:
 
     <button
         type="submit"
-        {{ stimulus_action('@web-auth/webauthn-stimulus', 'register') }}
+        {{ stimulus_action('@web-auth/webauthn-stimulus', 'signup') }}
     >
         Register with Passkey
     </button>
@@ -127,7 +127,7 @@ Existing users can register additional authenticators (backup keys, different de
     method="post"
     {{ stimulus_controller('@web-auth/webauthn-stimulus',
         {
-            creationOptionsUrl: path('webauthn.controller.creation.creation.add_device'),
+            creationOptionsUrl: path('webauthn.controller.creation.request.add_device'),
             creationResultField: 'input[name="attestation"]'
         }
     ) }}
@@ -136,7 +136,7 @@ Existing users can register additional authenticators (backup keys, different de
 
     <button
         type="submit"
-        {{ stimulus_action('@web-auth/webauthn-stimulus', 'register') }}
+        {{ stimulus_action('@web-auth/webauthn-stimulus', 'signup') }}
     >
         Add New Authenticator
     </button>
@@ -182,7 +182,7 @@ Automatically start the registration process when the page loads:
 {{ stimulus_controller('@web-auth/webauthn-stimulus',
     {
         autoRegister: true,
-        creationOptionsUrl: path('webauthn.controller.creation.creation.new_user'),
+        creationOptionsUrl: path('webauthn.controller.creation.request.new_user'),
         creationResultField: 'input[name="attestation"]'
     }
 ) }}
