@@ -86,6 +86,7 @@ The package provides Stimulus controllers that handle:
 * **Browser autofill** — supports conditional UI for passkey selection
 * **Conditional create** (v5.3.0+) — enhanced conditional UI support for both registration and authentication
 * **PRF extension** — built-in support for the Pseudo-Random Function extension
+* **TypeScript declarations** (v5.3.3+): the package ships `.d.ts` files alongside the controllers and declares them through the `types` entry of its `package.json`, so editors and `tsc` know the values, targets, actions and events of each controller without any extra `@types` package
 
 {% hint style="info" %}
 **Three controllers ship in the package:**
