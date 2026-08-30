@@ -26,16 +26,29 @@ The `name` property of `PublicKeyCredentialRpEntity` is deprecated in version 5.
 
 ```php
 # Before (deprecated)
-$rpEntity = PublicKeyCredentialRpEntity::create(
-    name: 'My Application',
-    id: 'example.com'
-);
+$rpEntity = PublicKeyCredentialRpEntity::create('My Application', 'example.com');
 
 # After
-$rpEntity = PublicKeyCredentialRpEntity::create(
-    id: 'example.com'
-);
+$rpEntity = PublicKeyCredentialRpEntity::create('', 'example.com');
 ```
+
+{% hint style="info" %}
+**Changed in v5.3.7:** the deprecation is carried by `PublicKeyCredentialRpEntity` only. `PublicKeyCredentialUserEntity.name` is **not** deprecated: the property moves from the abstract parent class down to the user entity in 6.0.0 and keeps working exactly as before. Until 5.3.6 the tag sat on the parent class, so static analysis reported every read of a user entity name as deprecated.
+{% endhint %}
+
+The `name` member is required by the W3C IDL. Since v5.3.7 the serializer writes the Relying Party ID in that member when the entity has an empty name, so the payload sent to the browser stays valid without any action on your side.
+
+With the Symfony bundle, drop the `rp.name` node from your creation profiles:
+
+```yaml
+webauthn:
+    creation_profiles:
+        default:
+            rp:
+                id: '%env(RELYING_PARTY_ID)%'
+```
+
+Between 5.3.3 and 5.3.6 the bundle copied `rp.id` into `rp.name` on the entity itself, which triggered the deprecation on every options request, including for the applications that had already removed the node. Since 5.3.7 the fallback is applied at serialization time and the deprecation is only triggered by an application that really sets a name.
 
 ### PublicKeyCredentialSource
 

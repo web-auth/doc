@@ -2,7 +2,7 @@
 
 ## Configuration
 
-With Flex, you have a minimal configuration file installed through a Flex Recipe. You must set the repositories you have just created. You also have to modify the environment variables `RELYING_PARTY_ID` and `RELYING_PARTY_NAME`.
+With Flex, you have a minimal configuration file installed through a Flex Recipe. You must set the repositories you have just created. You also have to modify the environment variable `RELYING_PARTY_ID`.
 
 You may also need to adjust other parameters.
 
@@ -23,8 +23,8 @@ webauthn:
     creation_profiles: # Authenticator registration profiles
         default: # Unique name of the profile
             rp: # Relying Party information
-                name: '%env(RELYING_PARTY_NAME)%' # CHANGE THIS! or create the corresponding env variable
                 id: '%env(RELYING_PARTY_ID)%' # Please adapt the env file with the correct relying party ID or set null
+#                name: '%env(RELYING_PARTY_NAME)%' # Deprecated since 5.3.0. The serialized options default it to the rp ID
 #                icon: null # Secured image (data:// scheme)
 #            challenge_length: 32
 #            timeout: 60000
@@ -102,6 +102,10 @@ The Relying Party corresponds to your application. Please refer [to this page](.
 
 {% hint style="warning" %}
 The parameter `id` is optional but highly recommended.
+{% endhint %}
+
+{% hint style="info" %}
+The parameters `name` and `icon` are deprecated (since 5.3.0 and 5.1.0 respectively) and are removed in 6.0.0. Since 5.3.7, a profile without `rp.name` produces options where the `name` member defaults to the Relying Party ID, and no deprecation is triggered.
 {% endhint %}
 
 #### Challenge Length
