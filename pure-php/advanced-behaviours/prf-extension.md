@@ -72,7 +72,9 @@ $options = PublicKeyCredentialRequestOptions::create(
 {% endcode %}
 
 {% hint style="info" %}
-The W3C spec keys `evalByCredential` by the **base64url string** of the credential id. `withCredentialInputs()` accepts the raw credential id bytes (the same bytes you store on the `CredentialRecord`) and encodes them for you. If you only hold the base64url form, pass it as-is — the builder will not double-encode.
+The W3C spec keys `evalByCredential` by the **base64url string** of the credential id. `withCredentialInputs()` expects the **raw** credential id bytes, the very bytes stored on the `CredentialRecord`, and encodes them itself.
+
+Passing the base64url form instead produces a key that is encoded twice, and the user agent then refuses the ceremony with `'prf' extension contains 'evalByCredential' key that doesn't match any in allowedCredentials`.
 {% endhint %}
 
 ### Validation
