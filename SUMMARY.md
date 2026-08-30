@@ -73,7 +73,11 @@
 
 ## Migration
 
-* [From 5.x to 6.0](migration/from-v5.x-to-v6.0.md)
+* [From 5.0 to 5.1](migration/from-v5.0-to-v5.1.md)
+* [From 5.1 to 5.2](migration/from-v5.1-to-v5.2.md)
+* [From 5.2 to 5.3](migration/from-v5.2-to-v5.3.md)
+* [From 5.3 to 5.4](migration/from-v5.3-to-v5.4.md)
+* [From 5.4 to 6.0](migration/from-v5.4-to-v6.0.md)
 
 ## Symfony UX
 

@@ -14,7 +14,7 @@ WebAuthn authenticators report two backup-related flags:
 * **BS (Backup Status)**: Indicates whether the credential is currently backed up
 
 {% hint style="info" %}
-**Fixed in v5.3.6:** `AuthenticatorData::getReservedForFutureUse2()` reported the bits 3 and 4 as reserved, although WebAuthn Level 3 assigns them to BE and BS. A synced passkey with both flags set returned `24` instead of `0`. The mask is now restricted to the only bit that is still reserved. Use `isBackupEligible()` and `isBackedUp()` to read the backup flags. The reserved-for-future-use accessors themselves are deprecated since v5.4.0, see [the migration guide](../../migration/from-v5.x-to-v6.0.md).
+**Fixed in v5.3.6:** `AuthenticatorData::getReservedForFutureUse2()` reported the bits 3 and 4 as reserved, although WebAuthn Level 3 assigns them to BE and BS. A synced passkey with both flags set returned `24` instead of `0`. The mask is now restricted to the only bit that is still reserved. Use `isBackupEligible()` and `isBackedUp()` to read the backup flags. The reserved-for-future-use accessors themselves are deprecated since v5.4.0, see [the migration guide](../../migration/from-v5.3-to-v5.4.md).
 {% endhint %}
 
 Changes in these flags can signal important security events:

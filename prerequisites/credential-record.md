@@ -10,7 +10,7 @@ After the registration of an authenticator, you will get a `Webauthn\CredentialR
 
 * **publicKeyCredentialId**: The unique identifier of the credential (binary string)
 * **type**: The credential type (always `"public-key"`)
-* **transports**: Supported transports (`usb`, `nfc`, `ble`, `internal`, `hybrid`, `smart-card`; `cable` is still recognised but deprecated since 5.3.0 — see the [migration guide](../migration/from-v5.x-to-v6.0.md))
+* **transports**: Supported transports (`usb`, `nfc`, `ble`, `internal`, `hybrid`, `smart-card`; `cable` is still recognised but deprecated since 5.3.0, see the [migration guide](../migration/from-v5.2-to-v5.3.md))
 * **attestationType**: The attestation type used during registration (`none`, `basic`, `self`, `attca`, `anonca`)
 * **trustPath**: The trust path containing certificate chain information
 * **aaguid**: The Authenticator AAGUID (Authenticator Attestation GUID)
