@@ -4,7 +4,7 @@
 **New in v5.3.0**
 {% endhint %}
 
-The framework dispatches PSR-14 events when the backup eligibility or backup status flags of a credential change during authentication. These events allow you to react to changes in credential backup state, which is important for security monitoring and user guidance.
+The framework dispatches PSR-14 events when the persisted indicators of a credential record change during authentication: the backup eligibility and backup status flags, and, since v5.4.0, the user verification indicator. These events allow you to react to those changes, which matters for security monitoring and user guidance.
 
 ## Background
 
@@ -14,7 +14,7 @@ WebAuthn authenticators report two backup-related flags:
 * **BS (Backup Status)**: Indicates whether the credential is currently backed up
 
 {% hint style="info" %}
-**Fixed in v5.3.6:** `AuthenticatorData::getReservedForFutureUse2()` reported the bits 3 and 4 as reserved, although WebAuthn Level 3 assigns them to BE and BS. A synced passkey with both flags set returned `24` instead of `0`. The mask is now restricted to the only bit that is still reserved. Use `isBackupEligible()` and `isBackedUp()` to read the backup flags.
+**Fixed in v5.3.6:** `AuthenticatorData::getReservedForFutureUse2()` reported the bits 3 and 4 as reserved, although WebAuthn Level 3 assigns them to BE and BS. A synced passkey with both flags set returned `24` instead of `0`. The mask is now restricted to the only bit that is still reserved. Use `isBackupEligible()` and `isBackedUp()` to read the backup flags. The reserved-for-future-use accessors themselves are deprecated since v5.4.0, see [the migration guide](../../migration/from-v5.x-to-v6.0.md).
 {% endhint %}
 
 Changes in these flags can signal important security events:
@@ -76,6 +76,43 @@ class BackupStatusListener
         if ($previousValue === true && $newValue === false) {
             // Credential is no longer backed up
             // Consider prompting the user to register an additional authenticator
+        }
+    }
+}
+```
+{% endcode %}
+
+### UvInitializedChangedEvent
+
+{% hint style="info" %}
+**New in v5.4.0**
+{% endhint %}
+
+Dispatched when the persisted `uvInitialized` indicator of a credential record changes during an assertion ceremony.
+
+The specification states that updating `uvInitialized` from `false` to `true` should require authorization by an additional authentication factor equivalent to WebAuthn user verification. The validator performs the transition as soon as an assertion arrives with the UV flag set, and this event is the hook where that additional verification belongs. When it cannot be obtained, revert the value on the credential record before it is persisted.
+
+{% code lineNumbers="true" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+use Webauthn\Event\UvInitializedChangedEvent;
+
+class UvInitializedListener
+{
+    public function __invoke(UvInitializedChangedEvent $event): void
+    {
+        $credentialRecord = $event->credentialRecord;
+        $previousValue = $event->previousValue; // ?bool
+        $newValue = $event->newValue;           // ?bool
+
+        if ($previousValue !== true && $newValue === true) {
+            // The credential now claims user verification.
+            // Apply your step-up verification here, and revert the value
+            // on the credential record if it cannot be obtained:
+            // $credentialRecord->uvInitialized = $previousValue;
         }
     }
 }

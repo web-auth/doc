@@ -32,4 +32,8 @@ The legacy PHP package `web-auth/webauthn-stimulus` is deprecated since v5.3.0 a
 
 * **PHP**: 8.2 or higher
 * **Symfony** (for the bundle): 6.4, 7.x, or 8.0+
-* **Extensions**: json, openssl
+* **Extensions**: openssl
+
+{% hint style="info" %}
+**Changed in v5.4.0:** `ext-json` is no longer required by the packages. It is enabled by default in every supported PHP version and cannot be disabled since PHP 8.0.
+{% endhint %}

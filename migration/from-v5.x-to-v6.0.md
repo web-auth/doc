@@ -336,6 +336,36 @@ app.register('web-auth--webauthn-stimulus', WebauthnController);
 
 Your Twig templates do not need any change — `stimulus_controller('@web-auth/webauthn-stimulus/authentication')` still resolves to the `web-auth--webauthn-stimulus--authentication` identifier you just registered.
 
+### Reserved-For-Future-Use accessors
+
+{% hint style="warning" %}
+**Deprecated in v5.4.0**
+{% endhint %}
+
+The RFU1 and RFU2 bits of the authenticator data flags are reserved by the specification and are set to zero by the authenticators, so reading them back brings nothing to a Relying Party. The accessors exposing them are removed in 6.0.0:
+
+* `Webauthn\AuthenticatorData::getReservedForFutureUse1()` and `getReservedForFutureUse2()`
+* `Webauthn\Bundle\Security\Authentication\Token\WebauthnToken::getReservedForFutureUse1()` and `getReservedForFutureUse2()`
+* the `$reservedForFutureUse1` and `$reservedForFutureUse2` arguments of the `WebauthnToken` constructor
+
+Nothing changes at runtime in 5.4: the constructor signature, the stored values and the serialized payload are untouched, and a deprecation notice is emitted only when a getter is called. Drop the calls, there is no replacement. The raw flags byte stays available:
+
+```php
+$flags = ord($authenticatorData->flags);
+```
+
+{% hint style="danger" %}
+In 6.0.0 the serialized payload of `WebauthnToken` loses two entries, so a session created by a 5.x application cannot be unserialized by a 6.0 one. Plan to invalidate the existing sessions when you upgrade.
+{% endhint %}
+
+### PseudoRandomFunctionInputExtensionBuilder::requiresHmacSecretMc
+
+{% hint style="warning" %}
+**Deprecated in v5.4.0**
+{% endhint %}
+
+The method named the CTAP `hmac-secret-mc` extension in an API that is abstract over the authenticator implementation. Use `requiresMultipleCredentialEvaluation()`, which describes the input shape the method actually detects. The old name delegates to the new one until 6.0.0. See the [PRF Extension](../pure-php/advanced-behaviours/prf-extension.md) page.
+
 ### Authenticator Transport CABLE
 
 {% hint style="warning" %}
