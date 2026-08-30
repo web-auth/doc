@@ -147,4 +147,4 @@ Register `CredentialPropertiesOutputChecker` with your `ExtensionOutputCheckerHa
 * [CTAP 2.1 §12.2](https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html#sctn-credBlob-extension) — `credBlob` / `getCredBlob`
 * [CTAP 2.1 §12.4](https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html#sctn-minpinlength-extension) — `minPinLength`
 * [Extensions](extensions.md) — generic extension mechanism
-* [PRF Extension](prf-extension.md) — also a CTAP-bound extension (`hmac-secret` / `hmac-secret-mc`)
+* [PRF Extension](prf-extension.md) — abstract over the authenticator implementation, `hmac-secret` being one of the possible backends

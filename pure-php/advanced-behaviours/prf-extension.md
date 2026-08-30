@@ -85,11 +85,11 @@ Cannot build a PRF extension without any input. Call withInputs() or withCredent
 
 This catches a silent failure mode where the browser would simply ignore an empty `prf` block, leaving the relying party convinced PRF was active when it never was.
 
-### Detecting the `hmac-secret-mc` requirement
+### Detecting a multi-credential evaluation
 
-CTAP 2.2 introduced `hmac-secret-mc`, the PRF authenticator extension variant that supports PRF evaluation at credential creation time and multi-credential `evalByCredential` queries. The wire format is unchanged — the user agent picks `hmac-secret` vs `hmac-secret-mc` based on the inputs you ship.
+An authenticator may serve PRF in several ways. The CTAP `hmac-secret` extension is one of them, and the variant supporting evaluation at creation time and multi-credential `evalByCredential` queries is `hmac-secret-mc`, but the WebAuthn extension is abstract over that choice: the user agent decides how to satisfy the inputs you ship.
 
-`PseudoRandomFunctionInputExtensionBuilder::requiresHmacSecretMc()` returns `true` when the builder carries `evalByCredential` entries for more than one credential — the case the builder can detect on its own:
+`PseudoRandomFunctionInputExtensionBuilder::requiresMultipleCredentialEvaluation()` returns `true` when the builder carries `evalByCredential` entries for more than one credential, which is the shape it can detect on its own and the one requiring the richer authenticator support:
 
 {% code lineNumbers="true" %}
 ```php
@@ -97,19 +97,51 @@ $builder = PseudoRandomFunctionInputExtensionBuilder::create()
     ->withCredentialInputs($credIdA, $saltA)
     ->withCredentialInputs($credIdB, $saltB);
 
-if ($builder->requiresHmacSecretMc()) {
-    // Authenticator must speak hmac-secret-mc; surface a fallback flow if it does not.
+if ($builder->requiresMultipleCredentialEvaluation()) {
+    // The authenticator must support evaluating several credentials at once;
+    // surface a fallback flow if it does not.
 }
 ```
 {% endcode %}
 
 {% hint style="warning" %}
-The create-time eval case (`eval` set during a registration ceremony) also requires `hmac-secret-mc`, but the builder cannot tell which ceremony its output will attach to — it is the caller's responsibility to flag that case at the call site.
+The create-time eval case (`eval` set during a registration ceremony) needs the same level of support, but the builder cannot tell which ceremony its output will attach to, so flagging that case is the responsibility of the caller.
+
+`requiresHmacSecretMc()` is the former name of the method. It named a CTAP extension in an API that is implementation agnostic, so it is deprecated since v5.4.0 and removed in 6.0.0. It still delegates to the new method.
 {% endhint %}
 
 ## Reading the PRF Output
 
 The browser surfaces the PRF result in the assertion's `clientExtensionResults.prf.results.first` (and optionally `.second`) as `ArrayBuffer`. Verifying the assertion through `AuthenticatorAssertionResponseValidator::check(...)` does not consume the output — you read it from the deserialized `PublicKeyCredential->response->clientExtensionResults` after validation succeeds and pipe it into your application-level KDF.
+
+### PRF results never reach the server
+
+WebAuthn Level 3 states that authenticator extension outputs must not contain cleartext PRF outputs: the authenticator data is signed, so the client cannot strip anything from it before the credential is sent to the Relying Party. A conforming authenticator therefore exchanges the results outside of the authenticator data, and a `prf` entry appearing in the authenticator extension outputs signals a broken or hostile authenticator. Its value must not be treated as key material.
+
+`Webauthn\AuthenticationExtensions\PseudoRandomFunctionOutputChecker` rejects such a response. It is not registered by default, since turning a previously accepted ceremony into a hard failure does not belong in a minor release. Opt in with:
+
+{% code lineNumbers="true" %}
+```php
+<?php
+
+declare(strict_types=1);
+
+use Webauthn\AuthenticationExtensions\ExtensionOutputCheckerHandler;
+use Webauthn\AuthenticationExtensions\PseudoRandomFunctionOutputChecker;
+
+$handler = ExtensionOutputCheckerHandler::create();
+$handler->add(new PseudoRandomFunctionOutputChecker());
+```
+{% endcode %}
+
+In a Symfony application, declaring the service is enough: the bundle autoconfigures every `ExtensionOutputChecker` into the handler.
+
+{% code title="config/services.yaml" lineNumbers="true" %}
+```yaml
+services:
+    Webauthn\AuthenticationExtensions\PseudoRandomFunctionOutputChecker: ~
+```
+{% endcode %}
 
 ## Stimulus Integration
 
