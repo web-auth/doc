@@ -16,3 +16,5 @@ At Spomky-Labs, we are committed to making the web safer for all users. We provi
 WebAuthn is supported by the FIDO Alliance, an organization working to promote open and interoperable strong authentication standards. You can learn more about the FIDO Alliance by visiting their website at [https://fidoalliance.org/](https://fidoalliance.org/).
 
 Explore our documentation to learn more about WebAuthn and how it can help you implement strong authentication in your PHP or Symfony application.
+
+Do you prefer reading code? Every ceremony this documentation describes is shown at work in [web-auth/webauthn-demos](https://github.com/web-auth/webauthn-demos): seven pure PHP demos and a full Symfony application you can run locally. See [the dedicated page](the-project/demos.md).

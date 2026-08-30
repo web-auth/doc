@@ -7,6 +7,7 @@
 * [What is WebAuthn?](the-project/the-project.md)
 * [Web Browser Support](the-project/web-browser-support.md)
 * [Installation](the-project/installation.md)
+* [Demos](the-project/demos.md)
 * [Contributing](the-project/contributing.md)
 
 ## WebAuthn In A Nutshell
