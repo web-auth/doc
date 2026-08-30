@@ -180,13 +180,13 @@ A `prf:` profile block (with a pluggable `PrfSaltProviderInterface` for per-user
 
 ## Runnable Demo
 
-The framework repository ships a complete client-side encryption demo under [`docs/examples/prf-demo/`](https://github.com/web-auth/webauthn-framework/tree/5.4.x/docs/examples/prf-demo) showing the typical PRF use case end-to-end:
+The [webauthn-demos](https://github.com/web-auth/webauthn-demos) repository ships a complete client-side encryption demo under [`prf-demo/`](https://github.com/web-auth/webauthn-demos/tree/main/prf-demo) showing the typical PRF use case end-to-end:
 
 * `register.html` — registers a credential with `prf.eval` primed and persists the salts next to the credential server-side.
 * `vault.html` — re-issues the per-credential salts during authentication, derives an AES-GCM key from `prf.results.first` and an HMAC-SHA256 key from `prf.results.second` (HKDF, disjoint info strings), and stores AES-GCM-encrypted items + per-item HMAC server-side. The server only ever sees ciphertexts.
 * `offline.html` — same flow without a server, demonstrating airplane-mode decryption via a service worker cache and `localStorage` ciphertexts.
 
-Run it with `./docs/examples/prf-demo/same-origin/run.sh`.
+Run it with `./same-origin/run.sh` from the `prf-demo` directory.
 
 ## See Also
 

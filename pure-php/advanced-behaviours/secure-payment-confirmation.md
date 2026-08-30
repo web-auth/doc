@@ -200,7 +200,7 @@ SPC requires Chromium-based browsers (Chrome 105+, Edge 105+, Opera 91+) and an 
 
 ## Runnable Demo
 
-The framework repository ships a complete demo under [`docs/examples/spc-demo/`](https://github.com/web-auth/webauthn-framework/tree/5.4.x/docs/examples/spc-demo) in three flavours:
+The [webauthn-demos](https://github.com/web-auth/webauthn-demos) repository ships a complete demo under [`spc-demo/`](https://github.com/web-auth/webauthn-demos/tree/main/spc-demo) in three flavours:
 
 * `same-origin/` — single PHP server hosting the relying party and the merchant page.
 * `two-origin/` — bank and merchant on separate origins, using CORS.
