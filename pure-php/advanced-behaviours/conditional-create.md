@@ -10,6 +10,12 @@ Conditional Create allows you to register a WebAuthn credential without explicit
 
 In a standard WebAuthn registration ceremony, user presence is always required (the user must interact with the authenticator). With Conditional Create (`mediation: 'conditional'`), the browser can silently create a credential after the user has already proven their identity through another means.
 
+Because the credential is created without any interaction, the User Present (UP) and User Verified (UV) flags of the authenticator data may both be `false`. The validation relaxes the two checks accordingly.
+
+{% hint style="info" %}
+**Changed in v5.3.6:** the User Verification check is relaxed as well. Until then only the User Presence check was, so a conditional registration made against a profile requiring user verification was rejected with `User authentication required.`.
+{% endhint %}
+
 This is particularly useful for:
 
 * **Passkey upgrade prompts**: After a password login, silently offer to register a passkey
@@ -18,11 +24,11 @@ This is particularly useful for:
 
 ## Pure PHP Usage
 
-There are two equivalent ways to relax the User Presence (UP) check during validation: a per-request hint on the options, or a dedicated ceremony manager. The first option is the recommended one since v5.3.0 because the hint travels with the options across the storage round-trip and applies automatically.
+There are two equivalent ways to relax the User Presence (UP) and User Verification (UV) checks during validation: a per-request hint on the options, or a dedicated ceremony manager. The first option is the recommended one since v5.3.0 because the hint travels with the options across the storage round-trip and applies automatically.
 
 ### Option 1 — Set `mediation` on the options (recommended)
 
-`PublicKeyCredentialCreationOptions` exposes two constants — `MEDIATION_DEFAULT` and `MEDIATION_CONDITIONAL` — and a nullable `$mediation` property. When the property is set to `MEDIATION_CONDITIONAL`, `CheckUserWasPresent` skips the UP check at runtime regardless of which ceremony manager you use.
+`PublicKeyCredentialCreationOptions` exposes two constants, `MEDIATION_DEFAULT` and `MEDIATION_CONDITIONAL`, and a nullable `$mediation` property. When the property is set to `MEDIATION_CONDITIONAL`, `CheckUserWasPresent` skips the UP check and `CheckUserVerification` skips the UV check at runtime, regardless of which ceremony manager you use.
 
 {% code lineNumbers="true" %}
 ```php
@@ -47,7 +53,7 @@ The `mediation` property is intentionally **not** serialized to the JSON sent to
 
 ### Option 2 — Use a dedicated ceremony manager
 
-The `CeremonyStepManagerFactory` still provides a dedicated method that returns a manager configured with `userPresenceRequired = false`:
+The `CeremonyStepManagerFactory` still provides a dedicated method that returns a manager where neither the User Presence nor the User Verification check is enforced:
 
 {% code lineNumbers="true" %}
 ```php

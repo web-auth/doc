@@ -86,6 +86,7 @@ The package provides Stimulus controllers that handle:
 * **Browser autofill** — supports conditional UI for passkey selection
 * **Conditional create** (v5.3.0+) — enhanced conditional UI support for both registration and authentication
 * **PRF extension** — built-in support for the Pseudo-Random Function extension
+* **TypeScript declarations** (v5.3.3+): the package ships `.d.ts` files alongside the controllers and declares them through the `types` entry of its `package.json`, so editors and `tsc` know the values, targets, actions and events of each controller without any extra `@types` package
 * **CTAP 2.1 extensions** (v5.4.0+) — `credBlob` round-trips through the controllers transparently
 * **WebAuthn L3 native helpers** (v5.4.0+) — `PublicKeyCredential.parseCreationOptionsFromJSON()`, `parseRequestOptionsFromJSON()` and `toJSON()` are used when the user agent ships them, with a SimpleWebAuthn-based fallback otherwise
 * **Client capabilities** (v5.4.0+) — `PublicKeyCredential.getClientCapabilities()` is feature-detected; the resulting map is exposed on the `webauthn:authentication:connect` and `webauthn:registration:connect` events so apps can tailor their flow

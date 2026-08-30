@@ -15,16 +15,34 @@ The library provides a simple class to handle the rp information: `Webauthn\Publ
 use Webauthn\PublicKeyCredentialRpEntity;
 
 $rpEntity = PublicKeyCredentialRpEntity::create(
-    'ACME WebAuthn Server' // The application name
+    '' // The application name. See below: this parameter is deprecated
 );
 ```
 {% endcode %}
 
 This `$rpEntity` object will be useful for the next steps.
 
+## Relying Party Name
+
+{% hint style="warning" %}
+**Deprecated since v5.3.0**
+
+The `name` of the Relying Party is removed in 6.0.0. Passing a non-empty value triggers a deprecation notice. The `PublicKeyCredentialUserEntity` name is not concerned: it remains a first-class field.
+{% endhint %}
+
+The W3C IDL still requires a `name` member in the serialized options. Since v5.3.7, the serializer fills that member with the Relying Party ID when the entity carries an empty name, so an entity created with `PublicKeyCredentialRpEntity::create('', 'acme.com')` reaches the browser as:
+
+{% code lineNumbers="true" %}
+```json
+{"id": "acme.com", "name": "acme.com"}
+```
+{% endcode %}
+
+An entity with neither a name nor an ID still serializes to nothing.
+
 ## Relying Party ID
 
-In the example above, we created a simple relying party object with it’s name. The relying party may also have an ID that corresponds to the domain applicable for that `rp`. By default, the relying party ID is `null` i.e. the current domain will be used.
+In the example above, we created a simple relying party object. The relying party may also have an ID that corresponds to the domain applicable for that `rp`. By default, the relying party ID is `null` i.e. the current domain will be used.
 
 It may be useful to specify the `rp` ID, especially if your application has several sub-domains. The rp ID can be set during the creation of the object as 2nd constructor parameter.
 
@@ -35,8 +53,8 @@ It may be useful to specify the `rp` ID, especially if your application has seve
 use Webauthn\PublicKeyCredentialRpEntity;
 
 $rpEntity = PublicKeyCredentialRpEntity::create(
-    'ACME WebAuthn Server', // The application name
-    'acme.com'              // The application ID = the domain
+    '',        // The application name (deprecated, keep it empty)
+    'acme.com' // The application ID = the domain
 );
 ```
 {% endcode %}
@@ -80,6 +98,12 @@ Discussion is ongoing for associating authenticators to multiple RP IDs such as 
 
 Your application may also have a logo. You can indicate this logo as third argument. Please note that for safety reasons this icon should be an authenticated URL, i.e. an image that uses the `data` scheme.
 
+{% hint style="warning" %}
+**Deprecated since v5.1.0**
+
+The `icon` is removed from the specification and is removed from the entities in 6.0.0.
+{% endhint %}
+
 {% code lineNumbers="true" %}
 ```php
 <?php
@@ -87,7 +111,7 @@ Your application may also have a logo. You can indicate this logo as third argum
 use Webauthn\PublicKeyCredentialRpEntity;
 
 $rpEntity = PublicKeyCredentialRpEntity::create(
-    'ACME WebAuthn Server',
+    '',
     'acme.com',
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAwFBMVEXm7NK41k3w8fDv7+q01Tyy0zqv0DeqyjOszDWnxjClxC6iwCu11z6y1DvA2WbY4rCAmSXO3JZDTxOiwC3q7tyryzTs7uSqyi6tzTCmxSukwi9aaxkWGga+3FLv8Ozh6MTT36MrMwywyVBziSC01TbT5ZW9z3Xi6Mq2y2Xu8Oioxy7f572qxzvI33Tb6KvR35ilwTmvykiwzzvV36/G2IPw8O++02+btyepyDKvzzifvSmw0TmtzTbw8PAAAADx8fEC59dUAAAA50lEQVQYV13RaXPCIBAG4FiVqlhyX5o23vfVqUq6mvD//1XZJY5T9xPzzLuwgKXKslQvZSG+6UXgCnFePtBE7e/ivXP/nRvUUl7UqNclvO3rpLqofPDAD8xiu2pOntjamqRy/RqZxs81oeVzwpCwfyA8A+8mLKFku9XfI0YnSKXnSYZ7ahSII+AwrqoMmEFKriAeVrqGM4O4Z+ADZIhjg3R6LtMpWuW0ERs5zunKVHdnnnMLNQqaUS0kyKkjE1aE98b8y9x9JYHH8aZXFMKO6JFMEvhucj3Wj0kY2D92HlHbE/9Vk77mD6srRZqmVEAZAAAAAElFTkSuQmCC'
 );

@@ -2,6 +2,10 @@
 
 The loaded data needs to be verified. The library will perform several actions to make sure the input you received is valid. This verification process is performed by a Ceremony Step Manager (CSM). The WebAuthn specification distinguishes two types of ceremonies [described in this page](../webauthn-in-a-nutshell/ceremonies.md).
 
+{% hint style="info" %}
+**Changed in v5.3.6:** the `tokenBinding` member of the client data is not validated anymore. It is reserved since WebAuthn Level 3 and its value was never used, so a ceremony is no longer rejected because of it. The raw client data stays available through the `data` property of `CollectedClientData`.
+{% endhint %}
+
 ## Ceremony Step Manager Factory
 
 To facilitate the creation of the CSM, a default factory is included. This factory requires no external services to function.
