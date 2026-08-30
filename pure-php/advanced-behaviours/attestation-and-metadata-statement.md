@@ -61,6 +61,10 @@ $attestationStatementSupportManager->add(CompoundAttestationStatementSupport::cr
 ```
 {% endcode %}
 
+{% hint style="warning" %}
+**Changed in v5.3.6:** `AndroidKeyAttestationStatementSupport` verifies the authorization lists of the attestation certificate. The key must have been generated inside the keystore (`origin` equal to `KM_ORIGIN_GENERATED`) and be allowed to sign (`purpose` containing `KM_PURPOSE_SIGN`). The union of the `softwareEnforced` and `teeEnforced` lists is used, as described by the specification. An imported key, accepted by the previous versions, is now rejected.
+{% endhint %}
+
 {% hint style="info" %}
 **Compound Attestation Statement (v5.3.0+):** The Compound Attestation format allows multiple attestation statements to be bundled together. This is useful for authenticators that support multiple attestation mechanisms. The `CompoundAttestationStatementSupport` requires the `AttestationStatementSupportManager` to process the individual attestation statements within the compound format.
 {% endhint %}

@@ -13,6 +13,10 @@ WebAuthn authenticators report two backup-related flags:
 * **BE (Backup Eligible)**: Indicates whether the authenticator is capable of backing up the credential (e.g., synced passkeys via iCloud Keychain, Google Password Manager)
 * **BS (Backup Status)**: Indicates whether the credential is currently backed up
 
+{% hint style="info" %}
+**Fixed in v5.3.6:** `AuthenticatorData::getReservedForFutureUse2()` reported the bits 3 and 4 as reserved, although WebAuthn Level 3 assigns them to BE and BS. A synced passkey with both flags set returned `24` instead of `0`. The mask is now restricted to the only bit that is still reserved. Use `isBackupEligible()` and `isBackedUp()` to read the backup flags.
+{% endhint %}
+
 Changes in these flags can signal important security events:
 
 * A credential becoming backup-eligible means the user may have synced their passkey
