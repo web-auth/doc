@@ -20,6 +20,7 @@ webauthn:
 #        - 'android:apk-key-hash://your-app-hash' # For Android FIDO2
 #        - 'ios:bundle-id://your.bundle.id' # For iOS
 #    allow_subdomains: false # Allow subdomains when validating origins (new in 5.2.0)
+#    ceremony_origin_pinning: false # Also require the response to come from the origin the ceremony started on (new in 5.4.0)
     creation_profiles: # Authenticator registration profiles
         default: # Unique name of the profile
             rp: # Relying Party information

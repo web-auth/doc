@@ -107,6 +107,7 @@ Most of the ceremony configuration has already happened on the *options* side; t
 | --- | --- |
 | `withAllowedOrigins(array)` | the global `webauthn.allowed_origins` configuration |
 | `withAllowSubdomains(bool = true)` | the global `webauthn.allow_subdomains` configuration |
+| `withCeremonyOriginPinning(bool = true)` | the global `webauthn.ceremony_origin_pinning` configuration (`false`) |
 | `withTopOriginValidator(?TopOriginValidator)` | the global `webauthn.top_origin_validator` (or none) |
 | `withOptionsStorage(OptionsStorage)` | the global `webauthn.options_storage` |
 | `withCredentialRepository(CredentialRecordRepositoryInterface)` | the global `webauthn.credential_repository` |
@@ -120,6 +121,21 @@ $result = $this->verifier
     ->withAllowSubdomains(true)
     ->verify($request);
 ```
+
+`withCeremonyOriginPinning(true)` requires the response to be produced on the very origin the ceremony was started on, in addition to the allow list. The options builders record the origin of the options request next to the challenge, and the verifier compares it with the `origin` of the client data. Scheme and host are compared case-insensitively and the default port is ignored, so `https://Example.com:443` and `https://example.com` match.
+
+```php
+$result = $this->verifier
+    ->forAssertion('example.com')
+    ->withCeremonyOriginPinning()
+    ->verify($request);
+```
+
+Origins sharing a Relying Party ID rarely share a trust level. Without pinning, an assertion obtained on the lowest-trust entry of the allow list (an XSS on a marketing site, a customer-controlled subdomain) is replayable against the highest-trust one. The check is additive: the allow list still runs first, so pinning can only narrow what is accepted.
+
+{% hint style="warning" %}
+Pinning fails closed. A ceremony stored without an origin, by a previous version of the bundle whose items are still in the cache, or by custom code building the `Item` itself, is rejected. Keep it disabled for native application facets (`android:apk-key-hash:...`) and for flows whose options request and ceremony do not share an origin.
+{% endhint %}
 
 `withTopOriginValidator(...)` overrides the cross-origin top-origin validator scoped to this verification. Pass `null` to **disable** top-origin validation per call when the global `webauthn.top_origin_validator` is set but the current endpoint should not enforce it.
 
