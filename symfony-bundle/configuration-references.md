@@ -190,6 +190,28 @@ webauthn:
 ```
 {% endcode %}
 
+#### Signature Verification Algorithms
+
+The parameters above list the algorithms offered to the authenticator during the registration. The signatures themselves are verified by `webauthn.cose.algorithm.manager`, which the bundle fills with one service per supported algorithm. Any service implementing `Cose\Algorithm\Algorithm` is collected automatically, so declaring one is enough to add an algorithm to that manager.
+
+{% hint style="danger" %}
+**Backward compatibility break in v5.3.8:** the bundle no longer registers `RS1` (RSASSA-PKCS1-v1\_5 with SHA-1). SHA-1 is no longer acceptable for digital signatures, and building the algorithm emits an `E_USER_WARNING` that the Symfony error handler turns into an exception, so every ceremony answered with a 500 in the dev environment.
+
+`RS1` was never offered at the registration, as `public_key_credential_parameters` is empty by default. The applications that added `Cose\Algorithms::COSE_ALGORITHM_RS1` to that list are the only ones affected: without the service, the assertions signed by the credentials they registered are rejected.
+{% endhint %}
+
+If you are in that situation, declare the algorithm yourself. Autoconfiguration adds it back to the manager.
+
+{% code title="config/services.yaml" lineNumbers="true" %}
+```yaml
+services:
+    webauthn.cose.algorithm.RS1:
+        class: Cose\Algorithm\Signature\RSA\RS1
+        arguments:
+            - true # Acknowledge that the algorithm is insecure
+```
+{% endcode %}
+
 #### Attestation Conveyance
 
 If you need the [attestation of the authenticator](../webauthn-in-a-nutshell/attestation-and-metadata-statement.md), you can specify the preference regarding attestation conveyance during credential generation.
