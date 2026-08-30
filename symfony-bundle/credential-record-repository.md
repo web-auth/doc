@@ -100,6 +100,10 @@ class WebauthnCredential extends CredentialRecord
 Do not forget to update your database schema!
 {% endhint %}
 
+{% hint style="warning" %}
+**New in v5.4.0:** the Doctrine mapping shipped by the bundle declares the new nullable `rpId` field of the Credential Record. Applications using that mapping have to generate and run a migration adding the column, which is nullable and empty for the existing rows.
+{% endhint %}
+
 ## The Repository
 
 {% hint style="warning" %}

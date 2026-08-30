@@ -21,6 +21,11 @@ After the registration of an authenticator, you will get a `Webauthn\CredentialR
 * **backupStatus**: Whether the credential is currently backed up (since 5.1)
 * **uvInitialized**: Whether user verification was initialized (since 5.1)
 * **otherUI**: Optional additional UI hints (array)
+* **rpId**: The Relying Party ID the credential was scoped to at registration (since 5.4, nullable)
+
+{% hint style="info" %}
+**New in v5.4.0:** the optional `rpId` member added by the specification to the Credential Record structure is recorded during registration. It is mainly useful to Relying Parties adopting Related Origin Requests. It is appended last in the constructor and in `create()`, so existing call sites keep working, it is omitted from the serialized payload when null, and a payload without the key is still accepted. Records written by an earlier version keep a null value.
+{% endhint %}
 
 {% hint style="warning" %}
 **Renamed in v5.3.0:** The class `Webauthn\PublicKeyCredentialSource` has been renamed to `Webauthn\CredentialRecord`. The old class name is deprecated and will be removed in version 6.0. `PublicKeyCredentialSource` now extends `CredentialRecord` for backward compatibility.
