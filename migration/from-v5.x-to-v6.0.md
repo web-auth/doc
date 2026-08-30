@@ -72,6 +72,10 @@ $credential = new CredentialRecord(/* ... */);
 
 Similarly, the repository interface `PublicKeyCredentialSourceRepositoryInterface` is deprecated in favor of `CredentialRecordRepositoryInterface`.
 
+{% hint style="info" %}
+**Fixed in v5.3.7:** the bundle aliases the deprecated `PublicKeyCredentialSourceRepositoryInterface` to your repository only when that repository actually implements it. Symfony refuses an interface alias whose target does not implement the interface, so a repository following the deprecation and implementing `CredentialRecordRepositoryInterface` alone made the container invalid. Applications whose repository still implements the legacy interface keep the alias, and code type-hinting it keeps working.
+{% endhint %}
+
 ### DoctrineCredentialSourceRepository
 
 {% hint style="warning" %}

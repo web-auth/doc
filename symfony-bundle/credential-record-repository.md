@@ -12,6 +12,10 @@ It is up to you to create a credential record repository. This service shall imp
 **Renamed in v5.3.0:** `PublicKeyCredentialSource` has been renamed to `CredentialRecord` and `PublicKeyCredentialSourceRepositoryInterface` to `CredentialRecordRepositoryInterface`. The old names are deprecated and will be removed in 6.0.
 {% endhint %}
 
+{% hint style="info" %}
+**Fixed in v5.3.7:** the bundle aliases the deprecated `PublicKeyCredentialSourceRepositoryInterface` to your repository only when that repository actually implements it. Symfony refuses an interface alias whose target does not implement the interface, so a repository following the deprecation and implementing `CredentialRecordRepositoryInterface` alone made the container invalid. Applications whose repository still implements the legacy interface keep the alias, and code type-hinting it keeps working.
+{% endhint %}
+
 {% hint style="warning" %}
 Doctrine users: the field type for `transports` and `other_ui` changed from `array` to `json` (`array` is now deprecated) between the bundle v4.x and 5.0.
 
