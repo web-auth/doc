@@ -6,7 +6,7 @@
 
 The WebAuthn Signal API allows relying parties to send signals to the client (browser/platform) about credential status. This helps clients maintain accurate credential metadata and improves the user experience by keeping passkey lists up to date.
 
-## What Is the Signal API?
+## What is the Signal API?
 
 When users manage their passkeys on the server side (removing credentials, updating profile information), the client platform may still display outdated information. The Signal API provides a standardized way to inform the client about:
 
@@ -14,7 +14,7 @@ When users manage their passkeys on the server side (removing credentials, updat
 * Updated user details (name, display name)
 * Credentials that are no longer recognized by the server
 
-## Signal Types
+## Signal types
 
 ### AllAcceptedCredentials
 
@@ -118,21 +118,21 @@ $json = $serializer->serialize(
 // }
 ```
 
-## Use Cases
+## Use cases
 
-### After Credential Deletion
+### After credential deletion
 
 When a user removes a passkey from your application, send an `AllAcceptedCredentials` signal with the remaining credentials so the client can update its list.
 
-### After Profile Update
+### After profile update
 
 When a user changes their username or display name, send a `CurrentUserDetails` signal so the client displays the correct information in its passkey picker.
 
-### During Authentication
+### During authentication
 
 If an authentication attempt references a credential that doesn't exist in your database, send an `UnknownCredential` signal to help the client clean up orphaned passkeys.
 
-## See Also
+## See also
 
 * [WebAuthn Signal API Specification](https://github.com/nicovil/webauthn-signal-api) - W3C specification
 * [Credential Record](../../prerequisites/credential-record.md) - Credential storage

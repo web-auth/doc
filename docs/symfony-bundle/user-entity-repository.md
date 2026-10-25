@@ -1,6 +1,6 @@
-# User Entity Repository
+# User entity repository
 
-## User Entity
+## User entity
 
 Your application certainly has a user repository. Good news: there is no need to modify it!
 
@@ -71,7 +71,7 @@ final class WebauthnUserEntityRepository implements PublicKeyCredentialUserEntit
 
 ```
 
-## Registration Capability
+## Registration capability
 
 By default, the User Entity Repository is not able to register any user account. You can add this behavior by implementing the following interfaces:
 

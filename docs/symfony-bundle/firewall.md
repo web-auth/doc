@@ -4,7 +4,7 @@ description: How to register and authenticate my users?
 
 # Firewall
 
-## Security Bundle
+## Security bundle
 
 To authenticate or register your users with Symfony, the best and easiest way is to use the Security Bundle. First, install that bundle and follow the instructions given by [the official documentation](https://symfony.com/doc/current/security.html).
 
@@ -86,7 +86,7 @@ Below is an example of a login form using the [Stimulus Controller](../symfony-u
 {% endblock %}
 ```
 
-## Login Authenticator
+## Login authenticator
 
 Next, we need a Symfony Authenticator to handle login form submissions. With WebAuthn, we use a dedicated Passport that shall contain a specific Badge.
 
@@ -143,7 +143,7 @@ final class LoginAuthenticator extends WebauthnAuthenticator
 }
 ```
 
-## Security Configuration
+## Security configuration
 
 To enable the user authentication, you just have to declare the Symfony Authenticator in the appropriate firewall (here `main`).
 
@@ -177,11 +177,11 @@ webauthn:
                 options_path: '/login/webauthn/options'
 ```
 
-## User Registration
+## User registration
 
 TO BE WRITTEN
 
-## Authentication Attributes
+## Authentication attributes
 
 The security token returned by the firewall sets some attributes depending on the assertion and the capabilities of the authenticator. The attributes are:
 

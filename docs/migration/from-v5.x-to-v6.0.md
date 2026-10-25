@@ -152,7 +152,7 @@ app.register('web-auth--webauthn-stimulus', WebauthnController);
 
 Your Twig templates do not need any change — `stimulus_controller('@web-auth/webauthn-stimulus/authentication')` still resolves to the `web-auth--webauthn-stimulus--authentication` identifier you just registered.
 
-### Authenticator Transport CABLE
+### Authenticator transport CABLE
 
 !!! warning
 
@@ -172,7 +172,7 @@ use Webauthn\PublicKeyCredentialDescriptor;
 $transport = PublicKeyCredentialDescriptor::AUTHENTICATOR_TRANSPORT_HYBRID;
 ```
 
-### New Authenticator Transports
+### New authenticator transports
 
 !!! info
 
@@ -185,7 +185,7 @@ $transport = PublicKeyCredentialDescriptor::AUTHENTICATOR_TRANSPORT_HYBRID;
 
 All seven values are referenced by `PublicKeyCredentialDescriptor::AUTHENTICATOR_TRANSPORTS`.
 
-### Options Handlers Signature
+### Options handlers signature
 
 !!! warning
 
@@ -257,7 +257,7 @@ webauthn:
     allow_subdomains: false
 ```
 
-### Options Storage
+### Options storage
 
 `options_storage` option on the controller or firewall levels are deprecated. Please use the top level configuration key
 

@@ -1,4 +1,4 @@
-# Input Validation
+# Input validation
 
 The loaded data needs to be verified. The library will perform several actions to make sure the input you received is valid. This verification process is performed by a Ceremony Step Manager (CSM). The WebAuthn specification distinguishes two types of ceremonies [described in this page](../webauthn-in-a-nutshell/ceremonies.md).
 
@@ -6,7 +6,7 @@ The loaded data needs to be verified. The library will perform several actions t
 
     **Changed in v5.3.6:** the `tokenBinding` member of the client data is not validated anymore. It is reserved since WebAuthn Level 3 and its value was never used, so a ceremony is no longer rejected because of it. The raw client data stays available through the `data` property of `CollectedClientData`.
 
-## Ceremony Step Manager Factory
+## Ceremony step manager factory
 
 To facilitate the creation of the CSM, a default factory is included. This factory requires no external services to function.
 
@@ -40,7 +40,7 @@ These CSM services are meant to be used by Response Validators. In a similar way
 * **Authenticator Attestation Response Validator**: used during the creation ceremony
 * **Authenticator Assertion Response Validator**: used during the request ceremony
 
-## Response Validators
+## Response validators
 
 The Authenticator Attestation Response Validator and Authenticator Assertion Response Validator services are directly used when receiving Authenticator Responses in order to [register authenticators](authenticator-registration.md) or [authenticate users](authenticate-your-users.md).
 

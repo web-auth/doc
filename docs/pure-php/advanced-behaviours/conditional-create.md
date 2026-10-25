@@ -1,4 +1,4 @@
-# Conditional Create
+# Conditional create
 
 !!! info
 
@@ -6,7 +6,7 @@
 
 Conditional Create allows you to register a WebAuthn credential without explicit user interaction, typically after a user has already authenticated via another method (e.g., password login). This enables a seamless upgrade path from traditional authentication to passkeys.
 
-## How It Works
+## How it works
 
 In a standard WebAuthn registration ceremony, user presence is always required (the user must interact with the authenticator). With Conditional Create (`mediation: 'conditional'`), the browser can silently create a credential after the user has already proven their identity through another means.
 
@@ -22,11 +22,11 @@ This is particularly useful for:
 * **Progressive enrollment**: Gradually migrate users from passwords to passkeys
 * **Background registration**: Register credentials without interrupting the user flow
 
-## Pure PHP Usage
+## Pure PHP usage
 
 There are two equivalent ways to relax the User Presence (UP) and User Verification (UV) checks during validation: a per-request hint on the options, or a dedicated ceremony manager. The first option is the recommended one since v5.3.0 because the hint travels with the options across the storage round-trip and applies automatically.
 
-### Option 1 — Set `mediation` on the options (recommended)
+### Option 1 — set `mediation` on the options (recommended)
 
 `PublicKeyCredentialCreationOptions` exposes two constants, `MEDIATION_DEFAULT` and `MEDIATION_CONDITIONAL`, and a nullable `$mediation` property. When the property is set to `MEDIATION_CONDITIONAL`, `CheckUserWasPresent` skips the UP check and `CheckUserVerification` skips the UV check at runtime, regardless of which ceremony manager you use.
 
@@ -49,7 +49,7 @@ $options = PublicKeyCredentialCreationOptions::create(
 
     The `mediation` property is intentionally **not** serialized to the JSON sent to the browser — the browser receives `mediation: 'conditional'` via the JS API. The property is only used server-side and survives PHP `serialize`/`unserialize` so it can be stored in the session between the options request and the response validation.
 
-### Option 2 — Use a dedicated ceremony manager
+### Option 2 — use a dedicated ceremony manager
 
 The `CeremonyStepManagerFactory` still provides a dedicated method that returns a manager where neither the User Presence nor the User Verification check is enforced:
 
@@ -90,7 +90,7 @@ $credentialRecord = $validator->check(
 );
 ```
 
-## Symfony Bundle Configuration
+## Symfony bundle configuration
 
 Enable conditional create per creation profile. The bundle's `CeremonyStepManagerFactory` translates the `conditional_create: true` flag into `mediation = 'conditional'` on the produced options, so existing 5.3.x configurations behave identically:
 
@@ -120,7 +120,7 @@ webauthn:
                     allowed_values: ['default', 'conditional']
 ```
 
-## Frontend Integration
+## Frontend integration
 
 On the frontend, use `mediation: 'conditional'` when calling `navigator.credentials.create()`:
 
@@ -145,7 +145,7 @@ With the Stimulus controller, use the `autoRegister` option on the registration 
 
     Conditional Create requires browser support. Not all browsers support this feature yet. Always provide a fallback registration flow.
 
-## See Also
+## See also
 
 * [Register Authenticators](../../pure-php/authenticator-registration.md) - Standard registration ceremony
 * [Stimulus Controllers](../../symfony-ux/installation.md) - Frontend integration

@@ -73,7 +73,7 @@ composer require web-auth/webauthn-stimulus
 
 This command installs the PHP wrapper, which used to register the Stimulus controllers via Symfony Flex and configure AssetMapper to import them from a vendored copy. As of v5.3.0 the same JavaScript ships on npm and the PHP wrapper no longer brings any added value — it is scheduled for removal in 6.0.0.
 
-## What's Included
+## What's included
 
 The package provides Stimulus controllers that handle:
 
@@ -96,7 +96,7 @@ The package provides Stimulus controllers that handle:
 
     The dedicated controllers offer better separation of concerns, enhanced conditional UI support, and improved error handling. The combined controller remains available for backward compatibility.
 
-## Basic Usage
+## Basic usage
 
 Once the controllers are registered, you can use them in your Twig templates with the standard Symfony UX helpers:
 
@@ -106,7 +106,7 @@ Once the controllers are registered, you can use them in your Twig templates wit
 
 The first argument is the package-prefixed name — it will resolve to the `--`-separated identifier you registered in step 2.
 
-### Registration Form Example
+### Registration form example
 
 ```twig title="templates/registration/register.html.twig" linenums="1"
 <form
@@ -139,7 +139,7 @@ The first argument is the package-prefixed name — it will resolve to the `--`-
 </form>
 ```
 
-### Authentication Form Example
+### Authentication form example
 
 ```twig title="templates/security/login.html.twig" linenums="1"
 <form
@@ -172,11 +172,11 @@ The first argument is the package-prefixed name — it will resolve to the `--`-
 </form>
 ```
 
-## Controller Options
+## Controller options
 
 The dedicated controllers accept the following options. See the [User Authentication](user-authentication.md) and [User Registration](user-registration.md) pages for the full list of values, targets, actions and events.
 
-### Registration Options
+### Registration options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
@@ -186,7 +186,7 @@ The dedicated controllers accept the following options. See the [User Authentica
 | `successRedirectUri` | string | – | URL to redirect after successful registration |
 | `autoRegister` | boolean | `false` | Auto-start registration on page load |
 
-### Authentication Options
+### Authentication options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
@@ -219,7 +219,7 @@ If you see console errors:
 3. Verify WebAuthn routes are properly configured in `config/routes/webauthn.yaml`.
 4. Ensure the controller is loaded by checking the browser's network tab.
 
-## HTTPS Requirement
+## HTTPS requirement
 
 WebAuthn **requires HTTPS** to function. For development, use the Symfony CLI for automatic HTTPS:
 
@@ -230,7 +230,7 @@ symfony serve
 
 For production, ensure HTTPS is properly configured on your web server.
 
-## Next Steps
+## Next steps
 
 Now that the Stimulus Controller is installed, proceed to:
 
@@ -238,7 +238,7 @@ Now that the Stimulus Controller is installed, proceed to:
 2. **[User Authentication](user-authentication.md)** — implement login flows
 3. **[Additional Authenticators](additional-authenticators.md)** — allow users to register backup devices
 
-## See Also
+## See also
 
 * [Symfony UX Documentation](https://symfony.com/doc/current/frontend/ux.html) — official UX guide
 * [Stimulus Documentation](https://stimulus.hotwired.dev/) — Stimulus framework reference

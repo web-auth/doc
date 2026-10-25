@@ -1,4 +1,4 @@
-# User Authentication
+# User authentication
 
 With the version 5.2 of the bundle, the login process is very similar to the username/password login.
 
@@ -54,7 +54,7 @@ The `requestResultField` parameter corresponds to the selector to the hidden fie
 
 The behavior after the login is managed by your Symfony Security Authenticator.
 
-### Browser Autofill
+### Browser autofill
 
 When authenticators are available on the device and the browser is aware of them, you can simplify the way users will sign in. When this feature is enabled, the user will see the list of available authenticators when focusing on the username field. Selecting an account in the list will automatically perform the authentication actions. There is a simple option to enable this feature:
 
@@ -68,7 +68,7 @@ When authenticators are available on the device and the browser is aware of them
 ) }}
 ```
 
-## Dedicated Authentication Controller
+## Dedicated authentication controller
 
 !!! info
 
@@ -76,7 +76,7 @@ When authenticators are available on the device and the browser is aware of them
 
 The new `authentication-controller` provides a focused controller specifically for sign-in flows, with built-in support for conditional UI and better error handling.
 
-### Basic Usage
+### Basic usage
 
 ```twig title="templates/security/login.html.twig" linenums="1"
 <form
@@ -109,7 +109,7 @@ The new `authentication-controller` provides a focused controller specifically f
 </form>
 ```
 
-### Conditional UI (Autofill)
+### Conditional UI (autofill)
 
 The dedicated controller supports conditional UI natively:
 
@@ -122,7 +122,7 @@ The dedicated controller supports conditional UI natively:
 }) }}
 ```
 
-### Authentication Controller Options
+### Authentication controller options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
@@ -133,7 +133,7 @@ The dedicated controller supports conditional UI natively:
 | `conditionalUi` | boolean | `false` | Enable conditional UI (autofill) |
 | `verifyAutofillInput` | boolean | `true` | Verify autofill input fields exist |
 
-### Authentication Controller Targets
+### Authentication controller targets
 
 | Target | Description |
 |--------|-------------|

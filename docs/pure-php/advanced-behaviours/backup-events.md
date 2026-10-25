@@ -1,4 +1,4 @@
-# Backup Events
+# Backup events
 
 !!! info
 
@@ -78,7 +78,7 @@ class BackupStatusListener
 }
 ```
 
-## Registering Event Listeners
+## Registering event listeners
 
 ### Pure PHP (PSR-14)
 
@@ -116,13 +116,13 @@ services:
             - { name: kernel.event_listener, event: Webauthn\Event\BackupEligibilityChangedEvent }
 ```
 
-## Security Considerations
+## Security considerations
 
 * **Monitor backup status loss**: If a credential transitions from backed up to not backed up, the user may have lost their backup. Consider prompting them to register additional authenticators.
 * **Audit backup eligibility changes**: Unexpected changes in backup eligibility may indicate authenticator changes worth logging.
 * **Do not block authentication**: These events are informational. Do not reject authentication attempts based on backup flag changes.
 
-## See Also
+## See also
 
 * [Credential Record](../../prerequisites/credential-record.md) - Credential properties including backup flags
 * [Authenticator Counter](authenticator-counter.md) - Another security monitoring mechanism

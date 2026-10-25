@@ -2,7 +2,7 @@
 description: aka the application you are interacting with
 ---
 
-# The Relying Party
+# The relying party
 
 The Relying Party (or `rp`) corresponds to the application that will ask for the user to interact with the authenticator.
 
@@ -20,7 +20,7 @@ $rpEntity = PublicKeyCredentialRpEntity::create(
 
 This `$rpEntity` object will be useful for the next steps.
 
-## Relying Party Name
+## Relying party name
 
 !!! warning
 
@@ -36,7 +36,7 @@ The W3C IDL still requires a `name` member in the serialized options. Since v5.3
 
 An entity with neither a name nor an ID still serializes to nothing.
 
-## Relying Party ID
+## Relying party ID
 
 In the example above, we created a simple relying party object. The relying party may also have an ID that corresponds to the domain applicable for that `rp`. By default, the relying party ID is `null` i.e. the current domain will be used.
 
@@ -74,7 +74,7 @@ The `rp` ID shall be the domain of the application without the scheme, userinfo,
 
     The domain `localhost` can be used if the browser considers the context is safe (especially the IP address corresponds to a local address)
 
-### How to determine the Relying Party ID?
+### How to determine the relying party ID?
 
 The Relying Party ID should be determined depending on the common URLs for your web application.
 
@@ -88,7 +88,7 @@ For example, a web site is located at `https://(www.)site1.host.com` and another
 
     Discussion is ongoing for associating authenticators to multiple RP IDs such as `my-company.com`, `meine-firma.de` and `ma-compagnie.fr`
 
-## Relying Party Icon
+## Relying party icon
 
 Your application may also have a logo. You can indicate this logo as third argument. Please note that for safety reasons this icon should be an authenticated URL, i.e. an image that uses the `data` scheme.
 

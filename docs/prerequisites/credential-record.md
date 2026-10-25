@@ -2,9 +2,9 @@
 description: Authenticator details and how to manage them
 ---
 
-# Credential Record
+# Credential record
 
-## Credential Record Class
+## Credential record class
 
 After the registration of an authenticator, you will get a `Webauthn\CredentialRecord` object. This object contains all the credential data needed to perform user authentication:
 
@@ -50,7 +50,7 @@ $transports = $credentialRecord->transports; // ['usb', 'nfc']
 $descriptor = $credentialRecord->getPublicKeyCredentialDescriptor();
 ```
 
-## Credential Record Repository
+## Credential record repository
 
 Since 4.6.0 and except if you use the Symfony bundle, there is no interface to implement or abstract class to extend, making it easy to integrate into your application.
 
@@ -63,7 +63,7 @@ Your repository needs to provide two main operations:
 
     Whatever database you use (MySQL, PostgreSQL, MongoDB…), it is not necessary to create foreign key relationships between your users and the Credential Records. The `userHandle` property is sufficient to link credentials to users.
 
-### Repository Example
+### Repository example
 
 Here's a simple example using an array storage (for demonstration purposes):
 
@@ -105,7 +105,7 @@ final class InMemoryCredentialRecordRepository
 
     For production use, implement your repository with your preferred storage backend (Doctrine ORM, PDO, MongoDB, Redis, etc.). See the [Symfony Bundle section](../symfony-bundle/credential-record-repository.md) for a complete Doctrine example.
 
-### Important Notes
+### Important notes
 
 * **Store credentials securely**: Credentials contain sensitive cryptographic material
 * **Index by credential ID**: Lookups during authentication require fast credential ID queries

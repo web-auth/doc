@@ -1,4 +1,4 @@
-# Authenticator Algorithms
+# Authenticator algorithms
 
 The WebAuthn data verification is based on cryptographic signatures and thus you need to provide cryptographic algorithms to perform those checks.
 

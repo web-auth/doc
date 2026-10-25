@@ -1,4 +1,4 @@
-# Fake Credentials
+# Fake credentials
 
 In order to prevent username enumeration, random credentials are set when a username is passed but no user entity is found.
 

@@ -10,7 +10,7 @@ The complete specification can be found on [the W3C dedicated page](https://www.
 
 This framework contains PHP libraries and Symfony bundle to allow developers to integrate that authentication mechanism into their web applications.
 
-## Class, Constant and Property Names
+## Class, constant and property names
 
 Naming things may be complicated. That’s why the following rule applies on the whole framework: the name of classes, constants and properties are identical to the ones you will find in the specification.
 
@@ -55,7 +55,7 @@ As an example, the [section 5.2.2 “Web Authentication Assertion”](https://ww
 * Conditional Create (new in 5.3.0)
   * Auto-register credentials after password authentication
 
-## Compatible Authenticators
+## Compatible authenticators
 
 As of January 2023, our framework supports every authenticator with full feature and algorithm support, achieving a 100% success rate across all tests. Official FIDO Alliance testing tools have validated its compliance.
 

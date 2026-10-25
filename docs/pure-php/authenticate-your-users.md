@@ -1,8 +1,8 @@
-# Authenticate Your Users
+# Authenticate your users
 
 During this step, your application will send a challenge to the list of registered devices of the user. The security token will resolve this challenge by adding information and digitally signing the data.
 
-## Assertion Request
+## Assertion request
 
 To perform a user authentication using a security device, you need to instantiate a `Webauthn\PublicKeyCredentialRequestOptions` object.
 
@@ -27,7 +27,7 @@ The `PublicKeyCredentialRequestOptions` object is designed to be easily serializ
     * If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
     * If the user verification is `preferred` or `required`, the range is 300 to 600 seconds (5 to 10 minutes)
 
-### Allowed Credentials
+### Allowed credentials
 
 The user trying to authenticate must have registered at least one device. For this user, you have to get all `Webauthn\PublicKeyCredentialDescriptor` associated to his account.
 
@@ -87,7 +87,7 @@ $publicKeyCredentialRequestOptions =
 ;
 ```
 
-### User Verification
+### User verification
 
 Eligible authenticators are filtered and only capable of satisfying this requirement will interact with the user. Please refer to the [User Verification page](advanced-behaviours/user-verification.md) for all possible values.
 
@@ -132,7 +132,7 @@ $publicKeyCredentialRequestOptions =
 ;
 ```
 
-## Response Handling
+## Response handling
 
 The way you receive this response is out of scope of this library. In the previous example, the data is part of the query string, but it can be done through a POST request body or a request header.
 
@@ -157,7 +157,7 @@ There are two steps to perform with this object:
 * [Load the data](input-loading.md)
 * [Verify the loaded data against the assertion options set above](input-validation.md)
 
-### Data Loading
+### Data loading
 
 This step is exactly the same as the one described in [Public Key Credential Creation](authenticator-registration.md) process.
 
@@ -180,7 +180,7 @@ $data = '
 $publicKeyCredential = $serializer->deserialize($data, PublicKeyCredential::class, 'json');
 ```
 
-### Response Verification
+### Response verification
 
 Now we have a fully loaded Public Key Credential object, but we need now to make sure that:
 

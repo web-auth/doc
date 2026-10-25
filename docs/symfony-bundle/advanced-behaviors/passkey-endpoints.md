@@ -1,4 +1,4 @@
-# Passkey Endpoints
+# Passkey endpoints
 
 !!! info
 
@@ -31,7 +31,7 @@ webauthn:
         manage: 'https://example.com/settings/passkeys'
 ```
 
-## Configuration Options
+## Configuration options
 
 | Option | Type | Required | Description |
 |--------|------|----------|-------------|
@@ -40,7 +40,7 @@ webauthn:
 | `manage` | string | No | URL to the passkey management interface |
 | `prf_usage_details` | string | No | URL to informational page about PRF extension usage |
 
-## Response Format
+## Response format
 
 When enabled, a GET request to `/.well-known/passkey-endpoints` returns a JSON response:
 
@@ -56,7 +56,7 @@ When enabled, a GET request to `/.well-known/passkey-endpoints` returns a JSON r
 
     According to the specification, all URLs must be absolute HTTPS URLs.
 
-## How It Works
+## How it works
 
 When the passkey endpoints are enabled, the bundle automatically:
 
@@ -66,7 +66,7 @@ When the passkey endpoints are enabled, the bundle automatically:
 
 No additional controller or route configuration is needed.
 
-## See Also
+## See also
 
 * [W3C Passkey Endpoints Specification](https://w3c.github.io/webappsec-passkey-endpoints/) - Official specification
 * [Configuration References](../configuration-references.md) - Full bundle configuration

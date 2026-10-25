@@ -1,4 +1,4 @@
-# Configuration References
+# Configuration references
 
 ## Configuration
 
@@ -88,13 +88,13 @@ webauthn:
 #        certificate_chain_checker: 'App\Security\CertificateChainChecker'
 ```
 
-### Creation Profiles
+### Creation profiles
 
 !!! success
 
     If you don't create the `creation_profiles` section, a `default` profile is set.
 
-#### Relying Party (rp)
+#### Relying party (rp)
 
 The Relying Party corresponds to your application. Please refer [to this page](../prerequisites/the-relying-party.md) for more information.
 
@@ -106,7 +106,7 @@ The Relying Party corresponds to your application. Please refer [to this page](.
 
     The parameters `name` and `icon` are deprecated (since 5.3.0 and 5.1.0 respectively) and are removed in 6.0.0. Since 5.3.7, a profile without `rp.name` produces options where the `name` member defaults to the Relying Party ID, and no deprecation is triggered.
 
-#### Challenge Length
+#### Challenge length
 
 By default, the length of the challenge is 32 bytes. You may need to select a smaller or higher length. This length can be configured for each profile:
 
@@ -141,7 +141,7 @@ webauthn:
 
     These behaviors are not necessarily followed by the web browsers.
 
-#### Authenticator Selection Criteria
+#### Authenticator selection criteria
 
 This set of options allows you to select authenticators depending on their capabilities. The values are described in [the advanced concepts](../pure-php/advanced-behaviours/authenticator-selection-criteria.md) of the protocol.
 
@@ -157,7 +157,7 @@ webauthn:
                 user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
 ```
 
-#### Public Key Credential Parameters
+#### Public key credential parameters
 
 This option indicates the algorithms allowed for your application. By default, a large list of algorithms is defined, but you can add custom algorithms or reduce the list.
 
@@ -180,7 +180,7 @@ webauthn:
                 - !php/const Cose\Algorithms::COSE_ALGORITHM_RS256
 ```
 
-#### Signature Verification Algorithms
+#### Signature verification algorithms
 
 The parameters above list the algorithms offered to the authenticator during the registration. The signatures themselves are verified by `webauthn.cose.algorithm.manager`, which the bundle fills with one service per supported algorithm. Any service implementing `Cose\Algorithm\Algorithm` is collected automatically, so declaring one is enough to add an algorithm to that manager.
 
@@ -200,7 +200,7 @@ services:
             - true # Acknowledge that the algorithm is insecure
 ```
 
-#### Attestation Conveyance
+#### Attestation conveyance
 
 If you need the [attestation of the authenticator](../webauthn-in-a-nutshell/attestation-and-metadata-statement.md), you can specify the preference regarding attestation conveyance during credential generation.
 
@@ -248,7 +248,7 @@ Available hint values:
 - `client-device`: Platform authenticator (like Touch ID, Windows Hello)
 - `hybrid`: Hybrid transport (like phone as authenticator)
 
-#### Hide Existing Credentials
+#### Hide existing credentials
 
 !!! info
 
@@ -265,7 +265,7 @@ webauthn:
             hide_existing_credentials: true
 ```
 
-#### Conditional Create
+#### Conditional create
 
 !!! info
 
@@ -286,7 +286,7 @@ webauthn:
 
 See [Conditional Create](../pure-php/advanced-behaviours/conditional-create.md) for detailed usage.
 
-#### Client Override Policy
+#### Client override policy
 
 !!! info
 
@@ -327,7 +327,7 @@ webauthn:
                 txAuthSimple: 'Please add your new authenticator'
 ```
 
-### Request Profiles
+### Request profiles
 
 !!! success
 
@@ -350,7 +350,7 @@ webauthn:
         acme: ~
 ```
 
-### Passkey Endpoints
+### Passkey endpoints
 
 !!! info
 

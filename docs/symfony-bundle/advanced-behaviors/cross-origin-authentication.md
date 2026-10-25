@@ -1,4 +1,4 @@
-# Cross Origin Authentication
+# Cross origin authentication
 
 Please [refer to this page](../../pure-php/advanced-behaviours/cross-origin-authentication.md) to know more about the Cross Origin Authentication.
 
@@ -20,7 +20,7 @@ webauthn:
 
     **Changed in v5.3.3:** entries that are not URLs, such as `android:apk-key-hash:<base64>`, are compared verbatim with the origin sent by the client. Entries made of a host only are normalized to `https://`.
 
-## Top Origin Validation (Cross-Origin iframes)
+## Top origin validation (cross-origin iframes)
 
 When the ceremony runs in a cross-origin iframe, the client data contains the origin of the embedding page in a `topOrigin` field.
 
@@ -70,6 +70,6 @@ webauthn:
 
 See [the pure PHP documentation](../../pure-php/advanced-behaviours/cross-origin-authentication.md#top-origin-validation-cross-origin-iframes) for the built-in `HostTopOriginValidator` and more details.
 
-## Allowed Origins Endpoint
+## Allowed origins endpoint
 
 When the allowed\_origins parameter is set, the path `/.well-known/webauthn` is enabled. This path returns a `JSON` object with allowed domains.

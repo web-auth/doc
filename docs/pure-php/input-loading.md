@@ -1,14 +1,14 @@
-# Input Loading
+# Input loading
 
 In general, the data you receive is an encoded JSON object. The library provides utilities to convert the string into objects.
 
 To do so, you will need an Attestation Statement Support Manager and a Serializer.
 
-## Attestation Statement Support Manager
+## Attestation statement support manager
 
 Authenticator Responses may contain an Attestation Statement. This attestation holds data regarding the authenticator depending on several factors such as its manufacturer and model, what you asked in the options, the capabilities of the browser or what the user allowed.
 
-### Supported Attestation Statement Types
+### Supported attestation statement types
 
 The following attestation types are supported. Note that you should only use the `none` one unless you have specific needs described in [the dedicated page](../webauthn-in-a-nutshell/attestation-and-metadata-statement.md).
 
@@ -32,7 +32,7 @@ $attestationStatementSupportManager = AttestationStatementSupportManager::create
 $attestationStatementSupportManager->add(NoneAttestationStatementSupport::create());
 ```
 
-## The Serializer
+## The serializer
 
 To convert Authenticator Responses from the encoded string to an object, you will need a Serializer. It only needs the Attestation Statement Support Manager created above.
 
@@ -51,7 +51,7 @@ $serializer = $factory->create();
 
     Please do not use `json_encode` or `json_decode` to convert this data either way.
 
-## Loading Data
+## Loading data
 
 In general, the data you receive looks like as follows.
 

@@ -2,7 +2,7 @@
 description: Where the public keys and details are stored
 ---
 
-# Credential Record Repository
+# Credential record repository
 
 The Credential Record can be stored the way you want. As the `Webauthn\CredentialRecord` class can be converted into JSON, it could be stored in a filesystem.
 
@@ -30,15 +30,15 @@ It is up to you to create a credential record repository. This service shall imp
 
     ```
 
-## Registration Capability
+## Registration capability
 
 By default, the User Entity Repository is not able to register any user account. You can add this behavior by implementing the interface `Webauthn\Bundle\Repository\CanRegisterUserEntity`.
 
-## Doctrine Repository
+## Doctrine repository
 
 In general, Symfony applications use Doctrine, which is why the bundle provides a way to use Doctrine as storage system.
 
-### The Doctrine Entity
+### The Doctrine entity
 
 Here is an example of an entity.
 
@@ -98,7 +98,7 @@ class WebauthnCredential extends CredentialRecord
 
     Do not forget to update your database schema!
 
-## The Repository
+## The repository
 
 !!! warning
 
