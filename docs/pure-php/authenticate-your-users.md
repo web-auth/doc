@@ -1,0 +1,262 @@
+# Authenticate your users
+
+During this step, your application will send a challenge to the list of registered devices of the user. The security token will resolve this challenge by adding information and digitally signing the data.
+
+## Assertion request
+
+To perform a user authentication using a security device, you need to instantiate a `Webauthn\PublicKeyCredentialRequestOptions` object.
+
+Let’s say you want to authenticate the user we used earlier. This options object will need:
+
+* A challenge (random binary string)
+* The list with the allowed credentials (may be an option in certain circumstances)
+
+Optionally, you can customize the following parameters:
+
+* A timeout
+* The Relying Party ID i.e. your application domain
+* The user verification requirement
+* Extensions
+
+The `PublicKeyCredentialRequestOptions` object is designed to be easily serialized into a JSON object. This will ease the integration into an HTML page or through an API endpoint.
+
+!!! info
+
+    The timeout default value is set to `null`. If you want to set a value, please read the following recommended behavior showed in the specification:
+
+    * If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
+    * If the user verification is `preferred` or `required`, the range is 300 to 600 seconds (5 to 10 minutes)
+
+### Allowed credentials
+
+The user trying to authenticate must have registered at least one device. For this user, you have to get all `Webauthn\PublicKeyCredentialDescriptor` associated to his account.
+
+```php linenums="1"
+use Webauthn\CredentialRecord;
+use Webauthn\PublicKeyCredentialDescriptor;
+
+// We gather all registered authenticators for this user
+// $credentialRecordRepository corresponds to your own service
+// The purpose of the fictive method findAllForUserEntity is to return all credential records
+// registered by the user.
+$registeredAuthenticators = $credentialRecordRepository->findAllForUserEntity($userEntity);
+
+// We don’t need the Credential Records, just the associated Descriptors
+$allowedCredentials = array_map(
+    static function (CredentialRecord $credential): PublicKeyCredentialDescriptor {
+        return $credential->getPublicKeyCredentialDescriptor();
+    },
+    $registeredAuthenticators
+);
+```
+
+!!! info
+
+    For usernameless authentication, please read the [dedicated page](advanced-behaviours/authentication-without-username.md). In this case no Public Key Credential Descriptors should be passed to the options.
+
+!!! danger
+
+    To prevent username enumeration, when the authentication process is performed using the username, it is highly recommended to continue the ceremony even if the user entity does not exist. The allowed credential list should be set with random data.
+
+### Example
+
+```php linenums="1"
+<?php
+
+declare(strict_types=1);
+
+use Webauthn\CredentialRecord;
+use Webauthn\PublicKeyCredentialDescriptor;
+use Webauthn\PublicKeyCredentialRequestOptions;
+
+// List of registered PublicKeyCredentialDescriptor classes associated to the user
+$registeredAuthenticators = $credentialRecordRepository->findAllForUserEntity($userEntity);
+$allowedCredentials = array_map(
+    static function (CredentialRecord $credential): PublicKeyCredentialDescriptor {
+        return $credential->getPublicKeyCredentialDescriptor();
+    },
+    $registeredAuthenticators
+);
+
+// Public Key Credential Request Options
+$publicKeyCredentialRequestOptions =
+    PublicKeyCredentialRequestOptions::create(
+        random_bytes(32), // Challenge
+        allowCredentials: $allowedCredentials
+    )
+;
+```
+
+### User verification
+
+Eligible authenticators are filtered and only capable of satisfying this requirement will interact with the user. Please refer to the [User Verification page](advanced-behaviours/user-verification.md) for all possible values.
+
+```php linenums="1"
+<?php
+
+declare(strict_types=1);
+
+use Webauthn\PublicKeyCredentialRequestOptions;
+
+// Public Key Credential Request Options
+$publicKeyCredentialRequestOptions =
+    PublicKeyCredentialRequestOptions::create(
+        random_bytes(32), // Challenge
+        userVerification: PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_REQUIRED
+    )
+;
+```
+
+### UI mode (v5.4.0+)
+
+!!! info
+
+    **New in v5.4.0**
+
+The W3C Credential Management editor's draft (§2.3.3) adds `uiMode` on `CredentialRequestOptions`. When set to `immediate`, the user agent must either return a credential immediately available locally or fail with `NotAllowedError` — no UI shown. The framework exposes the two values as constants:
+
+* `PublicKeyCredentialRequestOptions::UI_MODE_AUTO` — default browser behaviour (`auto`)
+* `PublicKeyCredentialRequestOptions::UI_MODE_IMMEDIATE` — synchronous, no UI
+
+```php linenums="1"
+use Webauthn\PublicKeyCredentialRequestOptions;
+
+$options = PublicKeyCredentialRequestOptions::create(
+    challenge: random_bytes(32),
+    rpId: 'example.com',
+    uiMode: PublicKeyCredentialRequestOptions::UI_MODE_IMMEDIATE,
+);
+```
+
+The Stimulus authentication controller routes `uiMode === "immediate"` straight through `navigator.credentials.get()` (bypassing SimpleWebAuthn, which has no native `uiMode` support yet) so no controller-side change is required to use it.
+
+!!! warning
+
+    `uiMode` is distinct from the `mediation` enum used by [Conditional Create](advanced-behaviours/conditional-create.md). They live on different specs and may both be set on the same request.
+
+### Extensions
+
+Please refer to the [Extension page](../webauthn-in-a-nutshell/extensions.md) to know how to manage authentication extensions.
+
+```php linenums="1"
+<?php
+
+declare(strict_types=1);
+
+use Webauthn\PublicKeyCredentialRequestOptions;
+use Webauthn\AuthenticationExtensions\AuthenticationExtensions;
+use Webauthn\AuthenticationExtensions\AuthenticationExtension;
+
+// Public Key Credential Request Options
+$publicKeyCredentialRequestOptions =
+    PublicKeyCredentialRequestOptions::create(
+        random_bytes(32), // Challenge
+        extensions: AuthenticationExtensions::create([
+            AuthenticationExtension::create('loc', true),
+            AuthenticationExtension::create('txAuthSimple', 'Please log in with a registered authenticator'),
+        ])
+    )
+;
+```
+
+## Response handling
+
+The way you receive this response is out of scope of this library. In the previous example, the data is part of the query string, but it can be done through a POST request body or a request header.
+
+What you receive must be a JSON object that looks like as follows:
+
+```javascript linenums="1"
+{
+    "id":"KVb8CnwDjpgAo[…]op61BTLaa0tczXvz4JrQ23usxVHA8QJZi3L9GZLsAtkcVvWObA",
+    "type":"public-key",
+    "rawId":"KVb8CnwDjpgAo[…]rQ23usxVHA8QJZi3L9GZLsAtkcVvWObA==",
+    "response":{
+        "clientDataJSON":"eyJjaGFsbGVuZ2UiOiJQbk1hVjBVTS[…]1iUkdHLUc4Y3BDSdGUifQ==",
+        "authenticatorData":"Y0EWbxTqi9hWTO[…]4aust69iUIzlwBfwABDw==",
+        "signature":"MEQCIHpmdruQLs[…]5uwbtlPNOFM2oTusx2eg==",
+        "userHandle":""
+    }
+}
+```
+
+There are two steps to perform with this object:
+
+* [Load the data](input-loading.md)
+* [Verify the loaded data against the assertion options set above](input-validation.md)
+
+### Data loading
+
+This step is exactly the same as the one described in [Public Key Credential Creation](authenticator-registration.md) process.
+
+```php linenums="1"
+<?php
+
+declare(strict_types=1);
+
+$data = '
+{
+    "id":"KVb8CnwDjpgAo[…]op61BTLaa0tczXvz4JrQ23usxVHA8QJZi3L9GZLsAtkcVvWObA",
+    "type":"public-key",
+    "rawId":"KVb8CnwDjpgAo[…]rQ23usxVHA8QJZi3L9GZLsAtkcVvWObA==",
+    "response":{
+        "clientDataJSON":"eyJjaGFsbGVuZ2UiOiJQbk1hVjBVTS[…]1iUkdHLUc4Y3BDSdGUifQ==",
+        "attestationObject":"o2NmbXRmcGFja2VkZ2F0dFN0bXSj[…]YcGhf"
+    }
+}';
+
+$publicKeyCredential = $serializer->deserialize($data, PublicKeyCredential::class, 'json');
+```
+
+### Response verification
+
+Now we have a fully loaded Public Key Credential object, but we need now to make sure that:
+
+1. The authenticator response is of type `AuthenticatorAssertionResponse`
+2. This response is valid.
+
+The first is easy to perform:
+
+```php linenums="1"
+<?php
+
+declare(strict_types=1);
+
+use Webauthn\AuthenticatorAssertionResponse;
+
+if (!$publicKeyCredential->response instanceof AuthenticatorAssertionResponse) {
+    //e.g. process here with a redirection to the public key login/MFA page. 
+}
+```
+
+The second step is the verification against the Public Key Assertion Options we created earlier.
+
+The Authenticator Assertion Response Validator service (variable `$authenticatorAssertionResponseValidator`) will check everything for you.
+
+```php linenums="1"
+<?php
+
+declare(strict_types=1);
+
+$credentialRecord = $credentialRecordRepository->findOneByCredentialId(
+    $publicKeyCredential->rawId
+);
+if ($credentialRecord === null) {
+   // Throw an exception if the credential is not found.
+   // It can also be rejected depending on your security policy (e.g. disabled by the user because of loss)
+}
+
+$credentialRecord = $authenticatorAssertionResponseValidator->check(
+    $credentialRecord,
+    $authenticatorAssertionResponse,
+    $publicKeyCredentialRequestOptions,
+    'my-application.com',
+    $userEntity?->id // Should be `null` if the user entity is not known before this step
+);
+
+// Optional, but highly recommended, you can save the credential record as it may be modified
+// during the verification process (counter may be higher).
+$credentialRecordRepository->saveCredentialRecord($credentialRecord);
+
+```
+
+If no exception is thrown, the response is valid and you can continue the authentication of the user.
