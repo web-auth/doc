@@ -213,7 +213,7 @@ There are two steps to perform with this object:
 
 ### Data loading
 
-Now that all components are set, we can load the data we receive using the [_Serializer_](webauthn-server.md#the-serializer) (variable `$serializer`).
+Now that all components are set, we can load the data we receive using the [_Serializer_](input-loading.md#the-serializer) (variable `$serializer`).
 
 ```php linenums="1" hl_lines="1"
 <?php
