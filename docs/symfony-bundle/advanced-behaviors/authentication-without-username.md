@@ -6,14 +6,13 @@ With WebAuthn, it is possible to authenticate a user without username. This beha
 2. The user verification is required,
 3. The list of allowed authenticators must be empty
 
-{% hint style="info" %}
-In case of failure, you should continue with the standard authentication process i.e. by asking the username of the user.
-{% endhint %}
+!!! info
+
+    In case of failure, you should continue with the standard authentication process i.e. by asking the username of the user.
 
 The bundle configuration should have a profile with the constraints listed above:
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     credential_repository: '…'
     user_repository: '…'
@@ -30,4 +29,3 @@ webauthn:
             rp_id: 'example.com'
             user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
 ```
-{% endcode %}

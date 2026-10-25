@@ -1,8 +1,8 @@
 # Backup Events
 
-{% hint style="info" %}
-**New in v5.3.0**
-{% endhint %}
+!!! info
+
+    **New in v5.3.0**
 
 The framework dispatches PSR-14 events when the backup eligibility or backup status flags of a credential change during authentication. These events allow you to react to changes in credential backup state, which is important for security monitoring and user guidance.
 
@@ -13,9 +13,9 @@ WebAuthn authenticators report two backup-related flags:
 * **BE (Backup Eligible)**: Indicates whether the authenticator is capable of backing up the credential (e.g., synced passkeys via iCloud Keychain, Google Password Manager)
 * **BS (Backup Status)**: Indicates whether the credential is currently backed up
 
-{% hint style="info" %}
-**Fixed in v5.3.6:** `AuthenticatorData::getReservedForFutureUse2()` reported the bits 3 and 4 as reserved, although WebAuthn Level 3 assigns them to BE and BS. A synced passkey with both flags set returned `24` instead of `0`. The mask is now restricted to the only bit that is still reserved. Use `isBackupEligible()` and `isBackedUp()` to read the backup flags.
-{% endhint %}
+!!! info
+
+    **Fixed in v5.3.6:** `AuthenticatorData::getReservedForFutureUse2()` reported the bits 3 and 4 as reserved, although WebAuthn Level 3 assigns them to BE and BS. A synced passkey with both flags set returned `24` instead of `0`. The mask is now restricted to the only bit that is still reserved. Use `isBackupEligible()` and `isBackedUp()` to read the backup flags.
 
 Changes in these flags can signal important security events:
 
@@ -28,8 +28,7 @@ Changes in these flags can signal important security events:
 
 Dispatched when the backup eligibility (BE) flag changes between authentications.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -51,14 +50,12 @@ class BackupEligibilityListener
     }
 }
 ```
-{% endcode %}
 
 ### BackupStatusChangedEvent
 
 Dispatched when the backup status (BS) flag changes between authentications.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -80,14 +77,12 @@ class BackupStatusListener
     }
 }
 ```
-{% endcode %}
 
 ## Registering Event Listeners
 
 ### Pure PHP (PSR-14)
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -106,14 +101,12 @@ $eventDispatcher->addListener(
     new BackupStatusListener()
 );
 ```
-{% endcode %}
 
 ### Symfony
 
 With the Symfony bundle, register your listeners as services. With autoconfiguration, they are registered automatically.
 
-{% code title="config/services.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/services.yaml" linenums="1"
 services:
     App\EventListener\BackupStatusListener:
         tags:
@@ -122,7 +115,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: Webauthn\Event\BackupEligibilityChangedEvent }
 ```
-{% endcode %}
 
 ## Security Considerations
 

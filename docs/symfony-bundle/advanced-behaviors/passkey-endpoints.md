@@ -1,8 +1,8 @@
 # Passkey Endpoints
 
-{% hint style="info" %}
-**New in v5.3.0**
-{% endhint %}
+!!! info
+
+    **New in v5.3.0**
 
 The [W3C Passkey Endpoints specification](https://w3c.github.io/webappsec-passkey-endpoints/) defines a well-known URL (`/.well-known/passkey-endpoints`) that allows passkey providers to discover where users can manage their passkeys on your application.
 
@@ -12,8 +12,7 @@ This enables password managers and platform authenticators to link directly to y
 
 Enable the passkey endpoints in your Symfony bundle configuration:
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     passkey_endpoints:
         enabled: true
@@ -21,19 +20,16 @@ webauthn:
         manage: 'https://example.com/passkeys/manage'
         prf_usage_details: 'https://example.com/passkeys/prf-info'
 ```
-{% endcode %}
 
 All URL fields are optional. You can enable only the endpoints relevant to your application:
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     passkey_endpoints:
         enabled: true
         enroll: 'https://example.com/register'
         manage: 'https://example.com/settings/passkeys'
 ```
-{% endcode %}
 
 ## Configuration Options
 
@@ -56,9 +52,9 @@ When enabled, a GET request to `/.well-known/passkey-endpoints` returns a JSON r
 }
 ```
 
-{% hint style="warning" %}
-According to the specification, all URLs must be absolute HTTPS URLs.
-{% endhint %}
+!!! warning
+
+    According to the specification, all URLs must be absolute HTTPS URLs.
 
 ## How It Works
 

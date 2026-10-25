@@ -1,8 +1,8 @@
 # Conditional Create
 
-{% hint style="info" %}
-**New in v5.3.0**
-{% endhint %}
+!!! info
+
+    **New in v5.3.0**
 
 Conditional Create allows you to register a WebAuthn credential without explicit user interaction, typically after a user has already authenticated via another method (e.g., password login). This enables a seamless upgrade path from traditional authentication to passkeys.
 
@@ -12,9 +12,9 @@ In a standard WebAuthn registration ceremony, user presence is always required (
 
 Because the credential is created without any interaction, the User Present (UP) and User Verified (UV) flags of the authenticator data may both be `false`. The validation relaxes the two checks accordingly.
 
-{% hint style="info" %}
-**Changed in v5.3.6:** the User Verification check is relaxed as well. Until then only the User Presence check was, so a conditional registration made against a profile requiring user verification was rejected with `User authentication required.`.
-{% endhint %}
+!!! info
+
+    **Changed in v5.3.6:** the User Verification check is relaxed as well. Until then only the User Presence check was, so a conditional registration made against a profile requiring user verification was rejected with `User authentication required.`.
 
 This is particularly useful for:
 
@@ -30,8 +30,7 @@ There are two equivalent ways to relax the User Presence (UP) and User Verificat
 
 `PublicKeyCredentialCreationOptions` exposes two constants, `MEDIATION_DEFAULT` and `MEDIATION_CONDITIONAL`, and a nullable `$mediation` property. When the property is set to `MEDIATION_CONDITIONAL`, `CheckUserWasPresent` skips the UP check and `CheckUserVerification` skips the UV check at runtime, regardless of which ceremony manager you use.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -45,18 +44,16 @@ $options = PublicKeyCredentialCreationOptions::create(
     mediation: PublicKeyCredentialCreationOptions::MEDIATION_CONDITIONAL,
 );
 ```
-{% endcode %}
 
-{% hint style="info" %}
-The `mediation` property is intentionally **not** serialized to the JSON sent to the browser — the browser receives `mediation: 'conditional'` via the JS API. The property is only used server-side and survives PHP `serialize`/`unserialize` so it can be stored in the session between the options request and the response validation.
-{% endhint %}
+!!! info
+
+    The `mediation` property is intentionally **not** serialized to the JSON sent to the browser — the browser receives `mediation: 'conditional'` via the JS API. The property is only used server-side and survives PHP `serialize`/`unserialize` so it can be stored in the session between the options request and the response validation.
 
 ### Option 2 — Use a dedicated ceremony manager
 
 The `CeremonyStepManagerFactory` still provides a dedicated method that returns a manager where neither the User Presence nor the User Verification check is enforced:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -71,12 +68,10 @@ $standardCeremony = $csmFactory->creationCeremony();
 // Conditional create ceremony (user presence can be false)
 $conditionalCeremony = $csmFactory->conditionalCreateCeremony();
 ```
-{% endcode %}
 
 Use the conditional ceremony manager when validating attestation responses from conditional create flows:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -94,14 +89,12 @@ $credentialRecord = $validator->check(
     'example.com'
 );
 ```
-{% endcode %}
 
 ## Symfony Bundle Configuration
 
 Enable conditional create per creation profile. The bundle's `CeremonyStepManagerFactory` translates the `conditional_create: true` flag into `mediation = 'conditional'` on the produced options, so existing 5.3.x configurations behave identically:
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         passkey_upgrade:
@@ -112,12 +105,10 @@ webauthn:
                 require_resident_key: true
                 user_verification: preferred
 ```
-{% endcode %}
 
 If you would rather decide per request — for example, only enable conditional create when the JavaScript client explicitly asks for it — opt in via the [Client Override Policy](../../symfony-bundle/advanced-behaviors/client-override-policy.md):
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         passkey_upgrade:
@@ -128,20 +119,17 @@ webauthn:
                     enabled: true
                     allowed_values: ['default', 'conditional']
 ```
-{% endcode %}
 
 ## Frontend Integration
 
 On the frontend, use `mediation: 'conditional'` when calling `navigator.credentials.create()`:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 const credential = await navigator.credentials.create({
     publicKey: creationOptions,
     mediation: 'conditional'
 });
 ```
-{% endcode %}
 
 With the Stimulus controller, use the `autoRegister` option on the registration controller:
 
@@ -153,9 +141,9 @@ With the Stimulus controller, use the `autoRegister` option on the registration 
 }) }}
 ```
 
-{% hint style="warning" %}
-Conditional Create requires browser support. Not all browsers support this feature yet. Always provide a fallback registration flow.
-{% endhint %}
+!!! warning
+
+    Conditional Create requires browser support. Not all browsers support this feature yet. Always provide a fallback registration flow.
 
 ## See Also
 

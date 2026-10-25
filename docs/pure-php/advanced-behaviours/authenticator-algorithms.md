@@ -4,8 +4,7 @@ The WebAuthn data verification is based on cryptographic signatures and thus you
 
 The following algorithms are required in most situations:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -21,16 +20,14 @@ $algorithmManager = Manager::create()
     )
 ;
 ```
-{% endcode %}
 
-{% hint style="info" %}
-The order is important. By adding `ES256` first, the relying party prefers an `ES256` credential. Browsers are eager to satisfy preferences.
-{% endhint %}
+!!! info
+
+    The order is important. By adding `ES256` first, the relying party prefers an `ES256` credential. Browsers are eager to satisfy preferences.
 
 The complete list of supported algorithms:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -69,12 +66,10 @@ $algorithmManager = Manager::create()
     )
 ;
 ```
-{% endcode %}
 
 The algorithm manager can be injected to your Ceremony Step Manager Factory.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -84,4 +79,3 @@ use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
 $csmFactory = new CeremonyStepManagerFactory();
 $csmFactory->setAlgorithmManager($algorithmManager);
 ```
-{% endcode %}

@@ -4,16 +4,15 @@ In order to prevent username enumeration, random credentials are set when a user
 
 A very simple service is provided: `Webauthn\SimpleFakeCredentialGenerator`. It derives the list from the username and from a secret, so that a given username always gets the same credentials while an outsider cannot compute them.
 
-{% hint style="danger" %}
-**Security fix in v5.3.5** ([GHSA-gq4g-fpc9-vjfq](https://github.com/web-auth/webauthn-framework/security/advisories/GHSA-gq4g-fpc9-vjfq))
+!!! danger
 
-With an empty secret, the generated credentials depend on the username alone and become predictable: an unauthenticated requester can tell a fake response from a real one, which defeats the protection against username enumeration. Building the generator without a secret is deprecated since 5.3.5 and a non-empty secret is required in 6.0.0.
+    **Security fix in v5.3.5** ([GHSA-gq4g-fpc9-vjfq](https://github.com/web-auth/webauthn-framework/security/advisories/GHSA-gq4g-fpc9-vjfq))
 
-The bundle injects `%kernel.secret%`, so applications using the default service are not affected. Only a manual instantiation of the generator, in a pure PHP application or in a custom service definition, needs to be fixed.
-{% endhint %}
+    With an empty secret, the generated credentials depend on the username alone and become predictable: an unauthenticated requester can tell a fake response from a real one, which defeats the protection against username enumeration. Building the generator without a secret is deprecated since 5.3.5 and a non-empty secret is required in 6.0.0.
 
-{% code lineNumbers="true" %}
-```php
+    The bundle injects `%kernel.secret%`, so applications using the default service are not affected. Only a manual instantiation of the generator, in a pure PHP application or in a custom service definition, needs to be fixed.
+
+```php linenums="1"
 <?php
 
 use Webauthn\SimpleFakeCredentialGenerator;
@@ -23,12 +22,10 @@ $generator = new SimpleFakeCredentialGenerator(
     $applicationSecret
 );
 ```
-{% endcode %}
 
 If you want to change the way the fake credentials are generated, you can create a custom service. The service shall implement the `Webauthn\FakeCredentialGenerator` interface.
 
-{% code title="src/CustomCredentialGenerator.php" lineNumbers="true" %}
-```php
+```php title="src/CustomCredentialGenerator.php" linenums="1"
 <?php
 
 namespace App;
@@ -50,13 +47,10 @@ final readonly class CustomCredentialGenerator implements FakeCredentialGenerato
     }
 }
 ```
-{% endcode %}
 
 Then, declare this service in the container and use it in your bundle configuration.
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     fake_credential_generator: App\CustomCredentialGenerator
 ```
-{% endcode %}

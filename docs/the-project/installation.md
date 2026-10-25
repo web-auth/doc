@@ -24,9 +24,9 @@ For the Stimulus controllers (frontend integration), pull them straight from npm
 php bin/console importmap:require @web-auth/webauthn-stimulus
 ```
 
-{% hint style="warning" %}
-The legacy PHP package `web-auth/webauthn-stimulus` is deprecated since v5.3.0 and will be removed in 6.0.0. Install the controllers via npm instead.
-{% endhint %}
+!!! warning
+
+    The legacy PHP package `web-auth/webauthn-stimulus` is deprecated since v5.3.0 and will be removed in 6.0.0. Install the controllers via npm instead.
 
 ## Requirements
 

@@ -13,9 +13,9 @@ Both APIs are asynchronous and return Promises that resolve with credential obje
 
 ## HTTPS Requirement
 
-{% hint style="danger" %}
-**HTTPS is mandatory** for WebAuthn to work. This applies to all domains, including `localhost`. The only exception is `localhost` in some browsers during development, but production environments must always use HTTPS.
-{% endhint %}
+!!! danger
+
+    **HTTPS is mandatory** for WebAuthn to work. This applies to all domains, including `localhost`. The only exception is `localhost` in some browsers during development, but production environments must always use HTTPS.
 
 Modern browsers enforce this requirement to prevent credential theft and man-in-the-middle attacks.
 
@@ -37,26 +37,25 @@ We highly recommend using [@simplewebauthn/browser](https://simplewebauthn.dev/d
 
 If you're using Symfony, the [Stimulus Controller](../symfony-ux/installation.md) provides seamless integration with forms and authentication workflows without writing JavaScript code.
 
-{% hint style="warning" %}
-**Recommended since v5.3.0:** install the Stimulus controllers from npm — `@web-auth/webauthn-stimulus` — and register them from your JavaScript bootstrap. The dedicated PHP package `web-auth/webauthn-stimulus` is deprecated and will be removed in 6.0.0.
+!!! warning
 
-```bash
-# AssetMapper
-php bin/console importmap:require @web-auth/webauthn-stimulus
+    **Recommended since v5.3.0:** install the Stimulus controllers from npm — `@web-auth/webauthn-stimulus` — and register them from your JavaScript bootstrap. The dedicated PHP package `web-auth/webauthn-stimulus` is deprecated and will be removed in 6.0.0.
 
-# Or any other bundler
-npm install @web-auth/webauthn-stimulus
-```
+    ```bash
+    # AssetMapper
+    php bin/console importmap:require @web-auth/webauthn-stimulus
 
-See [Symfony UX → Installation](../symfony-ux/installation.md) for the JS-side `app.register()` step. **Do not** add the package to `assets/controllers.json` — that file only handles Symfony UX **PHP** packages.
-{% endhint %}
+    # Or any other bundler
+    npm install @web-auth/webauthn-stimulus
+    ```
+
+    See [Symfony UX → Installation](../symfony-ux/installation.md) for the JS-side `app.register()` step. **Do not** add the package to `assets/controllers.json` — that file only handles Symfony UX **PHP** packages.
 
 ## Registration (Attestation) Flow
 
 ### Using Native Browser API
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 // 1. Fetch registration options from your server
 const optionsResponse = await fetch('/webauthn/register/options', {
     method: 'POST',
@@ -106,12 +105,10 @@ await fetch('/webauthn/register', {
     body: JSON.stringify(attestationResponse)
 });
 ```
-{% endcode %}
 
 ### Using @simplewebauthn/browser
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 import { startRegistration } from '@simplewebauthn/browser';
 
 try {
@@ -147,14 +144,12 @@ try {
     alert('Registration failed: ' + error.message);
 }
 ```
-{% endcode %}
 
 ## Authentication (Assertion) Flow
 
 ### Using Native Browser API
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 // 1. Fetch authentication options from server
 const optionsResponse = await fetch('/webauthn/login/options', {
     method: 'POST',
@@ -203,12 +198,10 @@ await fetch('/webauthn/login', {
     body: JSON.stringify(assertionResponse)
 });
 ```
-{% endcode %}
 
 ### Using @simplewebauthn/browser
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 import { startAuthentication } from '@simplewebauthn/browser';
 
 try {
@@ -243,14 +236,12 @@ try {
     alert('Authentication failed: ' + error.message);
 }
 ```
-{% endcode %}
 
 ## Base64URL Encoding/Decoding
 
 If you're using the native API without a library, you need helper functions for base64url encoding:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 function base64urlEncode(buffer) {
     const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
     return base64
@@ -272,18 +263,16 @@ function base64urlDecode(base64url) {
     return bytes.buffer;
 }
 ```
-{% endcode %}
 
-{% hint style="info" %}
-The [@simplewebauthn/browser](https://simplewebauthn.dev/docs/packages/browser/) library handles all encoding/decoding automatically, which is why we recommend it.
-{% endhint %}
+!!! info
+
+    The [@simplewebauthn/browser](https://simplewebauthn.dev/docs/packages/browser/) library handles all encoding/decoding automatically, which is why we recommend it.
 
 ## Error Handling
 
 WebAuthn operations can fail for various reasons. Always wrap calls in try-catch blocks:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 import { startAuthentication } from '@simplewebauthn/browser';
 
 try {
@@ -304,7 +293,6 @@ try {
     }
 }
 ```
-{% endcode %}
 
 ## Common Error Types
 
@@ -328,8 +316,7 @@ WebAuthn is supported in modern browsers:
 
 Always check for WebAuthn support before attempting registration or authentication:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 if (!window.PublicKeyCredential) {
     alert('WebAuthn is not supported in this browser');
     // Show fallback authentication method
@@ -344,14 +331,12 @@ if (window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) {
     }
 }
 ```
-{% endcode %}
 
 ## Browser Autofill / Conditional UI
 
 Modern browsers support autofill for WebAuthn credentials, allowing users to select passkeys from password autofill:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 // Check if conditional UI is available
 const conditionalUIAvailable = await PublicKeyCredential.isConditionalMediationAvailable();
 
@@ -363,7 +348,6 @@ if (conditionalUIAvailable) {
     });
 }
 ```
-{% endcode %}
 
 For Symfony UX users, enable this with the `useBrowserAutofill` option in the Stimulus controller configuration.
 

@@ -2,16 +2,15 @@
 
 The loaded data needs to be verified. The library will perform several actions to make sure the input you received is valid. This verification process is performed by a Ceremony Step Manager (CSM). The WebAuthn specification distinguishes two types of ceremonies [described in this page](../webauthn-in-a-nutshell/ceremonies.md).
 
-{% hint style="info" %}
-**Changed in v5.3.6:** the `tokenBinding` member of the client data is not validated anymore. It is reserved since WebAuthn Level 3 and its value was never used, so a ceremony is no longer rejected because of it. The raw client data stays available through the `data` property of `CollectedClientData`.
-{% endhint %}
+!!! info
+
+    **Changed in v5.3.6:** the `tokenBinding` member of the client data is not validated anymore. It is reserved since WebAuthn Level 3 and its value was never used, so a ceremony is no longer rejected because of it. The raw client data stays available through the `data` property of `CollectedClientData`.
 
 ## Ceremony Step Manager Factory
 
 To facilitate the creation of the CSM, a default factory is included. This factory requires no external services to function.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -23,19 +22,18 @@ $csmFactory = new CeremonyStepManagerFactory();
 $creationCSM = $csmFactory->creationCeremony();
 $requestCSM = $csmFactory->requestCeremony();
 ```
-{% endcode %}
 
-{% hint style="info" %}
-You can customize its behavior to fit the specific needs of your application by modifying the provided factory. Please refer to the dedicated pages for more information.
+!!! info
 
-* [Counter Checker](advanced-behaviours/authenticator-counter.md)
-* [Attestation Statement Support Manager](advanced-behaviours/attestation-and-metadata-statement.md#attestation-statement-support-manager)
-* [Extension Output Checker Handler](advanced-behaviours/extensions.md)
-* [Algorithm Manager](advanced-behaviours/authenticator-algorithms.md)
-* [Metadata Statement Repository](advanced-behaviours/attestation-and-metadata-statement.md#metadata-statement-repository)
-* [Status Report Repository](advanced-behaviours/attestation-and-metadata-statement.md#status-report-repository)
-* [Certification Chain Validator](advanced-behaviours/attestation-and-metadata-statement.md#certificate-chain-validator)
-{% endhint %}
+    You can customize its behavior to fit the specific needs of your application by modifying the provided factory. Please refer to the dedicated pages for more information.
+
+    * [Counter Checker](advanced-behaviours/authenticator-counter.md)
+    * [Attestation Statement Support Manager](advanced-behaviours/attestation-and-metadata-statement.md#attestation-statement-support-manager)
+    * [Extension Output Checker Handler](advanced-behaviours/extensions.md)
+    * [Algorithm Manager](advanced-behaviours/authenticator-algorithms.md)
+    * [Metadata Statement Repository](advanced-behaviours/attestation-and-metadata-statement.md#metadata-statement-repository)
+    * [Status Report Repository](advanced-behaviours/attestation-and-metadata-statement.md#status-report-repository)
+    * [Certification Chain Validator](advanced-behaviours/attestation-and-metadata-statement.md#certificate-chain-validator)
 
 These CSM services are meant to be used by Response Validators. In a similar way, there are two types of validators:
 
@@ -46,12 +44,11 @@ These CSM services are meant to be used by Response Validators. In a similar way
 
 The Authenticator Attestation Response Validator and Authenticator Assertion Response Validator services are directly used when receiving Authenticator Responses in order to [register authenticators](authenticator-registration.md) or [authenticate users](authenticate-your-users.md).
 
-{% hint style="info" %}
-All null values below correspond to deprecated parameters. They have been removed in 5.0.0
-{% endhint %}
+!!! info
 
-{% code lineNumbers="true" %}
-```php
+    All null values below correspond to deprecated parameters. They have been removed in 5.0.0
+
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -66,4 +63,3 @@ $authenticatorAssertionResponseValidator = AuthenticatorAssertionResponseValidat
     $requestCSM
 );
 ```
-{% endcode %}

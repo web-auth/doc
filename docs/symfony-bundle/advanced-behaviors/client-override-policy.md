@@ -1,8 +1,8 @@
 # Client Override Policy
 
-{% hint style="info" %}
-**New in v5.3.0**
-{% endhint %}
+!!! info
+
+    **New in v5.3.0**
 
 The Client Override Policy provides granular control over which WebAuthn options clients can override via request parameters. This allows you to define strict server-side defaults while optionally allowing clients to customize specific fields within constrained boundaries.
 
@@ -18,8 +18,7 @@ Each policy field has:
 
 The example below shows every field with an explicit value. You only need to declare the fields you want to change — the rest fall back to the [defaults](#configurable-fields) listed in the next section.
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         default:
@@ -44,7 +43,6 @@ webauthn:
                     enabled: false   # disabled by default; opt-in
                     allowed_values: ['default', 'conditional']
 ```
-{% endcode %}
 
 ## Configurable Fields
 
@@ -57,9 +55,9 @@ webauthn:
 | `extensions` | enabled | N/A | Whether the client can provide additional extensions |
 | `mediation` | **disabled** | `default`, `conditional` | Whether the client can request the [Conditional Create](../../pure-php/advanced-behaviours/conditional-create.md) flow (auto-register) — opt-in. |
 
-{% hint style="warning" %}
-**Why `user_verification` is disabled by default.** Allowing a client to override the user verification requirement makes it possible to request `discouraged` against a profile that mandates `required`, which silently weakens the security guarantee. If you enable this override, keep `discouraged` out of `allowed_values` and **always re-check the `UV` flag at the application layer** — see [User Verification](../../webauthn-in-a-nutshell/user-verification.md#checking-the-uv-flag).
-{% endhint %}
+!!! warning
+
+    **Why `user_verification` is disabled by default.** Allowing a client to override the user verification requirement makes it possible to request `discouraged` against a profile that mandates `required`, which silently weakens the security guarantee. If you enable this override, keep `discouraged` out of `allowed_values` and **always re-check the `UV` flag at the application layer** — see [User Verification](../../webauthn-in-a-nutshell/user-verification.md#checking-the-uv-flag).
 
 ## Examples
 
@@ -67,8 +65,7 @@ webauthn:
 
 Force platform authenticators (like Touch ID, Windows Hello) and prevent clients from requesting cross-platform authenticators:
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         passkeys_only:
@@ -80,14 +77,12 @@ webauthn:
                 authenticator_attachment:
                     enabled: false  # Client cannot change this
 ```
-{% endcode %}
 
 ### Lock Down All Options
 
 For high-security scenarios, disable all client overrides:
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         high_security:
@@ -108,14 +103,12 @@ webauthn:
                 extensions:
                     enabled: false
 ```
-{% endcode %}
 
 ### Allow Only Specific Verification Levels
 
 Allow the client to choose between `required` and `preferred`, but not `discouraged`:
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         default:
@@ -126,14 +119,12 @@ webauthn:
                     enabled: true
                     allowed_values: ['required', 'preferred']
 ```
-{% endcode %}
 
 ### Opt-in Conditional Create from the Client
 
 Conditional mediation is the only override that is **disabled by default**. Enable it on a per-profile basis if you want the JavaScript client to request the [Conditional Create](../../pure-php/advanced-behaviours/conditional-create.md) flow without the profile being permanently configured for it:
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         default:
@@ -144,7 +135,6 @@ webauthn:
                     enabled: true
                     allowed_values: ['default', 'conditional']
 ```
-{% endcode %}
 
 ## How It Works
 

@@ -13,9 +13,9 @@ Before installing the Stimulus Controller, you need:
 
 Since v5.3.0 the Stimulus controllers are published on npm as [`@web-auth/webauthn-stimulus`](https://www.npmjs.com/package/@web-auth/webauthn-stimulus). The npm package is the canonical and only maintained source going forward — the legacy `web-auth/webauthn-stimulus` Composer package is deprecated and will be removed in 6.0.0.
 
-{% hint style="danger" %}
-**Do not declare this package in `assets/controllers.json`.** That file is reserved for Symfony **PHP** UX packages. `Symfony\UX\StimulusBundle` resolves every entry against an installed Composer package, so adding `@web-auth/webauthn-stimulus` there throws `Could not find package "web-auth/webauthn-stimulus" referred to from controllers.json` as soon as the Composer wrapper is gone (the very thing we want). Register the controllers from your JavaScript code instead — see below.
-{% endhint %}
+!!! danger
+
+    **Do not declare this package in `assets/controllers.json`.** That file is reserved for Symfony **PHP** UX packages. `Symfony\UX\StimulusBundle` resolves every entry against an installed Composer package, so adding `@web-auth/webauthn-stimulus` there throws `Could not find package "web-auth/webauthn-stimulus" referred to from controllers.json` as soon as the Composer wrapper is gone (the very thing we want). Register the controllers from your JavaScript code instead — see below.
 
 ### 1. Pin the package in your importmap
 
@@ -37,8 +37,7 @@ The package depends on `@hotwired/stimulus` and `@simplewebauthn/browser`, which
 
 Import the controllers from the package entry point and register them on your Stimulus `Application`. Use the same `--`-separated identifiers that `stimulus_controller('@web-auth/webauthn-stimulus/...')` produces, so the existing Twig helpers keep working unchanged:
 
-{% code title="assets/bootstrap.js" lineNumbers="true" %}
-```javascript
+```javascript title="assets/bootstrap.js" linenums="1"
 import { Application } from '@hotwired/stimulus';
 import {
     AuthenticationController,
@@ -55,19 +54,18 @@ app.register('web-auth--webauthn-stimulus--registration', RegistrationController
 // Legacy combined controller — only register if you still rely on it
 app.register('web-auth--webauthn-stimulus', WebauthnController);
 ```
-{% endcode %}
 
-{% hint style="info" %}
-**Why these identifiers?** `stimulus_controller('@vendor/pkg/ctrl')` simply transforms the name to a flat string by stripping the leading `@` and turning `/` into `--`. So `stimulus_controller('@web-auth/webauthn-stimulus/authentication')` renders `data-controller="web-auth--webauthn-stimulus--authentication"` — the same identifier you registered in JS. Existing Twig templates that use the `@`-prefixed form keep working without changes.
+!!! info
 
-The exact location of your Stimulus bootstrap file depends on your project layout. With the default Symfony AssetMapper recipe it is `assets/bootstrap.js` or `assets/app.js`. Anywhere your `Application.start()` runs is fine.
-{% endhint %}
+    **Why these identifiers?** `stimulus_controller('@vendor/pkg/ctrl')` simply transforms the name to a flat string by stripping the leading `@` and turning `/` into `--`. So `stimulus_controller('@web-auth/webauthn-stimulus/authentication')` renders `data-controller="web-auth--webauthn-stimulus--authentication"` — the same identifier you registered in JS. Existing Twig templates that use the `@`-prefixed form keep working without changes.
+
+    The exact location of your Stimulus bootstrap file depends on your project layout. With the default Symfony AssetMapper recipe it is `assets/bootstrap.js` or `assets/app.js`. Anywhere your `Application.start()` runs is fine.
 
 ### Deprecated: install via Composer (`web-auth/webauthn-stimulus`)
 
-{% hint style="danger" %}
-This installation path is kept for backward compatibility only. New projects should use the npm package above.
-{% endhint %}
+!!! danger
+
+    This installation path is kept for backward compatibility only. New projects should use the npm package above.
 
 ```bash
 composer require web-auth/webauthn-stimulus
@@ -88,15 +86,15 @@ The package provides Stimulus controllers that handle:
 * **PRF extension** — built-in support for the Pseudo-Random Function extension
 * **TypeScript declarations** (v5.3.3+): the package ships `.d.ts` files alongside the controllers and declares them through the `types` entry of its `package.json`, so editors and `tsc` know the values, targets, actions and events of each controller without any extra `@types` package
 
-{% hint style="info" %}
-**Three controllers ship in the package:**
+!!! info
 
-* `WebauthnController` — combined controller (legacy, still supported)
-* `AuthenticationController` — dedicated authentication controller
-* `RegistrationController` — dedicated registration controller
+    **Three controllers ship in the package:**
 
-The dedicated controllers offer better separation of concerns, enhanced conditional UI support, and improved error handling. The combined controller remains available for backward compatibility.
-{% endhint %}
+    * `WebauthnController` — combined controller (legacy, still supported)
+    * `AuthenticationController` — dedicated authentication controller
+    * `RegistrationController` — dedicated registration controller
+
+    The dedicated controllers offer better separation of concerns, enhanced conditional UI support, and improved error handling. The combined controller remains available for backward compatibility.
 
 ## Basic Usage
 
@@ -110,8 +108,7 @@ The first argument is the package-prefixed name — it will resolve to the `--`-
 
 ### Registration Form Example
 
-{% code title="templates/registration/register.html.twig" lineNumbers="true" %}
-```twig
+```twig title="templates/registration/register.html.twig" linenums="1"
 <form
     action="{{ path('app_register') }}"
     method="post"
@@ -141,12 +138,10 @@ The first argument is the package-prefixed name — it will resolve to the `--`-
     </button>
 </form>
 ```
-{% endcode %}
 
 ### Authentication Form Example
 
-{% code title="templates/security/login.html.twig" lineNumbers="true" %}
-```twig
+```twig title="templates/security/login.html.twig" linenums="1"
 <form
     action="{{ path('app_login') }}"
     method="post"
@@ -176,7 +171,6 @@ The first argument is the package-prefixed name — it will resolve to the `--`-
     </button>
 </form>
 ```
-{% endcode %}
 
 ## Controller Options
 

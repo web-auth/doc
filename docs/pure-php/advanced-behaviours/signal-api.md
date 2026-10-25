@@ -1,8 +1,8 @@
 # Signal API
 
-{% hint style="info" %}
-**New in v5.3.0**
-{% endhint %}
+!!! info
+
+    **New in v5.3.0**
 
 The WebAuthn Signal API allows relying parties to send signals to the client (browser/platform) about credential status. This helps clients maintain accurate credential metadata and improves the user experience by keeping passkey lists up to date.
 
@@ -20,8 +20,7 @@ When users manage their passkeys on the server side (removing credentials, updat
 
 Informs the client about all credentials that the server currently recognizes for a given user. This allows the client to remove any credentials that are no longer valid.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -47,14 +46,12 @@ $acceptedCredentials = [
 
 $signal = new AllAcceptedCredentials($rpEntity, $userEntity, $acceptedCredentials);
 ```
-{% endcode %}
 
 ### CurrentUserDetails
 
 Informs the client about updated user details. Use this when a user changes their username or display name to keep the client's passkey list accurate.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -73,14 +70,12 @@ $userEntity = PublicKeyCredentialUserEntity::create(
 
 $signal = new CurrentUserDetails($rpEntity, $userEntity);
 ```
-{% endcode %}
 
 ### UnknownCredential
 
 Informs the client that a specific credential is not recognized by the server. This can occur when a credential has been deleted server-side or was never registered.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -95,14 +90,12 @@ $unknownCredential = PublicKeyCredentialDescriptor::create('public-key', $creden
 
 $signal = new UnknownCredential($rpEntity, $unknownCredential);
 ```
-{% endcode %}
 
 ## Serialization
 
 Signals can be serialized to JSON using the Symfony Serializer. The framework provides dedicated denormalizers for each signal type.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -124,7 +117,6 @@ $json = $serializer->serialize(
 //     "allAcceptedCredentialIds": ["...", "..."]
 // }
 ```
-{% endcode %}
 
 ## Use Cases
 

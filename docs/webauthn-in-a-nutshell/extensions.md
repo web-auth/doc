@@ -1,8 +1,8 @@
 # Extensions
 
-{% hint style="info" %}
-This page is about an advanced feature. You can skip it if you are new with WebAuthn.
-{% endhint %}
+!!! info
+
+    This page is about an advanced feature. You can skip it if you are new with WebAuthn.
 
 WebAuthn extensions are optional features that extend the core WebAuthn specification to support additional use cases and capabilities. They allow authenticators and browsers to provide extra functionality beyond basic authentication.
 
@@ -22,9 +22,9 @@ Extensions work in both directions:
 1. **Extension Inputs** - Sent from the Relying Party to the authenticator via the browser
 2. **Extension Outputs** - Returned from the authenticator to the Relying Party after processing
 
-{% hint style="warning" %}
-**Important**: Authenticators may ignore extension inputs if they don't support them. Extension outputs are **not guaranteed** and your application should handle their absence gracefully.
-{% endhint %}
+!!! warning
+
+    **Important**: Authenticators may ignore extension inputs if they don't support them. Extension outputs are **not guaranteed** and your application should handle their absence gracefully.
 
 ## Common WebAuthn Extensions
 
@@ -57,16 +57,15 @@ This library provides:
 * ✅ **AppID extension** - Built-in support for U2F backward compatibility
 * ⚠️ **Custom extensions** - You need to implement extension handlers for other extensions
 
-{% hint style="warning" %}
-Most extensions require custom implementation. It is up to you to create the extension handlers depending on which extensions you want to support.
-{% endhint %}
+!!! warning
+
+    Most extensions require custom implementation. It is up to you to create the extension handlers depending on which extensions you want to support.
 
 ## Basic Usage Example
 
 Here's how to add an extension input when creating credential options:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -88,12 +87,10 @@ $publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create
     extensions: $extensions
 );
 ```
-{% endcode %}
 
 After registration, check the extension outputs:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // After successful registration
 $extensionOutputs = $publicKeyCredential->response->getAuthenticatorData()->extensions;
 
@@ -103,7 +100,6 @@ if (isset($extensionOutputs['credProps']['rk'])) {
     echo $isDiscoverable ? 'Resident key created' : 'Non-resident key';
 }
 ```
-{% endcode %}
 
 ## Practical Use Cases
 
@@ -111,8 +107,7 @@ if (isset($extensionOutputs['credProps']['rk'])) {
 
 Allow existing U2F credentials to work with your WebAuthn implementation:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 $extensions = AuthenticationExtensions::create([
     AuthenticationExtension::create('appid', 'https://example.com')
 ]);
@@ -122,14 +117,12 @@ $publicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions::create(
     extensions: $extensions
 );
 ```
-{% endcode %}
 
 ### 2. Credential Properties (credProps Extension)
 
 Determine if a credential supports resident keys (usernameless authentication):
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 $extensions = AuthenticationExtensions::create([
     AuthenticationExtension::create('credProps', true)
 ]);
@@ -137,14 +130,12 @@ $extensions = AuthenticationExtensions::create([
 // After registration, check:
 $rk = $extensionOutputs['credProps']['rk'] ?? false;
 ```
-{% endcode %}
 
 ### 3. Large Blob Storage (largeBlob Extension)
 
 Store additional encrypted data with the credential:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // Write blob during registration
 $extensions = AuthenticationExtensions::create([
     AuthenticationExtension::create('largeBlob', [
@@ -153,18 +144,16 @@ $extensions = AuthenticationExtensions::create([
     ])
 ]);
 ```
-{% endcode %}
 
 ### 4. Pseudo-Random Function (prf Extension)
 
-{% hint style="info" %}
-PRF extension support was added in version 5.2.0
-{% endhint %}
+!!! info
+
+    PRF extension support was added in version 5.2.0
 
 The PRF (Pseudo-Random Function) extension allows you to generate cryptographic keys from authenticator secrets. This is particularly useful for encryption scenarios:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // Request PRF during authentication
 $extensions = AuthenticationExtensions::create([
     AuthenticationExtension::create('prf', [
@@ -179,7 +168,6 @@ $publicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions::create(
     extensions: $extensions
 );
 ```
-{% endcode %}
 
 ## Implementation Considerations
 

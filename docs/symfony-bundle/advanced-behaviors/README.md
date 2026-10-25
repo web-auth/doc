@@ -53,8 +53,7 @@ The bundle provides several Symfony-specific features not available in pure PHP:
 
 Here's a common advanced configuration:
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     credential_repository: 'App\Repository\WebauthnCredentialRepository'
     user_repository: 'App\Repository\UserRepository'
@@ -82,7 +81,6 @@ webauthn:
             rp_id: 'example.com'
             user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
 ```
-{% endcode %}
 
 ## See Also
 
@@ -90,6 +88,6 @@ webauthn:
 * [Configuration References](../configuration-references.md) - Complete configuration options
 * [Pure PHP Advanced Behaviours](../../pure-php/advanced-behaviours/README.md) - Framework-agnostic implementations
 
-{% hint style="info" %}
-Start with the basic bundle setup in [Bundle Installation](../bundle-installation.md) before diving into advanced behaviors.
-{% endhint %}
+!!! info
+
+    Start with the basic bundle setup in [Bundle Installation](../bundle-installation.md) before diving into advanced behaviors.

@@ -1,12 +1,12 @@
 # Metadata Statement
 
-{% hint style="info" %}
-This page is about an advanced feature. You can skip it if you are new with WebAuthn.
-{% endhint %}
+!!! info
 
-{% hint style="danger" %}
-Disclaimer: you **should not** ask for the Attestation Statement unless you want to play with it or you are working on an application that requires a high level of trust (e.g. Banking/Financial Company, Government Agency...).
-{% endhint %}
+    This page is about an advanced feature. You can skip it if you are new with WebAuthn.
+
+!!! danger
+
+    Disclaimer: you **should not** ask for the Attestation Statement unless you want to play with it or you are working on an application that requires a high level of trust (e.g. Banking/Financial Company, Government Agency...).
 
 ## Attestation Statement
 
@@ -25,6 +25,6 @@ The Metadata Statements are issued by the manufacturers of the authenticators. T
 
 There are several possible sources to get these Metadata Statements. The main source is the [FIDO Alliance Metadata Service](https://fidoalliance.org/metadata) that allows fetching statements on-demand, but some of them may be provided by other means.
 
-{% hint style="danger" %}
-The FIDO Alliance Metadata Service provides a limited number of Metadata Statements. It is mandatory to get the statement from the manufacturer of your authenticators otherwise the Attestation Statement won't be verified and the Attestation Ceremony will fail.
-{% endhint %}
+!!! danger
+
+    The FIDO Alliance Metadata Service provides a limited number of Metadata Statements. It is mandatory to get the statement from the manufacturer of your authenticators otherwise the Attestation Statement won't be verified and the Attestation Ceremony will fail.

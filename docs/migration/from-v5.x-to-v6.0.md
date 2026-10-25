@@ -4,9 +4,9 @@ description: Step-by-step guide for migrating from 5.x to 6.0
 
 # From 5.x to 6.0
 
-{% hint style="info" %}
-This page is subject to changes as the version 6.0.0 is not available at the time of writing.
-{% endhint %}
+!!! info
+
+    This page is subject to changes as the version 6.0.0 is not available at the time of writing.
 
 This project follows the [Semantic Versioning principles](https://semver.org) and, contrary to upgrading a minor version (where the middle number changes) where no difficulty should be encountered, upgrading a major version (where the first number changes) is subject to significant modifications.
 
@@ -18,9 +18,9 @@ This project follows the [Semantic Versioning principles](https://semver.org) an
 
 ### PublicKeyCredentialRpEntity.name
 
-{% hint style="warning" %}
-**Deprecated in v5.3.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.3.0**
 
 The `name` property of `PublicKeyCredentialRpEntity` is deprecated in version 5.3.0 and will be removed in version 6.0.0. According to the WebAuthn Level 3 specification, the Relying Party name is no longer required.
 
@@ -32,9 +32,9 @@ $rpEntity = PublicKeyCredentialRpEntity::create('My Application', 'example.com')
 $rpEntity = PublicKeyCredentialRpEntity::create('', 'example.com');
 ```
 
-{% hint style="info" %}
-**Changed in v5.3.7:** the deprecation is carried by `PublicKeyCredentialRpEntity` only. `PublicKeyCredentialUserEntity.name` is **not** deprecated: the property moves from the abstract parent class down to the user entity in 6.0.0 and keeps working exactly as before. Until 5.3.6 the tag sat on the parent class, so static analysis reported every read of a user entity name as deprecated.
-{% endhint %}
+!!! info
+
+    **Changed in v5.3.7:** the deprecation is carried by `PublicKeyCredentialRpEntity` only. `PublicKeyCredentialUserEntity.name` is **not** deprecated: the property moves from the abstract parent class down to the user entity in 6.0.0 and keeps working exactly as before. Until 5.3.6 the tag sat on the parent class, so static analysis reported every read of a user entity name as deprecated.
 
 The `name` member is required by the W3C IDL. Since v5.3.7 the serializer writes the Relying Party ID in that member when the entity has an empty name, so the payload sent to the browser stays valid without any action on your side.
 
@@ -52,9 +52,9 @@ Between 5.3.3 and 5.3.6 the bundle copied `rp.id` into `rp.name` on the entity i
 
 ### PublicKeyCredentialSource
 
-{% hint style="warning" %}
-**Deprecated in v5.3.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.3.0**
 
 The class `Webauthn\PublicKeyCredentialSource` has been renamed to `Webauthn\CredentialRecord` to better reflect its purpose. The old class now extends `CredentialRecord` for backward compatibility but will be removed in version 6.0.0.
 
@@ -72,15 +72,15 @@ $credential = new CredentialRecord(/* ... */);
 
 Similarly, the repository interface `PublicKeyCredentialSourceRepositoryInterface` is deprecated in favor of `CredentialRecordRepositoryInterface`.
 
-{% hint style="info" %}
-**Fixed in v5.3.7:** the bundle aliases the deprecated `PublicKeyCredentialSourceRepositoryInterface` to your repository only when that repository actually implements it. Symfony refuses an interface alias whose target does not implement the interface, so a repository following the deprecation and implementing `CredentialRecordRepositoryInterface` alone made the container invalid. Applications whose repository still implements the legacy interface keep the alias, and code type-hinting it keeps working.
-{% endhint %}
+!!! info
+
+    **Fixed in v5.3.7:** the bundle aliases the deprecated `PublicKeyCredentialSourceRepositoryInterface` to your repository only when that repository actually implements it. Symfony refuses an interface alias whose target does not implement the interface, so a repository following the deprecation and implementing `CredentialRecordRepositoryInterface` alone made the container invalid. Applications whose repository still implements the legacy interface keep the alias, and code type-hinting it keeps working.
 
 ### DoctrineCredentialSourceRepository
 
-{% hint style="warning" %}
-**Deprecated in v5.2.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.2.0**
 
 The class `Webauthn\Bundle\Repository\DoctrineCredentialSourceRepository` provided by the Symfony bundle is deprecated and will be removed in version 6.0.0. You should create your own Doctrine-based repository instead.
 
@@ -105,17 +105,17 @@ See the [Credential Record Repository](../symfony-bundle/credential-record-repos
 
 ### createFormJson
 
-{% hint style="warning" %}
-**Deprecated in v5.3.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.3.0**
 
 The `createFormJson` method is deprecated and will be removed in version 6.0.0. Use the standard Symfony Serializer to deserialize credential responses instead.
 
 ### Composer package `web-auth/webauthn-stimulus`
 
-{% hint style="warning" %}
-**Deprecated in v5.3.0 — removed in v6.0.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.3.0 — removed in v6.0.0**
 
 The dedicated PHP package `web-auth/webauthn-stimulus` (the Symfony Flex/AssetMapper wrapper around the Stimulus controllers) is deprecated. The same JavaScript is now published to npm as [`@web-auth/webauthn-stimulus`](https://www.npmjs.com/package/@web-auth/webauthn-stimulus) and that is the only package that will keep being maintained in 6.0.0.
 
@@ -146,17 +146,17 @@ app.register('web-auth--webauthn-stimulus--registration', RegistrationController
 app.register('web-auth--webauthn-stimulus', WebauthnController);
 ```
 
-{% hint style="danger" %}
-**Do not add `@web-auth/webauthn-stimulus` to `assets/controllers.json`.** Symfony UX `StimulusBundle` resolves `controllers.json` entries against installed Composer packages, so it throws `Could not find package "web-auth/webauthn-stimulus" referred to from controllers.json` once the Composer wrapper is gone. Register from JavaScript instead, as shown above.
-{% endhint %}
+!!! danger
+
+    **Do not add `@web-auth/webauthn-stimulus` to `assets/controllers.json`.** Symfony UX `StimulusBundle` resolves `controllers.json` entries against installed Composer packages, so it throws `Could not find package "web-auth/webauthn-stimulus" referred to from controllers.json` once the Composer wrapper is gone. Register from JavaScript instead, as shown above.
 
 Your Twig templates do not need any change — `stimulus_controller('@web-auth/webauthn-stimulus/authentication')` still resolves to the `web-auth--webauthn-stimulus--authentication` identifier you just registered.
 
 ### Authenticator Transport CABLE
 
-{% hint style="warning" %}
-**Deprecated in v5.3.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.3.0**
 
 The constant `AUTHENTICATOR_TRANSPORT_CABLE` is deprecated and will be removed in version 6.0.0. Use `AUTHENTICATOR_TRANSPORT_HYBRID` (the spec-aligned successor for caBLE / cloud-assisted BLE) instead.
 
@@ -174,9 +174,9 @@ $transport = PublicKeyCredentialDescriptor::AUTHENTICATOR_TRANSPORT_HYBRID;
 
 ### New Authenticator Transports
 
-{% hint style="info" %}
-**Added in v5.3.0**
-{% endhint %}
+!!! info
+
+    **Added in v5.3.0**
 
 `PublicKeyCredentialDescriptor` exposes two new transport constants in addition to the historic `usb`, `nfc`, `ble` and `internal`:
 
@@ -187,9 +187,9 @@ All seven values are referenced by `PublicKeyCredentialDescriptor::AUTHENTICATOR
 
 ### Options Handlers Signature
 
-{% hint style="warning" %}
-**Changed in v5.3.0**
-{% endhint %}
+!!! warning
+
+    **Changed in v5.3.0**
 
 The `CreationOptionsHandler` and `RequestOptionsHandler` interfaces now accept an optional `?Request $request` parameter. If you implement these interfaces, you must update the signature of your methods.
 
