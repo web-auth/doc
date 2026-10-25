@@ -7,7 +7,7 @@ The [Symfony UX Initiative](https://symfony.com/ux) enables high-interaction app
 Before installing the Stimulus Controller, you need:
 
 1. **Symfony UX configured** - Follow the [official Symfony UX documentation](https://symfony.com/doc/current/frontend/ux.html)
-2. **WebAuthn Bundle installed** - See [Symfony Bundle Installation](the-symfony-way.md)
+2. **WebAuthn Bundle installed** - See [Symfony Bundle Installation](../symfony-bundle/the-symfony-way.md)
 
 ## Installation
 
@@ -240,5 +240,5 @@ Now that the Stimulus Controller is installed, proceed to:
 
 * [Symfony UX Documentation](https://symfony.com/doc/current/frontend/ux.html) - Official UX guide
 * [Stimulus Documentation](https://stimulus.hotwired.dev/) - Stimulus framework reference
-* [WebAuthn Bundle](the-symfony-way.md) - Backend configuration
+* [WebAuthn Bundle](../symfony-bundle/the-symfony-way.md) - Backend configuration
 * [JavaScript Integration](../prerequisites/javascript.md) - Manual JavaScript implementation
