@@ -41,8 +41,7 @@ You can configure the user verification requirement when creating credential opt
 
 The operation **requires** user verification and will **fail** if the authenticator does not set the `UV` flag.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\AuthenticatorSelectionCriteria;
 use Webauthn\PublicKeyCredentialCreationOptions;
 
@@ -57,7 +56,6 @@ $publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create
     authenticatorSelection: $authenticatorSelection
 );
 ```
-{% endcode %}
 
 **Use when:**
 * High-security applications (banking, healthcare)
@@ -68,13 +66,11 @@ $publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create
 
 The operation **prefers** user verification but will **not fail** if the authenticator doesn't provide it.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 $authenticatorSelection = AuthenticatorSelectionCriteria::create(
     userVerification: AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
 );
 ```
-{% endcode %}
 
 This is the **recommended default** for most applications. It uses user verification when available but doesn't exclude authenticators that don't support it.
 
@@ -87,13 +83,11 @@ This is the **recommended default** for most applications. It uses user verifica
 
 The operation **discourages** user verification to minimize disruption to the user flow.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 $authenticatorSelection = AuthenticatorSelectionCriteria::create(
     userVerification: AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_DISCOURAGED
 );
 ```
-{% endcode %}
 
 **Use when:**
 * Low-risk operations
@@ -105,8 +99,7 @@ $authenticatorSelection = AuthenticatorSelectionCriteria::create(
 
 After authentication or registration, verify whether user verification actually occurred:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // During assertion validation
 $authenticatorData = $publicKeyCredential->response->getAuthenticatorData();
 
@@ -123,14 +116,12 @@ if ($userVerified) {
 $flags = $authenticatorData->getFlags();
 $uvFlag = ($flags & 0x04) !== 0;  // UV flag is bit 2
 ```
-{% endcode %}
 
 ## Practical Examples
 
 ### Example 1: High-Security Banking App
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // Require user verification for all operations
 $authenticatorSelection = AuthenticatorSelectionCriteria::create(
     userVerification: AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
@@ -144,12 +135,10 @@ $options = PublicKeyCredentialCreationOptions::create(
     authenticatorSelection: $authenticatorSelection
 );
 ```
-{% endcode %}
 
 ### Example 2: General Web Application
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // Prefer user verification but don't require it
 $authenticatorSelection = AuthenticatorSelectionCriteria::create(
     userVerification: AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
@@ -163,19 +152,16 @@ $options = PublicKeyCredentialCreationOptions::create(
     authenticatorSelection: $authenticatorSelection
 );
 ```
-{% endcode %}
 
 ### Example 3: Fast Re-authentication
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // For quick re-auth on already logged-in user, discourage UV
 $options = PublicKeyCredentialRequestOptions::create(
     challenge: random_bytes(32),
     userVerification: AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_DISCOURAGED
 );
 ```
-{% endcode %}
 
 ## Device Capabilities
 
@@ -190,9 +176,9 @@ Different authenticators have different user verification capabilities:
 | **YubiKey Bio** | Fingerprint |
 | **Basic security keys** | None (only user presence) |
 
-{% hint style="info" %}
-When you set `userVerification: required`, only authenticators capable of user verification will be available to the user during registration or authentication.
-{% endhint %}
+!!! info
+
+    When you set `userVerification: required`, only authenticators capable of user verification will be available to the user during registration or authentication.
 
 ## Best Practices
 
@@ -210,8 +196,7 @@ When you set `userVerification: required`, only authenticators capable of user v
 
 ### Conditional Logic
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // Require UV only for privileged operations
 $isAdminAction = ($user->getRole() === 'ROLE_ADMIN');
 
@@ -224,7 +209,6 @@ $options = PublicKeyCredentialRequestOptions::create(
     userVerification: $userVerification
 );
 ```
-{% endcode %}
 
 ## Common Issues
 
@@ -251,8 +235,7 @@ $options = PublicKeyCredentialRequestOptions::create(
 
 The library provides convenient constants in the `AuthenticatorSelectionCriteria` class:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\AuthenticatorSelectionCriteria;
 
 // For registration (attestation)
@@ -263,7 +246,6 @@ AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_DISCOURAGED
 // These same constants can be used for authentication (assertion)
 // in PublicKeyCredentialRequestOptions
 ```
-{% endcode %}
 
 ## See Also
 

@@ -19,8 +19,7 @@ The following attestation types are supported. Note that you should only use the
 * `trusted platform module`: for devices with built-in security chips.
 * `apple`: for Apple devices
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -32,14 +31,12 @@ use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
 $attestationStatementSupportManager = AttestationStatementSupportManager::create();
 $attestationStatementSupportManager->add(NoneAttestationStatementSupport::create());
 ```
-{% endcode %}
 
 ## The Serializer
 
 To convert Authenticator Responses from the encoded string to an object, you will need a Serializer. It only needs the Attestation Statement Support Manager created above.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -49,18 +46,16 @@ use Webauthn\Denormalizer\WebauthnSerializerFactory;
 $factory = new WebauthnSerializerFactory($attestationStatementSupportManager);
 $serializer = $factory->create();
 ```
-{% endcode %}
 
-{% hint style="danger" %}
-Please do not use `json_encode` or `json_decode` to convert this data either way.
-{% endhint %}
+!!! danger
+
+    Please do not use `json_encode` or `json_decode` to convert this data either way.
 
 ## Loading Data
 
 In general, the data you receive looks like as follows.
 
-{% code lineNumbers="true" %}
-```json
+```json linenums="1"
 {
     "id":"KVb8CnwDjpgAo[…]op61BTLaa0tczXvz4JrQ23usxVHA8QJZi3L9GZLsAtkcVvWObA",
     "type":"public-key",
@@ -71,14 +66,14 @@ In general, the data you receive looks like as follows.
     }
 }
 ```
-{% endcode %}
 
-{% hint style="info" %}
-Only this type of input is supported. If you receive other forms of data, please contact us.
-{% endhint %}
+!!! info
 
-<pre class="language-php" data-line-numbers><code class="lang-php"><strong>&#x3C;?php
-</strong>
+    Only this type of input is supported. If you receive other forms of data, please contact us.
+
+```php linenums="1" hl_lines="1"
+<?php
+
 declare(strict_types=1);
 
 use Webauthn\PublicKeyCredential;
@@ -89,10 +84,10 @@ $publicKeyCredential = $serializer->deserialize(
     PublicKeyCredential::class,
     'json'
 );
-</code></pre>
+```
 
 If the data is correctly loaded, the variable `$publicKeyCredential` will be an instance of `Webauthn\PublicKeyCredential`. An exception is thrown in case of an error.
 
-{% hint style="danger" %}
-At this stage, the data is not verified.
-{% endhint %}
+!!! danger
+
+    At this stage, the data is not verified.

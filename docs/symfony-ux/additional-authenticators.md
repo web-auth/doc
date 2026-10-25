@@ -15,8 +15,7 @@ Allowing users to register multiple authenticators provides several benefits:
 
 Display all authenticators registered to the current user:
 
-{% code title="src/Controller/SecurityController.php" lineNumbers="true" %}
-```php
+```php title="src/Controller/SecurityController.php" linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -47,10 +46,8 @@ class SecurityController extends AbstractController
     }
 }
 ```
-{% endcode %}
 
-{% code title="templates/security/authenticators.html.twig" lineNumbers="true" %}
-```twig
+```twig title="templates/security/authenticators.html.twig" linenums="1"
 {% extends 'base.html.twig' %}
 
 {% block body %}
@@ -94,14 +91,12 @@ class SecurityController extends AbstractController
     </p>
 {% endblock %}
 ```
-{% endcode %}
 
 ## Adding Additional Authenticators
 
 Allow authenticated users to register additional authenticators:
 
-{% code title="templates/security/add_authenticator.html.twig" lineNumbers="true" %}
-```twig
+```twig title="templates/security/add_authenticator.html.twig" linenums="1"
 {% extends 'base.html.twig' %}
 
 {% block body %}
@@ -135,18 +130,16 @@ Allow authenticated users to register additional authenticators:
     </form>
 {% endblock %}
 ```
-{% endcode %}
 
-{% hint style="info" %}
-The controller configuration for `add_device` should use `CurrentUserEntityGuesser` to automatically get the authenticated user. See the [User Registration](user-registration.md#configuration-for-existing-users) page for configuration details.
-{% endhint %}
+!!! info
+
+    The controller configuration for `add_device` should use `CurrentUserEntityGuesser` to automatically get the authenticated user. See the [User Registration](user-registration.md#configuration-for-existing-users) page for configuration details.
 
 ## Removing Authenticators
 
 Allow users to remove authenticators they no longer use:
 
-{% code title="src/Controller/SecurityController.php" lineNumbers="true" %}
-```php
+```php title="src/Controller/SecurityController.php" linenums="1"
 #[Route('/security/authenticators/{id}/remove', name: 'app_remove_authenticator')]
 #[IsGranted('ROLE_USER')]
 public function removeAuthenticator(
@@ -177,23 +170,21 @@ public function removeAuthenticator(
     return $this->redirectToRoute('app_list_authenticators');
 }
 ```
-{% endcode %}
 
-{% hint style="warning" %}
-**Important Security Considerations:**
+!!! warning
 
-* Always verify the authenticator belongs to the current user before removal
-* Prevent users from removing their last authenticator (would lock them out)
-* Consider requiring re-authentication before removal for sensitive accounts
-* Log authenticator additions and removals for security auditing
-{% endhint %}
+    **Important Security Considerations:**
+
+    * Always verify the authenticator belongs to the current user before removal
+    * Prevent users from removing their last authenticator (would lock them out)
+    * Consider requiring re-authentication before removal for sensitive accounts
+    * Log authenticator additions and removals for security auditing
 
 ## Naming Authenticators
 
 Allow users to give friendly names to their authenticators for easier management:
 
-{% code title="src/Entity/WebauthnCredential.php" lineNumbers="true" %}
-```php
+```php title="src/Entity/WebauthnCredential.php" linenums="1"
 use Doctrine\ORM\Mapping as ORM;
 use Webauthn\PublicKeyCredentialSource;
 
@@ -231,12 +222,10 @@ class WebauthnCredential extends PublicKeyCredentialSource
     // ... other methods
 }
 ```
-{% endcode %}
 
 Then allow users to set names during or after registration:
 
-{% code title="templates/security/add_authenticator.html.twig" lineNumbers="true" %}
-```twig
+```twig title="templates/security/add_authenticator.html.twig" linenums="1"
 <form ...>
     <label for="authenticator_name">Authenticator Name (optional)</label>
     <input
@@ -251,7 +240,6 @@ Then allow users to set names during or after registration:
     <button type="submit">Register New Authenticator</button>
 </form>
 ```
-{% endcode %}
 
 ## Best Practices
 
@@ -259,8 +247,7 @@ Then allow users to set names during or after registration:
 
 Prompt users to register a backup authenticator after their first registration:
 
-{% code lineNumbers="true" %}
-```twig
+```twig linenums="1"
 {% if credential_count == 1 %}
     <div class="alert alert-info">
         <strong>Add a backup authenticator!</strong>
@@ -270,7 +257,6 @@ Prompt users to register a backup authenticator after their first registration:
     </div>
 {% endif %}
 ```
-{% endcode %}
 
 ### Authenticator Metadata
 

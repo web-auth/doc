@@ -13,8 +13,7 @@ Your registration form needs:
 2. A **display name field** (optional, can default to username)
 3. A **hidden field** for the attestation response
 
-{% code title="templates/registration/register.html.twig" lineNumbers="true" %}
-```twig
+```twig title="templates/registration/register.html.twig" linenums="1"
 <form
     action="{{ path('app_register') }}"
     method="post"
@@ -52,14 +51,12 @@ Your registration form needs:
     </button>
 </form>
 ```
-{% endcode %}
 
 ### Bundle Configuration
 
 Configure the bundle to handle new user registration:
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     credential_repository: 'App\Repository\WebauthnCredentialRepository'
     user_repository: 'App\Repository\UserRepository'
@@ -72,14 +69,12 @@ webauthn:
                 result_path: '/register/webauthn'
                 user_entity_guesser: 'App\Guesser\NewUserEntityGuesser'
 ```
-{% endcode %}
 
 ### User Entity Guesser
 
 Create a guesser to handle new user registration:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -108,11 +103,10 @@ final class NewUserEntityGuesser implements UserEntityGuesser
     }
 }
 ```
-{% endcode %}
 
-{% hint style="info" %}
-After successful registration, save both the user entity and the credential source to your database. The controller automatically validates the attestation response.
-{% endhint %}
+!!! info
+
+    After successful registration, save both the user entity and the credential source to your database. The controller automatically validates the attestation response.
 
 ## Adding Authenticators to Existing Users
 
@@ -120,8 +114,7 @@ Existing users can register additional authenticators (backup keys, different de
 
 ### Add Authenticator Form
 
-{% code title="templates/security/add_authenticator.html.twig" lineNumbers="true" %}
-```twig
+```twig title="templates/security/add_authenticator.html.twig" linenums="1"
 <form
     action="{{ path('app_add_authenticator') }}"
     method="post"
@@ -142,12 +135,10 @@ Existing users can register additional authenticators (backup keys, different de
     </button>
 </form>
 ```
-{% endcode %}
 
 ### Configuration for Existing Users
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     controllers:
         enabled: true
@@ -157,11 +148,10 @@ webauthn:
                 result_path: '/devices/add'
                 user_entity_guesser: 'Webauthn\Bundle\Security\Guesser\CurrentUserEntityGuesser'
 ```
-{% endcode %}
 
-{% hint style="success" %}
-The `CurrentUserEntityGuesser` automatically retrieves the currently authenticated user from the Symfony security context. No custom guesser needed!
-{% endhint %}
+!!! success
+
+    The `CurrentUserEntityGuesser` automatically retrieves the currently authenticated user from the Symfony security context. No custom guesser needed!
 
 ## Stimulus Controller Options
 
@@ -177,8 +167,7 @@ The registration controller accepts the following options:
 
 Automatically start the registration process when the page loads:
 
-{% code lineNumbers="true" %}
-```twig
+```twig linenums="1"
 {{ stimulus_controller('@web-auth/webauthn-stimulus',
     {
         autoRegister: true,
@@ -187,18 +176,16 @@ Automatically start the registration process when the page loads:
     }
 ) }}
 ```
-{% endcode %}
 
-{% hint style="warning" %}
-Use `autoRegister` carefully as it immediately prompts the user for biometric authentication or security key interaction.
-{% endhint %}
+!!! warning
+
+    Use `autoRegister` carefully as it immediately prompts the user for biometric authentication or security key interaction.
 
 ## Error Handling
 
 Handle registration errors in your custom event listeners:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 document.addEventListener('webauthn:registration:error', (event) => {
     console.error('Registration failed:', event.detail);
     alert('Could not register authenticator: ' + event.detail.message);
@@ -208,7 +195,6 @@ document.addEventListener('webauthn:registration:success', (event) => {
     console.log('Registration successful!');
 });
 ```
-{% endcode %}
 
 ## See Also
 

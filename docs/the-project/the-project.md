@@ -52,9 +52,9 @@ As of January 2023, our framework supports every authenticator with full feature
 
 We ensure continuous conformity through rigorous unit and functional testing throughout the development process.
 
-{% hint style="info" %}
-See [https://github.com/herrjemand/awesome-webauthn/pull/61](https://github.com/herrjemand/awesome-webauthn/pull/61) and [https://github.com/herrjemand/awesome-webauthn#server-libs](https://github.com/herrjemand/awesome-webauthn?#server-libraries)
-{% endhint %}
+!!! info
+
+    See [https://github.com/herrjemand/awesome-webauthn/pull/61](https://github.com/herrjemand/awesome-webauthn/pull/61) and [https://github.com/herrjemand/awesome-webauthn#server-libs](https://github.com/herrjemand/awesome-webauthn?#server-libraries)
 
 ## Support
 
@@ -70,6 +70,6 @@ If you feel comfortable writing code, you could try to fix [opened issues where 
 
 Do not forget to follow [these best practices](contributing.md).
 
-{% hint style="danger" %}
-If you think you have found a security issue, **DO NOT open an issue**. [You MUST submit your issue here](https://github.com/web-auth/webauthn-framework/security).
-{% endhint %}
+!!! danger
+
+    If you think you have found a security issue, **DO NOT open an issue**. [You MUST submit your issue here](https://github.com/web-auth/webauthn-framework/security).

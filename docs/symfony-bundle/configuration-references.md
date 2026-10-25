@@ -8,8 +8,7 @@ You may also need to adjust other parameters.
 
 If you don’t use Flex, hereafter an example of configuration file:
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
 #    logger: null # PSR-3 compatible logging service
     credential_repository: 'Webauthn\Bundle\Repository\DummyPublicKeyCredentialSourceRepository' # CREATE YOUR REPOSITORY AND CHANGE THIS!
@@ -61,28 +60,26 @@ webauthn:
 #        status_report_repository: 'App\Repository\StatusReportRepository'
 #        certificate_chain_checker: 'App\Security\CertificateChainChecker'
 ```
-{% endcode %}
 
 ### Creation Profiles
 
-{% hint style="success" %}
-If you don't create the `creation_profiles` section, a `default` profile is set.
-{% endhint %}
+!!! success
+
+    If you don't create the `creation_profiles` section, a `default` profile is set.
 
 #### Relying Party (rp)
 
 The relying Party corresponds to your application. Please refer [to this page](../prerequisites/the-relying-party.md) for more information.
 
-{% hint style="warning" %}
-The parameter `id` is optional but highly recommended.
-{% endhint %}
+!!! warning
+
+    The parameter `id` is optional but highly recommended.
 
 #### Challenge Length
 
 By default, the length of the challenge is 32 bytes. You may need to select a smaller or higher length. This length can be configured for each profile:
 
-{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="app/config/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         acme:
@@ -90,14 +87,12 @@ webauthn:
                 name: 'ACME Webauthn Server'
             challenge_length: 16
 ```
-{% endcode %}
 
 #### Timeout
 
 The default timeout is set to 60 seconds (60 000 milliseconds). You can change this value as follows:
 
-{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="app/config/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         acme:
@@ -105,23 +100,21 @@ webauthn:
                 name: 'ACME Webauthn Server'
             timeout: 30000
 ```
-{% endcode %}
 
-{% hint style="info" %}
-For v4.0+, the timeout is set to `null`. The values recommended by the specification are as follow:
+!!! info
 
-* If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
-* If the user verification is `preferred` or `required`, the range is 300 to 600 seconds (5 to 10 minutes)
+    For v4.0+, the timeout is set to `null`. The values recommended by the specification are as follow:
 
-These behaviors are not necessarily followed by the web browsers.
-{% endhint %}
+    * If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
+    * If the user verification is `preferred` or `required`, the range is 300 to 600 seconds (5 to 10 minutes)
+
+    These behaviors are not necessarily followed by the web browsers.
 
 #### Authenticator Selection Criteria
 
 This set of options allows you to select authenticators depending on their capabilities. The values are described in [the advanced concepts](../pure-php/advanced-behaviours/authenticator-selection-criteria.md) of the protocol.
 
-{% code title="app/config/webauthn.yaml" lineNumbers="true" fullWidth="false" %}
-```yaml
+```yaml title="app/config/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         acme:
@@ -132,22 +125,20 @@ webauthn:
                 require_resident_key: true
                 user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
 ```
-{% endcode %}
 
 #### Public Key Credential Parameters
 
 This option indicates the algorithms allowed for your application. By default, a large list of algorithms is defined, but you can add custom algorithms or reduce the list.
 
-{% hint style="info" %}
-The order is important. Preferred algorithms go first.
-{% endhint %}
+!!! info
 
-{% hint style="warning" %}
-It is not recommended changing the default list unless you exactly know what you are doing.
-{% endhint %}
+    The order is important. Preferred algorithms go first.
 
-{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
-```yaml
+!!! warning
+
+    It is not recommended changing the default list unless you exactly know what you are doing.
+
+```yaml title="app/config/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         acme:
@@ -157,18 +148,16 @@ webauthn:
                 - !php/const Cose\Algorithms::COSE_ALGORITHM_ES256
                 - !php/const Cose\Algorithms::COSE_ALGORITHM_RS256
 ```
-{% endcode %}
 
 #### Attestation Conveyance
 
 If you need the [attestation of the authenticator](../webauthn-in-a-nutshell/attestation-and-metadata-statement.md), you can specify the preference regarding attestation conveyance during credential generation.
 
-{% hint style="warning" %}
-The use of Attestation Statements is generally not recommended unless you REALLY need this information.
-{% endhint %}
+!!! warning
 
-{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
-```yaml
+    The use of Attestation Statements is generally not recommended unless you REALLY need this information.
+
+```yaml title="app/config/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         acme:
@@ -176,18 +165,16 @@ webauthn:
                 name: 'ACME Webauthn Server'
             attestation_conveyance: !php/const Webauthn\PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_DIRECT
 ```
-{% endcode %}
 
 #### Extensions
 
 You can set as many extensions as you want in the profile. Please also [refer to this page](../webauthn-in-a-nutshell/extensions.md) for more information.
 
-{% hint style="info" %}
-The example below is totally fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the support depends on the authenticators, on the browsers and on the relying parties (your applications).
-{% endhint %}
+!!! info
 
-{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
-```yaml
+    The example below is totally fictive. Some extensions are [defined in the specification](https://www.w3.org/TR/webauthn/#sctn-defined-extensions) but the support depends on the authenticators, on the browsers and on the relying parties (your applications).
+
+```yaml title="app/config/webauthn.yaml" linenums="1"
 webauthn:
     creation_profiles:
         acme:
@@ -197,31 +184,26 @@ webauthn:
                 loc: true
                 txAuthSimple: 'Please add your new authenticator'
 ```
-{% endcode %}
 
 ### Request Profiles
 
-{% hint style="success" %}
-If you don't create the `creation_profiles` section, a `default` profile is set.
-{% endhint %}
+!!! success
+
+    If you don't create the `creation_profiles` section, a `default` profile is set.
 
 The parameters for the request profiles (i.e. the authentication) are very similar to the creation profiles. The only difference is that you don’t need all the detail of the Relying Party, but only its ID (i.e. its domain).
 
-{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="app/config/webauthn.yaml" linenums="1"
 webauthn:
     request_profiles:
         acme:
             rp_id: 'example.com'
 ```
-{% endcode %}
 
 Please note that all parameters are optional. The following configuration is perfectly valid. However, and as mentioned above, the parameter `id` is highly recommended.
 
-{% code title="app/config/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="app/config/webauthn.yaml" linenums="1"
 webauthn:
     request_profiles:
         acme: ~
 ```
-{% endcode %}

@@ -8,19 +8,19 @@ The Credential Source can be stored the way you want. As the `Webauthn\PublicKey
 
 It is up to you to create a credential source repository. This service shall implement `Webauthn\Bundle\Repository\PublicKeyCredentialSourceRepositoryInterface`.
 
-{% hint style="warning" %}
-Doctrine users: the field type for `transports` and `other_ui` changed from `array` to `json` (`array` is now deprecated) between the bundle v4.x and 5.0.
+!!! warning
 
-Please make sure to reflect the changes to your data model.
+    Doctrine users: the field type for `transports` and `other_ui` changed from `array` to `json` (`array` is now deprecated) between the bundle v4.x and 5.0.
 
-Hereafter an example for Postgres:
+    Please make sure to reflect the changes to your data model.
 
-```sql
-ALTER TABLE [/*TABLE NAME HERE*/] ALTER transports TYPE JSON USING transports::JSON
-ALTER TABLE [/*TABLE NAME HERE*/] ALTER other_ui TYPE JSON USING other_ui::JSON
+    Hereafter an example for Postgres:
 
-```
-{% endhint %}
+    ```sql
+    ALTER TABLE [/*TABLE NAME HERE*/] ALTER transports TYPE JSON USING transports::JSON
+    ALTER TABLE [/*TABLE NAME HERE*/] ALTER other_ui TYPE JSON USING other_ui::JSON
+
+    ```
 
 ## Registration Capability
 
@@ -36,8 +36,7 @@ Hereafter an example of an entity.
 
 This is the most simple example. Feel free to add custom fields that fit your needs e.g. `created_at` or `is_revoked`.
 
-{% code title="App/Entity/WebauthnCredential.php" lineNumbers="true" %}
-```php
+```php title="App/Entity/WebauthnCredential.php" linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -86,36 +85,36 @@ class WebauthnCredential extends PublicKeyCredentialSource
     }
 }
 ```
-{% endcode %}
 
-{% hint style="info" %}
-Do not forget to update your database schema!
-{% endhint %}
+!!! info
+
+    Do not forget to update your database schema!
 
 ## The Repository
 
-{% hint style="warning" %}
-**Deprecation Notice (v5.2.0):** The `DoctrineCredentialSourceRepository` class is deprecated and will be removed in version 6.0.0. You should create your own Doctrine-based repository implementation instead of extending the provided class. See the example below for guidance.
-{% endhint %}
+!!! warning
+
+    **Deprecation Notice (v5.2.0):** The `DoctrineCredentialSourceRepository` class is deprecated and will be removed in version 6.0.0. You should create your own Doctrine-based repository implementation instead of extending the provided class. See the example below for guidance.
 
 To ease the integration into your application, the bundle provides a concrete class that you can extend.
 
-{% hint style="info" %}
-In this following example, we extend that class and add a method to get all credentials for a specific user handle. Feel free to add your own methods.
-{% endhint %}
+!!! info
 
-{% hint style="warning" %}
-We must override the method `saveCredentialSource` because we may receive `Webauthn\PublicKeyCredentialSource` objects instead of `App\Entity\WebauthnCredential`.
-{% endhint %}
+    In this following example, we extend that class and add a method to get all credentials for a specific user handle. Feel free to add your own methods.
 
-<pre class="language-php" data-title="App/Repository/WebauthnCredentialRepository.php" data-line-numbers><code class="lang-php">&#x3C;?php
+!!! warning
+
+    We must override the method `saveCredentialSource` because we may receive `Webauthn\PublicKeyCredentialSource` objects instead of `App\Entity\WebauthnCredential`.
+
+```php title="App/Repository/WebauthnCredentialRepository.php" linenums="1" hl_lines="7"
+<?php
 
 declare(strict_types=1);
 
 namespace App\Repository;
 
-<strong>use App\Entity\WebauthnCredential;
-</strong>use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\WebauthnCredential;
+use Doctrine\Persistence\ManagerRegistry;
 use Webauthn\Bundle\Repository\DoctrineCredentialSourceRepository;
 use Webauthn\PublicKeyCredentialSource;
 
@@ -144,18 +143,15 @@ final class WebauthnCredentialRepository extends DoctrineCredentialSourceReposit
         parent::saveCredentialSource($publicKeyCredentialSource);
     }
 }
-
-</code></pre>
+```
 
 This repository should be declared as a Symfony service.
 
-{% hint style="info" %}
-With Symfony autowiring and autoconfiguration, this is usually done automatically
-{% endhint %}
+!!! info
 
-{% code title="config/services.yaml" %}
-```yaml
+    With Symfony autowiring and autoconfiguration, this is usually done automatically
+
+```yaml title="config/services.yaml"
 services:
     App\Repository\WebauthnCredentialRepository: ~
 ```
-{% endcode %}

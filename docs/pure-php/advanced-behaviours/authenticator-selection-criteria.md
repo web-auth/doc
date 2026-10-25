@@ -24,9 +24,9 @@ A primary use case for platform authenticators is to register a particular clien
 
 With this criterion, a Public Key Credential Source will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such a resident credential.
 
-{% hint style="info" %}
-A resident key shall be created if you want to [authenticate users without username](authentication-without-username.md).
-{% endhint %}
+!!! info
+
+    A resident key shall be created if you want to [authenticate users without username](authentication-without-username.md).
 
 ### User Verification
 
@@ -36,8 +36,7 @@ A resident key shall be created if you want to [authenticate users without usern
 
 With this example, with require the user verification (PIN, fingerprint...), a resident key and an authenticator embedded onto a device. This is typacally what you will require for Windows Hello or Face ID authentication.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\AuthenticatorSelectionCriteria;
 use Webauthn\PublicKeyCredentialCreationOptions;
 
@@ -55,4 +54,3 @@ $publicKeyCredentialCreationOptions =
         authenticatorSelection: $authenticatorSelectionCriteria
 );
 ```
-{% endcode %}

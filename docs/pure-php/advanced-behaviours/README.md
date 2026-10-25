@@ -45,6 +45,6 @@ For basic WebAuthn implementation, start with these pages:
 
 Then return to this section for advanced customization.
 
-{% hint style="info" %}
-If you're using the Symfony Bundle, see the [Symfony Bundle Advanced Behaviors](../../symfony-bundle/advanced-behaviors/README.md) section for framework-specific implementations.
-{% endhint %}
+!!! info
+
+    If you're using the Symfony Bundle, see the [Symfony Bundle Advanced Behaviors](../../symfony-bundle/advanced-behaviors/README.md) section for framework-specific implementations.

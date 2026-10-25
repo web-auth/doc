@@ -22,16 +22,15 @@ This command will automatically:
 * Register the Stimulus controller via Symfony Flex
 * Configure AssetMapper to import the necessary JavaScript files
 
-{% hint style="info" %}
-**No build step required!** The package works with Symfony AssetMapper, so you don't need Node.js, npm, yarn, or any JavaScript build tools. The browser imports the JavaScript files directly.
-{% endhint %}
+!!! info
+
+    **No build step required!** The package works with Symfony AssetMapper, so you don't need Node.js, npm, yarn, or any JavaScript build tools. The browser imports the JavaScript files directly.
 
 ## Verify Installation
 
 Check that the Stimulus controller is properly registered in your `assets/controllers.json`:
 
-{% code title="assets/controllers.json" lineNumbers="true" %}
-```json
+```json title="assets/controllers.json" linenums="1"
 {
     "controllers": {
         "@web-auth/webauthn-stimulus": {
@@ -40,7 +39,6 @@ Check that the Stimulus controller is properly registered in your `assets/contro
     }
 }
 ```
-{% endcode %}
 
 ## What's Included
 
@@ -61,8 +59,7 @@ Once installed, you can use the Stimulus controller in your Twig templates with 
 
 ### Registration Form Example
 
-{% code title="templates/registration/register.html.twig" lineNumbers="true" %}
-```twig
+```twig title="templates/registration/register.html.twig" linenums="1"
 <form
     action="{{ path('app_register') }}"
     method="post"
@@ -82,12 +79,10 @@ Once installed, you can use the Stimulus controller in your Twig templates with 
     </button>
 </form>
 ```
-{% endcode %}
 
 ### Authentication Form Example
 
-{% code title="templates/security/login.html.twig" lineNumbers="true" %}
-```twig
+```twig title="templates/security/login.html.twig" linenums="1"
 <form
     action="{{ path('app_login') }}"
     method="post"
@@ -107,7 +102,6 @@ Once installed, you can use the Stimulus controller in your Twig templates with 
     </button>
 </form>
 ```
-{% endcode %}
 
 ## Controller Options
 
@@ -132,8 +126,7 @@ The Stimulus controller accepts various configuration options:
 
 Create a simple test page to verify everything works:
 
-{% code title="templates/test/webauthn.html.twig" lineNumbers="true" %}
-```twig
+```twig title="templates/test/webauthn.html.twig" linenums="1"
 {% extends 'base.html.twig' %}
 
 {% block body %}
@@ -191,7 +184,6 @@ Create a simple test page to verify everything works:
     {% endif %}
 {% endblock %}
 ```
-{% endcode %}
 
 ## Troubleshooting
 

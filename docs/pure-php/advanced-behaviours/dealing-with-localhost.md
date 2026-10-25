@@ -13,9 +13,9 @@ By default, the current host is used, and the origin parameter returned in the W
 
 To handle these cases, you can explicitly define a list of allowed origins when configuring the WebAuthn authentication process using the method `setAllowedOrigins`.
 
-{% hint style="info" %}
-The method `setSecuredRelyingPartyId` is deprecated since 5.2.0
-{% endhint %}
+!!! info
+
+    The method `setSecuredRelyingPartyId` is deprecated since 5.2.0
 
 ### Allowing Multiple Origins
 
@@ -23,8 +23,7 @@ If your application supports multiple domains, specify them explicitly:
 
 This ensures that authentication requests coming from any of these origins are accepted.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -39,14 +38,12 @@ $csmFactory->setAllowedOrigins([
     'https://old-acme.com'
 ]);
 ```
-{% endcode %}
 
 ### Allowing Subdomains
 
 To allow authentication from subdomains dynamically, enable the `allowSubdomains` flag:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -56,20 +53,18 @@ use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
 $csmFactory = new CeremonyStepManagerFactory();
 $csmFactory->setAllowedOrigins(['https://acme.com'], true);
 ```
-{% endcode %}
 
 With this setting, authentication requests from `https://sub.acme.com` will be considered valid.
 
-{% hint style="danger" %}
-Do not use TLD and the sub domain flag together! `$csmFactory->setSecuredRelyingPartyId(['com'], true);`
-{% endhint %}
+!!! danger
+
+    Do not use TLD and the sub domain flag together! `$csmFactory->setSecuredRelyingPartyId(['com'], true);`
 
 ### Supporting Native Applications
 
 For native applications, origins are different from traditional web URLs. If your application integrates with mobile apps, ensure that relevant origins are included:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -83,7 +78,6 @@ $csmFactory->setAllowedOrigins([
     'ios:bundle-id://your.bundle.id',
 ]);
 ```
-{% endcode %}
 
 This configuration allows authentication responses from web browsers and native applications.
 
@@ -91,8 +85,7 @@ This configuration allows authentication responses from web browsers and native 
 
 During local development, you may need to allow `http://localhost`. Since WebAuthn generally requires HTTPS, this is an exception for local testing. To allow it:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -104,7 +97,6 @@ $csmFactory->setAllowedOrigins([
     'http://localhost.com',
 ]);
 ```
-{% endcode %}
 
 Be aware that this should only be enabled in non-production environments.
 
@@ -118,8 +110,7 @@ If you need to restrict which top-level origins are allowed to embed your authen
 
 The `HostTopOriginValidator` performs a strict comparison between the top origin and a given host:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -132,14 +123,12 @@ $csmFactory->enableTopOriginValidator(
     new HostTopOriginValidator('app.example.com')
 );
 ```
-{% endcode %}
 
 ### Using a Custom Validator
 
 For more advanced scenarios (e.g., allowing multiple top origins), implement the `TopOriginValidator` interface:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -167,12 +156,10 @@ final readonly class AllowedTopOriginsValidator implements TopOriginValidator
     }
 }
 ```
-{% endcode %}
 
 Then register it:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 $csmFactory->enableTopOriginValidator(
     new AllowedTopOriginsValidator([
         'https://app.example.com',
@@ -180,11 +167,10 @@ $csmFactory->enableTopOriginValidator(
     ])
 );
 ```
-{% endcode %}
 
-{% hint style="warning" %}
-If you do not call `enableTopOriginValidator()`, the top origin is **not validated**. Enable it if your authentication page can be embedded in cross-origin iframes and you want to control which parent origins are permitted.
-{% endhint %}
+!!! warning
+
+    If you do not call `enableTopOriginValidator()`, the top origin is **not validated**. Enable it if your authentication page can be embedded in cross-origin iframes and you want to control which parent origins are permitted.
 
 ## Security Considerations
 

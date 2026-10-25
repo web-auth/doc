@@ -6,14 +6,13 @@ An Extension Output Checker will check the extension output.
 
 It must implement the interface `Webauthn\AuthenticationExtensions\ExtensionOutputChecker` and throw an exception of type `Webauthn\AuthenticationExtension\ExtensionOutputError` in case of error.
 
-{% hint style="info" %}
-Devices may ignore the extension inputs. The extension outputs are therefore not guaranteed.
-{% endhint %}
+!!! info
+
+    Devices may ignore the extension inputs. The extension outputs are therefore not guaranteed.
 
 In the previous example, we asked for the location of the device and we expect to receive geolocation data in the extension output.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -44,12 +43,10 @@ final class LocationExtensionOutputChecker
     }
 }
 ```
-{% endcode %}
 
 The easiest way to manage that is by using the creation and request profiles.
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     …
     creation_profiles:
@@ -65,4 +62,3 @@ webauthn:
             extensions:
                 uvm: true
 ```
-{% endcode %}

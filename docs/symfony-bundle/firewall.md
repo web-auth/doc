@@ -10,8 +10,7 @@ To authenticate or register your users with Symfony, the best and easiest way is
 
 At the end of the installation and configuration, you should have a `config/packages/security.yaml` file that looks like as follow:
 
-{% code title="config/packages/security.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/security.yaml" linenums="1"
 security:
     providers:
         default:
@@ -22,7 +21,6 @@ security:
                 path: 'logout'
             ...
 ```
-{% endcode %}
 
 ## Controller
 
@@ -149,8 +147,7 @@ final class LoginAuthenticator extends WebauthnAuthenticator
 
 To enable the user authentication, you just have to declare the Symfony Authenticator if the appropriate firewall (here `main`).
 
-{% code title="config/packages/security.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/security.yaml" linenums="1"
 security:
     providers:
         default:
@@ -164,16 +161,14 @@ security:
         - { path: ^/login,  roles: PUBLIC_ACCESS, requires_channel: 'https'}
         - { path: ^/logout,  roles: PUBLIC_ACCESS}
 ```
-{% endcode %}
 
-{% hint style="info" %}
-**Multiple User Providers (v5.2.1+):** The bundle now supports multiple user providers. If your application uses multiple providers, you can configure them in the security configuration and the WebauthnBadge will work correctly with all of them.
-{% endhint %}
+!!! info
+
+    **Multiple User Providers (v5.2.1+):** The bundle now supports multiple user providers. If your application uses multiple providers, you can configure them in the security configuration and the WebauthnBadge will work correctly with all of them.
 
 Also, you need to define the credential options endpoint.
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     controllers:
         enabled: true
@@ -181,7 +176,6 @@ webauthn:
             login:
                 options_path: '/login/webauthn/options'
 ```
-{% endcode %}
 
 ## User Registration
 
@@ -196,10 +190,8 @@ The security token returned by the firewall sets some attributes depending on th
 
 You can then set constraints to the access controls. In the example below, the /admin path can be reached by users with the role `ROLE_ADMIN` and that **have been verified** during the ceremony.
 
-{% code title="config/packages/security.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/security.yaml" linenums="1"
 security:
     access_control:
         - { path: ^/admin,  roles: [ROLE_ADMIN, IS_USER_VERIFIED]}
 ```
-{% endcode %}

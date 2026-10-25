@@ -8,12 +8,10 @@ It is therefore required to go deeper in the protection of your application by l
 
 To do so , you have to create a custom Counter Checker and inject it to your Authenticator Assertion Response Validator. The checker must implement the interface `Webauthn\Counter\CounterChecker`.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
-
 
 namespace App\Service;
 
@@ -42,12 +40,10 @@ final class CustomCounterChecker implements CounterChecker
     }
 }
 ```
-{% endcode %}
 
 The Counter Checker service can be injected to your Ceremony Step Manager Factory.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -57,4 +53,3 @@ use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
 $csmFactory = new CeremonyStepManagerFactory();
 $csmFactory->setCounterChecker($customCounterChecker);
 ```
-{% endcode %}

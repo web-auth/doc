@@ -2,11 +2,11 @@
 
 This framework provides a Symfony bundle that will help you to use the components within your Symfony application.
 
-{% hint style="info" %}
-Implementations for other frameworks and web applications exist.
+!!! info
 
-As an example if you use Laravel, you may be interested in [this project: https://github.com/asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
-{% endhint %}
+    Implementations for other frameworks and web applications exist.
+
+    As an example if you use Laravel, you may be interested in [this project: https://github.com/asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
 
 ## Installation
 
@@ -16,16 +16,15 @@ As an example if you use Laravel, you may be interested in [this project: https:
 composer require web-auth/webauthn-symfony-bundle
 ```
 
-{% hint style="info" %}
-As the recipes are third party ones not officially supported by Symfony, you will be asked to execute the recipe or not. When applied, the recipes will prompt a message such as `WebAuthn Framework is ready.`
-{% endhint %}
+!!! info
+
+    As the recipes are third party ones not officially supported by Symfony, you will be asked to execute the recipe or not. When applied, the recipes will prompt a message such as `WebAuthn Framework is ready.`
 
 ### Without Symfony Flex
 
 If you don't use Symfony Flex, you must register the bundle and route manually.
 
-{% code title="config/bundles.php" lineNumbers="true" %}
-```php
+```php title="config/bundles.php" linenums="1"
 <?php
 
 return [
@@ -33,10 +32,8 @@ return [
     Webauthn\Bundle\WebauthnBundle::class => ['all' => true],
 ];
 ```
-{% endcode %}
 
-{% code title="config/routes/webauthn.php" lineNumbers="true" %}
-```php
+```php title="config/routes/webauthn.php" linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -47,7 +44,6 @@ return function (RoutingConfigurator $routes) {
     $routes->import('.', 'webauthn');
 };
 ```
-{% endcode %}
 
 ## Repositories
 

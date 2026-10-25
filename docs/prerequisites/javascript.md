@@ -13,9 +13,9 @@ Both APIs are asynchronous and return Promises that resolve with credential obje
 
 ## HTTPS Requirement
 
-{% hint style="danger" %}
-**HTTPS is mandatory** for WebAuthn to work. This applies to all domains, including `localhost`. The only exception is `localhost` in some browsers during development, but production environments must always use HTTPS.
-{% endhint %}
+!!! danger
+
+    **HTTPS is mandatory** for WebAuthn to work. This applies to all domains, including `localhost`. The only exception is `localhost` in some browsers during development, but production environments must always use HTTPS.
 
 Modern browsers enforce this requirement to prevent credential theft and man-in-the-middle attacks.
 
@@ -41,8 +41,7 @@ If you're using Symfony, the [Stimulus Controller](../symfony-ux/installation.md
 
 ### Using Native Browser API
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 // 1. Fetch registration options from your server
 const optionsResponse = await fetch('/webauthn/register/options', {
     method: 'POST',
@@ -92,12 +91,10 @@ await fetch('/webauthn/register', {
     body: JSON.stringify(attestationResponse)
 });
 ```
-{% endcode %}
 
 ### Using @simplewebauthn/browser
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 import { startRegistration } from '@simplewebauthn/browser';
 
 try {
@@ -133,14 +130,12 @@ try {
     alert('Registration failed: ' + error.message);
 }
 ```
-{% endcode %}
 
 ## Authentication (Assertion) Flow
 
 ### Using Native Browser API
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 // 1. Fetch authentication options from server
 const optionsResponse = await fetch('/webauthn/login/options', {
     method: 'POST',
@@ -189,12 +184,10 @@ await fetch('/webauthn/login', {
     body: JSON.stringify(assertionResponse)
 });
 ```
-{% endcode %}
 
 ### Using @simplewebauthn/browser
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 import { startAuthentication } from '@simplewebauthn/browser';
 
 try {
@@ -229,14 +222,12 @@ try {
     alert('Authentication failed: ' + error.message);
 }
 ```
-{% endcode %}
 
 ## Base64URL Encoding/Decoding
 
 If you're using the native API without a library, you need helper functions for base64url encoding:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 function base64urlEncode(buffer) {
     const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
     return base64
@@ -258,18 +249,16 @@ function base64urlDecode(base64url) {
     return bytes.buffer;
 }
 ```
-{% endcode %}
 
-{% hint style="info" %}
-The [@simplewebauthn/browser](https://simplewebauthn.dev/docs/packages/browser/) library handles all encoding/decoding automatically, which is why we recommend it.
-{% endhint %}
+!!! info
+
+    The [@simplewebauthn/browser](https://simplewebauthn.dev/docs/packages/browser/) library handles all encoding/decoding automatically, which is why we recommend it.
 
 ## Error Handling
 
 WebAuthn operations can fail for various reasons. Always wrap calls in try-catch blocks:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 import { startAuthentication } from '@simplewebauthn/browser';
 
 try {
@@ -290,7 +279,6 @@ try {
     }
 }
 ```
-{% endcode %}
 
 ## Common Error Types
 
@@ -314,8 +302,7 @@ WebAuthn is supported in modern browsers:
 
 Always check for WebAuthn support before attempting registration or authentication:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 if (!window.PublicKeyCredential) {
     alert('WebAuthn is not supported in this browser');
     // Show fallback authentication method
@@ -330,14 +317,12 @@ if (window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) {
     }
 }
 ```
-{% endcode %}
 
 ## Browser Autofill / Conditional UI
 
 Modern browsers support autofill for WebAuthn credentials, allowing users to select passkeys from password autofill:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 // Check if conditional UI is available
 const conditionalUIAvailable = await PublicKeyCredential.isConditionalMediationAvailable();
 
@@ -349,7 +334,6 @@ if (conditionalUIAvailable) {
     });
 }
 ```
-{% endcode %}
 
 For Symfony UX users, enable this with the `useBrowserAutofill` option in the Stimulus controller configuration.
 

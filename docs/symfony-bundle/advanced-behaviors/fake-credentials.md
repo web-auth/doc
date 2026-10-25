@@ -4,8 +4,7 @@ In order to prevent username enumeration, random credentials are set when a user
 
 A very simple service is provided. If you want to change the way the fake credentials are generated, you can create a custom service. The service shall implement the `Webauthn\FakeCredentialGenerator` interface.
 
-{% code title="src/CustomCredentialGenerator.php" lineNumbers="true" %}
-```php
+```php title="src/CustomCredentialGenerator.php" linenums="1"
 <?php
 
 namespace App;
@@ -25,13 +24,10 @@ final readonly class CustomCredentialGenerator implements FakeCredentialGenerato
     }
 }
 ```
-{% endcode %}
 
 Then, declare this service in the container and use it in your bundle configuration.
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     fake_credential_generator: App\CustomCredentialGenerator
 ```
-{% endcode %}

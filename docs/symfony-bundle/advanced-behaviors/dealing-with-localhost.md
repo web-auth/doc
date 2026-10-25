@@ -6,8 +6,7 @@ Please [refer to this page](../../pure-php/advanced-behaviours/dealing-with-loca
 
 The configuration of the allowed domains can be done as follows.
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     allowed_origins:
         - 'https://acme.com'
@@ -16,7 +15,6 @@ webauthn:
         - 'ios:bundle-id://your.bundle.id'
     allow_subdomains: true
 ```
-{% endcode %}
 
 ## Top Origin Validation (Cross-Origin iframes)
 
@@ -24,8 +22,7 @@ If your authentication page is embedded in a cross-origin iframe, you can enable
 
 When a `TopOriginValidator` service is available in the container, it is automatically used for both creation and request ceremonies.
 
-{% code title="src/Security/MyTopOriginValidator.php" lineNumbers="true" %}
-```php
+```php title="src/Security/MyTopOriginValidator.php" linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -51,11 +48,10 @@ final readonly class MyTopOriginValidator implements TopOriginValidator
     }
 }
 ```
-{% endcode %}
 
-{% hint style="info" %}
-If no `TopOriginValidator` service is registered, the top origin is not validated. See [the pure PHP documentation](../../pure-php/advanced-behaviours/dealing-with-localhost.md#top-origin-validation-cross-origin-iframes) for more details.
-{% endhint %}
+!!! info
+
+    If no `TopOriginValidator` service is registered, the top origin is not validated. See [the pure PHP documentation](../../pure-php/advanced-behaviours/dealing-with-localhost.md#top-origin-validation-cross-origin-iframes) for more details.
 
 ## Allowed Origins Endpoint
 

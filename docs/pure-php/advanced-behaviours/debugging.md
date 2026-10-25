@@ -10,8 +10,7 @@ The WebAuthn library supports [PSR-3 compatible loggers](https://www.php-fig.org
 
 Several WebAuthn classes implement the `Webauthn\MetadataService\CanLogData` interface, allowing you to inject a PSR-3 logger:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -33,7 +32,6 @@ $attestationValidator->setLogger($logger);
 $assertionValidator = AuthenticatorAssertionResponseValidator::create($requestCSM);
 $assertionValidator->setLogger($logger);
 ```
-{% endcode %}
 
 ## What Gets Logged
 
@@ -92,8 +90,7 @@ In case of errors:
 
 Enable verbose DEBUG logging to see all operations:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 // Development: Log everything
@@ -102,14 +99,12 @@ $logger->pushHandler(
     new StreamHandler('php://stdout', LogLevel::DEBUG)
 );
 ```
-{% endcode %}
 
 ### Production Environment
 
 In production, log only warnings and errors to avoid performance impact:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 // Production: Log only warnings and above
@@ -128,7 +123,6 @@ $logger->pushHandler(
     )
 );
 ```
-{% endcode %}
 
 ## Common Issues and Log Messages
 
@@ -180,13 +174,11 @@ Monitor the network requests to see:
 
 Use virtual authenticators for testing:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 // Chrome DevTools Protocol
 // Enable virtual authenticator in Chrome DevTools → Application → WebAuthn
 // Add Virtual Authenticator → Configure options
 ```
-{% endcode %}
 
 ## See Also
 

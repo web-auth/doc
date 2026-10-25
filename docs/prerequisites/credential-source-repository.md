@@ -22,8 +22,7 @@ After the registration of an authenticator, you will get a `Webauthn\PublicKeyCr
 * **uvInitialized**: Whether user verification was initialized (since 5.1)
 * **otherUI**: Optional additional UI hints (array)
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -46,7 +45,6 @@ $transports = $credentialSource->transports; // ['usb', 'nfc']
 // Get the descriptor for authentication
 $descriptor = $credentialSource->getPublicKeyCredentialDescriptor();
 ```
-{% endcode %}
 
 ## Credential Source Repository
 
@@ -57,16 +55,15 @@ Your repository needs to provide two main operations:
 1. **Save a credential** after registration or counter update
 2. **Find credentials** by credential ID or user handle
 
-{% hint style="success" %}
-Whatever database you use (MySQL, PostgreSQL, MongoDB…), it is not necessary to create foreign key relationships between your users and the Credential Sources. The `userHandle` property is sufficient to link credentials to users.
-{% endhint %}
+!!! success
+
+    Whatever database you use (MySQL, PostgreSQL, MongoDB…), it is not necessary to create foreign key relationships between your users and the Credential Sources. The `userHandle` property is sufficient to link credentials to users.
 
 ### Repository Example
 
 Here's a simple example using an array storage (for demonstration purposes):
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -99,11 +96,10 @@ final class InMemoryCredentialSourceRepository
     }
 }
 ```
-{% endcode %}
 
-{% hint style="info" %}
-For production use, implement your repository with your preferred storage backend (Doctrine ORM, PDO, MongoDB, Redis, etc.). See the [Symfony Bundle section](../symfony-bundle/entities-with-doctrine.md) for a complete Doctrine example.
-{% endhint %}
+!!! info
+
+    For production use, implement your repository with your preferred storage backend (Doctrine ORM, PDO, MongoDB, Redis, etc.). See the [Symfony Bundle section](../symfony-bundle/entities-with-doctrine.md) for a complete Doctrine example.
 
 ### Important Notes
 

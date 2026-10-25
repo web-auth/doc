@@ -25,8 +25,7 @@ Optionally, you can customize the following parameters:
 
 Let’s see an example of the `PublicKeyCredentialCreationOptions` object. The following example is a possible Public Key Creation page for a dummy user "@cypher-Angel-3000".
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -61,7 +60,6 @@ $publicKeyCredentialCreationOptions =
     )
 ;
 ```
-{% endcode %}
 
 The options object can be converted into JSON and sent to the authenticator [using the API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API).
 
@@ -80,14 +78,13 @@ $jsonObject = $serializer->serialize(
 );
 ```
 
-{% hint style="warning" %}
-It is important to store the user entity and the options object (e.g. in the session) for the next step. The data will be needed to check the response from the device.
-{% endhint %}
+!!! warning
+
+    It is important to store the user entity and the options object (e.g. in the session) for the next step. The data will be needed to check the response from the device.
 
 You can change the default values for each and all options
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\AuthenticatorSelectionCriteria;
 
 $publicKeyCredentialCreationOptions =
@@ -98,7 +95,6 @@ $publicKeyCredentialCreationOptions =
     )
 ;
 ```
-{% endcode %}
 
 ### Public Key Credential Parameters
 
@@ -106,8 +102,7 @@ The argument `pubKeyCredParams` contains a list of `Webauthn\PublicKeyCredential
 
 An empty list corresponds to the default algorithms that are `ES256` and `RS256` (in this order). Those two algorithms are required by the specification.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Cose\Algorithms;
 use Webauthn\PublicKeyCredentialParameters;
 
@@ -119,11 +114,10 @@ $publicKeyCredentialParametersList = [
     PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ED256),  // Less interesting algorithm
 ];
 ```
-{% endcode %}
 
-{% hint style="warning" %}
-Customizing this list may lead to unexpected behavior. Please use with caution.
-{% endhint %}
+!!! warning
+
+    Customizing this list may lead to unexpected behavior. Please use with caution.
 
 ### Authenticator Selection
 
@@ -137,8 +131,7 @@ Please read detail [on this page](advanced-behaviours/attestation-and-metadata-s
 
 When the user already registered authenticators, you can pass a list of `Webauthn\PublicKeyCredentialDescriptor` objects as argument to avoid registering multiple times the same authenticator.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\PublicKeyCredentialCreationOptions;
 use Webauthn\PublicKeyCredentialDescriptor;
 
@@ -157,20 +150,18 @@ $publicKeyCredentialCreationOptions =
     )
 ;
 ```
-{% endcode %}
 
-{% hint style="danger" %}
-To avoid username enumeration, you should not set any excluded credential when the authenticator registration is performed for anonymous users. If this value is present, it indicates that the username exists and has registered credentials.
+!!! danger
 
-On the contrary when adding new authenticators to already authenticated users, this value should be set.
-{% endhint %}
+    To avoid username enumeration, you should not set any excluded credential when the authenticator registration is performed for anonymous users. If this value is present, it indicates that the username exists and has registered credentials.
+
+    On the contrary when adding new authenticators to already authenticated users, this value should be set.
 
 ## Creation Response
 
 What you receive must be a JSON object that looks like as follow:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 {
     "id":"KVb8CnwDjpgAo[…]op61BTLaa0tczXvz4JrQ23usxVHA8QJZi3L9GZLsAtkcVvWObA",
     "type":"public-key",
@@ -181,7 +172,6 @@ What you receive must be a JSON object that looks like as follow:
     }
 }
 ```
-{% endcode %}
 
 There are two steps to perform with this object:
 
@@ -192,8 +182,9 @@ There are two steps to perform with this object:
 
 Now that all components are set, we can load the data we receive using the [_Serializer_](webauthn-server.md#the-serializer) (variable `$serializer`).
 
-<pre class="language-php" data-line-numbers><code class="lang-php"><strong>&#x3C;?php
-</strong>
+```php linenums="1" hl_lines="1"
+<?php
+
 declare(strict_types=1);
 
 use Webauthn\PublicKeyCredential;
@@ -214,7 +205,7 @@ $publicKeyCredential = $serializer->deserialize(
     PublicKeyCredential::class,
     'json'
 );
-</code></pre>
+```
 
 If no exception is thrown, you can go to the next step: the verification.
 
@@ -227,8 +218,7 @@ Now we have a fully loaded Public Key Credential object, but we need now to make
 
 The first step is easy to perform:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -239,7 +229,6 @@ if (!$publicKeyCredential->response instanceof AuthenticatorAttestationResponse)
     //e.g. process here with a redirection to the public key creation page. 
 }
 ```
-{% endcode %}
 
 The second step is the verification against
 
@@ -248,8 +237,7 @@ The second step is the verification against
 
 The Authenticator Attestation Response Validator service (variable `$authenticatorAttestationResponseValidator`) will check everything for you: challenge, origin, attestation statement and much more.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -260,10 +248,9 @@ $publicKeyCredentialSource = $authenticatorAttestationResponseValidator->check(
     'my-application.com'
 );
 ```
-{% endcode %}
 
 If no exception is thrown, the response is valid. You can store the Public Key Credential Source (`$publicKeyCredentialSource`).
 
-{% hint style="info" %}
-The way you store and associate these objects to the user is out of scope of this library.&#x20;
-{% endhint %}
+!!! info
+
+    The way you store and associate these objects to the user is out of scope of this library.&#x20;
