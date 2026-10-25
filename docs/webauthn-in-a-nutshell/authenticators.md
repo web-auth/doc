@@ -28,7 +28,10 @@ A platform authenticator is usually not removable from the client device. For ex
 
 ### Passkey
 
-<figure><img src="../assets/images/fido-passkey-mark-a-black-e1702581853266.png" alt="" width="188"><figcaption><p>Passkey Logo</p></figcaption></figure>
+<figure markdown="span">
+  ![Passkey Logo](../assets/images/fido-passkey-mark-a-black-e1702581853266.png){ width="188" }
+  <figcaption>Passkey Logo</figcaption>
+</figure>
 
 Passkey are virtual authenticators that have extended capabilities and in particular:
 
