@@ -6,7 +6,7 @@
 
 WebAuthn extensions are optional features that extend the core WebAuthn specification to support additional use cases and capabilities. They allow authenticators and browsers to provide extra functionality beyond basic authentication.
 
-## What Are Extensions?
+## What are extensions?
 
 Extensions provide a standardized way to:
 
@@ -15,7 +15,7 @@ Extensions provide a standardized way to:
 * Enable specific features like credential protection or large blob storage
 * Maintain backward compatibility with legacy systems (like U2F)
 
-## How Extensions Work
+## How extensions work
 
 Extensions work in both directions:
 
@@ -26,9 +26,9 @@ Extensions work in both directions:
 
     **Important**: Authenticators may ignore extension inputs if they don't support them. Extension outputs are **not guaranteed** and your application should handle their absence gracefully.
 
-## Common WebAuthn Extensions
+## Common WebAuthn extensions
 
-### Standard Extensions
+### Standard extensions
 
 The most commonly used WebAuthn extensions include:
 
@@ -49,7 +49,7 @@ All standard extensions are listed in the **IANA WebAuthn Extensions Registry**:
 
 [https://www.iana.org/assignments/webauthn/webauthn.xhtml](https://www.iana.org/assignments/webauthn/webauthn.xhtml)
 
-## Library Support
+## Library support
 
 This library provides:
 
@@ -61,7 +61,7 @@ This library provides:
 
     Most extensions require custom implementation. It is up to you to create the extension handlers depending on which extensions you want to support.
 
-## Basic Usage Example
+## Basic usage example
 
 Here's how to add an extension input when creating credential options:
 
@@ -101,9 +101,9 @@ if (isset($extensionOutputs['credProps']['rk'])) {
 }
 ```
 
-## Practical Use Cases
+## Practical use cases
 
-### 1. U2F Migration (appid Extension)
+### 1. U2F migration (appid extension)
 
 Allow existing U2F credentials to work with your WebAuthn implementation:
 
@@ -118,7 +118,7 @@ $publicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions::create(
 );
 ```
 
-### 2. Credential Properties (credProps Extension)
+### 2. Credential properties (credProps extension)
 
 Determine if a credential supports resident keys (usernameless authentication):
 
@@ -131,7 +131,7 @@ $extensions = AuthenticationExtensions::create([
 $rk = $extensionOutputs['credProps']['rk'] ?? false;
 ```
 
-### 3. Large Blob Storage (largeBlob Extension)
+### 3. Large blob storage (largeBlob extension)
 
 Store additional encrypted data with the credential:
 
@@ -145,7 +145,7 @@ $extensions = AuthenticationExtensions::create([
 ]);
 ```
 
-### 4. Pseudo-Random Function (prf Extension)
+### 4. Pseudo-random function (prf extension)
 
 !!! info
 
@@ -169,9 +169,9 @@ $publicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions::create(
 );
 ```
 
-## Implementation Considerations
+## Implementation considerations
 
-### Check Extension Support
+### Check extension support
 
 Not all authenticators support all extensions. Always:
 
@@ -179,7 +179,7 @@ Not all authenticators support all extensions. Always:
 2. Have fallback behavior when extensions aren't supported
 3. Don't rely on extensions for critical security features
 
-### Custom Extension Handlers
+### Custom extension handlers
 
 For extensions beyond `appid`, you'll need to implement:
 
@@ -188,7 +188,7 @@ For extensions beyond `appid`, you'll need to implement:
 
 See the [Pure PHP Extensions Guide](../pure-php/advanced-behaviours/extensions.md) or [Symfony Bundle Extensions Guide](../symfony-bundle/advanced-behaviors/extensions.md) for detailed implementation instructions.
 
-## When to Use Extensions
+## When to use extensions
 
 Use extensions when you need:
 
@@ -203,7 +203,7 @@ Avoid extensions if:
 * ❌ You need universal compatibility (not all devices support extensions)
 * ❌ You're just getting started with WebAuthn
 
-## See Also
+## See also
 
 * [Pure PHP Extensions Implementation](../pure-php/advanced-behaviours/extensions.md) - Detailed extension implementation
 * [Symfony Extensions Configuration](../symfony-bundle/advanced-behaviors/extensions.md) - Framework-specific setup

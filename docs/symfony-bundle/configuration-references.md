@@ -1,4 +1,4 @@
-# Configuration References
+# Configuration references
 
 ## Configuration
 
@@ -61,13 +61,13 @@ webauthn:
 #        certificate_chain_checker: 'App\Security\CertificateChainChecker'
 ```
 
-### Creation Profiles
+### Creation profiles
 
 !!! success
 
     If you don't create the `creation_profiles` section, a `default` profile is set.
 
-#### Relying Party (rp)
+#### Relying party (rp)
 
 The relying Party corresponds to your application. Please refer [to this page](../prerequisites/the-relying-party.md) for more information.
 
@@ -75,7 +75,7 @@ The relying Party corresponds to your application. Please refer [to this page](.
 
     The parameter `id` is optional but highly recommended.
 
-#### Challenge Length
+#### Challenge length
 
 By default, the length of the challenge is 32 bytes. You may need to select a smaller or higher length. This length can be configured for each profile:
 
@@ -110,7 +110,7 @@ webauthn:
 
     These behaviors are not necessarily followed by the web browsers.
 
-#### Authenticator Selection Criteria
+#### Authenticator selection criteria
 
 This set of options allows you to select authenticators depending on their capabilities. The values are described in [the advanced concepts](../pure-php/advanced-behaviours/authenticator-selection-criteria.md) of the protocol.
 
@@ -126,7 +126,7 @@ webauthn:
                 user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
 ```
 
-#### Public Key Credential Parameters
+#### Public key credential parameters
 
 This option indicates the algorithms allowed for your application. By default, a large list of algorithms is defined, but you can add custom algorithms or reduce the list.
 
@@ -149,7 +149,7 @@ webauthn:
                 - !php/const Cose\Algorithms::COSE_ALGORITHM_RS256
 ```
 
-#### Attestation Conveyance
+#### Attestation conveyance
 
 If you need the [attestation of the authenticator](../webauthn-in-a-nutshell/attestation-and-metadata-statement.md), you can specify the preference regarding attestation conveyance during credential generation.
 
@@ -185,7 +185,7 @@ webauthn:
                 txAuthSimple: 'Please add your new authenticator'
 ```
 
-### Request Profiles
+### Request profiles
 
 !!! success
 

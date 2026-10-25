@@ -2,11 +2,11 @@
 description: Prove to me who you claim to be!
 ---
 
-# User Verification
+# User verification
 
 User verification is a WebAuthn feature that confirms the identity of the actual user, not just possession of the authenticator. It answers the question: "Is the person using this authenticator really the authorized user?"
 
-## What is User Verification?
+## What is user verification?
 
 User verification requires the user to prove their identity through:
 
@@ -17,7 +17,7 @@ User verification requires the user to prove their identity through:
 
 The goal is to **distinguish individual users** and ensure that the person authenticating is the legitimate account owner, not just someone who stole or found the authenticator.
 
-## User Presence vs User Verification
+## User presence vs user verification
 
 It's important to understand the difference:
 
@@ -33,7 +33,7 @@ It's important to understand the difference:
 
 **User Verification** goes further by confirming the specific identity of that person.
 
-## User Verification Requirements
+## User verification requirements
 
 You can configure the user verification requirement when creating credential options. There are three possible values:
 
@@ -95,7 +95,7 @@ $authenticatorSelection = AuthenticatorSelectionCriteria::create(
 * Simple presence verification is sufficient
 * Testing or demonstration purposes
 
-## Checking the UV Flag
+## Checking the UV flag
 
 After authentication or registration, verify whether user verification actually occurred:
 
@@ -117,9 +117,9 @@ $flags = $authenticatorData->getFlags();
 $uvFlag = ($flags & 0x04) !== 0;  // UV flag is bit 2
 ```
 
-## Practical Examples
+## Practical examples
 
-### Example 1: High-Security Banking App
+### Example 1: High-security banking app
 
 ```php linenums="1"
 // Require user verification for all operations
@@ -136,7 +136,7 @@ $options = PublicKeyCredentialCreationOptions::create(
 );
 ```
 
-### Example 2: General Web Application
+### Example 2: General web application
 
 ```php linenums="1"
 // Prefer user verification but don't require it
@@ -153,7 +153,7 @@ $options = PublicKeyCredentialCreationOptions::create(
 );
 ```
 
-### Example 3: Fast Re-authentication
+### Example 3: Fast re-authentication
 
 ```php linenums="1"
 // For quick re-auth on already logged-in user, discourage UV
@@ -163,7 +163,7 @@ $options = PublicKeyCredentialRequestOptions::create(
 );
 ```
 
-## Device Capabilities
+## Device capabilities
 
 Different authenticators have different user verification capabilities:
 
@@ -180,21 +180,21 @@ Different authenticators have different user verification capabilities:
 
     When you set `userVerification: required`, only authenticators capable of user verification will be available to the user during registration or authentication.
 
-## Best Practices
+## Best practices
 
-### For Registration
+### For registration
 
 1. **Use `preferred` as default** - Balances security and compatibility
 2. **Use `required` for sensitive accounts** - Banking, healthcare, admin accounts
 3. **Inform users** - Explain that biometric/PIN improves security
 
-### For Authentication
+### For authentication
 
 1. **Match registration settings** - If registered with `required`, authenticate with `required`
 2. **Allow `preferred` for convenience** - Users can choose faster auth if device supports it
 3. **Document your policy** - Make clear what level of verification is expected
 
-### Conditional Logic
+### Conditional logic
 
 ```php linenums="1"
 // Require UV only for privileged operations
@@ -210,7 +210,7 @@ $options = PublicKeyCredentialRequestOptions::create(
 );
 ```
 
-## Common Issues
+## Common issues
 
 ### Issue: "User verification not supported"
 
@@ -224,14 +224,14 @@ $options = PublicKeyCredentialRequestOptions::create(
 
 **Solution**: Use `discouraged` or `preferred` for routine operations, save `required` for sensitive actions.
 
-## Security Considerations
+## Security considerations
 
 * ✅ **Higher assurance** - UV provides stronger identity verification than UP alone
 * ✅ **Phishing resistant** - Even if an attacker steals the authenticator, they need the PIN/biometric
 * ⚠️ **Not foolproof** - Biometric systems can have false positives; PINs can be observed
 * ⚠️ **Device dependent** - Relying solely on UV limits compatible devices
 
-## Constants Reference
+## Constants reference
 
 The library provides convenient constants in the `AuthenticatorSelectionCriteria` class:
 
@@ -247,7 +247,7 @@ AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_DISCOURAGED
 // in PublicKeyCredentialRequestOptions
 ```
 
-## See Also
+## See also
 
 * [Authenticators](authenticators.md) - Learn about different authenticator types
 * [Authenticator Selection Criteria](../pure-php/advanced-behaviours/authenticator-selection-criteria.md) - Detailed configuration

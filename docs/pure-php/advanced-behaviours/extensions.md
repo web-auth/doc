@@ -23,7 +23,7 @@ $publicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions::create(
 );
 ```
 
-## Extension Output Checker
+## Extension output checker
 
 An Extension Output Checker (EOC) will check the extension output.
 
@@ -69,7 +69,7 @@ final class LocationExtensionOutputChecker implements ExtensionOutputChecker
 }
 ```
 
-## Extension Output Checker Handler
+## Extension output checker handler
 
 You can create as many EOC as needed. These services can be managed by a handler that will be injected to the Ceremony Step Manager Factory. Extensions will be automatically verified during the validation steps.
 

@@ -1,4 +1,4 @@
-# Bundle Installation
+# Bundle installation
 
 This framework provides a Symfony bundle that will help you to use the components within your Symfony application.
 

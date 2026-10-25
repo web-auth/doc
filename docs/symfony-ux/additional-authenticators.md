@@ -1,8 +1,8 @@
-# Additional Authenticators
+# Additional authenticators
 
 Users can register multiple authenticators to their account for backup purposes or to use different devices. This page explains how to manage multiple authenticators per user.
 
-## Why Multiple Authenticators?
+## Why multiple authenticators?
 
 Allowing users to register multiple authenticators provides several benefits:
 
@@ -11,7 +11,7 @@ Allowing users to register multiple authenticators provides several benefits:
 * **Device upgrades**: Smoothly transition when replacing devices
 * **Shared accounts**: Family members can each use their own authenticator (if your security policy allows)
 
-## Listing User Authenticators
+## Listing user authenticators
 
 Display all authenticators registered to the current user:
 
@@ -92,7 +92,7 @@ class SecurityController extends AbstractController
 {% endblock %}
 ```
 
-## Adding Additional Authenticators
+## Adding additional authenticators
 
 Allow authenticated users to register additional authenticators:
 
@@ -135,7 +135,7 @@ Allow authenticated users to register additional authenticators:
 
     The controller configuration for `add_device` should use `CurrentUserEntityGuesser` to automatically get the authenticated user. See the [User Registration](user-registration.md#configuration-for-existing-users) page for configuration details.
 
-## Removing Authenticators
+## Removing authenticators
 
 Allow users to remove authenticators they no longer use:
 
@@ -180,7 +180,7 @@ public function removeAuthenticator(
     * Consider requiring re-authentication before removal for sensitive accounts
     * Log authenticator additions and removals for security auditing
 
-## Naming Authenticators
+## Naming authenticators
 
 Allow users to give friendly names to their authenticators for easier management:
 
@@ -241,9 +241,9 @@ Then allow users to set names during or after registration:
 </form>
 ```
 
-## Best Practices
+## Best practices
 
-### Encourage Backup Authenticators
+### Encourage backup authenticators
 
 Prompt users to register a backup authenticator after their first registration:
 
@@ -258,7 +258,7 @@ Prompt users to register a backup authenticator after their first registration:
 {% endif %}
 ```
 
-### Authenticator Metadata
+### Authenticator metadata
 
 Display useful information about each authenticator:
 
@@ -267,14 +267,14 @@ Display useful information about each authenticator:
 * **Registration date**: Track when each authenticator was added
 * **AAGUID**: Identify the authenticator model (if available)
 
-### Security Recommendations
+### Security recommendations
 
 * **Minimum authenticators**: Consider requiring at least 2 authenticators for privileged accounts
 * **Maximum authenticators**: Limit to prevent abuse (e.g., 10 per user)
 * **Inactive authenticators**: Automatically remove authenticators not used for a long period
 * **Notification**: Email users when authenticators are added or removed
 
-## See Also
+## See also
 
 * [User Registration](user-registration.md) - Register the first authenticator
 * [User Authentication](integration.md) - Authenticate with any registered authenticator

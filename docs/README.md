@@ -4,7 +4,7 @@ description: >-
   Tutorials
 ---
 
-# WebAuthn: Strong Authentication for your PHP applications
+# WebAuthn: Strong authentication for your PHP applications
 
 Welcome to WebAuthn, the solution for strong authentication on the web. With WebAuthn, you can offer your users a secure, simple, and convenient authentication experience that seamlessly integrates with your PHP or Symfony application.
 

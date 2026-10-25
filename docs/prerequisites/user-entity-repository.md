@@ -2,9 +2,9 @@
 description: It's all about users
 ---
 
-# User Entity
+# User entity
 
-## User Entity Class
+## User entity class
 
 A User Entity object represents a user in the Webauthn context. It has the following constraints:
 
@@ -58,7 +58,7 @@ $userEntity = PublicKeyCredentialUserEntity::create(
 
     The icon may be ignored by browsers, especially if its length is greater than 128 bytes.
 
-## User Entity Repository
+## User entity repository
 
 Except if you use the Symfony bundle, there is no interface to implement or abstract class to extend, making it easy to integrate into your application. You may already have a user repository that can be adapted.
 
@@ -72,7 +72,7 @@ Your repository needs to provide these main operations:
 
     Whatever database you use (MySQL, PostgreSQL, MongoDB…), it is not necessary to create foreign key relationships between your users and the Credential Sources. The `userHandle` in the Credential Source links to the user ID.
 
-### Repository Example
+### Repository example
 
 Here's a simple example using an array storage (for demonstration purposes):
 
@@ -130,7 +130,7 @@ final class InMemoryUserEntityRepository
 
     For production use, implement your repository with your preferred storage backend. See the [Symfony Bundle section](../symfony-bundle/entities-with-doctrine-1.md) for a complete Doctrine example.
 
-### Important Notes About User ID (userHandle)
+### Important notes about user ID (userHandle)
 
 * **Must be unique**: Each user must have a unique user ID
 * **Must be persistent**: The user ID must never change for a given user

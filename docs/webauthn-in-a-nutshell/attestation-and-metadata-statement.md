@@ -1,4 +1,4 @@
-# Metadata Statement
+# Metadata statement
 
 !!! info
 
@@ -8,7 +8,7 @@
 
     Disclaimer: you **should not** ask for the Attestation Statement unless you want to play with it or you are working on an application that requires a high level of trust (e.g. Banking/Financial Company, Government Agency...).
 
-## Attestation Statement
+## Attestation statement
 
 During the Attestation Ceremony (i.e. the registration of the authenticator), you can ask for the Attestation Statement of the authenticator. The Attestation Statements have one of the following types:
 
@@ -18,7 +18,7 @@ During the Attestation Ceremony (i.e. the registration of the authenticator), yo
 * **Attestation CA** (`AttCA`): Authenticators are based on a Trusted Platform Module (TPM). They can generate multiple attestation identity key pairs (AIK) and requests an Attestation CA to issue an AIK certificate for each.
 * **Anonymization CA** (`AnonCA`): Authenticators use an Anonymization CA, which dynamically generates per-credential attestation certificates such that the attestation statements presented to Relying Parties do not provide uniquely identifiable information.
 
-## Metadata Statement
+## Metadata statement
 
 The Metadata Statements are issued by the manufacturers of the authenticators. These statements contain details about the authenticators (supported algorithms, biometric capabilities...) and all the necessary information to verify the Attestation Statements generated during the attestation ceremony.
 

@@ -1,6 +1,6 @@
 # Extensions
 
-## Extension Output Checker
+## Extension output checker
 
 An Extension Output Checker will check the extension output.
 

@@ -1,4 +1,4 @@
-# Cross Origin Authentication
+# Cross origin authentication
 
 ## Default behavior
 
@@ -9,7 +9,7 @@ By default, the current host is used, and the origin parameter returned in the W
 * **Subdomain authentication**: Some deployments use a wildcard subdomain approach (e.g., `tenant1.example.com`, `tenant2.example.com`), but strict origin checking will reject authentication if the relying party ID does not match exactly.
 * **Development and testing environments**: Local development often uses `http://localhost`, which is not allowed by default due to the HTTPS requirement.
 
-## Customizing Allowed Origins
+## Customizing allowed origins
 
 To handle these cases, you can explicitly define a list of allowed origins when configuring the WebAuthn authentication process using the method `setAllowedOrigins`.
 
@@ -17,7 +17,7 @@ To handle these cases, you can explicitly define a list of allowed origins when 
 
     The method `setSecuredRelyingPartyId` is deprecated since 5.2.0
 
-### Allowing Multiple Origins
+### Allowing multiple origins
 
 If your application supports multiple domains, specify them explicitly:
 
@@ -39,7 +39,7 @@ $csmFactory->setAllowedOrigins([
 ]);
 ```
 
-### Allowing Subdomains
+### Allowing subdomains
 
 To allow authentication from subdomains dynamically, enable the `allowSubdomains` flag:
 
@@ -60,7 +60,7 @@ With this setting, authentication requests from `https://sub.acme.com` will be c
 
     Do not use TLD and the sub domain flag together! `$csmFactory->setSecuredRelyingPartyId(['com'], true);`
 
-### Supporting Native Applications
+### Supporting native applications
 
 For native applications, origins are different from traditional web URLs. If your application integrates with mobile apps, ensure that relevant origins are included:
 
@@ -81,7 +81,7 @@ $csmFactory->setAllowedOrigins([
 
 This configuration allows authentication responses from web browsers and native applications.
 
-### Enabling `http://localhost` for Development
+### Enabling `http://localhost` for development
 
 During local development, you may need to allow `http://localhost`. Since WebAuthn generally requires HTTPS, this is an exception for local testing. To allow it:
 
@@ -100,13 +100,13 @@ $csmFactory->setAllowedOrigins([
 
 Be aware that this should only be enabled in non-production environments.
 
-## Top Origin Validation (Cross-Origin iframes)
+## Top origin validation (cross-origin iframes)
 
 When your WebAuthn authentication is embedded in a cross-origin iframe (e.g., `auth.example.com` is loaded inside an iframe on `app.example.com`), the browser includes a `topOrigin` field in the client data. By default, the library **does not validate** this field.
 
 If you need to restrict which top-level origins are allowed to embed your authentication page, you must explicitly enable top origin validation by providing a `TopOriginValidator` implementation.
 
-### Using the Built-in Host Validator
+### Using the built-in host validator
 
 The `HostTopOriginValidator` performs a strict comparison between the top origin and a given host:
 
@@ -124,7 +124,7 @@ $csmFactory->enableTopOriginValidator(
 );
 ```
 
-### Using a Custom Validator
+### Using a custom validator
 
 For more advanced scenarios (e.g., allowing multiple top origins), implement the `TopOriginValidator` interface:
 
@@ -172,7 +172,7 @@ $csmFactory->enableTopOriginValidator(
 
     If you do not call `enableTopOriginValidator()`, the top origin is **not validated**. Enable it if your authentication page can be embedded in cross-origin iframes and you want to control which parent origins are permitted.
 
-## Security Considerations
+## Security considerations
 
 When modifying allowed origins, ensure that:
 

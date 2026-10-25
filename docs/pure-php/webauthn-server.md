@@ -1,8 +1,8 @@
-# Webauthn Server
+# Webauthn server
 
 This page provides an overview of the components needed to build a WebAuthn server in pure PHP, without framework dependencies.
 
-## Architecture Overview
+## Architecture overview
 
 A WebAuthn server handles two main operations:
 
@@ -13,11 +13,11 @@ Each operation involves two phases:
 * **Options generation**: Create challenge and parameters for the client
 * **Response validation**: Verify the client's cryptographic response
 
-## Required Components
+## Required components
 
 To set up a WebAuthn server, you need components from these categories:
 
-### 1. Input Loading
+### 1. Input loading
 
 [Input Loading](input-loading.md) services convert raw data from the browser into PHP objects:
 
@@ -25,7 +25,7 @@ To set up a WebAuthn server, you need components from these categories:
 * **Decoders**: Decode base64url-encoded binary data
 * **Parsers**: Parse CBOR-encoded authenticator data
 
-### 2. Input Validation
+### 2. Input validation
 
 [Input Validation](input-validation.md) services verify cryptographic signatures and data integrity:
 
@@ -33,14 +33,14 @@ To set up a WebAuthn server, you need components from these categories:
 * **Response Validators**: Verify attestation and assertion responses
 * **Algorithm Managers**: Handle cryptographic algorithms (ES256, RS256, etc.)
 
-### 3. Data Repositories
+### 3. Data repositories
 
 Storage for credentials and users:
 
 * **[Credential Source Repository](../prerequisites/credential-source-repository.md)**: Store and retrieve authenticator credentials
 * **[User Entity Repository](../prerequisites/user-entity-repository.md)**: Manage user accounts
 
-### 4. Relying Party Configuration
+### 4. Relying party configuration
 
 [Relying Party](../prerequisites/the-relying-party.md) configuration identifies your application:
 
@@ -48,9 +48,9 @@ Storage for credentials and users:
 * Optional icon
 * Allowed origins and subdomains
 
-## Implementation Flow
+## Implementation flow
 
-### Registration Flow
+### Registration flow
 
 ```php linenums="1"
 <?php
@@ -84,7 +84,7 @@ $credentialSource = $attestationValidator->check(
 $credentialRepository->saveCredentialSource($credentialSource);
 ```
 
-### Authentication Flow
+### Authentication flow
 
 ```php linenums="1"
 <?php
@@ -122,7 +122,7 @@ $updatedCredential = $assertionValidator->check(
 $credentialRepository->saveCredentialSource($updatedCredential);
 ```
 
-## Minimal Setup Example
+## Minimal setup example
 
 Here's a minimal working example with in-memory storage:
 
@@ -158,7 +158,7 @@ $userRepository = new YourUserRepository();
 // Now you can handle registration and authentication!
 ```
 
-## Next Steps
+## Next steps
 
 Once you have these components set up, proceed to:
 
@@ -166,7 +166,7 @@ Once you have these components set up, proceed to:
 2. **[Authenticate Users](authenticate-your-users.md)** - Implement the authentication flow
 3. **[Advanced Behaviours](advanced-behaviours/README.md)** - Customize security and UX settings
 
-## Production Considerations
+## Production considerations
 
 Before going to production:
 
@@ -178,7 +178,7 @@ Before going to production:
 * ✅ Test with multiple authenticator types (security keys, platform authenticators)
 * ✅ Handle browser compatibility gracefully
 
-## See Also
+## See also
 
 * [Prerequisites](../prerequisites/the-relying-party.md) - Understanding the basics
 * [Symfony Bundle](../symfony-bundle/the-symfony-way.md) - Framework integration

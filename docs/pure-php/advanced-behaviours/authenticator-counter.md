@@ -1,4 +1,4 @@
-# Authenticator Counter
+# Authenticator counter
 
 The authenticators may have an internal counter. This feature is very helpful to detect cloned devices.
 

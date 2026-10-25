@@ -1,4 +1,4 @@
-# Authenticator Selection Criteria
+# Authenticator selection criteria
 
 By default, any type of authenticator can be used by your users and interact with you application. In certain circumstances, you may need to select specific authenticators e.g. when user verification is required.
 
@@ -6,9 +6,9 @@ The Webauthn API and this library allow you to define a set of options to disall
 
 The class `Webauthn\AuthenticatorSelectionCriteria` is designed for this purpose. It is used when generating the `Webauthn\PublicKeyCredentialCreationOptions` object.
 
-## Available Criteria
+## Available criteria
 
-### Authenticator Attachment Modality
+### Authenticator attachment modality
 
 You can indicate if the authenticator must be attached to the client (platform authenticator i.e. it is usually not removable from the client device) or must be detached (roaming authenticator).
 
@@ -20,7 +20,7 @@ Possible values are:
 
 A primary use case for platform authenticators is to register a particular client device as a "trusted device" for future authentication. This gives the user the convenience benefit of not needing a roaming authenticator, e.g., the user will not have to dig around in their pocket for their key fob or phone.
 
-### Resident Key
+### Resident key
 
 When this criterion is set to `true`, a Public Key Credential Source will be stored in the authenticator, client or client device. Such storage requires an authenticator capable to store such a resident credential.
 

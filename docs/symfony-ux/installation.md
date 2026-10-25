@@ -26,7 +26,7 @@ This command will automatically:
 
     **No build step required!** The package works with Symfony AssetMapper, so you don't need Node.js, npm, yarn, or any JavaScript build tools. The browser imports the JavaScript files directly.
 
-## Verify Installation
+## Verify installation
 
 Check that the Stimulus controller is properly registered in your `assets/controllers.json`:
 
@@ -40,7 +40,7 @@ Check that the Stimulus controller is properly registered in your `assets/contro
 }
 ```
 
-## What's Included
+## What's included
 
 The package provides a Stimulus controller that handles:
 
@@ -50,14 +50,14 @@ The package provides a Stimulus controller that handles:
 * **Error handling** - Gracefully handles common WebAuthn errors
 * **Browser autofill** - Supports conditional UI for passkey selection
 
-## Basic Usage
+## Basic usage
 
 Once installed, you can use the Stimulus controller in your Twig templates with two simple functions:
 
 1. **`stimulus_controller()`** - Attach the controller to your form
 2. **`stimulus_action()`** - Trigger WebAuthn operations on button clicks
 
-### Registration Form Example
+### Registration form example
 
 ```twig title="templates/registration/register.html.twig" linenums="1"
 <form
@@ -80,7 +80,7 @@ Once installed, you can use the Stimulus controller in your Twig templates with 
 </form>
 ```
 
-### Authentication Form Example
+### Authentication form example
 
 ```twig title="templates/security/login.html.twig" linenums="1"
 <form
@@ -103,18 +103,18 @@ Once installed, you can use the Stimulus controller in your Twig templates with 
 </form>
 ```
 
-## Controller Options
+## Controller options
 
 The Stimulus controller accepts various configuration options:
 
-### Registration Options
+### Registration options
 
 | Option | Type | Required | Description |
 |--------|------|----------|-------------|
 | `creationOptionsUrl` | string | Yes | URL endpoint that returns `PublicKeyCredentialCreationOptions` |
 | `creationResultField` | string | Yes | CSS selector for hidden field to store attestation response |
 
-### Authentication Options
+### Authentication options
 
 | Option | Type | Required | Description |
 |--------|------|----------|-------------|
@@ -122,7 +122,7 @@ The Stimulus controller accepts various configuration options:
 | `requestResultField` | string | Yes | CSS selector for hidden field to store assertion response |
 | `useBrowserAutofill` | boolean | No | Enable conditional UI for browser autofill (default: false) |
 
-## Testing Your Installation
+## Testing your installation
 
 Create a simple test page to verify everything works:
 
@@ -187,7 +187,7 @@ Create a simple test page to verify everything works:
 
 ## Troubleshooting
 
-### Controller Not Found
+### Controller not found
 
 If you see "Controller '@web-auth/webauthn-stimulus' not found":
 
@@ -195,7 +195,7 @@ If you see "Controller '@web-auth/webauthn-stimulus' not found":
 2. Clear Symfony cache: `php bin/console cache:clear`
 3. Check that AssetMapper is properly configured in `config/packages/asset_mapper.yaml`
 
-### JavaScript Errors
+### JavaScript errors
 
 If you see console errors:
 
@@ -204,7 +204,7 @@ If you see console errors:
 3. Verify WebAuthn routes are properly configured in `config/routes/webauthn.yaml`
 4. Ensure the controller is loaded by checking the browser's network tab
 
-### Assets Not Loading
+### Assets not loading
 
 If the Stimulus controller doesn't load:
 
@@ -217,7 +217,7 @@ If the Stimulus controller doesn't load:
 
 2. Check that Stimulus is properly configured in your application
 
-## HTTPS Requirement
+## HTTPS requirement
 
 WebAuthn **requires HTTPS** to function. For development, use the Symfony CLI for automatic HTTPS:
 
@@ -228,7 +228,7 @@ symfony serve
 
 For production, ensure HTTPS is properly configured on your web server.
 
-## Next Steps
+## Next steps
 
 Now that the Stimulus Controller is installed, proceed to:
 
@@ -236,7 +236,7 @@ Now that the Stimulus Controller is installed, proceed to:
 2. **[User Authentication](integration.md)** - Implement login flows
 3. **[Additional Authenticators](additional-authenticators.md)** - Allow users to register backup devices
 
-## See Also
+## See also
 
 * [Symfony UX Documentation](https://symfony.com/doc/current/frontend/ux.html) - Official UX guide
 * [Stimulus Documentation](https://stimulus.hotwired.dev/) - Stimulus framework reference

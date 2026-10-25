@@ -1,4 +1,4 @@
-# Attestation and Metadata Statement
+# Attestation and metadata statement
 
 !!! warning
 
@@ -22,7 +22,7 @@ webauthn:
 
     If the metadata service is not enabled, the Attestation Statement Formats other than `None` (e.g. `Apple`, `Packed`, `TPM`...) **cannot be used**.
 
-### Credential Creation Options
+### Credential creation options
 
 By default, no Attestation Statement is asked to the Authenticators (type = `none`). To change this behavior, you just have to set the corresponding parameter in the `Webauthn\PublicKeyCredentialCreationOptions` object.
 

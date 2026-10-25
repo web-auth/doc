@@ -1,10 +1,10 @@
-# Register Authenticators
+# Register authenticators
 
 During this step, your application will send a challenge to the device. The device will resolve this challenge by adding information and digitally signing the data.
 
 The application will check the response from the device and get its credential ID. This ID will be used for further authentication requests.
 
-## Creation Request
+## Creation request
 
 To associate a device to a user, you need to instantiate a `Webauthn\PublicKeyCredentialCreationOptions` object.
 
@@ -96,7 +96,7 @@ $publicKeyCredentialCreationOptions =
 ;
 ```
 
-### Public Key Credential Parameters
+### Public key credential parameters
 
 The argument `pubKeyCredParams` contains a list of `Webauthn\PublicKeyCredentialParameters` objects that refer to COSE algorithms. The authenticators must use one of the algorithms in this list, respecting the order of preference on this list.
 
@@ -119,7 +119,7 @@ $publicKeyCredentialParametersList = [
 
     Customizing this list may lead to unexpected behavior. Please use with caution.
 
-### Authenticator Selection
+### Authenticator selection
 
 Please read detail [on this page](advanced-behaviours/authenticator-selection-criteria.md).
 
@@ -127,7 +127,7 @@ Please read detail [on this page](advanced-behaviours/authenticator-selection-cr
 
 Please read detail [on this page](advanced-behaviours/attestation-and-metadata-statement.md).
 
-### Exclude Credentials
+### Exclude credentials
 
 When the user already registered authenticators, you can pass a list of `Webauthn\PublicKeyCredentialDescriptor` objects as argument to avoid registering multiple times the same authenticator.
 
@@ -157,7 +157,7 @@ $publicKeyCredentialCreationOptions =
 
     On the contrary when adding new authenticators to already authenticated users, this value should be set.
 
-## Creation Response
+## Creation response
 
 What you receive must be a JSON object that looks like as follow:
 
@@ -178,7 +178,7 @@ There are two steps to perform with this object:
 * [Load the data](input-loading.md)
 * [Verify it with the creation options set above](input-validation.md)
 
-### Data Loading
+### Data loading
 
 Now that all components are set, we can load the data we receive using the [_Serializer_](webauthn-server.md#the-serializer) (variable `$serializer`).
 
@@ -209,7 +209,7 @@ $publicKeyCredential = $serializer->deserialize(
 
 If no exception is thrown, you can go to the next step: the verification.
 
-### Response Verification
+### Response verification
 
 Now we have a fully loaded Public Key Credential object, but we need now to make sure that:
 

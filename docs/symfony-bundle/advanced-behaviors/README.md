@@ -1,4 +1,4 @@
-# Advanced Behaviors
+# Advanced behaviors
 
 This section covers advanced WebAuthn features and customization options for Symfony Bundle implementations.
 
@@ -6,28 +6,28 @@ This section covers advanced WebAuthn features and customization options for Sym
 
 The Symfony WebAuthn Bundle provides sensible defaults for most applications. However, you can customize various behaviors to meet specific security requirements or enhance user experience.
 
-## Available Topics
+## Available topics
 
-### Security Features
+### Security features
 
 * **[Fake Credentials](fake-credentials.md)** - Prevent user enumeration attacks with fake credentials
 * **[Authenticator Counter](authenticator-counter.md)** - Detect cloned authenticators
 * **[Attestation and Metadata Statement](attestation-and-metadata-statement.md)** - Verify authenticator trust
 * **[Debugging](debugging.md)** - Enable debug logging for troubleshooting
 
-### User Experience
+### User experience
 
 * **[User Verification](user-verification.md)** - Configure biometric or PIN requirements
 * **[Authenticator Selection Criteria](authenticator-selection-criteria.md)** - Control authenticator types
 * **[Authentication without Username](authentication-without-username.md)** - Passwordless authentication with resident keys
 * **[Register Additional Authenticators](register-authenticators.md)** - Allow users to add backup authenticators
 
-### Technical Configuration
+### Technical configuration
 
 * **[Extensions](extensions.md)** - Use WebAuthn protocol extensions
 * **[Cross Origin Authentication](dealing-with-localhost.md)** - Development environment configuration
 
-## Configuration vs Code
+## Configuration vs code
 
 The Symfony Bundle allows configuration through:
 
@@ -35,7 +35,7 @@ The Symfony Bundle allows configuration through:
 2. **Custom Services** - Advanced behaviors require creating custom service classes
 3. **Event Listeners** - Hook into the authentication process with Symfony events
 
-## Symfony-Specific Features
+## Symfony-specific features
 
 The bundle provides several Symfony-specific features not available in pure PHP:
 
@@ -44,7 +44,7 @@ The bundle provides several Symfony-specific features not available in pure PHP:
 * **Configuration Profiles** - Multiple authentication profiles for different use cases
 * **Event System** - React to WebAuthn events throughout your application
 
-## Quick Configuration Example
+## Quick configuration example
 
 Here's a common advanced configuration:
 
@@ -77,7 +77,7 @@ webauthn:
             user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
 ```
 
-## See Also
+## See also
 
 * [Firewall Configuration](../firewall.md) - Basic Symfony Security setup
 * [Configuration References](../configuration-references.md) - Complete configuration options

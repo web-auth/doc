@@ -44,7 +44,7 @@ webauthn:
     allow_subdomains: false
 ```
 
-### Options Storage
+### Options storage
 
 `options_storage` option on the controller or firewall levels are deprecated. Please use the top level configuration key
 

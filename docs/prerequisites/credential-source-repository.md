@@ -2,9 +2,9 @@
 description: Authenticator details and how to manage them
 ---
 
-# Credential Source
+# Credential source
 
-## Credential Source Class
+## Credential source class
 
 After the registration of an authenticator, you will get a `Webauthn\PublicKeyCredentialSource` object. This object contains all the credential data needed to perform user authentication:
 
@@ -46,7 +46,7 @@ $transports = $credentialSource->transports; // ['usb', 'nfc']
 $descriptor = $credentialSource->getPublicKeyCredentialDescriptor();
 ```
 
-## Credential Source Repository
+## Credential source repository
 
 Since 4.6.0 and except if you use the Symfony bundle, there is no interface to implement or abstract class to extend, making it easy to integrate into your application.
 
@@ -59,7 +59,7 @@ Your repository needs to provide two main operations:
 
     Whatever database you use (MySQL, PostgreSQL, MongoDB…), it is not necessary to create foreign key relationships between your users and the Credential Sources. The `userHandle` property is sufficient to link credentials to users.
 
-### Repository Example
+### Repository example
 
 Here's a simple example using an array storage (for demonstration purposes):
 
@@ -101,7 +101,7 @@ final class InMemoryCredentialSourceRepository
 
     For production use, implement your repository with your preferred storage backend (Doctrine ORM, PDO, MongoDB, Redis, etc.). See the [Symfony Bundle section](../symfony-bundle/entities-with-doctrine.md) for a complete Doctrine example.
 
-### Important Notes
+### Important notes
 
 * **Store credentials securely**: Credentials contain sensitive cryptographic material
 * **Index by credential ID**: Lookups during authentication require fast credential ID queries

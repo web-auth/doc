@@ -1,10 +1,10 @@
-# Attestation and Metadata Statement
+# Attestation and metadata statement
 
 !!! danger
 
     **Important Notice:** The request for an Attestation Statement is reserved for applications necessitating a high degree of reliability, such as those operated by banking or financial institutions, government agencies, etc. Exercise caution and ensure your application's context requires such a level of trust before proceeding.
 
-## Attestation Statement Support Manager
+## Attestation statement support manager
 
 There are a few steps to achieve. First, you have to add support classes for all attestation statement types into your Attestation Metadata Manager.
 
@@ -61,7 +61,7 @@ $attestationStatementSupportManager->add(PackedAttestationStatementSupport::crea
 
     It is not described on this page, but available in the previous versions of the documentation.
 
-## Metadata Statement Repository
+## Metadata statement repository
 
 Then, you must prepare an Metadata Statement Repository. This service will manage all Metadata Statements depending on their sources (local storage or distant service).
 
@@ -73,7 +73,7 @@ Your Metadata Statement Repository must implement the interface `Webauthn\Metada
 
     The library does not provide any Metadata Statement Repository. It is up to you to select the MDS suitable for your application and store them in your database.
 
-## Status Report Repository
+## Status report repository
 
 To prevent the use of rogue MDS or deprecated by the manufacturers, Status Reports may be used. The Status Report Repository is a simple service that implements the interface `Webauthn\MetadataService\StatusReportRepository` with a unique method:
 
@@ -81,7 +81,7 @@ To prevent the use of rogue MDS or deprecated by the manufacturers, Status Repor
 
 The verification's success or failure depends on the state reported in the most recent Status Report.
 
-## Certificate Chain Validator
+## Certificate chain validator
 
 When an attestation statement is received, a certificate chain is constructed. This chain combines certificates from the Metadata Service (MDS), which are trusted, with those provided by the authenticator, which are untrusted.
 
@@ -98,7 +98,7 @@ $certificateChainValidator = PhpCertificateChainValidator::create(
 );
 ```
 
-## Ceremony Step Manager Factory
+## Ceremony step manager factory
 
 The services described above must be set to the [Ceremony Step Manager Factory](../input-validation.md). The CSM you will create will verify the attestation statement sent by the authenticator.
 
@@ -118,7 +118,7 @@ $csmFactory->enableMetadataStatementSupport(
 );
 ```
 
-## Requesting Attestation Statement
+## Requesting attestation statement
 
 By default, no Attestation Statement is asked to the Authenticators (type = `none`). To change this behavior, you just have to set the corresponding parameter in the `Webauthn\PublicKeyCredentialCreationOptions` object.
 
