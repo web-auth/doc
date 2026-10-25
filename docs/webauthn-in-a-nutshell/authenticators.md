@@ -1,0 +1,41 @@
+---
+description: What is an authenticator?
+---
+
+# Authenticators
+
+An Authenticator is a cryptographic entity used to generate a public key credential and registered by a Relying Party (i.e. an application). This public key is used to authenticate by potentially verifying a user in the form of an authentication assertion and other data.
+
+Authenticators may have additional features such as PIN code or biometric sensors (fingerprint, facial recognition…) that offer user verification.
+
+![USB device with fingerprint reader](../assets/images/images-1.jpeg)
+
+## Roaming authenticators
+
+The roaming authenticator may have different forms. The most common form is a USB device the user plugs into its computer. It can be a paired Bluetooth device or a card with NFC capabilities.
+
+Authenticators of this class are removable from, and can "roam" among, client devices.
+
+![Webauthn compatible devices](../assets/images/fido2.jpeg)
+
+## Platform authenticators
+
+A platform authenticator is usually not removable from the client device. For example an Android smartphone or a Windows 10 computer with the associated security chips can act as an authenticator.
+
+![Android screenshot](../assets/images/webauthn-android-fennec-1.png)
+
+![Fingerprint reader on a laptop](../assets/images/master.jpg)
+
+### Passkey
+
+<figure markdown="span">
+  ![Passkey Logo](../assets/images/fido-passkey-mark-a-black-e1702581853266.png){ width="188" }
+  <figcaption>Passkey Logo</figcaption>
+</figure>
+
+Passkey are virtual authenticators that have extended capabilities and in particular:
+
+* Synchronized and stored in an integrated password manager (e.g., iCloud Keychain, Google Password Manager).
+* Simple and integrated use, no need for an external device.
+* Seamless synchronization across different user devices.
+* Backed up automatically through the associated cloud service, allowing easy recovery if a device is lost or replaced.
