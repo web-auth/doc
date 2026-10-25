@@ -4,9 +4,9 @@ In some circumstances, you may need to register a new authenticator for a user e
 
 It is possible to perform this ceremony programmatically.
 
-{% hint style="success" %}
-You can attach several authenticators to a user account. It is recommended in case of lost devices or if the user gets access on your application using multiple platforms (smartphone, laptop…).
-{% endhint %}
+!!! success
+
+    You can attach several authenticators to a user account. It is recommended in case of lost devices or if the user gets access on your application using multiple platforms (smartphone, laptop…).
 
 With a Symfony application, the fastest way for a user to register additional authenticators is to use the “controller” feature.
 
@@ -21,8 +21,7 @@ You can directly use the `Webauthn\Bundle\Security\Guesser\CurrentUserEntityGues
 
 In the following example the current user is guessed using a controller parameter. This can be used when an administrator is adding an authenticator to another user account.
 
-{% code title="App\Guesser\FromQueryParameterGuesser.php" lineNumbers="true" %}
-```php
+```php title="App\Guesser\FromQueryParameterGuesser.php" linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -53,16 +52,14 @@ final class FromQueryParameterGuesser implements UserEntityGuesser
     }
 }
 ```
-{% endcode %}
 
-{% hint style="info" %}
-In the case the current user is supposed to be an administrator, the user entity can be determined using the query parameters and a route like `/admin/add-authenticator/for/{user_id}`.
-{% endhint %}
+!!! info
+
+    In the case the current user is supposed to be an administrator, the user entity can be determined using the query parameters and a route like `/admin/add-authenticator/for/{user_id}`.
 
 Now you just have to enable the feature and set the routes to your options and response controllers.
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     controllers:
         enabled: true # We enable the feature
@@ -78,29 +75,25 @@ webauthn:
                 user_entity_guesser: App\Guesser\FromQueryParameterGuesser # From the example
                 hide_existing_credentials: false
 ```
-{% endcode %}
 
-{% hint style="warning" %}
-As the user shall be authenticated to register a new authenticator, you should protect these routes in the `security.yaml` file.
-{% endhint %}
+!!! warning
 
-{% hint style="danger" %}
-The option `hide_existing_credentials` should be `false` when adding authenticators from a secured area. Set `true` when this action is performed by anonymous users.
-{% endhint %}
+    As the user shall be authenticated to register a new authenticator, you should protect these routes in the `security.yaml` file.
 
-{% code title="config/packages/security.yaml" lineNumbers="true" %}
-```yaml
+!!! danger
+
+    The option `hide_existing_credentials` should be `false` when adding authenticators from a secured area. Set `true` when this action is performed by anonymous users.
+
+```yaml title="config/packages/security.yaml" linenums="1"
 security:
     access_control:
         - { path: ^/profile,  roles: IS_AUTHENTICATED_FULLY } # We protect all the /profile path
         - { path: ^/admin,  roles: ROLE_ADMIN }
 ```
-{% endcode %}
 
 Now you can send requests to these new endpoints. For example, if you are using the JavaScript library, the calls will look like as follow:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 // Import the registration hook
 import {useRegistration} from 'webauthn-helper';
 
@@ -112,7 +105,6 @@ const register = useRegistration({
     optionsUrl: '/profile/security/devices/add/options'
 });
 
-
 // We can call this register function whenever we need
 //   No "username" or "displayName" parameters are needed
 //   as the user entity is guessed by the dedicated service
@@ -121,14 +113,12 @@ register({})
     .catch((error) => console.log('Registration failure'))
 ;
 ```
-{% endcode %}
 
 ### Creation Profile
 
 The `default` [creation profile](../configuration-references.md#creation-profiles) is used. You can change it using the dedicated option.
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     controllers:
         enabled: true
@@ -137,7 +127,6 @@ webauthn:
                 …
                 profile: custom_profile
 ```
-{% endcode %}
 
 ### Response Handlers
 
@@ -153,8 +142,7 @@ There are 3 types of responses and handlers:
 
 This handler is called during the registration of an authenticator and has to implement the interface `Webauthn\Bundle\Security\Handler\CreationOptionsHandler`.
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     controllers:
         enabled: true
@@ -163,14 +151,12 @@ webauthn:
                 …
                 options_handler: … # Your handler here
 ```
-{% endcode %}
 
 #### Success Handler
 
 This handler is called when a client sends a valid assertion from the authenticator. This handler shall implement the interface `Webauthn\Bundle\Security\Handler\SuccessHandler`. The default handler is `Webauthn\Bundle\Service\DefaultSuccessHandler`.
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     controllers:
         enabled: true
@@ -179,14 +165,12 @@ webauthn:
                 …
                 success_handler: … # Your handler here
 ```
-{% endcode %}
 
 #### Failure Handler
 
 This handler is called when an error occurred during the process. This handler shall implement the interface `Webauthn\Bundle\Security\Handler\FailureHandler`. The default handler is `Webauthn\Bundle\Service\DefaultFailureHandler`.
 
-{% code title="config/packages/webauthn.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
     controllers:
         enabled: true
@@ -195,4 +179,3 @@ webauthn:
                 …
                 failure_handler: … # Your handler here
 ```
-{% endcode %}

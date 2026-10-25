@@ -52,8 +52,7 @@ Storage for credentials and users:
 
 ### Registration Flow
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 // 1. Create options for registration
@@ -84,12 +83,10 @@ $credentialSource = $attestationValidator->check(
 // 5. Store the credential
 $credentialRepository->saveCredentialSource($credentialSource);
 ```
-{% endcode %}
 
 ### Authentication Flow
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 // 1. Get user's registered credentials
@@ -124,14 +121,12 @@ $updatedCredential = $assertionValidator->check(
 // 5. Update credential (counter may have changed)
 $credentialRepository->saveCredentialSource($updatedCredential);
 ```
-{% endcode %}
 
 ## Minimal Setup Example
 
 Here's a minimal working example with in-memory storage:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -162,7 +157,6 @@ $userRepository = new YourUserRepository();
 
 // Now you can handle registration and authentication!
 ```
-{% endcode %}
 
 ## Next Steps
 

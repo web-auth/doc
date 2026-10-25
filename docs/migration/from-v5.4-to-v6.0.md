@@ -4,9 +4,9 @@ description: Step-by-step guide for migrating from 5.4 to 6.0
 
 # From 5.4 to 6.0
 
-{% hint style="info" %}
-This page is subject to changes as the version 6.0.0 is not available at the time of writing.
-{% endhint %}
+!!! info
+
+    This page is subject to changes as the version 6.0.0 is not available at the time of writing.
 
 This project follows the [Semantic Versioning principles](https://semver.org) and, contrary to upgrading a minor version (where the middle number changes) where no difficulty should be encountered, upgrading a major version (where the first number changes) is subject to significant modifications.
 
@@ -16,8 +16,7 @@ Version 6.0 removes everything that has been deprecated during the 5.x line. The
 
 The biggest shift in 5.4 is the move from a **profile-driven** YAML configuration to **autowired helpers** invoked from controllers you write yourself. Once 6.0 lands, a typical Symfony application looks like this:
 
-{% code title="config/packages/webauthn.yaml" %}
-```yaml
+```yaml title="config/packages/webauthn.yaml"
 webauthn:
     credential_repository: 'App\Repo\CredentialRepository'
     user_repository:       'App\Repo\UserRepository'
@@ -28,16 +27,13 @@ webauthn:
         mds_repository:           'App\Webauthn\MetadataStatementRepository'
         status_report_repository: 'App\Webauthn\StatusReportRepository'
 ```
-{% endcode %}
 
-{% code title="config/services.yaml (optional)" %}
-```yaml
+```yaml title="config/services.yaml (optional)"
 parameters:
     app.webauthn.origins:
         - 'https://app.example.com'
         - 'https://admin.example.com'
 ```
-{% endcode %}
 
 Four user-written controllers cover the request and response sides of registration and authentication, calling the autowired `WebauthnOptionsResponse` and `WebauthnResponseVerifier` helpers. See the [Options Helpers](../symfony-bundle/options-helpers.md) and [Verification Helpers](../symfony-bundle/verification-helpers.md) pages for the concrete patterns.
 
@@ -96,9 +92,9 @@ Everything below is removed. Each entry points to the page explaining the replac
 
 The `$reservedForFutureUse1` and `$reservedForFutureUse2` arguments are dropped from the `WebauthnToken` constructor, as well as from its `__serialize()` and `__unserialize()` methods. The serialized payload of the token therefore loses two entries and a session created by a 5.x application cannot be unserialized by a 6.0 one.
 
-{% hint style="danger" %}
-Plan to invalidate the existing sessions when you deploy 6.0.
-{% endhint %}
+!!! danger
+
+    Plan to invalidate the existing sessions when you deploy 6.0.
 
 ### A secret is required for the fake credentials
 

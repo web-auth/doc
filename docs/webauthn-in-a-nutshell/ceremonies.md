@@ -52,22 +52,21 @@ The authenticator:
 * Returns a signed response
 * The server validates the response
 
-{% hint style="info" %}
-User interaction varies based on authenticator capabilities and your configuration. It can range from a simple button touch to biometric authentication (fingerprint, facial recognition, PIN code).
-{% endhint %}
+!!! info
+
+    User interaction varies based on authenticator capabilities and your configuration. It can range from a simple button touch to biometric authentication (fingerprint, facial recognition, PIN code).
 
 ## Attestation Ceremony (Registration)
 
 The attestation ceremony registers a new authenticator credential for a user.
 
-![The attestation ceremony](<../.gitbook/assets/registration (2).png>)
+![The attestation ceremony](../assets/images/registration-2.png)
 
 ### Attestation Flow Breakdown
 
 #### Server Side (Step 1)
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // 1. Create PublicKeyCredentialCreationOptions
 $publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create(
     rp: $rpEntity,                    // Your application identity
@@ -83,7 +82,6 @@ $session->set('webauthn_creation_challenge', $publicKeyCredentialCreationOptions
 // 3. Send options to browser as JSON
 return new JsonResponse($publicKeyCredentialCreationOptions);
 ```
-{% endcode %}
 
 #### Client Side (Browser)
 
@@ -105,8 +103,7 @@ await fetch('/webauthn/register', {
 
 #### Server Side (Step 2)
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // 1. Load the attestation response
 $publicKeyCredential = $serializer->deserialize(
     $request->getContent(),
@@ -124,7 +121,6 @@ $credentialSource = $attestationValidator->check(
 // 3. Save the new credential
 $credentialRepository->saveCredentialSource($credentialSource);
 ```
-{% endcode %}
 
 ### What Happens During Attestation?
 
@@ -147,14 +143,13 @@ $credentialRepository->saveCredentialSource($credentialSource);
 
 The assertion ceremony authenticates a user with a previously registered credential.
 
-![The assertion ceremony](../.gitbook/assets/login.png)
+![The assertion ceremony](../assets/images/login.png)
 
 ### Assertion Flow Breakdown
 
 #### Server Side (Step 1)
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // 1. Get user's registered credentials
 $credentials = $credentialRepository->findAllForUserEntity($userEntity);
 $allowedCredentials = array_map(
@@ -175,7 +170,6 @@ $session->set('webauthn_request_challenge', $publicKeyCredentialRequestOptions->
 // 4. Send options to browser
 return new JsonResponse($publicKeyCredentialRequestOptions);
 ```
-{% endcode %}
 
 #### Client Side (Browser)
 
@@ -197,8 +191,7 @@ await fetch('/webauthn/login', {
 
 #### Server Side (Step 2)
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // 1. Load the assertion response
 $publicKeyCredential = $serializer->deserialize(
     $request->getContent(),
@@ -226,7 +219,6 @@ $credentialRepository->saveCredentialSource($updatedCredential);
 // 5. Log the user in
 $session->set('user_id', $userEntity->id);
 ```
-{% endcode %}
 
 ### What Happens During Assertion?
 
@@ -263,8 +255,7 @@ $session->set('user_id', $userEntity->id);
 
 Both ceremonies require a unique, random challenge:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // Always generate a fresh challenge
 $challenge = random_bytes(32);  // 32 bytes = 256 bits of entropy
 
@@ -272,14 +263,12 @@ $challenge = random_bytes(32);  // 32 bytes = 256 bits of entropy
 // NEVER use predictable challenges (like timestamps)
 // NEVER skip challenge verification
 ```
-{% endcode %}
 
 ### Challenge Storage
 
 Store challenges temporarily in server-side sessions:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // Store during Step 1 (options creation)
 $session->set('webauthn_challenge', base64_encode($challenge));
 $session->set('webauthn_challenge_expires', time() + 60); // 60 second timeout
@@ -292,14 +281,12 @@ if (time() > $session->get('webauthn_challenge_expires')) {
     throw new \Exception('Challenge expired');
 }
 ```
-{% endcode %}
 
 ### Origin Validation
 
 Always verify the origin matches your domain:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 // Server must verify origin during validation
 $credentialSource = $attestationValidator->check(
     $publicKeyCredential->response,
@@ -307,7 +294,6 @@ $credentialSource = $attestationValidator->check(
     'https://example.com'  // Must match your actual domain
 );
 ```
-{% endcode %}
 
 ## Common Pitfalls
 
@@ -340,8 +326,7 @@ $attestationValidator->check($response, $options, 'http://localhost');
 
 Set reasonable timeouts for user interaction:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 $publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create(
     rp: $rpEntity,
     user: $userEntity,
@@ -349,14 +334,12 @@ $publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create
     timeout: 60000  // 60 seconds in milliseconds
 );
 ```
-{% endcode %}
 
 ### ✅ Handle Errors Gracefully
 
 Provide helpful error messages:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 try {
     $credentialSource = $attestationValidator->check(/* ... */);
 } catch (\Webauthn\Exception\InvalidDataException $e) {
@@ -366,20 +349,17 @@ try {
     ], 400);
 }
 ```
-{% endcode %}
 
 ### ✅ Store Credential Metadata
 
 Keep track of when and how credentials were registered:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 $credential->createdAt = new \DateTimeImmutable();
 $credential->lastUsedAt = null;
 $credential->name = 'My YubiKey';  // Allow users to name their keys
 $credential->transports = ['usb', 'nfc'];  // Store transport hints
 ```
-{% endcode %}
 
 ## See Also
 

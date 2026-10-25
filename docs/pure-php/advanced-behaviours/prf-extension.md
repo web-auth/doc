@@ -1,18 +1,18 @@
 # PRF Extension
 
-{% hint style="info" %}
-**New in v5.4.0**
-{% endhint %}
+!!! info
+
+    **New in v5.4.0**
 
 The [WebAuthn Pseudo-Random Function (PRF) extension](https://www.w3.org/TR/webauthn-3/#prf-extension) lets the relying party derive an authenticator-bound, salt-bound secret on the client. Because the secret is a deterministic function of `(credential, salt)`, it is the building block for **client-side encryption**: the authenticator returns the same bytes for the same salt as long as the credential lives, the relying party never sees them, and yet the user can decrypt their own data after a fresh assertion.
 
 The framework ships a fluent builder for the `prf` extension input plus first-class handling on the Stimulus side. The output is left to the application — what you do with `clientExtensionResults.prf.results.first` (typically: feed it through HKDF and use the output as an AES-GCM key) is yours to design.
 
-{% hint style="danger" %}
-**A passkey deletion permanently destroys all PRF-protected data.** Every passkey owns its own PRF input-key inside the authenticator. The relying party never sees that key, the user agent never sees that key, and there is no API to export it. Re-creating a passkey produces a brand-new input-key, so anything sealed under the previous passkey is irrecoverable.
+!!! danger
 
-Production use of PRF therefore needs an explicit recovery story — a second passkey enrolled with shared salts, a server-side wrap escrowed behind a strong second factor, or a "you will lose this data if you lose this passkey" UX contract the user accepts. See Matt Miller's [May 2025 update](https://blog.millerti.me/2023/01/22/encrypting-data-in-the-browser-using-webauthn/) for the full rationale.
-{% endhint %}
+    **A passkey deletion permanently destroys all PRF-protected data.** Every passkey owns its own PRF input-key inside the authenticator. The relying party never sees that key, the user agent never sees that key, and there is no API to export it. Re-creating a passkey produces a brand-new input-key, so anything sealed under the previous passkey is irrecoverable.
+
+    Production use of PRF therefore needs an explicit recovery story — a second passkey enrolled with shared salts, a server-side wrap escrowed behind a strong second factor, or a "you will lose this data if you lose this passkey" UX contract the user accepts. See Matt Miller's [May 2025 update](https://blog.millerti.me/2023/01/22/encrypting-data-in-the-browser-using-webauthn/) for the full rationale.
 
 ## Building a PRF Extension
 
@@ -22,8 +22,7 @@ Production use of PRF therefore needs an explicit recovery story — a second pa
 
 Use `withInputs()` for the WebAuthn `eval` block — the canonical form during registration when the credential id is not yet known, and a usable fallback during authentication for credentials not covered by `evalByCredential`.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -44,7 +43,6 @@ $options = PublicKeyCredentialCreationOptions::create(
     extensions: AuthenticationExtensions::create([$prf]),
 );
 ```
-{% endcode %}
 
 The salts are passed in **raw bytes**. The builder takes care of base64url-encoding them so the JSON sent to the browser matches the W3C wire format.
 
@@ -52,8 +50,7 @@ The salts are passed in **raw bytes**. The builder takes care of base64url-encod
 
 During authentication, prefer `withCredentialInputs()` so each credential is queried with its own salt — for instance a salt rotated alongside a re-encrypted blob:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 $prf = PseudoRandomFunctionInputExtensionBuilder::create();
 foreach ($userCredentials as $credentialRecord) {
     $prf = $prf->withCredentialInputs(
@@ -69,13 +66,12 @@ $options = PublicKeyCredentialRequestOptions::create(
     extensions: AuthenticationExtensions::create([$prf->build()]),
 );
 ```
-{% endcode %}
 
-{% hint style="info" %}
-The W3C spec keys `evalByCredential` by the **base64url string** of the credential id. `withCredentialInputs()` expects the **raw** credential id bytes, the very bytes stored on the `CredentialRecord`, and encodes them itself.
+!!! info
 
-Passing the base64url form instead produces a key that is encoded twice, and the user agent then refuses the ceremony with `'prf' extension contains 'evalByCredential' key that doesn't match any in allowedCredentials`.
-{% endhint %}
+    The W3C spec keys `evalByCredential` by the **base64url string** of the credential id. `withCredentialInputs()` expects the **raw** credential id bytes, the very bytes stored on the `CredentialRecord`, and encodes them itself.
+
+    Passing the base64url form instead produces a key that is encoded twice, and the user agent then refuses the ceremony with `'prf' extension contains 'evalByCredential' key that doesn't match any in allowedCredentials`.
 
 ### Validation
 
@@ -93,8 +89,7 @@ An authenticator may serve PRF in several ways. The CTAP `hmac-secret` extension
 
 `PseudoRandomFunctionInputExtensionBuilder::requiresMultipleCredentialEvaluation()` returns `true` when the builder carries `evalByCredential` entries for more than one credential, which is the shape it can detect on its own and the one requiring the richer authenticator support:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 $builder = PseudoRandomFunctionInputExtensionBuilder::create()
     ->withCredentialInputs($credIdA, $saltA)
     ->withCredentialInputs($credIdB, $saltB);
@@ -104,13 +99,12 @@ if ($builder->requiresMultipleCredentialEvaluation()) {
     // surface a fallback flow if it does not.
 }
 ```
-{% endcode %}
 
-{% hint style="warning" %}
-The create-time eval case (`eval` set during a registration ceremony) needs the same level of support, but the builder cannot tell which ceremony its output will attach to, so flagging that case is the responsibility of the caller.
+!!! warning
 
-`requiresHmacSecretMc()` is the former name of the method. It named a CTAP extension in an API that is implementation agnostic, so it is deprecated since v5.4.0 and removed in 6.0.0. It still delegates to the new method.
-{% endhint %}
+    The create-time eval case (`eval` set during a registration ceremony) needs the same level of support, but the builder cannot tell which ceremony its output will attach to, so flagging that case is the responsibility of the caller.
+
+    `requiresHmacSecretMc()` is the former name of the method. It named a CTAP extension in an API that is implementation agnostic, so it is deprecated since v5.4.0 and removed in 6.0.0. It still delegates to the new method.
 
 ## Reading the PRF Output
 
@@ -122,8 +116,7 @@ WebAuthn Level 3 states that authenticator extension outputs must not contain cl
 
 `Webauthn\AuthenticationExtensions\PseudoRandomFunctionOutputChecker` rejects such a response. It is not registered by default, since turning a previously accepted ceremony into a hard failure does not belong in a minor release. Opt in with:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -134,16 +127,13 @@ use Webauthn\AuthenticationExtensions\PseudoRandomFunctionOutputChecker;
 $handler = ExtensionOutputCheckerHandler::create();
 $handler->add(new PseudoRandomFunctionOutputChecker());
 ```
-{% endcode %}
 
 In a Symfony application, declaring the service is enough: the bundle autoconfigures every `ExtensionOutputChecker` into the handler.
 
-{% code title="config/services.yaml" lineNumbers="true" %}
-```yaml
+```yaml title="config/services.yaml" linenums="1"
 services:
     Webauthn\AuthenticationExtensions\PseudoRandomFunctionOutputChecker: ~
 ```
-{% endcode %}
 
 ## Stimulus Integration
 
@@ -154,16 +144,15 @@ The new `authentication-controller` and `registration-controller` (and the frame
 
 No additional configuration is required — return options with a `prf` extension and the controllers do the right thing.
 
-{% hint style="warning" %}
-The legacy combined controller (`@web-auth/webauthn-stimulus`) had two bugs in the legacy code path that were fixed in v5.4.0: it passed the wrong sub-object to the PRF input importer, and it read `prf.result` (singular) instead of `prf.results`. Make sure you are on v5.4.0 if you depend on PRF on the legacy controller; the dedicated `authentication`/`registration` controllers were always correct.
-{% endhint %}
+!!! warning
+
+    The legacy combined controller (`@web-auth/webauthn-stimulus`) had two bugs in the legacy code path that were fixed in v5.4.0: it passed the wrong sub-object to the PRF input importer, and it read `prf.result` (singular) instead of `prf.results`. Make sure you are on v5.4.0 if you depend on PRF on the legacy controller; the dedicated `authentication`/`registration` controllers were always correct.
 
 ## Symfony Bundle
 
 PRF support currently lives only at the library level. The Symfony bundle does not yet expose a `prf:` profile flag — to enable PRF on a bundle-driven flow you have to attach the extension yourself, for instance from a custom `CreationOptionsHandler` / `RequestOptionsHandler`:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 public function onCreationOptions(
     PublicKeyCredentialCreationOptions $options,
     PublicKeyCredentialUserEntity $userEntity,
@@ -176,7 +165,6 @@ public function onCreationOptions(
     return new JsonResponse($options);
 }
 ```
-{% endcode %}
 
 A `prf:` profile block (with a pluggable `PrfSaltProviderInterface` for per-user/per-credential salt rotation) is on the roadmap for a future minor.
 

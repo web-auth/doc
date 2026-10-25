@@ -1,8 +1,8 @@
 # Signal API
 
-{% hint style="info" %}
-**Library since v5.3.0**. Symfony bundle helpers added in v5.4.0.
-{% endhint %}
+!!! info
+
+    **Library since v5.3.0**. Symfony bundle helpers added in v5.4.0.
 
 The [WebAuthn Signal API (W3C §5.1.10)](https://www.w3.org/TR/webauthn-3/#sctn-signal-methods) lets relying parties notify the browser's passkey manager about credential state changes. The flow is purely outbound from the page: the relying party composes the payload server-side, the page calls `navigator.credentials.signalXxx()`, and the user agent forwards the action to attached authenticators. **Nothing comes back**: the call returns `Promise<undefined>`, fire-and-forget.
 
@@ -14,19 +14,19 @@ When users manage their passkeys on the server side (removing credentials, updat
 * Updated user details (name, display name)
 * Credentials that are no longer recognized by the server
 
-{% hint style="danger" %}
-**Privacy gates per W3C §14.6.3.** Two of the three signals leak PII to whoever receives them, so they must only be exposed to authenticated callers:
+!!! danger
 
-| Signal | Authentication required? |
-| --- | --- |
-| `signalUnknownCredential` | **No**. The credential id is one the caller already presented (e.g. failed login attempt). No leak. |
-| `signalAllAcceptedCredentials` | **Yes**. The full credential id list correlates a user across relying parties. |
-| `signalCurrentUserDetails` | **Yes**. User handle plus name/displayName are PII. |
-{% endhint %}
+    **Privacy gates per W3C §14.6.3.** Two of the three signals leak PII to whoever receives them, so they must only be exposed to authenticated callers:
 
-{% hint style="warning" %}
-**Caveat on `AllAcceptedCredentials` (W3C §5.1.10.3).** Credentials missing from `allAcceptedCredentialIds` may be **removed or hidden, potentially irreversibly** by the authenticator. Always derive the list exhaustively from your truth source, never from a partial view.
-{% endhint %}
+    | Signal | Authentication required? |
+    | --- | --- |
+    | `signalUnknownCredential` | **No**. The credential id is one the caller already presented (e.g. failed login attempt). No leak. |
+    | `signalAllAcceptedCredentials` | **Yes**. The full credential id list correlates a user across relying parties. |
+    | `signalCurrentUserDetails` | **Yes**. User handle plus name/displayName are PII. |
+
+!!! warning
+
+    **Caveat on `AllAcceptedCredentials` (W3C §5.1.10.3).** Credentials missing from `allAcceptedCredentialIds` may be **removed or hidden, potentially irreversibly** by the authenticator. Always derive the list exhaustively from your truth source, never from a partial view.
 
 ## Signal Types
 
@@ -34,8 +34,7 @@ When users manage their passkeys on the server side (removing credentials, updat
 
 Informs the client about all credentials that the server currently recognizes for a given user. This allows the client to remove any credentials that are no longer valid.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -61,14 +60,12 @@ $acceptedCredentials = [
 
 $signal = new AllAcceptedCredentials($rpEntity, $userEntity, $acceptedCredentials);
 ```
-{% endcode %}
 
 ### CurrentUserDetails
 
 Informs the client about updated user details. Use this when a user changes their username or display name to keep the client's passkey list accurate.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -87,14 +84,12 @@ $userEntity = PublicKeyCredentialUserEntity::create(
 
 $signal = new CurrentUserDetails($rpEntity, $userEntity);
 ```
-{% endcode %}
 
 ### UnknownCredential
 
 Informs the client that a specific credential is not recognized by the server. This can occur when a credential has been deleted server-side or was never registered.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -109,14 +104,12 @@ $unknownCredential = PublicKeyCredentialDescriptor::create('public-key', $creden
 
 $signal = new UnknownCredential($rpEntity, $unknownCredential);
 ```
-{% endcode %}
 
 ## Serialization
 
 Signals can be serialized to JSON using the Symfony Serializer. The framework provides dedicated denormalizers for each signal type.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -138,7 +131,6 @@ $json = $serializer->serialize(
 //     "allAcceptedCredentialIds": ["...", "..."]
 // }
 ```
-{% endcode %}
 
 ## Use Cases
 
@@ -154,15 +146,15 @@ When a user changes their username or display name, send a `CurrentUserDetails` 
 
 If an authentication attempt references a credential that doesn't exist in your database, send an `UnknownCredential` signal to help the client clean up orphaned passkeys.
 
-{% hint style="info" %}
-The W3C spec recommends running `signalAllAcceptedCredentials` and `signalCurrentUserDetails` **on every sign-in**: authenticators may have been detached when the underlying event (delete, profile update) fired, so the next login is the natural moment to push the up-to-date state.
-{% endhint %}
+!!! info
+
+    The W3C spec recommends running `signalAllAcceptedCredentials` and `signalCurrentUserDetails` **on every sign-in**: authenticators may have been detached when the underlying event (delete, profile update) fired, so the next login is the natural moment to push the up-to-date state.
 
 ## Symfony Bundle Helpers
 
-{% hint style="info" %}
-**New in v5.4.0**
-{% endhint %}
+!!! info
+
+    **New in v5.4.0**
 
 The Symfony bundle ships two helpers that build the right payload from your repository and wrap them in a JSON envelope the client picks up. Wire them from your own `SuccessHandler` and `FailureHandler` (no bundle configuration), and you keep full control over *when* signals are emitted.
 
@@ -180,8 +172,7 @@ The Symfony bundle ships two helpers that build the right payload from your repo
 
 `Webauthn\Bundle\Service\WebauthnSignalResponse` produces a `JsonResponse` that combines your application payload with a top-level `signals: [{type, options}]` envelope:
 
-{% code lineNumbers="true" %}
-```json
+```json linenums="1"
 {
     "your": "payload",
     "signals": [
@@ -205,7 +196,6 @@ The Symfony bundle ships two helpers that build the right payload from your repo
     ]
 }
 ```
-{% endcode %}
 
 The Stimulus base controller picks the envelope up automatically (see [Stimulus Integration](#stimulus-integration) below).
 
@@ -213,8 +203,7 @@ The Stimulus base controller picks the envelope up automatically (see [Stimulus 
 
 The W3C spec recommends emitting `allAcceptedCredentials` and `currentUserDetails` on every sign-in so authenticators that were detached when the change happened catch up later. A focused `SuccessHandler` does exactly that:
 
-{% code title="src/Security/WebauthnSignalingSuccessHandler.php" lineNumbers="true" %}
-```php
+```php title="src/Security/WebauthnSignalingSuccessHandler.php" linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -260,7 +249,6 @@ final readonly class WebauthnSignalingSuccessHandler implements SuccessHandler
     }
 }
 ```
-{% endcode %}
 
 ### Drop stale credentials: custom `FailureHandler`
 
@@ -268,8 +256,7 @@ When an assertion fails because the relying party no longer recognises the crede
 
 The bundle's response controllers pass three optional arguments to `FailureHandler::onFailure` (the deserialized `PublicKeyCredential`, the stored options, and the resolved user entity) so the handler can build a signal without re-parsing the request. Add them to your signature:
 
-{% code title="src/Security/WebauthnSignalingFailureHandler.php" lineNumbers="true" %}
-```php
+```php title="src/Security/WebauthnSignalingFailureHandler.php" linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -323,18 +310,16 @@ final readonly class WebauthnSignalingFailureHandler implements FailureHandler
     }
 }
 ```
-{% endcode %}
 
-{% hint style="info" %}
-**Why the extra arguments?** In v5.x the `FailureHandler::onFailure` interface only declares `Request` and `?Throwable`. The three additional optional arguments (`?PublicKeyCredential`, `?PublicKeyCredentialOptions`, `?PublicKeyCredentialUserEntity`) are passed by the bundle's response controllers but live as a PHPDoc-only signature on the interface for backwards compatibility. Implementations that have not updated their signature ignore the extras silently. They will become required parameters in 6.0.
-{% endhint %}
+!!! info
+
+    **Why the extra arguments?** In v5.x the `FailureHandler::onFailure` interface only declares `Request` and `?Throwable`. The three additional optional arguments (`?PublicKeyCredential`, `?PublicKeyCredentialOptions`, `?PublicKeyCredentialUserEntity`) are passed by the bundle's response controllers but live as a PHPDoc-only signature on the interface for backwards compatibility. Implementations that have not updated their signature ignore the extras silently. They will become required parameters in 6.0.
 
 ### Wiring
 
 Both helpers are autowired. Reference your handlers from the firewall configuration:
 
-{% code title="config/packages/security.yaml" %}
-```yaml
+```yaml title="config/packages/security.yaml"
 security:
     firewalls:
         main:
@@ -343,20 +328,18 @@ security:
                     success_handler: App\Security\WebauthnSignalingSuccessHandler
                     failure_handler: App\Security\WebauthnSignalingFailureHandler
 ```
-{% endcode %}
 
 ## Authenticator + Passport flow
 
-{% hint style="info" %}
-**Recommended flow.** The legacy `webauthn` firewall is being phased out in favour of a standard Symfony custom authenticator with the `WebauthnPassport` / `WebauthnBadge` pair. The signal helpers work transparently in this world too: no `SuccessHandler` / `FailureHandler` to wire separately, everything lives on the authenticator.
-{% endhint %}
+!!! info
+
+    **Recommended flow.** The legacy `webauthn` firewall is being phased out in favour of a standard Symfony custom authenticator with the `WebauthnPassport` / `WebauthnBadge` pair. The signal helpers work transparently in this world too: no `SuccessHandler` / `FailureHandler` to wire separately, everything lives on the authenticator.
 
 ### Custom authenticator
 
 Extend `Webauthn\Bundle\Security\Authentication\WebauthnAuthenticator` and inject the two signal helpers. `onAuthenticationSuccess()` receives a `WebauthnToken` (built by the bundle) that already exposes `getPublicKeyCredentialUserEntity()`, `getPublicKeyCredentialOptions()` and `getPublicKeyCredentialDescriptor()`. `onAuthenticationFailure()` receives a `WebauthnAuthenticationFailureException` that carries the deserialized credential when the failure happened after the bundle recognised the request as a WebAuthn ceremony.
 
-{% code title="src/Security/WebauthnAuthenticator.php" lineNumbers="true" %}
-```php
+```php title="src/Security/WebauthnAuthenticator.php" linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -436,20 +419,17 @@ final class WebauthnAuthenticator extends BaseWebauthnAuthenticator
     }
 }
 ```
-{% endcode %}
 
 ### Wiring
 
 The authenticator is registered as any other Symfony custom authenticator:
 
-{% code title="config/packages/security.yaml" %}
-```yaml
+```yaml title="config/packages/security.yaml"
 security:
     firewalls:
         main:
             custom_authenticator: 'App\Security\WebauthnAuthenticator'
 ```
-{% endcode %}
 
 No `webauthn:` block under the firewall, no `success_handler` / `failure_handler` to declare separately.
 
@@ -472,8 +452,7 @@ The `@web-auth/webauthn-stimulus` controllers (`AuthenticationController`, `Regi
 
 If you want to fire signals outside of a controller flow (e.g. from a custom JS handler after a profile update), the package also exports four helpers from its entry point:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 import {
     dispatchUnknownCredential,
     dispatchAllAcceptedCredentials,
@@ -492,11 +471,10 @@ await dispatchSignals({
     ],
 });
 ```
-{% endcode %}
 
-{% hint style="info" %}
-**Browser support.** The Signal API requires Chrome/Edge ≥ 128, Safari ≥ 18.4 (or 18.5 for the `allAcceptedCredentials` and `currentUserDetails` variants). Firefox does not implement it yet. The Stimulus dispatch is intentionally fire-and-forget so the rest of your application flow proceeds unchanged on unsupported user agents.
-{% endhint %}
+!!! info
+
+    **Browser support.** The Signal API requires Chrome/Edge ≥ 128, Safari ≥ 18.4 (or 18.5 for the `allAcceptedCredentials` and `currentUserDetails` variants). Firefox does not implement it yet. The Stimulus dispatch is intentionally fire-and-forget so the rest of your application flow proceeds unchanged on unsupported user agents.
 
 ## See Also
 

@@ -70,16 +70,15 @@ When authenticators are available on the device and the browser is aware of them
 
 ## Dedicated Authentication Controller
 
-{% hint style="info" %}
-**New in v5.3.0:** The Stimulus package now provides dedicated controllers for authentication and registration, in addition to the combined controller.
-{% endhint %}
+!!! info
+
+    **New in v5.3.0:** The Stimulus package now provides dedicated controllers for authentication and registration, in addition to the combined controller.
 
 The new `authentication-controller` provides a focused controller specifically for sign-in flows, with built-in support for conditional UI and better error handling.
 
 ### Basic Usage
 
-{% code title="templates/security/login.html.twig" lineNumbers="true" %}
-```twig
+```twig title="templates/security/login.html.twig" linenums="1"
 <form
     action="{{ path('app_login') }}"
     method="post"
@@ -109,14 +108,12 @@ The new `authentication-controller` provides a focused controller specifically f
     </button>
 </form>
 ```
-{% endcode %}
 
 ### Conditional UI (Autofill)
 
 The dedicated controller supports conditional UI natively:
 
-{% code lineNumbers="true" %}
-```twig
+```twig linenums="1"
 {{ stimulus_controller('@web-auth/webauthn-stimulus/authentication', {
     optionsUrl: path('webauthn.controller.request.request.login'),
     resultUrl: path('app_login'),
@@ -124,7 +121,6 @@ The dedicated controller supports conditional UI natively:
     conditionalUi: true
 }) }}
 ```
-{% endcode %}
 
 ### Authentication Controller Options
 

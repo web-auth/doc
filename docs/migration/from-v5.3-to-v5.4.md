@@ -4,17 +4,17 @@ description: Upgrade guide from 5.3 to 5.4
 
 # From 5.3 to 5.4
 
-{% hint style="success" %}
-No backward compatibility break. The YAML sections deprecated below keep working until 6.0.0.
-{% endhint %}
+!!! success
+
+    No backward compatibility break. The YAML sections deprecated below keep working until 6.0.0.
 
 Version 5.4 is the preparation step for 6.0: the profile-driven YAML configuration of the Symfony bundle is superseded by autowired helpers called from controllers you write yourself. The whole configuration surface that goes away in 6.0 is deprecated here, so you can migrate progressively while staying on the 5.x line.
 
 ## Database schema: the new `rpId` column
 
-{% hint style="warning" %}
-**Action required if you persist your credentials with Doctrine**
-{% endhint %}
+!!! warning
+
+    **Action required if you persist your credentials with Doctrine**
 
 Version 5.4 adds the OPTIONAL `rpId` member of the credential record structure (see [w3c/webauthn#2258](https://github.com/w3c/webauthn/pull/2258)). It stores the Relying Party ID the credential was scoped to during the registration ceremony, which is useful to the Relying Parties adopting Related Origin Requests.
 
@@ -37,9 +37,9 @@ The records created before 5.4, and those created from creation options without 
 
 ### Profile-driven configuration superseded by helpers
 
-{% hint style="warning" %}
-**Deprecated in v5.4.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.4.0**
 
 The profile- and controller-driven YAML sections are superseded by the autowired helpers introduced in 5.4. Every section keeps working until 6.0; this section lists the migration path for each. See [Options Helpers](../symfony-bundle/options-helpers.md) and [Verification Helpers](../symfony-bundle/verification-helpers.md) for the complete reference.
 
@@ -185,9 +185,9 @@ The list lives in a single Symfony parameter, the security-critical decision is 
 
 ### Reserved-For-Future-Use accessors
 
-{% hint style="warning" %}
-**Deprecated in v5.4.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.4.0**
 
 The RFU1 and RFU2 bits of the authenticator data flags are reserved by the specification and are set to zero by the authenticators, so reading them back brings nothing to a Relying Party. The accessors exposing them are removed in 6.0.0:
 
@@ -203,15 +203,15 @@ $flags = ord($authenticatorData->flags);
 
 Use `isBackupEligible()` and `isBackedUp()` to read the backup flags.
 
-{% hint style="danger" %}
-In 6.0.0 the serialized payload of `WebauthnToken` loses two entries, so a session created by a 5.x application cannot be unserialized by a 6.0 one. Plan to invalidate the existing sessions when you upgrade.
-{% endhint %}
+!!! danger
+
+    In 6.0.0 the serialized payload of `WebauthnToken` loses two entries, so a session created by a 5.x application cannot be unserialized by a 6.0 one. Plan to invalidate the existing sessions when you upgrade.
 
 ### PseudoRandomFunctionInputExtensionBuilder::requiresHmacSecretMc
 
-{% hint style="warning" %}
-**Deprecated in v5.4.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.4.0**
 
 The method named the CTAP `hmac-secret-mc` extension in an API that is abstract over the authenticator implementation. Use `requiresMultipleCredentialEvaluation()`, which describes the input shape the method actually detects. The old name delegates to the new one until 6.0.0. See the [PRF Extension](../pure-php/advanced-behaviours/prf-extension.md) page.
 

@@ -1,8 +1,8 @@
 # Verification Helpers (Custom Controllers)
 
-{% hint style="info" %}
-**New in v5.4.0**
-{% endhint %}
+!!! info
+
+    **New in v5.4.0**
 
 Companion of the [Options Helpers](options-helpers.md) for the **response side**: instead of routing your `/attestation/response` and `/assertion/response` endpoints through the bundle's `AttestationResponseController` / `AssertionResponseController` (driven by `creation_profiles` / `request_profiles` config), you write your own controllers and call a single helper to deserialise the body, validate the ceremony and return a typed result. Your controller stays in charge of what to do with that result (login, redirect, JSON envelope, Signal API payload, etc.).
 
@@ -31,8 +31,7 @@ The terminal call `->verify($request)` returns a `WebauthnVerificationResult` va
 
 ### Registration response
 
-{% code title="src/Controller/Webauthn/RegisterResponseController.php" lineNumbers="true" %}
-```php
+```php title="src/Controller/Webauthn/RegisterResponseController.php" linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -70,12 +69,10 @@ final class RegisterResponseController
     }
 }
 ```
-{% endcode %}
 
 ### Authentication response
 
-{% code title="src/Controller/Webauthn/LoginResponseController.php" lineNumbers="true" %}
-```php
+```php title="src/Controller/Webauthn/LoginResponseController.php" linenums="1"
 #[Route('/webauthn/login', methods: ['POST'])]
 public function __invoke(Request $request): Response
 {
@@ -93,7 +90,6 @@ public function __invoke(Request $request): Response
     return new JsonResponse(['status' => 'authenticated']);
 }
 ```
-{% endcode %}
 
 `allowCredentials`, the user handle, the host and the challenge are all checked under the hood through the underlying validators and ceremony steps. Nothing else to wire on the controller side.
 
@@ -133,9 +129,9 @@ $result = $this->verifier
 
 Origins sharing a Relying Party ID rarely share a trust level. Without pinning, an assertion obtained on the lowest-trust entry of the allow list (an XSS on a marketing site, a customer-controlled subdomain) is replayable against the highest-trust one. The check is additive: the allow list still runs first, so pinning can only narrow what is accepted.
 
-{% hint style="warning" %}
-Pinning fails closed. A ceremony stored without an origin, by a previous version of the bundle whose items are still in the cache, or by custom code building the `Item` itself, is rejected. Keep it disabled for native application facets (`android:apk-key-hash:...`) and for flows whose options request and ceremony do not share an origin.
-{% endhint %}
+!!! warning
+
+    Pinning fails closed. A ceremony stored without an origin, by a previous version of the bundle whose items are still in the cache, or by custom code building the `Item` itself, is rejected. Keep it disabled for native application facets (`android:apk-key-hash:...`) and for flows whose options request and ceremony do not share an origin.
 
 `withTopOriginValidator(...)` overrides the cross-origin top-origin validator scoped to this verification. Pass `null` to **disable** top-origin validation per call when the global `webauthn.top_origin_validator` is set but the current endpoint should not enforce it.
 

@@ -23,16 +23,15 @@ After the registration of an authenticator, you will get a `Webauthn\CredentialR
 * **otherUI**: Optional additional UI hints (array)
 * **rpId**: The Relying Party ID the credential was scoped to at registration (since 5.4, nullable)
 
-{% hint style="info" %}
-**New in v5.4.0:** the optional `rpId` member added by the specification to the Credential Record structure is recorded during registration. It is mainly useful to Relying Parties adopting Related Origin Requests. It is appended last in the constructor and in `create()`, so existing call sites keep working, it is omitted from the serialized payload when null, and a payload without the key is still accepted. Records written by an earlier version keep a null value.
-{% endhint %}
+!!! info
 
-{% hint style="warning" %}
-**Renamed in v5.3.0:** The class `Webauthn\PublicKeyCredentialSource` has been renamed to `Webauthn\CredentialRecord`. The old class name is deprecated and will be removed in version 6.0. `PublicKeyCredentialSource` now extends `CredentialRecord` for backward compatibility.
-{% endhint %}
+    **New in v5.4.0:** the optional `rpId` member added by the specification to the Credential Record structure is recorded during registration. It is mainly useful to Relying Parties adopting Related Origin Requests. It is appended last in the constructor and in `create()`, so existing call sites keep working, it is omitted from the serialized payload when null, and a payload without the key is still accepted. Records written by an earlier version keep a null value.
 
-{% code lineNumbers="true" %}
-```php
+!!! warning
+
+    **Renamed in v5.3.0:** The class `Webauthn\PublicKeyCredentialSource` has been renamed to `Webauthn\CredentialRecord`. The old class name is deprecated and will be removed in version 6.0. `PublicKeyCredentialSource` now extends `CredentialRecord` for backward compatibility.
+
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -55,7 +54,6 @@ $transports = $credentialRecord->transports; // ['usb', 'nfc']
 // Get the descriptor for authentication
 $descriptor = $credentialRecord->getPublicKeyCredentialDescriptor();
 ```
-{% endcode %}
 
 ## Credential Record Repository
 
@@ -66,16 +64,15 @@ Your repository needs to provide two main operations:
 1. **Save a credential** after registration or counter update
 2. **Find credentials** by credential ID or user handle
 
-{% hint style="success" %}
-Whatever database you use (MySQL, PostgreSQL, MongoDB…), it is not necessary to create foreign key relationships between your users and the Credential Records. The `userHandle` property is sufficient to link credentials to users.
-{% endhint %}
+!!! success
+
+    Whatever database you use (MySQL, PostgreSQL, MongoDB…), it is not necessary to create foreign key relationships between your users and the Credential Records. The `userHandle` property is sufficient to link credentials to users.
 
 ### Repository Example
 
 Here's a simple example using an array storage (for demonstration purposes):
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -108,11 +105,10 @@ final class InMemoryCredentialRecordRepository
     }
 }
 ```
-{% endcode %}
 
-{% hint style="info" %}
-For production use, implement your repository with your preferred storage backend (Doctrine ORM, PDO, MongoDB, Redis, etc.). See the [Symfony Bundle section](../symfony-bundle/credential-record-repository.md) for a complete Doctrine example.
-{% endhint %}
+!!! info
+
+    For production use, implement your repository with your preferred storage backend (Doctrine ORM, PDO, MongoDB, Redis, etc.). See the [Symfony Bundle section](../symfony-bundle/credential-record-repository.md) for a complete Doctrine example.
 
 ### Important Notes
 

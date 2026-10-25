@@ -4,8 +4,7 @@ The WebAuthn data verification is based on cryptographic signatures and thus you
 
 The following algorithms are required in most situations:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -21,16 +20,14 @@ $algorithmManager = Manager::create()
     )
 ;
 ```
-{% endcode %}
 
-{% hint style="info" %}
-The order is important. By adding `ES256` first, the relying party prefers an `ES256` credential. Browsers are eager to satisfy preferences.
-{% endhint %}
+!!! info
+
+    The order is important. By adding `ES256` first, the relying party prefers an `ES256` credential. Browsers are eager to satisfy preferences.
 
 The complete list of supported algorithms:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -69,13 +66,12 @@ $algorithmManager = Manager::create()
     )
 ;
 ```
-{% endcode %}
 
 ## Fully-Specified Algorithm Identifiers (RFC 9864)
 
-{% hint style="info" %}
-**New in v5.4.0**
-{% endhint %}
+!!! info
+
+    **New in v5.4.0**
 
 RFC 9864 introduced fully-specified COSE algorithm identifiers, which WebAuthn Level 3 integrated: `-9` (ESP256), `-51` (ESP384), `-52` (ESP512) and `-19` (Ed25519). Within WebAuthn they designate exactly the same algorithms as `-7` (ES256), `-35` (ES384), `-36` (ES512) and `-8` (EdDSA) respectively.
 
@@ -87,8 +83,7 @@ The specification makes them `NOT RECOMMENDED` in `pubKeyCredParams` for backwar
 
 Add them to your own manager when you build one by hand:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -106,16 +101,14 @@ $algorithmManager = Manager::create()
     )
 ;
 ```
-{% endcode %}
 
-{% hint style="info" %}
-Keep the legacy identifiers in the `pubKeyCredParams` you send to the browser. Advertising a fully-specified identifier there is `NOT RECOMMENDED` by the specification and older user agents may not understand it.
-{% endhint %}
+!!! info
+
+    Keep the legacy identifiers in the `pubKeyCredParams` you send to the browser. Advertising a fully-specified identifier there is `NOT RECOMMENDED` by the specification and older user agents may not understand it.
 
 The algorithm manager can be injected to your Ceremony Step Manager Factory.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -125,4 +118,3 @@ use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
 $csmFactory = new CeremonyStepManagerFactory();
 $csmFactory->setAlgorithmManager($algorithmManager);
 ```
-{% endcode %}

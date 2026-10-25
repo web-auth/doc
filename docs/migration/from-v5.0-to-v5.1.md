@@ -4,17 +4,17 @@ description: Upgrade guide from 5.0 to 5.1
 
 # From 5.0 to 5.1
 
-{% hint style="success" %}
-No backward compatibility break. Upgrading is a `composer update` away. A single member is deprecated.
-{% endhint %}
+!!! success
+
+    No backward compatibility break. Upgrading is a `composer update` away. A single member is deprecated.
 
 ## Deprecations
 
 ### PublicKeyCredentialEntity.icon
 
-{% hint style="warning" %}
-**Deprecated in v5.1.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.1.0**
 
 The `icon` member has been removed from the WebAuthn specification, so the value is never used. The property, the `$icon` argument of the entity constructors and factories, and the `icon` node of the bundle creation profiles are deprecated and will be removed in 6.0.0.
 

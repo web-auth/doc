@@ -2,7 +2,6 @@
 description: >-
   Seamless Integration with PHP Applications: Our WebAuthn Documentation and
   Tutorials
-layout: landing
 ---
 
 # WebAuthn: Strong Authentication for your PHP applications

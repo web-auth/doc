@@ -8,7 +8,7 @@ An Authenticator is a cryptographic entity used to generate a public key credent
 
 Authenticators may have additional features such as PIN code or biometric sensors (fingerprint, facial recognition…) that offer user verification.
 
-![USB device with fingerprint reader](<../.gitbook/assets/images (1).jpeg>)
+![USB device with fingerprint reader](../assets/images/images-1.jpeg)
 
 ## Roaming Authenticators
 
@@ -16,19 +16,19 @@ The roaming authenticator may have different forms. The most common form is a US
 
 Authenticators of this class are removable from, and can "roam" among, client devices.
 
-![Webauthn compatible devices](../.gitbook/assets/fido2.jpeg)
+![Webauthn compatible devices](../assets/images/fido2.jpeg)
 
 ## Platform Authenticators
 
 A platform authenticator is usually not removable from the client device. For example an Android smartphone or a Windows 10 computer with the associated security chips can act as an authenticator.
 
-![Android screenshot](<../.gitbook/assets/webauthn-android-fennec (1).png>)
+![Android screenshot](../assets/images/webauthn-android-fennec-1.png)
 
-![Fingerprint reader on a laptop](../.gitbook/assets/master.jpg)
+![Fingerprint reader on a laptop](../assets/images/master.jpg)
 
 ### Passkey
 
-<figure><img src="../.gitbook/assets/FIDO_Passkey_mark_A_black-e1702581853266.png" alt="" width="188"><figcaption><p>Passkey Logo</p></figcaption></figure>
+<figure><img src="../assets/images/fido-passkey-mark-a-black-e1702581853266.png" alt="" width="188"><figcaption><p>Passkey Logo</p></figcaption></figure>
 
 Passkeys are virtual authenticators that have extended capabilities and in particular:
 

@@ -1,8 +1,8 @@
 # Options Helpers (Custom Controllers)
 
-{% hint style="info" %}
-**New in v5.4.0**
-{% endhint %}
+!!! info
+
+    **New in v5.4.0**
 
 The bundle ships an autowired helper that lets you write your own attestation/assertion *options* controllers without touching a single line of bundle configuration. This is the recommended path going forward: the controllers shipped with the bundle (`AttestationRequestController` / `AssertionRequestController`, driven by `creation_profiles` / `request_profiles`) stay available for backwards compatibility but the helper is more flexible and clearer.
 
@@ -38,8 +38,7 @@ The creation builder applies a baseline `pubKeyCredParams` list (in priority ord
 
 ### Registration
 
-{% code title="src/Controller/Webauthn/RegisterOptionsController.php" lineNumbers="true" %}
-```php
+```php title="src/Controller/Webauthn/RegisterOptionsController.php" linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -69,14 +68,12 @@ final class RegisterOptionsController
     }
 }
 ```
-{% endcode %}
 
 `NewUserEntityGuesser` is a class **you write** that implements `Webauthn\Bundle\Security\Guesser\UserEntityGuesser`. It reads the username from the body, generates a user handle, and returns a `PublicKeyCredentialUserEntity`. The bundle does not ship a generic implementation: that logic is application-specific.
 
 ### Authentication, userless (passkeys)
 
-{% code title="src/Controller/Webauthn/LoginOptionsController.php" lineNumbers="true" %}
-```php
+```php title="src/Controller/Webauthn/LoginOptionsController.php" linenums="1"
 #[Route('/webauthn/login/options', methods: ['POST'])]
 public function __invoke(Request $request): JsonResponse
 {
@@ -85,14 +82,12 @@ public function __invoke(Request $request): JsonResponse
         ->build($request);
 }
 ```
-{% endcode %}
 
 No guesser, no allow-list. The user agent will offer the user any platform-side discoverable passkey for `example.com`.
 
 ### Authentication, user already known
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 #[Route('/webauthn/step-up/options', methods: ['POST'])]
 public function __invoke(Request $request): JsonResponse
 {
@@ -104,7 +99,6 @@ public function __invoke(Request $request): JsonResponse
         ->build($request);
 }
 ```
-{% endcode %}
 
 `allowCredentials` is automatically derived from your `CredentialRecordRepositoryInterface` for the resolved user. If you have a `UserEntityGuesser` instead of a ready-made entity, pass it the same way: `withUser($myGuesser)`.
 
@@ -187,8 +181,7 @@ By default, **anything in the client request body is ignored**: the server alone
 
 Build the policy with named arguments and `ClientOverrideRule` value objects:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\Bundle\Policy\ClientOverridePolicy;
 use Webauthn\Bundle\Policy\ClientOverrideRule;
 
@@ -202,7 +195,6 @@ return $this->options
     ))
     ->build($request);
 ```
-{% endcode %}
 
 * `ClientOverrideRule::any()` — accepts any value the client submits
 * `ClientOverrideRule::restrictTo($allowedValues)` — restricts the client value to a list
@@ -212,8 +204,7 @@ return $this->options
 
 The legacy `array<string, array{enabled, allowed_values?}>` shape stays supported as a first-class API; it can be useful when the policy is loaded from a config file or a database row:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 return $this->options
     ->forRequest('example.com')
     ->withUser($user)
@@ -226,7 +217,6 @@ return $this->options
     ]))
     ->build($request);
 ```
-{% endcode %}
 
 The constructor also accepts a mix of typed `ClientOverrideRule` entries and legacy `{enabled, allowed_values?}` arrays in the same call.
 

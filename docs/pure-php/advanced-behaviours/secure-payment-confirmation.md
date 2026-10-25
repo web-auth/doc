@@ -1,8 +1,8 @@
 # Secure Payment Confirmation (SPC)
 
-{% hint style="info" %}
-**New in v5.4.0**
-{% endhint %}
+!!! info
+
+    **New in v5.4.0**
 
 [Secure Payment Confirmation](https://www.w3.org/TR/secure-payment-confirmation/) is a W3C Web API that lets the relying party authenticate a payment with WebAuthn while having the user agent display the transaction details (amount, payee, instrument) in its own trusted UI. It is the building block recommended by EMV 3DS v2.3.1.1 §6.1.4.1.5 for FIDO-based SCA.
 
@@ -19,8 +19,7 @@ W3C SPC §5.1 splits the verification work in two — the framework wires both:
 
 Attach a `PaymentExtension` to your `PublicKeyCredentialRequestOptions`. The extension takes the rpId, the merchant top-level origin, the amount, the instrument and the payee fields:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -53,20 +52,18 @@ $options = PublicKeyCredentialRequestOptions::create(
     extensions: AuthenticationExtensions::create([$paymentExtension]),
 );
 ```
-{% endcode %}
 
 For registration, use `PaymentExtension::register()` — the registration form of the extension only emits `isPayment: true`.
 
-{% hint style="danger" %}
-Always derive the amount, instrument and payee fields from a server-side transaction record, **never** from request input. See [Security Model](#security-model) below.
-{% endhint %}
+!!! danger
+
+    Always derive the amount, instrument and payee fields from a server-side transaction record, **never** from request input. See [Security Model](#security-model) below.
 
 ## Validating the Assertion
 
 The Symfony bundle auto-registers `PaymentClientDataCollector` and `PaymentExtensionOutputChecker`, so a regular `AuthenticatorAssertionResponseValidator::check(...)` call performs full SPC validation:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 $credentialRecord = $authenticatorAssertionResponseValidator->check(
     credentialRecord: $storedCredentialRecord,
     authenticatorAssertionResponse: $publicKeyCredential->response,
@@ -75,12 +72,10 @@ $credentialRecord = $authenticatorAssertionResponseValidator->check(
     userHandle: $userId,
 );
 ```
-{% endcode %}
 
 For pure PHP usage, wire the new pieces into the ceremony manager factory yourself:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -104,7 +99,6 @@ $factory = new CeremonyStepManagerFactory();
 $factory->setClientDataCollectorManager($clientDataManager);
 $factory->setExtensionOutputCheckerHandler($extensionHandler);
 ```
-{% endcode %}
 
 ## Data Structures
 
@@ -124,8 +118,7 @@ All value objects live under the `Webauthn\SecurePaymentConfirmation` namespace 
 
 The Stimulus package ships a `PaymentController` that extends `AuthenticationController`. It forwards the server-issued `payment` extension input to the user agent untouched and base64url-encodes `browserBoundSignature.signature` on the way back so the credential is JSON-transportable.
 
-{% code lineNumbers="true" %}
-```html
+```html linenums="1"
 <form data-controller="webauthn--payment"
       data-action="submit->webauthn--payment#authenticate"
       data-webauthn--payment-options-url-value="/payment/options"
@@ -140,7 +133,6 @@ The Stimulus package ships a `PaymentController` that extends `AuthenticationCon
     <button type="submit">Confirm</button>
 </form>
 ```
-{% endcode %}
 
 The controller inherits every value, target, action and event from `AuthenticationController`. The defaults change to match the SPC convention:
 
@@ -149,9 +141,9 @@ The controller inherits every value, target, action and event from `Authenticati
 | `optionsUrl`  | `/payment/options` |
 | `resultUrl`   | `/payment/verify`  |
 
-{% hint style="info" %}
-The controller dispatches the same events as `AuthenticationController`, prefixed with `webauthn:authentication:`. Filter on the originating controller in your listeners.
-{% endhint %}
+!!! info
+
+    The controller dispatches the same events as `AuthenticationController`, prefixed with `webauthn:authentication:`. Filter on the originating controller in your listeners.
 
 ## Security Model
 
@@ -160,8 +152,7 @@ SPC is only as strong as the discipline of the relying party. Two rules matter a
 1. **Never trust client-side payment data.** Amounts, payees and instruments must never travel through HTML attributes or JavaScript. Build the transaction server-side, store its details indexed by an opaque ID, and only pass that ID to the page. The Stimulus `PaymentController` is intentionally designed to take a `transactionId` and let the server resolve the rest.
 2. **Re-derive the `payment` extension from the database.** When the `/payment/options` endpoint is hit, fetch the transaction by its ID, verify it belongs to the authenticated user and is still pending, then build the `PaymentExtension` from the database row.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 public function options(Request $request): JsonResponse
 {
     $transactionId = $request->toArray()['transactionId'] ?? null;
@@ -190,7 +181,6 @@ public function options(Request $request): JsonResponse
     // ...build the request options and store the challenge in the session
 }
 ```
-{% endcode %}
 
 `PaymentClientDataCollector` then verifies, field by field, that what the user signed matches what the database said the transaction was — any tampering on the wire results in validation failure.
 

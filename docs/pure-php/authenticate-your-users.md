@@ -20,19 +20,18 @@ Optionally, you can customize the following parameters:
 
 The `PublicKeyCredentialRequestOptions` object is designed to be easily serialized into a JSON object. This will ease the integration into an HTML page or through an API endpoint.
 
-{% hint style="info" %}
-The timeout default value is set to `null`. If you want to set a value, please read the following recommended behavior showed in the specification:
+!!! info
 
-* If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
-* If the user verification is `preferred` or `required`, the range is 300 to 600 seconds (5 to 10 minutes)
-{% endhint %}
+    The timeout default value is set to `null`. If you want to set a value, please read the following recommended behavior showed in the specification:
+
+    * If the user verification is `discouraged`, timeout should be between 30 and 180 seconds
+    * If the user verification is `preferred` or `required`, the range is 300 to 600 seconds (5 to 10 minutes)
 
 ### Allowed Credentials
 
 The user trying to authenticate must have registered at least one device. For this user, you have to get all `Webauthn\PublicKeyCredentialDescriptor` associated to his account.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\CredentialRecord;
 use Webauthn\PublicKeyCredentialDescriptor;
 
@@ -50,20 +49,18 @@ $allowedCredentials = array_map(
     $registeredAuthenticators
 );
 ```
-{% endcode %}
 
-{% hint style="info" %}
-For usernameless authentication, please read the [dedicated page](advanced-behaviours/authentication-without-username.md). In this case no Public Key Credential Descriptors should be passed to the options.
-{% endhint %}
+!!! info
 
-{% hint style="danger" %}
-To prevent username enumeration, when the authentication process is performed using the username, it is highly recommended to continue the ceremony even if the user entity does not exist. The allowed credential list should be set with random data.
-{% endhint %}
+    For usernameless authentication, please read the [dedicated page](advanced-behaviours/authentication-without-username.md). In this case no Public Key Credential Descriptors should be passed to the options.
+
+!!! danger
+
+    To prevent username enumeration, when the authentication process is performed using the username, it is highly recommended to continue the ceremony even if the user entity does not exist. The allowed credential list should be set with random data.
 
 ### Example
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -89,14 +86,12 @@ $publicKeyCredentialRequestOptions =
     )
 ;
 ```
-{% endcode %}
 
 ### User Verification
 
 Eligible authenticators are filtered and only capable of satisfying this requirement will interact with the user. Please refer to the [User Verification page](advanced-behaviours/user-verification.md) for all possible values.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -111,21 +106,19 @@ $publicKeyCredentialRequestOptions =
     )
 ;
 ```
-{% endcode %}
 
 ### UI Mode (v5.4.0+)
 
-{% hint style="info" %}
-**New in v5.4.0**
-{% endhint %}
+!!! info
+
+    **New in v5.4.0**
 
 The W3C Credential Management editor's draft (§2.3.3) adds `uiMode` on `CredentialRequestOptions`. When set to `immediate`, the user agent must either return a credential immediately available locally or fail with `NotAllowedError` — no UI shown. The framework exposes the two values as constants:
 
 * `PublicKeyCredentialRequestOptions::UI_MODE_AUTO` — default browser behaviour (`auto`)
 * `PublicKeyCredentialRequestOptions::UI_MODE_IMMEDIATE` — synchronous, no UI
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\PublicKeyCredentialRequestOptions;
 
 $options = PublicKeyCredentialRequestOptions::create(
@@ -134,20 +127,18 @@ $options = PublicKeyCredentialRequestOptions::create(
     uiMode: PublicKeyCredentialRequestOptions::UI_MODE_IMMEDIATE,
 );
 ```
-{% endcode %}
 
 The Stimulus authentication controller routes `uiMode === "immediate"` straight through `navigator.credentials.get()` (bypassing SimpleWebAuthn, which has no native `uiMode` support yet) so no controller-side change is required to use it.
 
-{% hint style="warning" %}
-`uiMode` is distinct from the `mediation` enum used by [Conditional Create](advanced-behaviours/conditional-create.md). They live on different specs and may both be set on the same request.
-{% endhint %}
+!!! warning
+
+    `uiMode` is distinct from the `mediation` enum used by [Conditional Create](advanced-behaviours/conditional-create.md). They live on different specs and may both be set on the same request.
 
 ### Extensions
 
 Please refer to the [Extension page](../webauthn-in-a-nutshell/extensions.md) to know how to manage authentication extensions.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -167,7 +158,6 @@ $publicKeyCredentialRequestOptions =
     )
 ;
 ```
-{% endcode %}
 
 ## Response Handling
 
@@ -175,8 +165,7 @@ The way you receive this response is out of scope of this library. In the previo
 
 What you receive must be a JSON object that looks like as follows:
 
-{% code lineNumbers="true" %}
-```javascript
+```javascript linenums="1"
 {
     "id":"KVb8CnwDjpgAo[…]op61BTLaa0tczXvz4JrQ23usxVHA8QJZi3L9GZLsAtkcVvWObA",
     "type":"public-key",
@@ -189,7 +178,6 @@ What you receive must be a JSON object that looks like as follows:
     }
 }
 ```
-{% endcode %}
 
 There are two steps to perform with this object:
 
@@ -200,8 +188,7 @@ There are two steps to perform with this object:
 
 This step is exactly the same as the one described in [Public Key Credential Creation](authenticator-registration.md) process.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -219,7 +206,6 @@ $data = '
 
 $publicKeyCredential = $serializer->deserialize($data, PublicKeyCredential::class, 'json');
 ```
-{% endcode %}
 
 ### Response Verification
 
@@ -230,8 +216,7 @@ Now we have a fully loaded Public Key Credential object, but we need now to make
 
 The first is easy to perform:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -242,14 +227,12 @@ if (!$publicKeyCredential->response instanceof AuthenticatorAssertionResponse) {
     //e.g. process here with a redirection to the public key login/MFA page. 
 }
 ```
-{% endcode %}
 
 The second step is the verification against the Public Key Assertion Options we created earlier.
 
 The Authenticator Assertion Response Validator service (variable `$authenticatorAssertionResponseValidator`) will check everything for you.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -275,6 +258,5 @@ $credentialRecord = $authenticatorAssertionResponseValidator->check(
 $credentialRecordRepository->saveCredentialRecord($credentialRecord);
 
 ```
-{% endcode %}
 
 If no exception is thrown, the response is valid and you can continue the authentication of the user.

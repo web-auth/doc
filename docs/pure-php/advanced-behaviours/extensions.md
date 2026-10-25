@@ -2,8 +2,7 @@
 
 The following example is totally fictive. We will add an extension input `loc=true` to the request option object.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -23,7 +22,6 @@ $publicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions::create(
     extensions: $extensions
 );
 ```
-{% endcode %}
 
 ## Extension Output Checker
 
@@ -31,14 +29,13 @@ An Extension Output Checker (EOC) will check the extension output.
 
 It must implement the interface `Webauthn\AuthenticationExtensions\ExtensionOutputChecker` and throw an exception of type `Webauthn\AuthenticationExtension\ExtensionOutputError` in case of error.
 
-{% hint style="info" %}
-Devices may ignore the extension inputs. The extension outputs are therefore not guaranteed.
-{% endhint %}
+!!! info
+
+    Devices may ignore the extension inputs. The extension outputs are therefore not guaranteed.
 
 In the previous example, we asked for the location of the device and we expect to receive geolocation data in the extension output.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -71,14 +68,12 @@ final class LocationExtensionOutputChecker implements ExtensionOutputChecker
     }
 }
 ```
-{% endcode %}
 
 ## Extension Output Checker Handler
 
 You can create as many EOC as needed. These services can be managed by a handler that will be injected to the Ceremony Step Manager Factory. Extensions will be automatically verified during the validation steps.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -95,4 +90,3 @@ $eocHandler->add(new LocationExtensionOutputChecker());
 $csmFactory = new CeremonyStepManagerFactory();
 $csmFactory->setExtensionOutputCheckerHandler($eocHandler);
 ```
-{% endcode %}

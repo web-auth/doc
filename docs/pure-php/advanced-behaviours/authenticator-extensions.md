@@ -1,8 +1,8 @@
 # Authenticator Extensions (CTAP 2.1 / FIDO Alliance)
 
-{% hint style="info" %}
-**New in v5.4.0**
-{% endhint %}
+!!! info
+
+    **New in v5.4.0**
 
 WebAuthn delegates a number of authenticator-side capabilities to extensions defined by the FIDO Alliance CTAP 2.1 specification rather than by the W3C document. The framework ships first-class builders and typed output value objects for the four most common ones: `credProtect`, `credBlob` / `getCredBlob`, `minPinLength`, and the WebAuthn Level 3 update to `credProps`.
 
@@ -16,8 +16,7 @@ Lets the relying party request a credential-protection policy at registration ti
 
 `CredentialProtectionInputExtension` exposes named factories for the three policies plus the optional enforce flag:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -30,7 +29,6 @@ $extensions = AuthenticationExtensions::create([
     CredentialProtectionInputExtension::enforce(),  // optional companion
 ]);
 ```
-{% endcode %}
 
 | Factory | Policy |
 | --- | --- |
@@ -43,8 +41,7 @@ $extensions = AuthenticationExtensions::create([
 
 `CredentialProtectionOutput::fromExtensions(...)` parses the uint that the authenticator wrote back. Compare it with the requested policy to detect silent downgrades on authenticators that do not honour `credProtect`:
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\AuthenticationExtensions\CredentialProtectionOutput;
 
 $applied = CredentialProtectionOutput::fromExtensions($authenticatorData->extensions);
@@ -52,7 +49,6 @@ if ($applied?->policy !== CredentialProtectionInputExtension::POLICY_UV_REQUIRED
     // Authenticator silently downgraded; reject or warn the user.
 }
 ```
-{% endcode %}
 
 ## credBlob / getCredBlob (CTAP 2.1 §12.2)
 
@@ -60,8 +56,7 @@ Stores up to 32 bytes of opaque data alongside a credential at registration time
 
 ### Storing a blob at registration
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\AuthenticationExtensions\AuthenticationExtensions;
 use Webauthn\AuthenticationExtensions\CredentialBlobInputExtension;
 
@@ -69,14 +64,12 @@ $extensions = AuthenticationExtensions::create([
     CredentialBlobInputExtension::withBlob($rawBytes),  // raw bytes ≤ 32 — base64url'd for transport
 ]);
 ```
-{% endcode %}
 
 `withBlob()` rejects payloads above 32 bytes at construction time. The success flag the authenticator returns is exposed by `CredentialBlobRegistrationOutput`.
 
 ### Retrieving the blob at assertion
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\AuthenticationExtensions\AuthenticationExtensions;
 use Webauthn\AuthenticationExtensions\CredentialBlobAssertionOutput;
 use Webauthn\AuthenticationExtensions\GetCredentialBlobInputExtension;
@@ -89,7 +82,6 @@ $extensions = AuthenticationExtensions::create([
 $blob = CredentialBlobAssertionOutput::fromExtensions($authenticatorData->extensions);
 $bytes = $blob?->bytes;  // raw bytes, ≤ 32
 ```
-{% endcode %}
 
 The Stimulus base controller takes care of encoding/decoding transparently: registration `extensions.credBlob` strings are base64url-decoded to `ArrayBuffer` before `navigator.credentials.create()`, and the assertion `clientExtensionResults.credBlob` `ArrayBuffer` is re-encoded to base64url before the credential event is dispatched. JSON sent to the server round-trips cleanly through `CredentialBlobAssertionOutput`.
 
@@ -97,8 +89,7 @@ The Stimulus base controller takes care of encoding/decoding transparently: regi
 
 Enabled at registration time. When the relying party id is on the authenticator's enterprise allow-list, the authenticator returns the configured minimum PIN length as a CBOR uint inside `authData.extensions.minPinLength`.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\AuthenticationExtensions\AuthenticationExtensions;
 use Webauthn\AuthenticationExtensions\MinPinLengthInputExtension;
 use Webauthn\AuthenticationExtensions\MinPinLengthOutput;
@@ -111,7 +102,6 @@ $extensions = AuthenticationExtensions::create([
 $minPinLength = MinPinLengthOutput::fromExtensions($authenticatorData->extensions);
 $value = $minPinLength?->minPinLength;  // int
 ```
-{% endcode %}
 
 `MinPinLengthOutput::fromExtensions(...)` rejects non-integer or negative values defensively.
 
@@ -119,8 +109,7 @@ $value = $minPinLength?->minPinLength;  // int
 
 WebAuthn Level 3 adds an `authenticatorDisplayName` field next to the existing `rk` flag in the `credProps` client extension output. The framework now exposes a typed value object plus a checker that structurally validates the output when the extension was requested.
 
-{% code lineNumbers="true" %}
-```php
+```php linenums="1"
 use Webauthn\AuthenticationExtensions\AuthenticationExtension;
 use Webauthn\AuthenticationExtensions\AuthenticationExtensions;
 use Webauthn\AuthenticationExtensions\CredentialPropertiesOutput;
@@ -136,7 +125,6 @@ $credProps = CredentialPropertiesOutput::fromExtensions($clientExtensionResults)
 $isPasskey         = $credProps?->rk;                       // bool|null
 $authenticatorName = $credProps?->authenticatorDisplayName; // string|null
 ```
-{% endcode %}
 
 Register `CredentialPropertiesOutputChecker` with your `ExtensionOutputCheckerHandler` (see [Extensions](extensions.md)) to enforce the `boolean rk` / `string authenticatorDisplayName` shape automatically when the extension is in use.
 

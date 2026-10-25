@@ -8,27 +8,27 @@ The Credential Record can be stored the way you want. As the `Webauthn\Credentia
 
 It is up to you to create a credential record repository. This service shall implement `Webauthn\Bundle\Repository\CredentialRecordRepositoryInterface`.
 
-{% hint style="warning" %}
-**Renamed in v5.3.0:** `PublicKeyCredentialSource` has been renamed to `CredentialRecord` and `PublicKeyCredentialSourceRepositoryInterface` to `CredentialRecordRepositoryInterface`. The old names are deprecated and will be removed in 6.0.
-{% endhint %}
+!!! warning
 
-{% hint style="info" %}
-**Fixed in v5.3.7:** the bundle aliases the deprecated `PublicKeyCredentialSourceRepositoryInterface` to your repository only when that repository actually implements it. Symfony refuses an interface alias whose target does not implement the interface, so a repository following the deprecation and implementing `CredentialRecordRepositoryInterface` alone made the container invalid. Applications whose repository still implements the legacy interface keep the alias, and code type-hinting it keeps working.
-{% endhint %}
+    **Renamed in v5.3.0:** `PublicKeyCredentialSource` has been renamed to `CredentialRecord` and `PublicKeyCredentialSourceRepositoryInterface` to `CredentialRecordRepositoryInterface`. The old names are deprecated and will be removed in 6.0.
 
-{% hint style="warning" %}
-Doctrine users: the field type for `transports` and `other_ui` changed from `array` to `json` (`array` is now deprecated) between the bundle v4.x and 5.0.
+!!! info
 
-Please make sure to reflect the changes to your data model.
+    **Fixed in v5.3.7:** the bundle aliases the deprecated `PublicKeyCredentialSourceRepositoryInterface` to your repository only when that repository actually implements it. Symfony refuses an interface alias whose target does not implement the interface, so a repository following the deprecation and implementing `CredentialRecordRepositoryInterface` alone made the container invalid. Applications whose repository still implements the legacy interface keep the alias, and code type-hinting it keeps working.
 
-Here is an example for Postgres:
+!!! warning
 
-```sql
-ALTER TABLE [/*TABLE NAME HERE*/] ALTER transports TYPE JSON USING transports::JSON
-ALTER TABLE [/*TABLE NAME HERE*/] ALTER other_ui TYPE JSON USING other_ui::JSON
+    Doctrine users: the field type for `transports` and `other_ui` changed from `array` to `json` (`array` is now deprecated) between the bundle v4.x and 5.0.
 
-```
-{% endhint %}
+    Please make sure to reflect the changes to your data model.
+
+    Here is an example for Postgres:
+
+    ```sql
+    ALTER TABLE [/*TABLE NAME HERE*/] ALTER transports TYPE JSON USING transports::JSON
+    ALTER TABLE [/*TABLE NAME HERE*/] ALTER other_ui TYPE JSON USING other_ui::JSON
+
+    ```
 
 ## Registration Capability
 
@@ -44,8 +44,7 @@ Here is an example of an entity.
 
 This is the most simple example. Feel free to add custom fields that fit your needs e.g. `created_at` or `is_revoked`.
 
-{% code title="App/Entity/WebauthnCredential.php" lineNumbers="true" %}
-```php
+```php title="App/Entity/WebauthnCredential.php" linenums="1"
 <?php
 
 declare(strict_types=1);
@@ -94,40 +93,40 @@ class WebauthnCredential extends CredentialRecord
     }
 }
 ```
-{% endcode %}
 
-{% hint style="info" %}
-Do not forget to update your database schema!
-{% endhint %}
+!!! info
 
-{% hint style="warning" %}
-**New in v5.4.0:** the Doctrine mapping shipped by the bundle declares the new nullable `rpId` field of the Credential Record. Applications using that mapping have to generate and run a migration adding the column, which is nullable and empty for the existing rows.
-{% endhint %}
+    Do not forget to update your database schema!
+
+!!! warning
+
+    **New in v5.4.0:** the Doctrine mapping shipped by the bundle declares the new nullable `rpId` field of the Credential Record. Applications using that mapping have to generate and run a migration adding the column, which is nullable and empty for the existing rows.
 
 ## The Repository
 
-{% hint style="warning" %}
-**Deprecation Notice (v5.2.0):** The `DoctrineCredentialSourceRepository` class is deprecated and will be removed in version 6.0.0. You should create your own Doctrine-based repository implementation instead of extending the provided class. See the example below for guidance.
-{% endhint %}
+!!! warning
+
+    **Deprecation Notice (v5.2.0):** The `DoctrineCredentialSourceRepository` class is deprecated and will be removed in version 6.0.0. You should create your own Doctrine-based repository implementation instead of extending the provided class. See the example below for guidance.
 
 To ease the integration into your application, the bundle provides a concrete class that you can extend.
 
-{% hint style="info" %}
-In this following example, we extend that class and add a method to get all credentials for a specific user handle. Feel free to add your own methods.
-{% endhint %}
+!!! info
 
-{% hint style="warning" %}
-We must override the method `saveCredentialRecord` because we may receive `Webauthn\CredentialRecord` objects instead of `App\Entity\WebauthnCredential`.
-{% endhint %}
+    In this following example, we extend that class and add a method to get all credentials for a specific user handle. Feel free to add your own methods.
 
-<pre class="language-php" data-title="App/Repository/WebauthnCredentialRepository.php" data-line-numbers><code class="lang-php">&#x3C;?php
+!!! warning
+
+    We must override the method `saveCredentialRecord` because we may receive `Webauthn\CredentialRecord` objects instead of `App\Entity\WebauthnCredential`.
+
+```php title="App/Repository/WebauthnCredentialRepository.php" linenums="1" hl_lines="7"
+<?php
 
 declare(strict_types=1);
 
 namespace App\Repository;
 
-<strong>use App\Entity\WebauthnCredential;
-</strong>use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\WebauthnCredential;
+use Doctrine\Persistence\ManagerRegistry;
 use Webauthn\Bundle\Repository\DoctrineCredentialSourceRepository;
 use Webauthn\CredentialRecord;
 
@@ -156,18 +155,15 @@ final class WebauthnCredentialRepository extends DoctrineCredentialSourceReposit
         parent::saveCredentialSource($credentialRecord);
     }
 }
-
-</code></pre>
+```
 
 This repository should be declared as a Symfony service.
 
-{% hint style="info" %}
-With Symfony autowiring and autoconfiguration, this is usually done automatically
-{% endhint %}
+!!! info
 
-{% code title="config/services.yaml" %}
-```yaml
+    With Symfony autowiring and autoconfiguration, this is usually done automatically
+
+```yaml title="config/services.yaml"
 services:
     App\Repository\WebauthnCredentialRepository: ~
 ```
-{% endcode %}

@@ -4,9 +4,9 @@ description: Upgrade guide from 5.1 to 5.2
 
 # From 5.1 to 5.2
 
-{% hint style="success" %}
-No backward compatibility break. Everything listed below keeps working until 6.0.0.
-{% endhint %}
+!!! success
+
+    No backward compatibility break. Everything listed below keeps working until 6.0.0.
 
 Version 5.2 reworks the origin verification, moves the options storage to a single configuration node and introduces the dedicated Symfony Passport and Badge, which supersede the `webauthn` firewall.
 
@@ -14,9 +14,9 @@ Version 5.2 reworks the origin verification, moves the options storage to a sing
 
 ### Secured RP IDs
 
-{% hint style="warning" %}
-**Deprecated in v5.2.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.2.0**
 
 `secured_rp_ids` listed the Relying Party IDs allowed to be served over plain HTTP. It is superseded by `allowed_origins` and `allow_subdomains`, which check the full origin (scheme, host and port) instead of the sole host.
 
@@ -46,9 +46,9 @@ webauthn:
 
 The node is deprecated at the three levels where it was available: the root configuration, the controllers and the firewall.
 
-{% hint style="danger" %}
-List only the origins that share the trust level of the endpoint, and never enable `allow_subdomains` when a subdomain can be controlled by a third party.
-{% endhint %}
+!!! danger
+
+    List only the origins that share the trust level of the endpoint, and never enable `allow_subdomains` when a subdomain can be controlled by a third party.
 
 Without the Symfony bundle, the same move applies to the ceremony step manager:
 
@@ -64,9 +64,9 @@ The `Webauthn\CeremonyStep\CheckOrigin` step is deprecated as well and is replac
 
 ### Options Storage
 
-{% hint style="warning" %}
-**Deprecated in v5.2.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.2.0**
 
 The `options_storage` option at the controller and firewall levels is deprecated. Declare the storage once, at the root of the configuration.
 
@@ -100,9 +100,9 @@ The same node is deprecated on the firewall configuration. The `$optionStorage` 
 
 ### DoctrineCredentialSourceRepository
 
-{% hint style="warning" %}
-**Deprecated in v5.2.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.2.0**
 
 The class `Webauthn\Bundle\Repository\DoctrineCredentialSourceRepository` provided by the Symfony bundle is deprecated and will be removed in version 6.0.0. Create your own Doctrine-based repository instead.
 
@@ -125,15 +125,15 @@ class WebauthnCredentialRepository extends ServiceEntityRepository implements Cr
 
 See the [Credential Record Repository](../symfony-bundle/credential-record-repository.md) page for a complete implementation example.
 
-{% hint style="info" %}
-The interface names above are the ones introduced in 5.3. On 5.2 they are still called `PublicKeyCredentialSourceRepositoryInterface` and `CanSaveCredentialSource`. See [From 5.2 to 5.3](from-v5.2-to-v5.3.md).
-{% endhint %}
+!!! info
+
+    The interface names above are the ones introduced in 5.3. On 5.2 they are still called `PublicKeyCredentialSourceRepositoryInterface` and `CanSaveCredentialSource`. See [From 5.2 to 5.3](from-v5.2-to-v5.3.md).
 
 ### Firewall
 
-{% hint style="warning" %}
-**Deprecated in v5.2.0**
-{% endhint %}
+!!! warning
+
+    **Deprecated in v5.2.0**
 
 Version 5.2 ships a dedicated `WebauthnPassport` and a `WebauthnBadge`, which make a custom authenticator straightforward. The `webauthn` firewall is deprecated and will be removed in 6.0.0.
 
