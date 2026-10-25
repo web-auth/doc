@@ -77,8 +77,11 @@ plugins:
       enable_creation_date: false
       type: date
       fallback_to_build_date: true
+  # The root of the GitBook site served 5.3, whose guide to 6.0 was from-v5.x-to-v6.0; in 5.4 it is
+  # from-v5.4-to-v6.0. The root goes to the latest version.
   - redirects:
-      redirect_maps: {}
+      redirect_maps:
+        migration/from-v5.x-to-v6.0.md: migration/from-v5.4-to-v6.0.md
 
 markdown_extensions:
   - abbr
