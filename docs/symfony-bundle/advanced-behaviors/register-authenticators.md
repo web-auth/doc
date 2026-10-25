@@ -1,4 +1,4 @@
-# Register Additional Authenticators
+# Register additional authenticators
 
 In some circumstances, you may need to register a new authenticator for a user e.g. when adding a new authenticator or when an administrator acts as another user to replace a lost device.
 
@@ -114,7 +114,7 @@ register({})
 ;
 ```
 
-### Creation Profile
+### Creation profile
 
 The `default` [creation profile](../configuration-references.md#creation-profiles) is used. You can change it using the dedicated option.
 
@@ -128,7 +128,7 @@ webauthn:
                 profile: custom_profile
 ```
 
-### Response Handlers
+### Response handlers
 
 You can customize the responses returned by the controllers by using custom handlers. This could be useful when you want to return additional information to your application.
 
@@ -138,7 +138,7 @@ There are 3 types of responses and handlers:
 * Success,
 * Failure.
 
-#### Creation Options Handler
+#### Creation options handler
 
 This handler is called during the registration of an authenticator and has to implement the interface `Webauthn\Bundle\Security\Handler\CreationOptionsHandler`.
 
@@ -152,7 +152,7 @@ webauthn:
                 options_handler: … # Your handler here
 ```
 
-#### Success Handler
+#### Success handler
 
 This handler is called when a client sends a valid assertion from the authenticator. This handler shall implement the interface `Webauthn\Bundle\Security\Handler\SuccessHandler`. The default handler is `Webauthn\Bundle\Service\DefaultSuccessHandler`.
 
@@ -166,7 +166,7 @@ webauthn:
                 success_handler: … # Your handler here
 ```
 
-#### Failure Handler
+#### Failure handler
 
 This handler is called when an error occurred during the process. This handler shall implement the interface `Webauthn\Bundle\Security\Handler\FailureHandler`. The default handler is `Webauthn\Bundle\Service\DefaultFailureHandler`.
 

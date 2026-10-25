@@ -1,4 +1,4 @@
-# Authenticator Algorithms
+# Authenticator algorithms
 
 The WebAuthn data verification is based on cryptographic signatures and thus you need to provide cryptographic algorithms to perform those checks.
 
@@ -67,7 +67,7 @@ $algorithmManager = Manager::create()
 ;
 ```
 
-## Fully-Specified Algorithm Identifiers (RFC 9864)
+## Fully-specified algorithm identifiers (RFC 9864)
 
 !!! info
 

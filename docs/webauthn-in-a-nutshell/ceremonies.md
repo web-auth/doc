@@ -6,11 +6,11 @@ description: Registration and Authentication process overview
 
 In WebAuthn, authentication workflows are called "ceremonies" - a term that emphasizes the formal, cryptographic nature of these operations. There are two main ceremonies that form the foundation of WebAuthn authentication.
 
-## The Two Ceremonies
+## The two ceremonies
 
 WebAuthn defines two distinct ceremonies:
 
-### 1. Attestation Ceremony (Registration)
+### 1. Attestation ceremony (registration)
 
 **Also called:** Creation Ceremony, Registration Ceremony
 
@@ -21,7 +21,7 @@ WebAuthn defines two distinct ceremonies:
 * Adding an additional authenticator to an existing account
 * Registering a backup security key
 
-### 2. Assertion Ceremony (Authentication)
+### 2. Assertion ceremony (authentication)
 
 **Also called:** Request Ceremony, Authentication Ceremony, Login Ceremony
 
@@ -32,11 +32,11 @@ WebAuthn defines two distinct ceremonies:
 * Step-up authentication for sensitive operations
 * Re-authentication after session timeout
 
-## Common Workflow Pattern
+## Common workflow pattern
 
 Both ceremonies follow a similar two-step pattern:
 
-### Step 1: Options Creation
+### Step 1: Options creation
 
 The Relying Party (your server) creates options that:
 * Define parameters for the operation
@@ -44,7 +44,7 @@ The Relying Party (your server) creates options that:
 * Specify requirements and preferences
 * Are sent to the browser/authenticator
 
-### Step 2: Response Verification
+### Step 2: Response verification
 
 The authenticator:
 * Prompts the user for interaction
@@ -56,15 +56,15 @@ The authenticator:
 
     User interaction varies based on authenticator capabilities and your configuration. It can range from a simple button touch to biometric authentication (fingerprint, facial recognition, PIN code).
 
-## Attestation Ceremony (Registration)
+## Attestation ceremony (registration)
 
 The attestation ceremony registers a new authenticator credential for a user.
 
 ![The attestation ceremony](../assets/images/registration-2.png)
 
-### Attestation Flow Breakdown
+### Attestation flow breakdown
 
-#### Server Side (Step 1)
+#### Server side (step 1)
 
 ```php linenums="1"
 // 1. Create PublicKeyCredentialCreationOptions
@@ -83,7 +83,7 @@ $session->set('webauthn_creation_challenge', $publicKeyCredentialCreationOptions
 return new JsonResponse($publicKeyCredentialCreationOptions);
 ```
 
-#### Client Side (Browser)
+#### Client side (browser)
 
 ```javascript
 // 1. Receive options from server
@@ -101,7 +101,7 @@ await fetch('/webauthn/register', {
 });
 ```
 
-#### Server Side (Step 2)
+#### Server side (step 2)
 
 ```php linenums="1"
 // 1. Load the attestation response
@@ -122,7 +122,7 @@ $credentialSource = $attestationValidator->check(
 $credentialRepository->saveCredentialSource($credentialSource);
 ```
 
-### What Happens During Attestation?
+### What happens during attestation?
 
 1. **Challenge Generation**: Server creates a random challenge to prevent replay attacks
 2. **User Prompt**: Browser asks user to interact with authenticator
@@ -131,7 +131,7 @@ $credentialRepository->saveCredentialSource($credentialSource);
 5. **Verification**: Server verifies signatures and stores the public key
 6. **Storage**: Credential is saved and associated with the user account
 
-### Attestation Data Contains
+### Attestation data contains
 
 * **Public Key**: Used to verify future signatures
 * **Credential ID**: Unique identifier for this credential
@@ -139,15 +139,15 @@ $credentialRepository->saveCredentialSource($credentialSource);
 * **Signature Counter**: Used to detect cloned authenticators
 * **Attestation Statement**: Optional proof of authenticator authenticity
 
-## Assertion Ceremony (Authentication)
+## Assertion ceremony (authentication)
 
 The assertion ceremony authenticates a user with a previously registered credential.
 
 ![The assertion ceremony](../assets/images/login.png)
 
-### Assertion Flow Breakdown
+### Assertion flow breakdown
 
-#### Server Side (Step 1)
+#### Server side (step 1)
 
 ```php linenums="1"
 // 1. Get user's registered credentials
@@ -171,7 +171,7 @@ $session->set('webauthn_request_challenge', $publicKeyCredentialRequestOptions->
 return new JsonResponse($publicKeyCredentialRequestOptions);
 ```
 
-#### Client Side (Browser)
+#### Client side (browser)
 
 ```javascript
 // 1. Receive options from server
@@ -189,7 +189,7 @@ await fetch('/webauthn/login', {
 });
 ```
 
-#### Server Side (Step 2)
+#### Server side (step 2)
 
 ```php linenums="1"
 // 1. Load the assertion response
@@ -220,7 +220,7 @@ $credentialRepository->saveCredentialSource($updatedCredential);
 $session->set('user_id', $userEntity->id);
 ```
 
-### What Happens During Assertion?
+### What happens during assertion?
 
 1. **Challenge Generation**: Server creates a new random challenge
 2. **Credential Selection**: Browser identifies available credentials
@@ -230,14 +230,14 @@ $session->set('user_id', $userEntity->id);
 6. **Counter Check**: Server verifies counter to detect cloning
 7. **Authentication**: If valid, user is logged in
 
-### Assertion Data Contains
+### Assertion data contains
 
 * **Authenticator Data**: Flags, counter, extensions
 * **Client Data**: Origin, challenge, type
 * **Signature**: Cryptographic proof using the private key
 * **User Handle**: Optional user identifier (for usernameless authentication)
 
-## Key Differences Between Ceremonies
+## Key differences between ceremonies
 
 | Aspect | Attestation (Registration) | Assertion (Authentication) |
 |--------|---------------------------|---------------------------|
@@ -249,9 +249,9 @@ $session->set('user_id', $userEntity->id);
 | **Validator Class** | `AuthenticatorAttestationResponseValidator` | `AuthenticatorAssertionResponseValidator` |
 | **User Experience** | "Register security key" | "Use security key to sign in" |
 
-## Security Considerations
+## Security considerations
 
-### Challenge Uniqueness
+### Challenge uniqueness
 
 Both ceremonies require a unique, random challenge:
 
@@ -264,7 +264,7 @@ $challenge = random_bytes(32);  // 32 bytes = 256 bits of entropy
 // NEVER skip challenge verification
 ```
 
-### Challenge Storage
+### Challenge storage
 
 Store challenges temporarily in server-side sessions:
 
@@ -282,7 +282,7 @@ if (time() > $session->get('webauthn_challenge_expires')) {
 }
 ```
 
-### Origin Validation
+### Origin validation
 
 Always verify the origin matches your domain:
 
@@ -295,16 +295,16 @@ $credentialSource = $attestationValidator->check(
 );
 ```
 
-## Common Pitfalls
+## Common pitfalls
 
-### ❌ Challenge Reuse
+### ❌ Challenge reuse
 
 ```php
 // WRONG: Reusing the same challenge
 $challenge = 'my-static-challenge';  // Never do this!
 ```
 
-### ❌ Skipping Verification
+### ❌ Skipping verification
 
 ```php
 // WRONG: Trusting client data without validation
@@ -312,7 +312,7 @@ $credentialId = $_POST['credentialId'];
 $user = $userRepository->find($credentialId); // DON'T!
 ```
 
-### ❌ Incorrect Origin
+### ❌ Incorrect origin
 
 ```php
 // WRONG: Verifying with wrong domain
@@ -320,9 +320,9 @@ $attestationValidator->check($response, $options, 'http://localhost');
 // But the actual domain is https://example.com
 ```
 
-## Best Practices
+## Best practices
 
-### ✅ Use Timeouts
+### ✅ Use timeouts
 
 Set reasonable timeouts for user interaction:
 
@@ -335,7 +335,7 @@ $publicKeyCredentialCreationOptions = PublicKeyCredentialCreationOptions::create
 );
 ```
 
-### ✅ Handle Errors Gracefully
+### ✅ Handle errors gracefully
 
 Provide helpful error messages:
 
@@ -350,7 +350,7 @@ try {
 }
 ```
 
-### ✅ Store Credential Metadata
+### ✅ Store credential metadata
 
 Keep track of when and how credentials were registered:
 
@@ -361,7 +361,7 @@ $credential->name = 'My YubiKey';  // Allow users to name their keys
 $credential->transports = ['usb', 'nfc'];  // Store transport hints
 ```
 
-## See Also
+## See also
 
 * [Authenticators](authenticators.md) - Learn about different authenticator types
 * [User Verification](user-verification.md) - Understand UP vs UV flags

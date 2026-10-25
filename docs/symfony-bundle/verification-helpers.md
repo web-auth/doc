@@ -1,4 +1,4 @@
-# Verification Helpers (Custom Controllers)
+# Verification helpers (custom controllers)
 
 !!! info
 
@@ -155,7 +155,7 @@ $result = $this->verifier
 
 If your `CredentialRecordRepositoryInterface` does not implement `CanSaveCredentialRecord`, calling `verify()` with the default behaviour throws `Webauthn\Bundle\Exception\MissingFeatureException`. Implement the interface or pass `withSaveCredential(false)` and persist yourself.
 
-#### Metadata Statement validation
+#### Metadata statement validation
 
 When `webauthn.metadata.enabled: true` is set in YAML, every attestation verifier inherits the configured `MetadataStatementRepository` / `StatusReportRepository` / `CertificateChainValidator` services and runs the `CheckMetadataStatement` step. Most apps stop there.
 
@@ -239,7 +239,7 @@ If you are still routing `/attestation/response` and `/assertion/response` throu
 
 Your previous `SuccessHandler` / `FailureHandler` logic moves into the controller body: do whatever you need with the `WebauthnVerificationResult` (or with the caught `WebauthnAuthenticationFailureException`) and return the response yourself.
 
-## See Also
+## See also
 
 * [Options Helpers](options-helpers.md): the matching helper for the request/options phase
 * [Signal API](../pure-php/advanced-behaviours/signal-api.md): how to use the `WebauthnAuthenticationFailureException` context to push `signalUnknownCredential` payloads back to the client

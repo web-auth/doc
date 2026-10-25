@@ -1,4 +1,4 @@
-# User Verification
+# User verification
 
 The easiest way to manage the user verification requirements in your Symfony application is by using the creation and request profiles.
 

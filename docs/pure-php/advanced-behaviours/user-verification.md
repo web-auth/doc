@@ -1,4 +1,4 @@
-# User Verification
+# User verification
 
 You can indicate the user verification requirements during the ceremonies by setting the value in your options.
 
@@ -18,7 +18,7 @@ $publicKeyCredentialCreationOptions =
 ;
 ```
 
-### User Authentication
+### User authentication
 
 ```php linenums="1"
 // Public Key Credential Request Options

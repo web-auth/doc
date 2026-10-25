@@ -2,7 +2,7 @@
 
 WebAuthn requires JavaScript to interact with authenticators in the browser. This page explains the client-side implementation using the WebAuthn Browser API and recommended libraries.
 
-## Browser API Overview
+## Browser API overview
 
 The WebAuthn specification provides two main JavaScript APIs:
 
@@ -11,7 +11,7 @@ The WebAuthn specification provides two main JavaScript APIs:
 
 Both APIs are asynchronous and return Promises that resolve with credential objects.
 
-## HTTPS Requirement
+## HTTPS requirement
 
 !!! danger
 
@@ -19,7 +19,7 @@ Both APIs are asynchronous and return Promises that resolve with credential obje
 
 Modern browsers enforce this requirement to prevent credential theft and man-in-the-middle attacks.
 
-## Recommended Libraries
+## Recommended libraries
 
 ### @simplewebauthn/browser
 
@@ -33,7 +33,7 @@ We highly recommend using [@simplewebauthn/browser](https://simplewebauthn.dev/d
 
 **Installation:**
 
-## Symfony UX Stimulus Controller
+## Symfony UX Stimulus controller
 
 If you're using Symfony, the [Stimulus Controller](../symfony-ux/installation.md) provides seamless integration with forms and authentication workflows without writing JavaScript code.
 
@@ -51,9 +51,9 @@ If you're using Symfony, the [Stimulus Controller](../symfony-ux/installation.md
 
     See [Symfony UX → Installation](../symfony-ux/installation.md) for the JS-side `app.register()` step. **Do not** add the package to `assets/controllers.json` — that file only handles Symfony UX **PHP** packages.
 
-## Registration (Attestation) Flow
+## Registration (attestation) flow
 
-### Using Native Browser API
+### Using native browser API
 
 ```javascript linenums="1"
 // 1. Fetch registration options from your server
@@ -145,9 +145,9 @@ try {
 }
 ```
 
-## Authentication (Assertion) Flow
+## Authentication (assertion) flow
 
-### Using Native Browser API
+### Using native browser API
 
 ```javascript linenums="1"
 // 1. Fetch authentication options from server
@@ -237,7 +237,7 @@ try {
 }
 ```
 
-## Base64URL Encoding/Decoding
+## Base64URL encoding/decoding
 
 If you're using the native API without a library, you need helper functions for base64url encoding:
 
@@ -268,7 +268,7 @@ function base64urlDecode(base64url) {
 
     The [@simplewebauthn/browser](https://simplewebauthn.dev/docs/packages/browser/) library handles all encoding/decoding automatically, which is why we recommend it.
 
-## Error Handling
+## Error handling
 
 WebAuthn operations can fail for various reasons. Always wrap calls in try-catch blocks:
 
@@ -294,7 +294,7 @@ try {
 }
 ```
 
-## Common Error Types
+## Common error types
 
 | Error Name | Description | Common Cause |
 |------------|-------------|--------------|
@@ -304,7 +304,7 @@ try {
 | `SecurityError` | Security requirements not met | Not using HTTPS, invalid origin/RP ID |
 | `AbortError` | Operation aborted | Explicitly cancelled by application code |
 
-## Browser Compatibility
+## Browser compatibility
 
 WebAuthn is supported in modern browsers:
 
@@ -332,7 +332,7 @@ if (window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) {
 }
 ```
 
-## Browser Autofill / Conditional UI
+## Browser autofill / conditional UI
 
 Modern browsers support autofill for WebAuthn credentials, allowing users to select passkeys from password autofill:
 
@@ -351,7 +351,7 @@ if (conditionalUIAvailable) {
 
 For Symfony UX users, enable this with the `useBrowserAutofill` option in the Stimulus controller configuration.
 
-## Development Setup
+## Development setup
 
 ### Local HTTPS
 
@@ -380,7 +380,7 @@ symfony serve
 
 The Symfony CLI automatically sets up HTTPS for local development.
 
-## See Also
+## See also
 
 * [@simplewebauthn/browser Documentation](https://simplewebauthn.dev/docs/packages/browser/)
 * [Symfony UX Integration](../symfony-ux/installation.md) - Framework integration

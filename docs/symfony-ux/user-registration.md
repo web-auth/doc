@@ -1,12 +1,12 @@
-# User Registration
+# User registration
 
 The Symfony UX WebAuthn package provides Stimulus controllers to simplify the registration of new authenticators. This page explains how to register a new user with WebAuthn or add authenticators to an existing user account.
 
-## New User Registration
+## New user registration
 
 When registering a new user, you need to collect basic information (username, display name) and then register their first authenticator.
 
-### Registration Form
+### Registration form
 
 Your registration form needs:
 1. A **username field** for the user's identifier
@@ -52,7 +52,7 @@ Your registration form needs:
 </form>
 ```
 
-### Bundle Configuration
+### Bundle configuration
 
 Configure the bundle to handle new user registration:
 
@@ -70,7 +70,7 @@ webauthn:
                 user_entity_guesser: 'App\Guesser\NewUserEntityGuesser'
 ```
 
-### User Entity Guesser
+### User entity guesser
 
 Create a guesser to handle new user registration:
 
@@ -108,11 +108,11 @@ final class NewUserEntityGuesser implements UserEntityGuesser
 
     After successful registration, save both the user entity and the credential source to your database. The controller automatically validates the attestation response.
 
-## Adding Authenticators to Existing Users
+## Adding authenticators to existing users
 
 Existing users can register additional authenticators (backup keys, different devices).
 
-### Add Authenticator Form
+### Add authenticator form
 
 ```twig title="templates/security/add_authenticator.html.twig" linenums="1"
 <form
@@ -136,7 +136,7 @@ Existing users can register additional authenticators (backup keys, different de
 </form>
 ```
 
-### Configuration for Existing Users
+### Configuration for existing users
 
 ```yaml title="config/packages/webauthn.yaml" linenums="1"
 webauthn:
@@ -153,7 +153,7 @@ webauthn:
 
     The `CurrentUserEntityGuesser` automatically retrieves the currently authenticated user from the Symfony security context. No custom guesser needed!
 
-## Stimulus Controller Options
+## Stimulus controller options
 
 The registration controller accepts the following options:
 
@@ -163,7 +163,7 @@ The registration controller accepts the following options:
 | `creationResultField` | string | Yes | CSS selector for the hidden attestation field |
 | `autoRegister` | boolean | No | Automatically trigger registration on page load (default: false) |
 
-### Auto-Register Example
+### Auto-register example
 
 Automatically start the registration process when the page loads:
 
@@ -181,7 +181,7 @@ Automatically start the registration process when the page loads:
 
     Use `autoRegister` carefully as it immediately prompts the user for biometric authentication or security key interaction.
 
-## Dedicated Registration Controller
+## Dedicated registration controller
 
 !!! info
 
@@ -189,7 +189,7 @@ Automatically start the registration process when the page loads:
 
 The dedicated `registration-controller` provides a focused controller for credential registration with enhanced features like conditional create support.
 
-### Basic Usage
+### Basic usage
 
 ```twig title="templates/registration/register.html.twig" linenums="1"
 <form
@@ -222,7 +222,7 @@ The dedicated `registration-controller` provides a focused controller for creden
 </form>
 ```
 
-### Registration Controller Options
+### Registration controller options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
@@ -232,7 +232,7 @@ The dedicated `registration-controller` provides a focused controller for creden
 | `successRedirectUri` | string | - | URL to redirect after successful registration |
 | `autoRegister` | boolean | `false` | Auto-start registration on page load |
 
-### Registration Controller Targets
+### Registration controller targets
 
 | Target | Description |
 |--------|-------------|
@@ -243,7 +243,7 @@ The dedicated `registration-controller` provides a focused controller for creden
 | `authenticatorAttachment` | Select field for authenticator attachment preference |
 | `result` | Hidden input for the attestation response |
 
-## Error Handling
+## Error handling
 
 Handle registration errors in your custom event listeners:
 
@@ -258,7 +258,7 @@ document.addEventListener('webauthn:registration:success', (event) => {
 });
 ```
 
-## See Also
+## See also
 
 * [User Authentication](user-authentication.md) - Authenticate users with registered authenticators
 * [Additional Authenticators](additional-authenticators.md) - Manage multiple authenticators

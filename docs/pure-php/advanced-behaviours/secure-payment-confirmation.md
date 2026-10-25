@@ -1,4 +1,4 @@
-# Secure Payment Confirmation (SPC)
+# Secure payment confirmation (SPC)
 
 !!! info
 
@@ -8,14 +8,14 @@
 
 The framework ships SPC support out of the box: a `payment` extension, a dedicated client-data collector, an output checker for the browser-bound signature, and a Stimulus controller.
 
-## How the Pieces Fit Together
+## How the pieces fit together
 
 W3C SPC §5.1 splits the verification work in two — the framework wires both:
 
 1. **`clientDataJSON.payment`** carries the transaction the user actually confirmed in the browser SPC dialog. It is signed by the authenticator and validated server-side by `PaymentClientDataCollector`, which compares each field (`rpId`, `topOrigin`, `total`, `instrument`, `payee*`) with the request options. This closes the threat of a compromised client substituting the amount the user signs.
 2. **`clientExtensionResults.payment.browserBoundSignature`** carries the browser-bound signature. Its structural presence is enforced by `PaymentExtensionOutputChecker`. Cryptographic verification against the `BrowserBoundPublicKey` returned at registration is performed by `BrowserBoundSignatureVerifier`, wired into the assertion ceremony as `CheckBrowserBoundSignature`.
 
-## Building a Payment Authentication Request
+## Building a payment authentication request
 
 Attach a `PaymentExtension` to your `PublicKeyCredentialRequestOptions`. The extension takes the rpId, the merchant top-level origin, the amount, the instrument and the payee fields:
 
@@ -59,7 +59,7 @@ For registration, use `PaymentExtension::register()` — the registration form o
 
     Always derive the amount, instrument and payee fields from a server-side transaction record, **never** from request input. See [Security Model](#security-model) below.
 
-## Validating the Assertion
+## Validating the assertion
 
 The Symfony bundle auto-registers `PaymentClientDataCollector` and `PaymentExtensionOutputChecker`, so a regular `AuthenticatorAssertionResponseValidator::check(...)` call performs full SPC validation:
 
@@ -100,7 +100,7 @@ $factory->setClientDataCollectorManager($clientDataManager);
 $factory->setExtensionOutputCheckerHandler($extensionHandler);
 ```
 
-## Data Structures
+## Data structures
 
 All value objects live under the `Webauthn\SecurePaymentConfirmation` namespace and validate their inputs in the constructor (ISO 4217 currencies, W3C decimal monetary regex, URL validation on origins, non-empty strings on names).
 
@@ -114,7 +114,7 @@ All value objects live under the `Webauthn\SecurePaymentConfirmation` namespace 
 | `BrowserBoundPublicKey` / `BrowserBoundSignature` | The COSE-encoded browser-bound key returned at registration and the signature returned at assertion. |
 | `BrowserBoundSignatureVerifier` | CBOR-decodes the COSE key, looks up the matching `Cose\Algorithm\Signature\Signature` and verifies the signature against raw `clientDataJSON`. |
 
-## Stimulus Controller
+## Stimulus controller
 
 The Stimulus package ships a `PaymentController` that extends `AuthenticationController`. It forwards the server-issued `payment` extension input to the user agent untouched and base64url-encodes `browserBoundSignature.signature` on the way back so the credential is JSON-transportable.
 
@@ -145,7 +145,7 @@ The controller inherits every value, target, action and event from `Authenticati
 
     The controller dispatches the same events as `AuthenticationController`, prefixed with `webauthn:authentication:`. Filter on the originating controller in your listeners.
 
-## Security Model
+## Security model
 
 SPC is only as strong as the discipline of the relying party. Two rules matter above everything else:
 
@@ -184,11 +184,11 @@ public function options(Request $request): JsonResponse
 
 `PaymentClientDataCollector` then verifies, field by field, that what the user signed matches what the database said the transaction was — any tampering on the wire results in validation failure.
 
-## Browser Support
+## Browser support
 
 SPC requires Chromium-based browsers (Chrome 105+, Edge 105+, Opera 91+) and an HTTPS context. The user must already have at least one credential registered with `PaymentExtension::register()` enabled.
 
-## Runnable Demo
+## Runnable demo
 
 The [webauthn-demos](https://github.com/web-auth/webauthn-demos) repository ships a complete demo under [`spc-demo/`](https://github.com/web-auth/webauthn-demos/tree/main/spc-demo) in three flavours:
 
@@ -198,7 +198,7 @@ The [webauthn-demos](https://github.com/web-auth/webauthn-demos) repository ship
 
 Each flavour has a `run.sh` launcher and its own README walking through the EMV 3DS mapping and the trust model.
 
-## See Also
+## See also
 
 * [W3C Secure Payment Confirmation](https://www.w3.org/TR/secure-payment-confirmation/)
 * [Extensions](extensions.md) — generic mechanism behind `PaymentExtension`

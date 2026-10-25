@@ -183,7 +183,7 @@ public function __invoke(Request $request): Response
 
 The list lives in a single Symfony parameter, the security-critical decision is visible right where it applies, and the per-route overrides become trivial.
 
-### Reserved-For-Future-Use accessors
+### Reserved-for-future-use accessors
 
 !!! warning
 

@@ -6,7 +6,7 @@
 
 The [WebAuthn Signal API (W3C §5.1.10)](https://www.w3.org/TR/webauthn-3/#sctn-signal-methods) lets relying parties notify the browser's passkey manager about credential state changes. The flow is purely outbound from the page: the relying party composes the payload server-side, the page calls `navigator.credentials.signalXxx()`, and the user agent forwards the action to attached authenticators. **Nothing comes back**: the call returns `Promise<undefined>`, fire-and-forget.
 
-## What Is the Signal API?
+## What is the Signal API?
 
 When users manage their passkeys on the server side (removing credentials, updating profile information), the client platform may still display outdated information. The Signal API provides a standardized way to inform the client about:
 
@@ -28,7 +28,7 @@ When users manage their passkeys on the server side (removing credentials, updat
 
     **Caveat on `AllAcceptedCredentials` (W3C §5.1.10.3).** Credentials missing from `allAcceptedCredentialIds` may be **removed or hidden, potentially irreversibly** by the authenticator. Always derive the list exhaustively from your truth source, never from a partial view.
 
-## Signal Types
+## Signal types
 
 ### AllAcceptedCredentials
 
@@ -132,17 +132,17 @@ $json = $serializer->serialize(
 // }
 ```
 
-## Use Cases
+## Use cases
 
-### After Credential Deletion
+### After credential deletion
 
 When a user removes a passkey from your application, send an `AllAcceptedCredentials` signal with the remaining credentials so the client can update its list.
 
-### After Profile Update
+### After profile update
 
 When a user changes their username or display name, send a `CurrentUserDetails` signal so the client displays the correct information in its passkey picker.
 
-### During Authentication
+### During authentication
 
 If an authentication attempt references a credential that doesn't exist in your database, send an `UnknownCredential` signal to help the client clean up orphaned passkeys.
 
@@ -150,7 +150,7 @@ If an authentication attempt references a credential that doesn't exist in your 
 
     The W3C spec recommends running `signalAllAcceptedCredentials` and `signalCurrentUserDetails` **on every sign-in**: authenticators may have been detached when the underlying event (delete, profile update) fired, so the next login is the natural moment to push the up-to-date state.
 
-## Symfony Bundle Helpers
+## Symfony bundle helpers
 
 !!! info
 
@@ -329,7 +329,7 @@ security:
                     failure_handler: App\Security\WebauthnSignalingFailureHandler
 ```
 
-## Authenticator + Passport flow
+## Authenticator + passport flow
 
 !!! info
 
@@ -446,7 +446,7 @@ Failures raised inside `WebauthnBadgeListener` after it has recognised the reque
 
 `WebauthnSignalFactory::forUnknownCredentialFromException()` extracts the descriptor from the carried credential and produces the signal in one call. Pre-deserialization failures (malformed body, missing stored options) keep the historical silent-fail so other authenticators on the same firewall stay free to handle the request.
 
-## Stimulus Integration
+## Stimulus integration
 
 The `@web-auth/webauthn-stimulus` controllers (`AuthenticationController`, `RegistrationController`, `WebauthnController`) pick up the `signals: [...]` envelope automatically after a successful `verify` call and dispatch each entry to the matching `PublicKeyCredential.signalXxx()` JS API. Each call is feature-detected, silently no-ops on browsers that do not expose the method, and swallows the spec-defined `TypeError` / `SecurityError` so the rest of your application flow proceeds unchanged.
 
@@ -476,7 +476,7 @@ await dispatchSignals({
 
     **Browser support.** The Signal API requires Chrome/Edge ≥ 128, Safari ≥ 18.4 (or 18.5 for the `allAcceptedCredentials` and `currentUserDetails` variants). Firefox does not implement it yet. The Stimulus dispatch is intentionally fire-and-forget so the rest of your application flow proceeds unchanged on unsupported user agents.
 
-## See Also
+## See also
 
 * [WebAuthn L3 §5.1.10, Signal Methods](https://www.w3.org/TR/webauthn-3/#sctn-signal-methods): the W3C specification.
 * [WebAuthn L3 §14.6.3, Privacy leak via credential IDs](https://www.w3.org/TR/webauthn-3/#sctn-credential-id-privacy-leak): the rationale behind the privacy gates above.

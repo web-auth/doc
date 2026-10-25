@@ -1,4 +1,4 @@
-# Client Override Policy
+# Client override policy
 
 !!! info
 
@@ -73,7 +73,7 @@ webauthn:
                     allowed_values: ['default', 'conditional']
 ```
 
-## Configurable Fields
+## Configurable fields
 
 | Field | Default | Default Allowed Values | Description |
 |-------|---------|------------------------|-------------|
@@ -90,7 +90,7 @@ webauthn:
 
 ## Examples
 
-### Restrict to Platform Authenticators Only
+### Restrict to platform authenticators only
 
 Force platform authenticators (like Touch ID, Windows Hello) and prevent clients from requesting cross-platform authenticators:
 
@@ -107,7 +107,7 @@ webauthn:
                     enabled: false  # Client cannot change this
 ```
 
-### Lock Down All Options
+### Lock down all options
 
 For high-security scenarios, disable all client overrides:
 
@@ -133,7 +133,7 @@ webauthn:
                     enabled: false
 ```
 
-### Allow Only Specific Verification Levels
+### Allow only specific verification levels
 
 Allow the client to choose between `required` and `preferred`, but not `discouraged`:
 
@@ -149,7 +149,7 @@ webauthn:
                     allowed_values: ['required', 'preferred']
 ```
 
-### Opt-in Conditional Create from the Client
+### Opt-in conditional create from the client
 
 Conditional mediation is the only override that is **disabled by default**. Enable it on a per-profile basis if you want the JavaScript client to request the [Conditional Create](../../pure-php/advanced-behaviours/conditional-create.md) flow without the profile being permanently configured for it:
 
@@ -165,7 +165,7 @@ webauthn:
                     allowed_values: ['default', 'conditional']
 ```
 
-## How It Works
+## How it works
 
 The `ClientOverridePolicy` class determines the effective value for each field:
 
@@ -176,7 +176,7 @@ The `ClientOverridePolicy` class determines the effective value for each field:
 
 This ensures that the server always maintains control over the final options, while allowing controlled flexibility for client-side customization.
 
-## See Also
+## See also
 
 * [Configuration References](../configuration-references.md) - Full bundle configuration
 * [Authenticator Selection Criteria](authenticator-selection-criteria.md) - Selection criteria details

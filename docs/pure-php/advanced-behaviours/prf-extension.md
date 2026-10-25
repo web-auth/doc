@@ -1,4 +1,4 @@
-# PRF Extension
+# PRF extension
 
 !!! info
 
@@ -14,11 +14,11 @@ The framework ships a fluent builder for the `prf` extension input plus first-cl
 
     Production use of PRF therefore needs an explicit recovery story — a second passkey enrolled with shared salts, a server-side wrap escrowed behind a strong second factor, or a "you will lose this data if you lose this passkey" UX contract the user accepts. See Matt Miller's [May 2025 update](https://blog.millerti.me/2023/01/22/encrypting-data-in-the-browser-using-webauthn/) for the full rationale.
 
-## Building a PRF Extension
+## Building a PRF extension
 
 `Webauthn\AuthenticationExtensions\PseudoRandomFunctionInputExtensionBuilder` is the entry point. It produces a `PseudoRandomFunctionInputExtension` ready to be attached to your creation or request options.
 
-### Global Salts (`eval`)
+### Global salts (`eval`)
 
 Use `withInputs()` for the WebAuthn `eval` block — the canonical form during registration when the credential id is not yet known, and a usable fallback during authentication for credentials not covered by `evalByCredential`.
 
@@ -46,7 +46,7 @@ $options = PublicKeyCredentialCreationOptions::create(
 
 The salts are passed in **raw bytes**. The builder takes care of base64url-encoding them so the JSON sent to the browser matches the W3C wire format.
 
-### Per-credential Salts (`evalByCredential`)
+### Per-credential salts (`evalByCredential`)
 
 During authentication, prefer `withCredentialInputs()` so each credential is queried with its own salt — for instance a salt rotated alongside a re-encrypted blob:
 
@@ -106,7 +106,7 @@ if ($builder->requiresMultipleCredentialEvaluation()) {
 
     `requiresHmacSecretMc()` is the former name of the method. It named a CTAP extension in an API that is implementation agnostic, so it is deprecated since v5.4.0 and removed in 6.0.0. It still delegates to the new method.
 
-## Reading the PRF Output
+## Reading the PRF output
 
 The browser surfaces the PRF result in the assertion's `clientExtensionResults.prf.results.first` (and optionally `.second`) as `ArrayBuffer`. Verifying the assertion through `AuthenticatorAssertionResponseValidator::check(...)` does not consume the output — you read it from the deserialized `PublicKeyCredential->response->clientExtensionResults` after validation succeeds and pipe it into your application-level KDF.
 
@@ -135,7 +135,7 @@ services:
     Webauthn\AuthenticationExtensions\PseudoRandomFunctionOutputChecker: ~
 ```
 
-## Stimulus Integration
+## Stimulus integration
 
 The new `authentication-controller` and `registration-controller` (and the framework's `BaseController` they extend) handle PRF transparently:
 
@@ -148,7 +148,7 @@ No additional configuration is required — return options with a `prf` extensio
 
     The legacy combined controller (`@web-auth/webauthn-stimulus`) had two bugs in the legacy code path that were fixed in v5.4.0: it passed the wrong sub-object to the PRF input importer, and it read `prf.result` (singular) instead of `prf.results`. Make sure you are on v5.4.0 if you depend on PRF on the legacy controller; the dedicated `authentication`/`registration` controllers were always correct.
 
-## Symfony Bundle
+## Symfony bundle
 
 PRF support currently lives only at the library level. The Symfony bundle does not yet expose a `prf:` profile flag — to enable PRF on a bundle-driven flow you have to attach the extension yourself, for instance from a custom `CreationOptionsHandler` / `RequestOptionsHandler`:
 
@@ -168,7 +168,7 @@ public function onCreationOptions(
 
 A `prf:` profile block (with a pluggable `PrfSaltProviderInterface` for per-user/per-credential salt rotation) is on the roadmap for a future minor.
 
-## Runnable Demo
+## Runnable demo
 
 The [webauthn-demos](https://github.com/web-auth/webauthn-demos) repository ships a complete client-side encryption demo under [`prf-demo/`](https://github.com/web-auth/webauthn-demos/tree/main/prf-demo) showing the typical PRF use case end-to-end:
 
@@ -178,7 +178,7 @@ The [webauthn-demos](https://github.com/web-auth/webauthn-demos) repository ship
 
 Run it with `./same-origin/run.sh` from the `prf-demo` directory.
 
-## See Also
+## See also
 
 * [W3C WebAuthn PRF Extension](https://www.w3.org/TR/webauthn-3/#prf-extension)
 * [Extensions](extensions.md) — generic mechanism behind `PseudoRandomFunctionInputExtension`

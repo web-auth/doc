@@ -62,7 +62,7 @@ $factory->setAllowedOrigins(['http://localhost', 'https://example.com'], false);
 
 The `Webauthn\CeremonyStep\CheckOrigin` step is deprecated as well and is replaced by `Webauthn\CeremonyStep\CheckAllowedOrigins`. The new step also accepts non-URL facet identifiers such as `android:apk-key-hash:...`, so a native Android application can share the Relying Party ID of your website.
 
-### Options Storage
+### Options storage
 
 !!! warning
 

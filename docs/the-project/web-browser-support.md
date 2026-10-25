@@ -2,7 +2,7 @@
 description: Adoption by web browsers
 ---
 
-# Web Browser Support
+# Web browser support
 
 WebAuthn is now supported by all main web browsers:
 

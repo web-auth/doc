@@ -178,7 +178,7 @@ Between 5.3.3 and 5.3.6 the bundle copied `rp.id` into `rp.name` on the entity i
 
 `CollectedClientData::createFormJson()` is deprecated and will be removed in 6.0.0. Use the standard Symfony Serializer to deserialize the credential responses instead. See [Input Loading](../pure-php/input-loading.md).
 
-### Authenticator Transport CABLE
+### Authenticator transport CABLE
 
 !!! warning
 
@@ -259,7 +259,7 @@ See [Fake Credentials](../symfony-bundle/advanced-behaviors/fake-credentials.md)
 
 ## Changed behaviors
 
-### Options Handlers signature
+### Options handlers signature
 
 !!! warning
 
@@ -305,7 +305,7 @@ The same applies to `RequestOptionsHandler::onRequestOptions()`.
 
 ## Other changes
 
-### New Authenticator Transports
+### New authenticator transports
 
 !!! info
 

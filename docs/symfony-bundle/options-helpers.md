@@ -1,4 +1,4 @@
-# Options Helpers (Custom Controllers)
+# Options helpers (custom controllers)
 
 !!! info
 
@@ -247,7 +247,7 @@ $this->options->forCreation(...)->withUiMode(...);       // ❌ does not exist o
 
 If you are still using the bundle's profile-driven controllers, the migration path is straightforward: write a controller of your own that calls the helper, then drop the matching `webauthn.controllers.creation.<name>` / `webauthn.controllers.request.<name>` config block. The route name(s) you previously had can be re-bound to your controller via the `#[Route]` attribute.
 
-## See Also
+## See also
 
 * [Client Override Policy](advanced-behaviors/client-override-policy.md): what the client can request when a policy is set
 * [Conditional Create](../pure-php/advanced-behaviours/conditional-create.md): the `withMediation('conditional')` flow

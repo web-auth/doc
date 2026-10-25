@@ -2,11 +2,11 @@
 
 WebAuthn operations can be complex to debug due to the cryptographic operations and browser interactions involved. This page explains how to enable logging to troubleshoot issues during development or monitor your application in production.
 
-## PSR-3 Logger Integration
+## PSR-3 logger integration
 
 The WebAuthn library supports [PSR-3 compatible loggers](https://www.php-fig.org/psr/psr-3/) for debugging and monitoring. You can use any PSR-3 logger implementation such as Monolog, Symfony Logger, or others.
 
-### Setting Up a Logger
+### Setting up a logger
 
 Several WebAuthn classes implement the `Webauthn\MetadataService\CanLogData` interface, allowing you to inject a PSR-3 logger:
 
@@ -33,11 +33,11 @@ $assertionValidator = AuthenticatorAssertionResponseValidator::create($requestCS
 $assertionValidator->setLogger($logger);
 ```
 
-## What Gets Logged
+## What gets logged
 
 The WebAuthn library logs various events during authentication and registration:
 
-### Registration (Attestation) Events
+### Registration (attestation) events
 
 * Challenge generation and validation
 * Client data validation
@@ -47,7 +47,7 @@ The WebAuthn library logs various events during authentication and registration:
 * Certificate chain validation (when using attestation)
 * Errors during any step
 
-### Authentication (Assertion) Events
+### Authentication (assertion) events
 
 * Challenge validation
 * Credential lookup
@@ -56,7 +56,7 @@ The WebAuthn library logs various events during authentication and registration:
 * User presence and verification checks
 * Errors during any step
 
-## Log Levels
+## Log levels
 
 The library uses standard PSR-3 log levels:
 
@@ -66,7 +66,7 @@ The library uses standard PSR-3 log levels:
 * **ERROR**: Error messages for failures
 * **CRITICAL**: Critical errors requiring immediate attention
 
-## Example Log Output
+## Example log output
 
 Here's what typical log messages look like:
 
@@ -84,9 +84,9 @@ In case of errors:
 [2025-01-15 10:31:12] webauthn.CRITICAL: Signature verification failed
 ```
 
-## Development vs Production
+## Development vs production
 
-### Development Environment
+### Development environment
 
 Enable verbose DEBUG logging to see all operations:
 
@@ -100,7 +100,7 @@ $logger->pushHandler(
 );
 ```
 
-### Production Environment
+### Production environment
 
 In production, log only warnings and errors to avoid performance impact:
 
@@ -124,7 +124,7 @@ $logger->pushHandler(
 );
 ```
 
-## Common Issues and Log Messages
+## Common issues and log messages
 
 ### "Challenge mismatch"
 
@@ -148,29 +148,29 @@ $logger->pushHandler(
 
 **Solution**: Check your Relying Party ID configuration matches your domain.
 
-### "User not present" or "User not verified"
+### "User not present" or "user not verified"
 
 **Cause**: User verification requirements not met.
 
 **Solution**: Check your authenticator selection criteria configuration.
 
-## Additional Debugging Tools
+## Additional debugging tools
 
-### Browser Developer Tools
+### Browser developer tools
 
 Modern browsers provide WebAuthn debugging in developer tools:
 
 * **Chrome/Edge**: DevTools → Application → WebAuthn
 * **Firefox**: about:config → search for "webauthn"
 
-### Network Inspector
+### Network inspector
 
 Monitor the network requests to see:
 * Options requests (registration/authentication)
 * Response data being sent back
 * HTTP errors or timeouts
 
-### Test Authenticators
+### Test authenticators
 
 Use virtual authenticators for testing:
 
@@ -180,7 +180,7 @@ Use virtual authenticators for testing:
 // Add Virtual Authenticator → Configure options
 ```
 
-## See Also
+## See also
 
 * [Symfony Bundle Debugging](../../symfony-bundle/advanced-behaviors/debugging.md) - Framework-specific logging
 * [Authenticator Counter](authenticator-counter.md) - Detect cloned authenticators

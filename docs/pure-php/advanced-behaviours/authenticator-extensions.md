@@ -1,4 +1,4 @@
-# Authenticator Extensions (CTAP 2.1 / FIDO Alliance)
+# Authenticator extensions (CTAP 2.1 / FIDO Alliance)
 
 !!! info
 
@@ -128,7 +128,7 @@ $authenticatorName = $credProps?->authenticatorDisplayName; // string|null
 
 Register `CredentialPropertiesOutputChecker` with your `ExtensionOutputCheckerHandler` (see [Extensions](extensions.md)) to enforce the `boolean rk` / `string authenticatorDisplayName` shape automatically when the extension is in use.
 
-## See Also
+## See also
 
 * [W3C WebAuthn L3 §10.1.3](https://www.w3.org/TR/webauthn-3/#sctn-authenticator-credential-properties-extension) — `credProps` extension
 * [CTAP 2.1 §12.1](https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html#sctn-credProtect-extension) — `credProtect`
