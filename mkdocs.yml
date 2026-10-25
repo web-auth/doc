@@ -1,0 +1,249 @@
+site_name: WebAuthn Framework
+site_description: WebAuthn and passkeys for PHP and Symfony. Registration and authentication ceremonies, the Symfony bundle and the Symfony UX components, after WebAuthn Level 3.
+site_url: https://webauthn-doc.spomky-labs.com/
+site_author: Spomky-Labs
+repo_url: https://github.com/web-auth/webauthn-framework
+repo_name: web-auth/webauthn-framework
+edit_uri: https://github.com/web-auth/doc/edit/5.4/docs/
+
+docs_dir: docs
+site_dir: site
+
+# The GitBook table of contents. It stays while GitBook serves the domain, and the navigation below says the
+# same thing in the words of MkDocs.
+exclude_docs: |
+  SUMMARY.md
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+  language: en
+  # Space Grotesk and IBM Plex Mono are served from assets/fonts, declared in slabs.css: the theme loads
+  # no font of its own.
+  font: false
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil-outline
+    annotation: material/plus-circle
+  favicon: assets/brand/favicon.svg
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Follow the system theme
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to the dark theme
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to the light theme
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.tooltips
+    - content.action.edit
+
+# The tokens of the Slabs design kit, as they are, then the rules that apply them.
+extra_css:
+  - assets/stylesheets/slabs-tokens.css
+  - assets/stylesheets/slabs.css
+
+plugins:
+  - search
+  # Every asset is served from this site. Should a page ever reference an external one, it is downloaded
+  # at build time: nothing a reader loads reaches a third party.
+  - privacy
+  - git-revision-date-localized:
+      enable_creation_date: false
+      type: date
+      fallback_to_build_date: true
+  - redirects:
+      redirect_maps: {}
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      title: On this page
+      permalink: true
+      permalink_title: Link to this section
+      toc_depth: 3
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      # A PHP block of these pages starts without "<?php", which Pygments needs before it colours anything,
+      # and which GitBook never asked for.
+      extend_pygments_lang:
+        - name: php
+          lang: php
+          options:
+            startinline: true
+      line_spans: __span
+      # The number of a line is written at the start of the line itself, so it cannot drift from it.
+      linenums_style: pymdownx-inline
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.tilde
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+  nav:
+    omitted_files: warn
+
+extra:
+  status:
+    draft: This page is a stub, the section it belongs to is not written yet
+    new: Added in this version
+  version:
+    provider: mike
+    alias: true
+    default: latest
+  # The footer of the Slabs guidelines (p. 31): links in Calcaire, then the legal line in Béton.
+  slabs:
+    website: https://spomky-labs.com/
+    links:
+      - name: All documentation
+        link: https://docs.spomky-labs.com/
+      - name: WebAuthn Framework on GitHub
+        link: https://github.com/web-auth/webauthn-framework
+      - name: Packagist
+        link: https://packagist.org/packages/web-auth/webauthn-lib
+      - name: Security
+        link: https://github.com/web-auth/webauthn-framework/security/policy
+      - name: Sponsor
+        link: https://github.com/sponsors/Spomky
+    legal: SPOMKY-LABS · Florent Morselli EI
+    # The legal notice, the privacy policy and the contact page are shared by every documentation site,
+    # on the central one.
+    legal_links:
+      - name: Legal notice
+        link: https://docs.spomky-labs.com/legal-notice/
+      - name: Privacy
+        link: https://docs.spomky-labs.com/privacy/
+      - name: Contact
+        link: https://docs.spomky-labs.com/contact/
+
+# The title of each page is its first heading.
+nav:
+  - README.md
+  - "The project":
+      - the-project/the-project.md
+      - the-project/web-browser-support.md
+      - the-project/installation.md
+      - the-project/demos.md
+      - the-project/contributing.md
+  - "WebAuthn in a nutshell":
+      - webauthn-in-a-nutshell/authenticators.md
+      - webauthn-in-a-nutshell/ceremonies.md
+      - webauthn-in-a-nutshell/user-verification.md
+      - webauthn-in-a-nutshell/attestation-and-metadata-statement.md
+      - webauthn-in-a-nutshell/extensions.md
+  - "Prerequisites":
+      - prerequisites/the-relying-party.md
+      - prerequisites/credential-record.md
+      - prerequisites/user-entity.md
+      - prerequisites/javascript.md
+  - "Pure PHP":
+      - pure-php/webauthn-server.md
+      - pure-php/input-loading.md
+      - pure-php/input-validation.md
+      - pure-php/authenticator-registration.md
+      - pure-php/authenticate-your-users.md
+      - "Advanced behaviors":
+          - pure-php/advanced-behaviours/README.md
+          - pure-php/advanced-behaviours/debugging.md
+          - pure-php/advanced-behaviours/user-verification.md
+          - pure-php/advanced-behaviours/authenticator-selection-criteria.md
+          - pure-php/advanced-behaviours/authentication-without-username.md
+          - pure-php/advanced-behaviours/authenticator-algorithms.md
+          - pure-php/advanced-behaviours/attestation-and-metadata-statement.md
+          - pure-php/advanced-behaviours/extensions.md
+          - pure-php/advanced-behaviours/authenticator-counter.md
+          - pure-php/advanced-behaviours/cross-origin-authentication.md
+          - pure-php/advanced-behaviours/signal-api.md
+          - pure-php/advanced-behaviours/backup-events.md
+          - pure-php/advanced-behaviours/conditional-create.md
+          - pure-php/advanced-behaviours/secure-payment-confirmation.md
+          - pure-php/advanced-behaviours/prf-extension.md
+          - pure-php/advanced-behaviours/authenticator-extensions.md
+  - "Symfony bundle":
+      - symfony-bundle/bundle-installation.md
+      - symfony-bundle/credential-record-repository.md
+      - symfony-bundle/user-entity-repository.md
+      - symfony-bundle/firewall.md
+      - symfony-bundle/options-helpers.md
+      - symfony-bundle/verification-helpers.md
+      - symfony-bundle/configuration-references.md
+      - "Advanced behaviors":
+          - symfony-bundle/advanced-behaviors/README.md
+          - symfony-bundle/advanced-behaviors/fake-credentials.md
+          - symfony-bundle/advanced-behaviors/register-authenticators.md
+          - symfony-bundle/advanced-behaviors/debugging.md
+          - symfony-bundle/advanced-behaviors/user-verification.md
+          - symfony-bundle/advanced-behaviors/attestation-and-metadata-statement.md
+          - symfony-bundle/advanced-behaviors/authenticator-selection-criteria.md
+          - symfony-bundle/advanced-behaviors/authentication-without-username.md
+          - symfony-bundle/advanced-behaviors/extensions.md
+          - symfony-bundle/advanced-behaviors/authenticator-counter.md
+          - symfony-bundle/advanced-behaviors/cross-origin-authentication.md
+          - symfony-bundle/advanced-behaviors/client-override-policy.md
+          - symfony-bundle/advanced-behaviors/passkey-endpoints.md
+  - "Migration":
+      - migration/from-v5.0-to-v5.1.md
+      - migration/from-v5.1-to-v5.2.md
+      - migration/from-v5.2-to-v5.3.md
+      - migration/from-v5.3-to-v5.4.md
+      - migration/from-v5.4-to-v6.0.md
+  - "Symfony UX":
+      - symfony-ux/installation.md
+      - symfony-ux/user-authentication.md
+      - symfony-ux/user-registration.md
+      - symfony-ux/additional-authenticators.md
